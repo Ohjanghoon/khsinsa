@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<h1>반갑습니다.주신사입니다.</h1>
-	<h2>aa</h2>
 </body>
 </html>

@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>반갑습니다.주신사입니다.</h1>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+        <div class="content_wrapper">
+            <div class="main"><h1>이미지슬라이더</h1></div>
+            <div class="main"><h1>사진</h1></div>
+            <div class="main"><h1>사이트 가이드라인</h1></div>
+        </div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

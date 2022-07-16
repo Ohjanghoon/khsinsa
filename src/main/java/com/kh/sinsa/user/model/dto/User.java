@@ -1,7 +1,7 @@
 package com.kh.sinsa.user.model.dto;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 
 public class User {
 	
@@ -13,11 +13,23 @@ public class User {
 	private Del userDel; // Y N
 	private String userEmail;
 	private String userPhone;
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", userRole=" + userRole
-				+ ", userBirthday=" + userBirthday + ", userDel=" + userDel + ", userEmail=" + userEmail
-				+ ", userPhone=" + userPhone + ", userAddress=" + userAddress + ", enrollDate=" + enrollDate + "]";
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public User(String userId, String userPwd, String userName, UserRole userRole, Date userBirthday, Del userDel,
+			String userEmail, String userPhone, String userAddress, Timestamp enrollDate) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.userRole = userRole;
+		this.userBirthday = userBirthday;
+		this.userDel = userDel;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.userAddress = userAddress;
+		this.enrollDate = enrollDate;
 	}
 	public String getUserId() {
 		return userId;
@@ -73,34 +85,27 @@ public class User {
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
 	}
+	
 	public Timestamp getEnrollDate() {
 		return enrollDate;
 	}
 	public void setEnrollDate(Timestamp enrollDate) {
 		this.enrollDate = enrollDate;
 	}
-	public User(String userId, String userPwd, String userName, UserRole userRole, Date userBirthday, Del userDel,
-			String userEmail, String userPhone, String userAddress, Timestamp enrollDate) {
-		super();
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
-		this.userRole = userRole;
-		this.userBirthday = userBirthday;
-		this.userDel = userDel;
-		this.userEmail = userEmail;
-		this.userPhone = userPhone;
-		this.userAddress = userAddress;
-		this.enrollDate = enrollDate;
-	}
-	private String userAddress;
-	private Timestamp enrollDate; // 날짜/ 시각
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String userAddress;
+	public Timestamp enrollDate; // 날짜/ 시각
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return userPwd;
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", userRole=" + userRole
+				+ ", userBirthday=" + userBirthday + ", userDel=" + userDel + ", userEmail=" + userEmail
+				+ ", userPhone=" + userPhone + ", userAddress=" + userAddress + ", enrollDate=" + enrollDate + "]";
+	}
 
 	
 

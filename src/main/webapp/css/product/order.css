@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+hr{
+     padding: 1px;
+ }
+.container-md{
+     background-color: whitesmoke;
+ }
+#title{
+     font-size: 30px;
+     font-weight: bold;
+     padding:  10px 0 0 10px;
+ }
+#user-info{
+     font-size: 20px;
+     font-weight: bold;
+ }
+.recipient-info{
+     background-color: lightgrey;
+     padding: 30px;
+     display: block;
+     margin: 20px;
+ }
+.product-info img{
+     width: 100px;
+ }
+.product-info{
+     padding: 30px;
+     display: block;
+ }
+.product-price{
+     padding: 0 30px;
+ }

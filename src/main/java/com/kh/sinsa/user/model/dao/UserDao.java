@@ -90,16 +90,41 @@ public class UserDao {
 		
 		
 	}
+	//##########minseo UserDao end#############
 	
 
+	//##########janghoon UserDao begin#############
+	//----------------------회원가입----------------------
+		public int insertUser(Connection conn, User user) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			String sql  = prop.getProperty("insertUser");
+			//insertUser = insert into kh_user values (?, default, ?, ?, ?, ?, ?, ?, default, default)
+			//(1)user_id, enroll_date, (2)user_name, (3)user_pwd, (4)user_phone, (5)user_birthday, (6)user_email, (7)user_address, user_del, user_role)
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user.getUserId());
+				pstmt.setString(2, user.getUserName());
+				pstmt.setString(3, user.getUserPwd());
+				pstmt.setString(4, user.getUserPhone());
+				pstmt.setDate(5, user.getUserBirthday());
+				pstmt.setString(6, user.getUserEmail());
+				pstmt.setString(7, user.getUserAddress());
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new UserException("회원가입 오류", e);
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
+		}
+		
+	//##########janghoon UserDao end#############
 		
 }
-//##########minseo UserDao end#############
 
-//##########janghoon UserDao begin#############
-
-
-//##########janghoon UserDao end#############
 
 	
 

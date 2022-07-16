@@ -16,7 +16,7 @@
 
 /* header */
 header {
-    background-color: skyblue;
+    background-color: green;
     display: flex;
     flex-wrap: nowrap;
 }

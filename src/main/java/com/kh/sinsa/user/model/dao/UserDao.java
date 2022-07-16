@@ -1,14 +1,18 @@
 package com.kh.sinsa.user.model.dao;
 
 import java.io.FileReader;
-import java.lang.reflect.Member;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Properties;
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
+import com.kh.sinsa.user.model.dto.Del;
 import com.kh.sinsa.user.model.dto.User;
+import com.kh.sinsa.user.model.dto.UserRole;
 import com.kh.sinsa.user.model.exception.UserException;
 
 public class UserDao {
@@ -28,7 +32,7 @@ public class UserDao {
 		
 	}
 	
-
+	//##########minseo UserDao begin#############
 	/**
 	 * DQL요청 - dao
 	 * 1. PreparedStatement객체 생성 (sql전달) & 값대입
@@ -40,13 +44,14 @@ public class UserDao {
 	 * @param memberId
 	 * @return
 	 */
+	
 
 	public User findById(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		User user = null;
 		String sql = prop.getProperty("findById");
-		// select * from member where member_id = ?
+//		findById = select * from kh_user where user_id = ?
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1,userId);
@@ -68,15 +73,33 @@ public class UserDao {
 	}
 
 
-	private User handleUserResultSet(ResultSet rset) {
-		// TODO Auto-generated method stub
-		return null;
+	private User handleUserResultSet(ResultSet rset) throws SQLException {
+		String userId = rset.getString("user_id"); //왼쪽은 자바 오른쪽은 sql
+		Timestamp enrollDate = rset.getTimestamp("enroll_date");
+		String userName = rset.getString("user_name");
+		String userPwd = rset.getString("user_pwd");
+		String userPhone = rset.getString("user_phone");
+		Date userBirthday = rset.getDate("user_birthday");
+		String userEmail = rset.getString("user_email");
+		String userAddress = rset.getString("user_address");
+		Del userDel = Del.valueOf(rset.getString("user_del"));
+		UserRole userRole = UserRole.valueOf(rset.getString("user_role"));	
+		return new User (userId, userPwd, userName, userRole, userBirthday, userDel,
+						userEmail,userPhone,userAddress,enrollDate);
+				
+		
+		
 	}
 	
 
 		
-		
-	}
+}
+//##########minseo UserDao end#############
+
+//##########janghoon UserDao begin#############
+
+
+//##########janghoon UserDao end#############
 
 	
 

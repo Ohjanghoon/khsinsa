@@ -35,11 +35,11 @@ public class UserLoginServlet extends HttpServlet {
 		try {
 			// 1.사용자 입력값 처리
 			String userId = request.getParameter("userId");
-			String password = request.getParameter("password");
+			String password = request.getParameter("pwd");
 			String saveId = request.getParameter("saveId");
-			System.out.println("userId = " + userId);
-			System.out.println("password = " + password);
-			System.out.println("saveId = " + saveId); // "on" | null 
+//			System.out.println("userId = " + userId);
+//			System.out.println("password = " + password);
+//			System.out.println("saveId = " + saveId); // "on" | null 
 			
 			
 			// 2.업무로직: 로그인 여부 판단 

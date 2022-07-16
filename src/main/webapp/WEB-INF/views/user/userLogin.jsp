@@ -7,7 +7,7 @@
  <div class="container">
         <div class="login_container">
             <h2>로그인</h2>
-            <form action="">
+            <form action="<%= request.getContextPath() %>/user/login" method="post">
                     <div class="input_area">
                         <input type="text" name="userId" id="userId" autocomplete="off" required>
                         <label>아이디</label>

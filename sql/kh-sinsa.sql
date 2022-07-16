@@ -216,5 +216,24 @@ create table notice(
 create table connection_stats (
     session_id varchar2(1000),
     session_date date DEFAULT current_date,
-		constraint pk_session_id primary key (session_id)
+    constraint pk_session_id primary key (session_id)
 );
+
+-- 시퀀스테이블 생성 7/17--
+create sequence seq_community_comm_no;
+create sequence seq_comm_comment_comm_comment_no;
+create sequence seq_comm_attachment_comm_attachment_no;
+create sequence seq_inquire_inquire_no;
+create sequence seq_inquire_attatchment_inq_attatchment_no;
+create sequence seq_product_pro_no;
+create sequence seq_review_review_no;
+create sequence seq_product_attachment_pro_attachment_no;
+create sequence seq_kh_order_order_no;
+create sequence seq_report_report_no;
+create sequence seq_notice_notice_no;
+
+-- 주문 상품관리 fk 추가 --
+alter table product_io add constraint fk_order_no_02 foreign key(order_no) references kh_order(order_no);
+alter table product_io add constraint fk_pro_no_07 foreign key(pro_no) references product(pro_no);
+
+select * from kh_user;

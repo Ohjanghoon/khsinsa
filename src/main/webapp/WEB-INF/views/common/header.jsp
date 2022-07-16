@@ -22,6 +22,7 @@
         <nav>
             <li><a href="#">NOTICE</a></li>
             <li><a href="#">PAGE</a></li>
-            <li><a href="#">LOGIN</a></li>
+            <li><a href=" <%= request.getContextPath() %>/user/login">LOGIN</a></li>
         </nav>
     </header>
+ 

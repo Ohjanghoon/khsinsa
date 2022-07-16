@@ -237,3 +237,27 @@ alter table product_io add constraint fk_order_no_02 foreign key(order_no) refer
 alter table product_io add constraint fk_pro_no_07 foreign key(pro_no) references product(pro_no);
 
 select * from kh_user;
+
+
+-- 상품 테이블 추가 -- 
+-- 상의 -- 
+insert into product values ('A10'||seq_product_pro_no.nextval,'상의','마하그리드 반팔티 보라색',56000,'L',default,'마하그리드 반팔티 보라색 56000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','마하그리드 반팔티 크림색',56000,'L',default,'마하그리드 반팔티 크림색 56000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','마하그리드 반팔티 하얀색',56000,'L',default,'마하그리드 반팔티 하얀색 56000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','나이키 로고티셔츠 검은색',38000,'L',default,'나이키 로고티셔츠 검은색 38000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','나이키 로고티셔츠 하얀색',38000,'L',default,'나이키 로고티셔츠 검은색 38000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','아디다스 트랙탑 네이비',99000,'L',default,'아디다스 트랙탑 네이비 99000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','커버낫 카라집업 네이비',71200,'L',default,'커버낫 카라집업 네이비 71200');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','커버낫 카라집업 오트밀',71200,'L',default,'커버낫 카라집업 네이비 71200');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','컨버스 코믹후디 블랙',69000,'L',default,'컨버스 코믹후디 블랙 69000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','컨버스 코믹후디 화이트',69000,'L',default,'컨버스 코믹후디 화이트 69000');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','브라운브레스 니트 블루',62300,'L',default,'브라운브레스 니트 블루 62300');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','브라운브레스 니트 머스타드',62300,'L',default,'브라운브레스 니트 머스타드 62300');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10'||seq_product_pro_no.nextval,'상의','드로우핏 반팔 오버셔츠 네이비',49500,'L',default,'드로우핏 반팔 오버셔츠 네이비 49500');
+insert into khsinsa.product (pro_no,pro_type,pro_name,pro_price,pro_size,reg_date,pro_content) values ('A10' || seq_product_pro_no.nextval,'상의','드로우핏 반팔 오버셔츠 블랙',49500,'L',default,'드로우핏 반팔 오버셔츠 블랙 49500');
+
+commit;
+select * from product;
+select * from product where pro_no between 1 and 2;
+select * from user_sequences;
+select * from ( select row_number() over(order by pro_no desc) rnum, p.* from product p) p where rnum between ? and ?;

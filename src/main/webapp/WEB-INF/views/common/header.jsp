@@ -34,7 +34,7 @@
     <div class="container">
     <header>
         <nav>
-            <li><a href="#">SHOP</a></li>
+            <li><a href="<%= request.getContextPath() %>/product/productList">">SHOP</a></li>
             <li><a href="#">COMMUNITY</a></li>
             <li><a href="#">고객센터</a></li>
         </nav>

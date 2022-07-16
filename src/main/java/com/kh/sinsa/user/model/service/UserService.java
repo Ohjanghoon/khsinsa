@@ -9,6 +9,7 @@ import static com.kh.sinsa.common.JdbcTemplate.*;
 public class UserService {
 	private UserDao userDao = new UserDao();
 	
+	//##########minseo UserService begin#############
 	/**
 	 * DQL요청 - service
 	 * 1. Connection객체 생성
@@ -26,5 +27,23 @@ public class UserService {
 		
 		return user;
 	}
-
+	//##########minseo UserService end#############
+	
+	//##########janghoon UserService begin#############
+		public int insertUser(User user) {
+			Connection conn = getConnection();
+			int result = 0;
+			
+			try {
+				result = userDao.insertUser(conn, user);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+		//##########janghoon UserService end#############
 }

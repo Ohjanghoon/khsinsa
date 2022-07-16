@@ -1,12 +1,409 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userEnroll.css" />
 <title>회원가입 페이지</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String todayDate = sdf.format(new Date());
+%>
+<div class="enroll_container">
+    <h2>회원가입</h2>
+    <form action="<%= request.getContextPath() %>/user/userEnroll" name="userEnrollFrm" method="POST">
+            <div class="input_area">
+                <label>아이디 <span class="essential_mark">*</span></label>
+                <input type="text" name="userId" id="userId" autocomplete="off" required>
+            </div>
+            <br>
+            <span class="message_box" id="idMsg"></span>
+            <div class="input_area">
+                <label>비밀번호 <span class="essential_mark">*</span></label>
+                <input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
+                <button type="button" id="btn_show_pwd"><img src="<%= request.getContextPath() %>/images/eye_visible_icon.png" alt="버튼"></button>
+            </div>
+            <br>
+            <span class="message_box" id="pwdMsg">8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
+            <div class="input_area">
+                <label>비밀번호 확인 <span class="essential_mark">*</span></label>
+                <input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
+            </div>
+            <br>
+            <span class="message_box" id="pwdCheckMsg"></span>
+            <div class="input_area">
+                <label>이름 <span class="essential_mark">*</span></label>
+                <input type="text" name="userName" id="userName" autocomplete="off" required>
+            </div>
+            <br>
+            <span class="message_box" id="nameMsg"></span>
+            <div class="input_area">
+                <label>생년월일 <span class="essential_mark">*</span></label>
+                <input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%= todayDate %>">
+            </div>
+            <br>
+            <div class="input_area phone_area">
+                <label>휴대전화 <span class="essential_mark">*</span></label>
+                <select name="phone1" id="phone1">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                    <option value="017">017</option>
+                    <option value="018">018</option>
+                    <option value="019">019</option>
+                </select>
+                <input type="text" name="phone2" id="phone2" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
+            </div>
+            <br>
+            <span class="message_box" id="phoneMsg"></span>
+            <div class="input_area email_area">
+                <label>이메일 <span class="essential_mark">*</span></label>
+                <input type="text" name="emailId" id="emailId" title="이메일을 입력해주세요" autocomplete="off" required>
+                <span id="email_at">@</span>
+                <input type="text" name="emailAddr" id="emailAddr" list="emailAddrs" autocomplete="off" required>
+                <datalist id="emailAddrs">
+                    <option value="naver.com">
+                    <option value="hanmail.net">
+                    <option value="gmail.com">
+                    <option value="yahoo.com">
+                    <option value="hotmail.com">
+                    <option value="korea.com">
+                    <option value="nate.com">
+                </datalist> 
+            </div>
+            <br>
+            <span class="message_box" id="emailMsg"></span>
+            <div class="input_area">
+                <label>주소 <span class="essential_mark">*</span></label>
+                <input type="text" name="roadAddr" id="roadAddr" readonly>
+                <button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
+            </div>
+            <br>
+            <div class="input_area addr_area">
+                <input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력" >
+            </div>
+            <br>
+            <span class="message_box" id="addressMsg"></span>
+            <div class="btn_area">
+                <button type="submit" id="btn_enroll">회원가입</button>
+            </div>
+        </form>
+</div>
+<script>
+//----------------------------------아이디----------------------------------------
+//아이디 유효성 검사 (중복 검사 기능 추가)
+const checkId = () => {
+	const tempId = document.querySelector("#userId").value;
+	const idRegexp1 = /^[a-z]/g
+	const idRegexp2 = /^[a-z][a-z0-9]{3,11}$/g;
+	const idRegexp3 = /\d+/g;
+	
+	if(tempId === ""){
+	    showMsg(idMsg, "필수 정보입니다.");
+	    return false;
+	}
+	
+	if(!idRegexp1.test(tempId)){
+	    showMsg(idMsg, "영소문자로 시작해주세요.");
+	    return false;
+	}
+	if(!idRegexp2.test(tempId)){
+	    showMsg(idMsg, "4~12자리 영소문자/숫자만 사용해주세요.");
+	    return false;
+	}
+	if(!idRegexp3.test(tempId)){
+	    showMsg(idMsg, "숫자를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	
+	showMsg(idMsg, "✔️");
+	return true;
+};
+//아이디 유효성 검사 메세지
+const showMsg = (obj, msg) => {
+    obj.innerHTML = msg;
+};
+//onblur시 아이디 유효성 검사 체크
+userId.onblur = () => {
+    checkId();
+};
 
-</body>
-</html>
+//----------------------------------비밀번호----------------------------------------
+//비밀번호 유효성 검사
+const checkPwd = () => {
+	const tempPwd = document.querySelector("#userPwd").value;
+	const pwdRegExp1 = /^[\da-zA-z!@#$%&]{8,12}$/g;
+	const pwdRegExp2 = /\d+/g;
+	const pwdRegExp3 = /[a-zA-z]+/g;
+	const pwdRegExp4 = /[!@#$%&]+/;
+	const pwdRegExp5 = /`\${tempId}`/;
+	
+	if(tempPwd === ""){
+	    showMsg(pwdMsg, "필수 정보입니다.");
+	    return false;
+	}
+	if(!pwdRegExp1.test(tempPwd)){
+	    showMsg(pwdMsg, "8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.")
+	    return false;
+	}
+	if(!pwdRegExp2.test(tempPwd)){
+	    showMsg(pwdMsg, "숫자를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	if(!pwdRegExp3.test(tempPwd)){
+	    showMsg(pwdMsg, "영대소문자를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	if(!pwdRegExp4.test(tempPwd)){
+	    showMsg(pwdMsg, "특수문자(!, @, #, $, %, &)를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	showMsg(pwdMsg, "✔️");
+	
+	userPwdCheck.focus();
+	return true;
+};
+//onblur시 비밀번호 유효성 검사 체크
+userPwd.onblur = () => {
+  checkPwd();
+};
+
+//----------------------------------비밀번호 확인----------------------------------------
+//비밀번호 일치여부 확인
+const checkPwdCheck = () => {
+    const tempPwdCheck = document.querySelector("#userPwdCheck").value;
+
+    if(tempPwdCheck === ""){
+        showMsg(pwdCheckMsg, "필수 정보입니다.");
+        return false;
+    }
+    if(userPwd.value !== userPwdCheck.value){
+        showMsg(pwdCheckMsg, "비밀번호가 일치하지 않습니다.");
+        return false;
+    }
+
+    showMsg(pwdCheckMsg, "✔️");
+    return true;
+};
+//onblur시 비밀번호 확인 일치여부 체크
+userPwdCheck.onblur = () => {
+    checkPwdCheck();
+};
+
+//-----------------------------눈 아이콘 클릭시 비밀번호 보이기------------------------------------
+document.querySelector("#btn_show_pwd").addEventListener('mousedown', () => {
+    const ele_pwd = document.querySelector("#userPwd");
+    const ele_pwdCheck = document.querySelector("#userPwdCheck");
+    btn_show_pwd.classList.add('clicked');
+
+    ele_pwd.type = "text";
+    ele_pwdCheck.type = "text";
+});
+btn_show_pwd.addEventListener('mouseup', () => {
+    const ele_pwd = document.querySelector("#userPwd");
+    const ele_pwdCheck = document.querySelector("#userPwdCheck");
+    btn_show_pwd.classList.remove('clicked');
+
+    ele_pwd.type = "password";
+    ele_pwdCheck.type = "password";
+});
+
+//----------------------------------이름----------------------------------------
+//이름 유효성 검사
+const checkName = () => {
+	const tempUserName = document.querySelector("#userName").value;
+	const nameRegexp = /^[가-힣]{2,}$/;
+	
+	if(tempUserName === ""){
+	    showMsg(nameMsg, "필수 정보입니다.");
+	    return false;
+	}
+	if(!nameRegexp.test(tempUserName)){
+	    showMsg(nameMsg, "이름을 다시 확인해주세요.");
+	    return false;
+	}
+	showMsg(nameMsg, "✔️");
+	return true;
+};
+//onblur시 이름 유효성 검사 체크
+userName.onblur = () => {
+	checkName();
+};
+
+//----------------------------------휴대전화----------------------------------------
+/**
+ * 휴대전화 유효성 검사 (본인 확인을 위해 필수정보로 설정)
+ * - 앞의 3자리를 select로 번호를 받아 발생할 수 있는 케이스를 줄임
+ */
+const checkPhone = () => {
+    const tempPhone2 = document.querySelector("#phone2").value;
+    const phoneRegexp = /\d{7,8}/;
+    
+    if(tempPhone2 === ""){
+        showMsg(phoneMsg, "필수 정보입니다.");
+        return false;
+    }
+    if(!phoneRegexp.test(tempPhone2)){
+        showMsg(phoneMsg, "전화번호를 다시 확인해주세요.");
+        return false;
+    }
+    showMsg(phoneMsg, "✔️");
+    return true;
+};
+//onblur시 휴대전화 유효성 검사 체크
+phone2.onblur = () => {
+    checkPhone();
+};
+
+//----------------------------------이메일----------------------------------------
+//이메일 유효성 검사
+const checkEmailId = () => {
+	const tempEmailId = document.querySelector("#emailId").value;
+	const emailIdRegexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*$/;
+	
+	if(tempEmailId === ""){
+	    showMsg(emailMsg, "필수 정보입니다.");
+	    return false;
+	}
+	if(!emailIdRegexp.test(tempEmailId)){
+	    showMsg(emailMsg, "이메일 주소를 다시 확인해주세요.");
+	    return false;
+	}
+	
+	//이메일아이디를 입력받은 후 이메일 주소 형식 처리
+	// const tempEmailAddr = "";
+	emailAddr.focus();
+	
+	// 이메일 주소 체크
+	emailAddr.onblur = () => {
+	    checkEmailAddr();
+	};
+	return true;
+};
+
+//이메일 아이디 체크
+emailId.onblur = () => {
+  checkEmailId();    
+};
+
+//이메일 주소 유효성 검사
+const checkEmailAddr = () => {
+  const tempEmailAddr = document.querySelector("#emailAddr").value;
+  const emailAddrRegexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+  
+  if(emailAddr.value === ""){
+      showMsg(emailMsg, "이메일 주소를 다시 확인해주세요.");
+      return false;
+  }
+  if(!emailAddrRegexp.test(tempEmailAddr)){
+      showMsg(emailMsg, "이메일 주소를 다시 확인해주세요.");
+      return false;
+  }
+  showMsg(emailMsg, "✔️");
+  return true;
+};      
+
+//----------------------------------주소----------------------------------------
+//주소 유효성 검사
+const checkAddress = () => {
+	const tempAddress = document.querySelector("#roadAddr").value;
+	
+	if(tempAddress === ""){
+	    showMsg(addressMsg, "필수 정보입니다.");
+	    return false;
+	}
+	return true;
+};
+
+//주소 입력여부 체크
+roadAddr.onblur = () => {
+	checkAddress();    
+};
+
+//사용자 입력값이 올바르지 않은데 가입하기 버튼을 클릭시 출력 메세지
+const re_input = (msg, ele) => {
+    alert(`${msg} 입력을 다시 확인해주세요!`);
+    ele.focus();       //잘못 입력된 input focus 처리
+    return false;
+};
+//----------------------------------회원가입 폼 제출 전 체크----------------------------------------
+document.userEnrollFrm.addEventListener('submit', () => {
+    
+    //회원가입 처리하기 이전에 최종 유효성 검사
+    if(!checkId()){
+        return re_input("아이디", userId);
+    }
+    if(!checkPwd()){
+        return re_input("비밀번호", userPwd);
+    }
+    if(!checkPwdCheck()){
+        return re_input("비밀번호 확인", userPwdCheck);
+    }
+    if(!checkName()){
+        return re_input("이름", userName);
+    }
+    if(!checkPhone()){
+        return re_input("휴대전화", phone2);
+    }
+    if(!checkEmailId()){
+        return re_input("이메일 아이디", emailId);
+    }
+    if(!checkEmailAddr()){
+        return re_input("이메일 주소", emailAddr);
+    }
+    if(!checkAddress()){
+        return re_input("주소", roadAddr);
+    }
+
+    return true;
+});
+</script>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+//----------------------------------주소 검색 팝업----------------------------------------
+function addressPopup() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+            
+            }
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.querySelector("#roadAddr").value = addr;
+            showMsg(addressMsg, "✔️");
+            // 커서를 상세주소 필드로 이동한다.
+            document.querySelector("#roadDetail").focus();
+        }
+    }).open();
+}
+</script>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

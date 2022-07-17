@@ -9,6 +9,8 @@ import java.util.Map;
 
 import com.kh.sinsa.product.model.dao.ProductDao;
 import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.kh.sinsa.product.model.dto.ProductExt;
 
 public class ProductService {
 	private ProductDao productDao = new ProductDao();
@@ -25,6 +27,20 @@ public class ProductService {
 		int totalContent = productDao.getTotalContent(conn); 
 		close(conn);
 		return totalContent;
+	}
+
+	public Product findByProNo(String proNo) {
+		Connection conn = getConnection();
+		Product product = productDao.findByProNo(conn, proNo);
+		close(conn);
+		return product;
+	}
+
+	public List<ProductAttachment> findProductAttachmentByProductProNo(String proNo) {
+		Connection conn = getConnection();
+		List<ProductAttachment> attachmentList = productDao.findProductAttachmentByProductProNo(conn,proNo);
+		close(conn);
+		return attachmentList;
 	}
 
 }

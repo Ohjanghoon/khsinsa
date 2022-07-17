@@ -1,9 +1,18 @@
+<%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
+<%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
+<%@page import="com.kh.sinsa.product.model.dto.Product"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product/productDetail.css" />
+<%
+	Product product = (Product) request.getAttribute("product");
+	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
+	
+%>
 <main>
     <div class="container-fluid">
         <section class="py-5 text-center container">
@@ -11,16 +20,25 @@
         </section>
 
         <div class="container-md">
-            <p class="product-name">쿨 썸머 에센셜 라운드 반팔 니트티 BLACK</p>
+            <h3><%= product.getProName() %></h3>
             <div class="product-img">
-                <img src="./img/flower1.PNG" alt="">
+<% 
+for(ProductAttachment att : attachList) {
+%>
+				<img src="<%= request.getContextPath() %>/upload/product/top/<%= att.getProOriginalFilename() %>.jpg" alt="">
+<% 
+ break; } 
+%>
             </div>
             <div class="product-text">
-                <p>Product Info</p>
-                <p>상품명</p>
-                <p>좋아요 수</p>
-                <p>베송비</p>
-                <p>옵션</p>
+                <h4>Product Info</h4>
+                <h5>상품</h5>
+                <p><%= product.getProName() %></p>
+                <h5>❤️</h5>
+                <p>5개</p>
+                <h5>배송비</h5>
+                <p>무료</p>
+               	<h5>옵션</h5>
                 <form action="" name="productFrm">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>사이즈를 선택해주세요.</option>
@@ -28,26 +46,32 @@
                         <option value="2">M</option>
                         <option value="3">S</option>
                     </select>
-                    <p>수량</p>
+                   	<h5>수량</h5>
                     <button>-</button>
                     <input type="text" value="1" disabled>
                     <button>+</button>
-                    <p>총 결제 금액</p>
-                    <p>0원</p>
+                    <h5>총 결제 금액</h5>
+                    <p><%= product.getProPrice() %>원</p>
                     <button id="buy">구매하기</button>
                     <button>찜하기</button>
                     <button>장바구니 담기</button>
                 </form>
             </div>
             <hr>
+<% 
+	if(attachList != null && !attachList.isEmpty()){ 
+		for(ProductAttachment pa : attachList){
+%>
             <div class="product-info">
-                <img src="./img/flower2.PNG" alt="">
-                <img src="./img/flower3.PNG" alt="">
-                <img src="./img/flower4.PNG" alt="">
+                <img src="<%= request.getContextPath() %>/upload/product/top/<%= pa.getProOriginalFilename() %>.jpg" alt="">
+<% 
+		}
+	}
+%>
                 <p>상품설명</p>
-                <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas iure, id, distinctio dignissimos saepe provident quidem iusto a consequuntur inventore eos exercitationem molestiae hic? Nobis cum perferendis reprehenderit ullam nesciunt! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aut deleniti facilis fugit temporibus, non, nostrum molestiae consectetur, aliquid necessitatibus officiis iusto. Ipsum dignissimos nulla, error saepe aliquid nostrum eveniet?</span>
+                <span><%= product.getProContent() %></span>
                 <p>사이즈 기준표</p>
-                <img src="./img/hyunta.jpg" alt="">
+                <img src="<%= request.getContextPath() %>/images/sizecheck.png" alt="">
             </div>
             <hr>
             <section>

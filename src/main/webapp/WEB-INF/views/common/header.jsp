@@ -1,3 +1,5 @@
+<%@page import="com.kh.sinsa.user.model.dto.UserRole"%>
+<%@page import="com.kh.sinsa.user.model.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -6,6 +8,8 @@
 		session.removeAttribute("msg");   //한번만 사용후 제거
 	}
 
+	User loginUser = (User) session.getAttribute("loginUser");
+	//System.out.println("loginUser@header.jsp = " + loginUser);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +27,6 @@
     </style>
     <script>
 	window.onload = () => {
-		console.log("나와라");
 		<%	if(msg != null) { %>
 				alert("<%= msg %>");
 		<% } %>
@@ -34,15 +37,26 @@
     <div class="container">
     <header>
         <nav>
-            <li><a href="<%= request.getContextPath() %>/product/productList">">SHOP</a></li>
+            <li><a href="<%= request.getContextPath() %>/product/productList">SHOP</a></li>
             <li><a href="#">COMMUNITY</a></li>
             <li><a href="#">고객센터</a></li>
         </nav>
-            <li id="logo"><img src="<%= request.getContextPath() %>/images/logo.png"></li>
+            <li id="logo"><img src="<%= request.getContextPath() %>/images/logo.png" onclick="location.href='<%= request.getContextPath() %>'"></li>
         <nav>
             <li><a href="#">NOTICE</a></li>
-            <li><a href="#">PAGE</a></li>
-            <li><a href=" <%= request.getContextPath() %>/user/login">LOGIN</a></li>
+            <% if(loginUser != null) {
+            		if(loginUser.getUserRole() == UserRole.U){ 
+            %>
+		            	<li><a href="#">MY PAGE</a></li>
+            <%		} else { %>
+		            	<li><a href="#">ADMIN PAGE</a></li>
+            <%  	} %>
+            		<span>[<%= loginUser.getUserId() %>]님, 반갑습니다.</span>
+	            	<li><a href=" <%= request.getContextPath() %>/user/logout">LOGOUT</a></li>
+			<% }
+               else { %>            
+            	<li><a href=" <%= request.getContextPath() %>/user/login">LOGIN</a></li>
+            <% } %>
         </nav>
     </header>
  

@@ -1,6 +1,6 @@
 package com.kh.sinsa.product.model.dao;
 
-import static com.kh.sinsa.common.JdbcTemplate.*;
+import static com.kh.sinsa.common.JdbcTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.kh.sinsa.product.model.dto.ProductExt;
 import com.kh.sinsa.product.model.exception.ProductException;
 
 public class ProductDao {
@@ -40,13 +42,25 @@ public class ProductDao {
 		return new Product(proNo, proType, proName, proPrice, proSize, regDate, proContent);
 	}
 	
+	private ProductExt handleProductExtResultSet(ResultSet rset) throws SQLException {
+		String proNo = rset.getString("pro_no");
+		String proType = rset.getString("pro_type");
+		String proName = rset.getString("pro_name");
+		int proPrice = rset.getInt("pro_price");
+		String proSize = rset.getString("pro_size");
+		Timestamp regDate = rset.getTimestamp("reg_date");
+		String proContent = rset.getString("pro_content");		
+		String proOriginalFilename = rset.getString("pro_original_filename");
+		return new ProductExt(proNo, proType, proName, proPrice, proSize, regDate, proContent, proOriginalFilename);
+	}
+	
 	
 	public List<Product> contentFindAll(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Product> list = new ArrayList<>();
 		String sql = prop.getProperty("contentFindAll");
-		
+		System.out.println("1");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (int) param.get("start"));
@@ -55,7 +69,8 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Product product = handleProductResultSet(rset);
+				ProductExt product = handleProductExtResultSet(rset);
+				product.setProOriginalFilename(rset.getString("pro_original_filename"));
 				list.add(product);
 			}
 			
@@ -79,13 +94,67 @@ public class ProductDao {
 			if(rset.next())
 				totalContent = rset.getInt(1);
 		} catch (SQLException e) {
-			throw new ProductException("총 게시물수 조회 오류!", e);
+			throw new ProductException("총 상품수 조회 오류!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		
 		return totalContent;
+	}
+
+	public Product findByProNo(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Product product = null;
+		String sql = prop.getProperty("findByProNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				product = handleProductResultSet(rset);
+			}
+			
+		} catch (SQLException e) {
+			throw new ProductException("상품상세조회 오류!", e);
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return product;
+	}
+
+	public List<ProductAttachment> findProductAttachmentByProductProNo(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductAttachment> attachmentList = new ArrayList<>();
+		String sql = prop.getProperty("findProductAttachmentByProductProNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				attachmentList.add(handleProductAttachmentResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new ProductException("상품 사진 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attachmentList;
+	}
+
+	private ProductAttachment handleProductAttachmentResultSet(ResultSet rset) throws SQLException {
+		int proAttachmentNo = rset.getInt("pro_attachment_no");
+		String proNo = rset.getString("pro_no");
+		String proOriginalFilename = rset.getString("pro_original_filename");
+		String proRenameFilename = rset.getString("pro_rename_filename");
+		return new ProductAttachment(proAttachmentNo,proNo,proOriginalFilename,proRenameFilename);
 	}
 
 }

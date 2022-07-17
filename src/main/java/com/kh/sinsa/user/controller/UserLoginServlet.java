@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.service.UserService;
 
@@ -35,7 +36,7 @@ public class UserLoginServlet extends HttpServlet {
 		try {
 			// 1.사용자 입력값 처리
 			String userId = request.getParameter("userId");
-			String password = request.getParameter("pwd");
+			String password = KhsinsaUtils.getEncryptedPassword(request.getParameter("pwd"), userId);
 			String saveId = request.getParameter("saveId");
 //			System.out.println("userId = " + userId);
 //			System.out.println("password = " + password);
@@ -51,29 +52,34 @@ public class UserLoginServlet extends HttpServlet {
 			
 			//로그인 성공
 			if(user != null && password.equals(user.getPassword())) {
+//				System.out.println("로그인 성공");
 				session.setAttribute("loginUser", user);
-			}
-			//saveId처리
-			Cookie cookie = new Cookie("saveId", userId);
-			cookie.setPath(request.getContextPath());// /khsinsa -> /khsinsa로 시작하는 요청주소에 cookie를 함께 전송 
+				
+				//saveId처리
+				Cookie cookie = new Cookie("saveId", userId);
+				cookie.setPath(request.getContextPath());// /khsinsa -> /khsinsa로 시작하는 요청주소에 cookie를 함께 전송 
 			
-			//saveId를 사용하는 경우
-			if(saveId != null) {
-				// session cookie (서버에 접속한 동안만 client에 보관)
-				//persistent cookie (maxAge를 지정한 경우)
-			cookie.setMaxAge(7 * 24  * 60 * 60); // 초단위로 설정 - 7일 
+				//saveId를 사용하는 경우
+				if(saveId != null) {
+					// session cookie (서버에 접속한 동안만 client에 보관)
+					//persistent cookie (maxAge를 지정한 경우)
+					cookie.setMaxAge(7 * 24  * 60 * 60); // 초단위로 설정 - 7일 
+				}
+				//saveId를 사용하지 않는 경우
+				else {
+					cookie.setMaxAge(0);
+				}
+				response.addCookie(cookie);
 			}
-			//saveId를 사용하지 않는 경우
+			//로그인 실패 (아이디가 존재하지 않는 경우 || 비밀번호가 틀린 경우)
 			else {
 				session.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다. ");
-			
 			}
 			// 3. 응답처리 : 로그인 후 url변경을 위해 리다이렉트 처리
 			// 응답 302 redirect 전송.
 			// 브라우저에게 location으로 재요청을 명령.
 			
-			String location = request.getHeader("Referer");
-			response.sendRedirect(location);		
+			response.sendRedirect(request.getContextPath());
 		} catch (Exception e) {
 			e.printStackTrace(); // 로깅
 			throw e; // 톰캣에 예외 던짐 

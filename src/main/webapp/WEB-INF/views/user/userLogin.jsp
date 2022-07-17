@@ -2,13 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+<%
+	String saveId = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie c : cookies){
+			String name = c.getName();
+			String value = c.getValue();
+			System.out.println("[cookie] " + name + " = " + value);
+			if("saveId".equals(name)){
+				saveId = value;
+			}
+		}
+	}
+%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/login.css">
  <div class="container">
     <div class="login_container">
         <h2>로그인</h2>
         <form action="<%= request.getContextPath() %>/user/login" method="post">
                 <div class="input_area">
-                    <input type="text" name="userId" id="userId" autocomplete="off" required>
+                    <input type="text" name="userId" id="userId" autocomplete="off" value="<%= saveId != null ? saveId : "" %>" required>
                     <label>아이디</label>
                     <br>
                     <span class="message_box" id="loginMsg"></span>   <!-- input 태그 밑에 유효성 검사 메세지 -->
@@ -22,7 +36,7 @@
                 </div>
                 <div>
                     <div class="saveId_wrapper">
-                        <input type="checkbox" name="saveId" id="saveId">
+                        <input type="checkbox" name="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>>
                         <label for="saveId">아이디저장</label>
                     </div>
                     <div class="forgot_wrapper">

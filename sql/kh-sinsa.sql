@@ -261,3 +261,9 @@ select * from product;
 select * from product where pro_no between 1 and 2;
 select * from user_sequences;
 select * from ( select row_number() over(order by pro_no desc) rnum, p.* from product p) p where rnum between ? and ?;
+
+-- 초기 회원 데이터 삭제 (장훈 0717-1940)
+delete from kh_user where user_id = 'admin';
+delete from kh_user where user_id = 'user';
+select * from kh_user;
+update kh_user set user_role = 'A' where user_id = 'admin123';

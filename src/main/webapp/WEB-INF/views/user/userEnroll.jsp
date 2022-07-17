@@ -55,7 +55,7 @@ pageEncoding="UTF-8"%>
                 <input type="text" name="phone2" id="phone2" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
             </div>
             <br>
-            <span class="message_box" id="phoneMsg"></span>
+            <span class="message_box" id="phoneMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
             <div class="input_area email_area">
                 <label>이메일 <span class="essential_mark">*</span></label>
                 <input type="text" name="emailId" id="emailId" title="이메일을 입력해주세요" autocomplete="off" required>

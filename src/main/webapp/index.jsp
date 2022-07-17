@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
         <div class="content_wrapper">
-            <div class="main"><h1>이미지슬라이더</h1></div>
+            <div class="main"><img src="<%=request.getContextPath() %>/images/index_image_1.jpg" alt="" /></div>
             <div class="main"><h1>사진</h1></div>
             <div class="main"><h1>사이트 가이드라인</h1></div>
         </div>

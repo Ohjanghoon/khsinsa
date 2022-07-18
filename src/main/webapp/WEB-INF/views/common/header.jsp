@@ -47,7 +47,7 @@
             <% if(loginUser != null) {
             		if(loginUser.getUserRole() == UserRole.U){ 
             %>
-		            	<li><a href="#">MY PAGE</a></li>
+		            	<li><a href="<%=request.getContextPath()%>/user/mypage">MY PAGE</a></li>
             <%		} else { %>
 		            	<li><a href="#">ADMIN PAGE</a></li>
             <%  	} %>

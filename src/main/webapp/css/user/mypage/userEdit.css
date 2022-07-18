@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+    /* 전체 요소 제거 */
+    * {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        text-decoration: none;
+        font-family: 'Noto Sans', sans-serif;
+    }
+    /* 홈페이지 규격 */
+    .container {
+        width: 1024px;
+        margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
+    }
+
+    /* 회원가입 폼 컨테이너 */
+    .enroll_container {
+        width: 700px;
+        /* height: 400px; */
+        /* background-color: rgba(150, 150, 150, 0.2); */
+        margin: 100px auto;
+        /* box-shadow: 5px 5px 10px lightslategray; */
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    /* 컨테이너 제목 */
+    .enroll_container h2 {
+        line-height: 80px;
+        letter-spacing: 5px;
+    }
+    /* 회원가입 폼 */
+    [name=enrollFrm] {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    /* 입력 영역 */
+    .input_area{
+        width: 100%;
+        position: relative;
+        margin-top: 30px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+    .input_area:first-child{
+        margin-top: 50px;
+    }
+    .input_area label {
+        margin-left: 50px;
+    }
+    .input_area input {
+        width: 400px;
+        margin-right: 50px;
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid rgb(0, 0, 0);
+        font-size: 15px;
+        outline: none;
+        text-indent: 5px;
+    }
+    /* 휴대전화 영역 */
+    .phone_area select {
+        margin-left: 120px;
+        padding-right: 40px;
+        border: 2px solid black;
+    }
+    .phone_area input {
+        width: 300px;
+        position: relative;
+    }
+
+    /* 이메일 영역 */
+    .email_area #emailId {
+        width: 150px;
+        margin: 0 0 0 120px;
+    }
+    .email_area #emailAddr {
+        width: 180px;
+        /* position: relative; */
+        /* left: 50px; */
+    }
+    
+    /* 주소영역 */
+    #roadAddr {
+        width: 300px;
+        margin: 0 0 0 130px;
+    }
+    #btn_address {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        margin-right: 50px;
+    }
+    .addr_area {
+        margin-top: 15px;
+    }
+    .addr_area #roadDetail {
+        width: 405px;
+        margin-left: 240px;
+    }
+
+    /* 비밀번호 확인 버튼 */
+    .input_area #btn_show_pwd {
+        background: none;
+        border: none;
+        z-index: 3;
+        
+        position: absolute;
+        bottom: 5px; right: 50px;
+        cursor: pointer;
+    }
+
+     /* 회원가입 버튼 */
+     #btn_enroll {
+        width: 300px;
+        padding: 10px 0;
+        margin-top: 100px;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        background-color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    /* 취소하기 버튼 */
+    #btn_cancel {
+        width: 100px;
+        padding: 10px 0;
+        margin-top: 20px;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        background-color: rgb(125, 125, 125);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+ 

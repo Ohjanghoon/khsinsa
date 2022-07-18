@@ -78,9 +78,9 @@ create table comm_attachment(
 
 -- 1:1 문의 --
 create table inquire(
-    inquire_no number not null,
+    inquire_no varchar2(100) not null,
     user_id varchar2(100) not null,
-    inquire_answer_ref number,
+    inquire_answer_ref varchar2(100),
     inquire_title varchar2(200),
     inquire_content varchar2(4000),
     inqure_date date not null,
@@ -92,12 +92,12 @@ create table inquire(
 );
 
 -- 1:1 문의 첨부파일 -- 
-create table inquire_attatchment(
-        inq_attatchment_no number ,
-        inquire_no number, 
+create table inquire_attachment(
+        inq_attachment_no number ,
+        inquire_no varchar2(100), 
         inq_original_filename varchar2(255),
-        pro_rename_filename varchar2(255),
-        constraint pk_inq_attatchment_no primary key(inq_attatchment_no),
+        inq_rename_filename varchar2(255),
+        constraint pk_inq_attachment_no primary key(inq_attachment_no),
         constraint fk_inquire_no_01 foreign key(inquire_no) references inquire (inquire_no) on delete cascade
 );
 
@@ -267,3 +267,30 @@ delete from kh_user where user_id = 'admin';
 delete from kh_user where user_id = 'user';
 select * from kh_user;
 update kh_user set user_role = 'A' where user_id = 'admin123';
+
+-- 1:1문의, 게시글, 리뷰 작성 (장훈 0718)
+desc inquire;
+desc inquire_attachment;
+select * from inquire;
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
+insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'admin123', 'S103', '조용하세요!', '조용하시라구요!', default, '상품하자'); 
+commit;
+
+-- 정보공유 게시판 테스트 게시글 3개 추가
+select * from community;
+desc community;
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '살려주세요..', default, default, default);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '죄송합니다 뚝배기만은..', default, default, default);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '아니에요 깨주세요 뚝배기..', default, default, default);
+commit;

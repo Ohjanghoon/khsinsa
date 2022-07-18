@@ -1,3 +1,5 @@
+<%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
+<%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -41,12 +43,14 @@
                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 <% 
 	if(list != null && !list.isEmpty()){ 
-		for(Product product : list){
+		for(Product _product : list){
+			ProductExt product = (ProductExt) _product;
 %>
 					<div class="col">
                     <div class="card shadow-sm">
-                        <img src="./img/bgsample.PNG" alt="" class="img-product">
-        
+                        <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>">
+                        <img src="<%= request.getContextPath() %>/upload/product/top/<%= product.getProOriginalFilename() %>.jpg" alt="" class="img-product">
+                        </a>
                         <div class="card-body">
                         <p class="card-text"><%= product.getProName() %></p>
                         <p class="card-text"><%= product.getProPrice() %></p>
@@ -54,7 +58,6 @@
                             <small class="text-muted">❤️ 1</small>
                         </div>
                         </div>
-                        
                     </div>
                     </div>
 <%
@@ -68,8 +71,9 @@
     </div>
 </main>
 <script>
+window.onload = () => {
 	document.querySelector(".card").addEventListener('click', (e) =>{
-		location.href="<%= request.getContextPath() %>/product/productDetail";
 	});
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

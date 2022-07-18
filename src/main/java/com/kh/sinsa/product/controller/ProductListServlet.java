@@ -49,7 +49,7 @@ public class ProductListServlet extends HttpServlet {
 			int totalContent = productService.getTotalContent();
 			String url = request.getRequestURI(); // /mvc/board/boardList
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			
+
 			// view단 처리
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);

@@ -6,18 +6,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/adminpage/adminpage.css">
 
 <%
 	List<User> list = (List<User>) request.getAttribute("list");
 	//System.out.println("list@adminpage = " + list);
 	String type = request.getParameter("searchType");
 	String kw = request.getParameter("searchKeyword");
-	
-	
 %>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/adminpage/adminpage.css">
 
 <script>
 window.addEventListener('load', (e) => {
@@ -50,7 +49,30 @@ window.addEventListener('load', (e) => {
   <br>
   <a><center>회원 관리</center></a>
   <br>
-  <table class="table table-bordered">
+ <!-- 검색창 -->
+	<div id="search-container">
+		<label for="searchType">검색타입 :</label> 
+        <select id="searchType">
+            <option value="user_id" <%= "user_id".equals(type) ? "selected" : "" %>>아이디</option>		
+            <option value="user_name" <%= "user_name".equals(type) ? "selected" : "" %>>회원명</option>
+        </select>
+        <div id="search-userId" class="search-type">
+            <form action="<%=request.getContextPath()%>/admin/userFinder">
+                <input type="hidden" name="searchType" value="user_id"/>
+                <input type="text" name="searchKeyword"  size="25" placeholder="검색할 아이디를 입력하세요." 
+                	value="<%= "user_id".equals(type) ? kw : "" %>"/>
+                <button type="submit">검색</button>			
+            </form>	
+     </div>
+        <div id="search-userName" class="search-type">
+            <form action="<%=request.getContextPath()%>/admin/userFinder">
+                <input type="hidden" name="searchType" value="user_name"/>
+                <input type="text" name="searchKeyword" size="25" placeholder="검색할 이름을 입력하세요."
+                	value="<%= "user_name".equals(type) ? kw : "" %>"/>
+                	<button type="submit">검색</button>
+            </form>	
+    </div>
+  	<table class="table table-bordered">
       <thead>
           <tr class = tablehead>
              <th><center>ID</center></th>
@@ -64,7 +86,15 @@ window.addEventListener('load', (e) => {
           </tr>
         </thead>
         <tbody>
-        <% for(User user : list) { 
+        <%
+			if(list == null || list.isEmpty()){
+		%>
+			<tr>
+				<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
+			</tr>
+		<%
+			} 
+			else { for(User user : list) { 
         		if(user.getUserDel() == Del.N) {%>
 		          <tr>
 		            <td><%= user.getUserId() %></td>
@@ -73,12 +103,7 @@ window.addEventListener('load', (e) => {
 		            <td><%= user.getUserPhone() %></td>
 		            <td><%= user.getUserEmail()!=null ? user.getUserEmail() : "" %></td>
 		            <td><%= user.getUserAddress() %></td>
-		            <td>
-		              <select class="member-role" data-member-id="<%= user.getUserId() %>">
-		                <option value="A" <%= UserRole.A == user.getUserRole() ? "selected" : "" %>>관리자</option>
-		                <option value="U" <%= UserRole.U == user.getUserRole() ? "selected" : "" %>>일반</option>
-		              </select>	 --%>
-		            </td>
+		            <td><%= user.getUserRole() %></td>
 		            <td>탈퇴여부</td>
 		            <!-- 탈퇴회원 처리 물어보기 -->
 		          </tr>
@@ -86,8 +111,35 @@ window.addEventListener('load', (e) => {
        		} %>
         </tbody>  
   </table>
+  		<div id="pagebar">
+		<%= request.getAttribute("pagebar") %>
+		</div>
+		
             <a><center>탈퇴 회원</center></a>
             <br>
+ <!-- 검색창 -->
+	<div id="search-container">
+		<label for="searchType">검색타입 :</label> 
+        <select id="searchType">
+            <option value="user_id" <%= "user_id".equals(type) ? "selected" : "" %>>아이디</option>		
+            <option value="user_name" <%= "user_name".equals(type) ? "selected" : "" %>>회원명</option>
+        </select>
+        <div id="search-userId" class="search-type">
+            <form action="<%=request.getContextPath()%>/admin/userFinder">
+                <input type="hidden" name="searchType" value="user_id"/>
+                <input type="text" name="searchKeyword"  size="25" placeholder="검색할 아이디를 입력하세요." 
+                	value="<%= "user_id".equals(type) ? kw : "" %>"/>
+                <button type="submit">검색</button>			
+            </form>	
+     </div>
+        <div id="search-userName" class="search-type">
+            <form action="<%=request.getContextPath()%>/admin/userFinder">
+                <input type="hidden" name="searchType" value="user_name"/>
+                <input type="text" name="searchKeyword" size="25" placeholder="검색할 이름을 입력하세요."
+                	value="<%= "user_name".equals(type) ? kw : "" %>"/>
+                	<button type="submit">검색</button>
+            </form>	
+    </div>
             <table class="table table-bordered">
                 <thead>
                     <tr class = tablehead>
@@ -102,25 +154,20 @@ window.addEventListener('load', (e) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <% for(User user : list) { 
-        		if(user.getUserDel() == Del.Y) {%>
-		          <tr>
-		            <td><%= user.getUserId() %></td>
-		            <td><%= user.getUserName() %></td>
-		            <td><%= user.getUserBirthday() %></td>
-		            <td><%= user.getUserPhone() %></td>
-		            <td><%= user.getUserEmail()!=null ? user.getUserEmail() : "" %></td>
-		            <td><%= user.getUserAddress() %></td>
-		            <td>
-		              <select class="member-role" data-member-id="<%= user.getUserId() %>">
-		                <option value="A" <%= UserRole.A == user.getUserRole() ? "selected" : "" %>>관리자</option>
-		                <option value="U" <%= UserRole.U == user.getUserRole() ? "selected" : "" %>>일반</option>
-		              </select>	 --%>
-		            </td>
-		            <td>탈퇴여부</td>
-		            <!-- 탈퇴회원 처리 물어보기 -->
+                  <% for(User user : list) { 
+        			if(user.getUserDel() == Del.Y) {%>
+		          	<tr>
+			            <td><%= user.getUserId() %></td>
+			            <td><%= user.getUserName() %></td>
+			            <td><%= user.getUserBirthday() %></td>
+			            <td><%= user.getUserPhone() %></td>
+			            <td><%= user.getUserEmail()!=null ? user.getUserEmail() : "" %></td>
+			            <td><%= user.getUserAddress() %></td>
+			            <td><%= user.getUserRole() %></td>
+			            <td>탈퇴여부</td>
+			            <!-- 탈퇴회원 처리 물어보기 -->
 		          </tr>
-       <% 		}
+       <% 		}}
        		} %>
                     <br>
  <%@ include file="/WEB-INF/views/common/footer.jsp" %>

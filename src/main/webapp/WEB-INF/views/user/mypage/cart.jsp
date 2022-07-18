@@ -5,21 +5,12 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/mypage/cart.css">
-<div class="wrapper relative">
+<!-- <div class="wrapper relative">
 
         <p class="my_page_txt">MY PAGE</p>
 
-    </div>
+    </div> -->
 
-   <!--  <nav>
-        <ul class="menu">
-            <li><a href="01.orderlist.html">주문내역조회</a></li>
-            <li><a href="02.cart.html">장바구니</a></li>
-            <li><a href="03interest.html">관심상품</a></li>
-            <li><a href="04.postCheck.html">게시글확인</a></li>
-            <li><a href="05.editmyprofile.html">회원정보변경</a></li>
-        </ul>
-    </nav> -->
 
 
     <div class="orderlist_txt">

@@ -286,3 +286,11 @@ insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', 
 insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'ohjang12', null, '문의합니다!', '문희는 포도가 머꼬찌푼데!', default, '상품하자'); 
 insert into inquire values('S10' || seq_inquire_inquire_no.nextval, 'admin123', 'S103', '조용하세요!', '조용하시라구요!', default, '상품하자'); 
 commit;
+
+-- 정보공유 게시판 테스트 게시글 3개 추가
+select * from community;
+desc community;
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '살려주세요..', default, default, default);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '죄송합니다 뚝배기만은..', default, default, default);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '커뮤니티 테스트 입니다.', '아니에요 깨주세요 뚝배기..', default, default, default);
+commit;

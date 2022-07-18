@@ -6,19 +6,21 @@ import static com.kh.sinsa.common.JdbcTemplate.getConnection;
 import static com.kh.sinsa.common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.sinsa.user.model.dao.UserDao;
 import com.kh.sinsa.user.model.dto.User;
 
+import static com.kh.sinsa.common.JdbcTemplate.*;
+
 public class UserService {
 	private UserDao userDao = new UserDao();
-	
-	//##########minseo UserService begin#############
+
+	// ##########minseo UserService begin#############
 	/**
-	 * DQL요청 - service
-	 * 1. Connection객체 생성
-	 * 2. Dao 요청 & Connection 전달
-	 * 3. Connection 반환(close)
+	 * DQL요청 - service 1. Connection객체 생성 2. Dao 요청 & Connection 전달 3. Connection
+	 * 반환(close)
 	 * 
 	 * @param memberId
 	 * @return
@@ -26,13 +28,11 @@ public class UserService {
 
 	public User findById(String userId) {
 		Connection conn = getConnection();
-		User user =userDao.findById(conn, userId);
+		User user = userDao.findById(conn, userId);
 		close(conn);
-		
+
 		return user;
 	}
-	
-	
 
 	public int editUser(User user) {
 		Connection conn = getConnection();
@@ -40,7 +40,7 @@ public class UserService {
 		try {
 //			result = userDao.editSUser(conn, user);
 			commit(conn);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			rollback(conn);
 			throw e; // controller에 예외 던짐.
 		} finally {
@@ -48,26 +48,55 @@ public class UserService {
 		}
 		return result;
 	}
-	//##########minseo UserService end#############
-	
-	
-	//##########janghoon UserService begin#############
-		public int insertUser(User user) {
-			Connection conn = getConnection();
-			int result = 0;
-			
-			try {
-				result = userDao.insertUser(conn, user);
-				commit(conn);
-			} catch (Exception e) {
-				rollback(conn);
-				throw e;
-			} finally {
-				close(conn);
-			}
-			return result;
+	// ##########minseo UserService end#############
+
+	// ##########janghoon UserService begin#############
+	public int insertUser(User user) {
+		Connection conn = getConnection();
+		int result = 0;
+
+		try {
+			result = userDao.insertUser(conn, user);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
 		}
-		//##########janghoon UserService end#############
+		return result;
+	}
+	// ##########janghoon UserService end#############
 
+	// ##########jaekyung UserService begin#############
 
+	public List<User> findAll(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<User> list = userDao.findAll(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public int getTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = userDao.getTotalContent(conn);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<User> findMemberLike(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<User> list = userDao.findMemberLike(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public int getTotalContentLike(Map<String, Object> param) {
+		Connection conn = getConnection();
+		int totalContent = userDao.getTotalContentLike(conn, param);
+		close(conn);
+		return totalContent;
+	}
 }
+
+// ##########jaekyung UserService end#############

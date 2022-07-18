@@ -1,0 +1,84 @@
+/* 전체 요소 제거 후 시작 */
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+/* 홈페이지 규격 */
+.container {
+    width: 1024px !important; 
+    margin: 0 auto !important;  /* 화면에 가운데 정렬하기 위함 */ 
+}
+
+/* header */
+header {
+    background-color: skyblue !important;
+    display: flex !important;
+    flex-wrap: nowrap !important; 
+}
+nav {
+    width: 100% !important;
+    height: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-evenly !important;
+    text-decoration-line: none !important; 
+}
+
+adminmenu {
+    width: 100% !important;
+    height: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-evenly !important;
+}
+
+ul {
+    list-style: none !important;
+    margin: auto 20px !important;
+    float: right
+
+}
+li {
+    float: right !important;
+    margin: auto 20px !important; 
+}
+#logo {
+    margin: 20px auto 0 !important; 
+}
+#logo > img {
+    width: 150px !important; 
+    height: auto !important; 
+}
+a {
+    color: rgb(50, 50, 50) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    text-decoration: none;
+}
+
+/* 컨텐츠 영역 */
+.main {
+    width: 100% !important;
+    height: 100vh !important; 
+    background-color: blue !important; 
+}
+.main:nth-child(2) {
+    background-color: green !important; 
+}
+
+.회원관리 {
+    color: rgb(50, 50, 50) !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    text-decoration: underline; 
+}
+
+/* footer */
+footer {
+    background-color: lightslategray !important;
+    height: 200px !important; 
+}

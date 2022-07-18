@@ -13,7 +13,6 @@ public class Community {
 	
 	public Community() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Community(String commNo, String userId, String commTitle, String commContent, Date commDate,

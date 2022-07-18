@@ -1,0 +1,90 @@
+@charset "UTF-8";
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+}
+/* 마이페이지 영역 */
+.myCommunity_content {
+    width: 1024px;
+}
+/* 내 게시글 조회 헤더 영역 */
+.myCommunity_content_header {
+    display: flex;
+    align-items: center;
+}
+.myCommunity_content_header ul {
+    display: flex;
+    margin: 20px 0 0 20px;
+}
+.myCommunity_content_header a {
+    color: rgb(130, 130, 130);
+    margin: 0 20px;
+    font-weight: bold;
+}
+
+
+/* 내 게시글 조회 1:1문의 리스트 영역 */
+.myCommunity_list {
+    width: 1000px;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+.myCommunity_list thead {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.myCommunity_list th {
+    /* background-color: red; */
+    padding: 10px 0;
+}
+.myCommunity_list td:first-child {
+	text-align: center;
+}
+.myCommunity_list input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+	accent-color: black;	
+}
+.myCommunity_list th:nth-child(2), td:nth-child(2) {
+    width: 130px;
+    text-align: center;
+}
+.myCommunity_list th:nth-child(3) {
+    width: 500px;
+    text-align: center;
+}
+.myCommunity_list td:nth-child(3) {
+    text-indent: 20px;
+}
+.myCommunity_list th:nth-child(4), td:nth-child(4) {
+    width: 170px;
+    text-align: center;
+}
+.myCommunity_list td:last-child {
+    text-align: center;
+}
+.myCommunity_list td {
+    /* background-color: blue; */
+    padding: 5px 0;
+}
+.myCommunity_list tr {
+	border-bottom: 1px solid gray;
+}
+
+.btn_area {
+	position: relative;
+}
+#btn_myInquireList_del {
+	margin: 10px 20px 0 0; 
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	float: right;
+	
+}

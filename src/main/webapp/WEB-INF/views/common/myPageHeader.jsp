@@ -1,15 +1,8 @@
 <%@page import="com.kh.sinsa.user.model.dto.UserRole"%>
 <%@page import="com.kh.sinsa.user.model.dto.User"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
  <nav>
         <ul class="menu">
             <li><a href="01.orderlist.html">주문내역조회</a></li>
@@ -20,5 +13,3 @@
         </ul>
     </nav>
 
-</body>
-</html>

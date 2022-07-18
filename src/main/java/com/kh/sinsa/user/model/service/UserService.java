@@ -1,10 +1,14 @@
 package com.kh.sinsa.user.model.service;
 
+import static com.kh.sinsa.common.JdbcTemplate.close;
+import static com.kh.sinsa.common.JdbcTemplate.commit;
+import static com.kh.sinsa.common.JdbcTemplate.getConnection;
+import static com.kh.sinsa.common.JdbcTemplate.rollback;
+
 import java.sql.Connection;
 
 import com.kh.sinsa.user.model.dao.UserDao;
 import com.kh.sinsa.user.model.dto.User;
-import static com.kh.sinsa.common.JdbcTemplate.*;
 
 public class UserService {
 	private UserDao userDao = new UserDao();
@@ -27,6 +31,23 @@ public class UserService {
 		
 		return user;
 	}
+	
+	
+
+	public int editUser(User user) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+//			result = userDao.editSUser(conn, user);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			throw e; // controller에 예외 던짐.
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 	//##########minseo UserService end#############
 	
 	
@@ -47,4 +68,6 @@ public class UserService {
 			return result;
 		}
 		//##########janghoon UserService end#############
+
+
 }

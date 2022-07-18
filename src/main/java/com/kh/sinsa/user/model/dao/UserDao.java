@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Properties;
+
 import static com.kh.sinsa.common.JdbcTemplate.*;
+
 
 import com.kh.sinsa.user.model.dto.Del;
 import com.kh.sinsa.user.model.dto.User;
@@ -90,6 +92,34 @@ public class UserDao {
 		
 		
 	}
+	
+	// editUser = update user set  user_name = ?, birthday = ?, email = ?, phone = ?, address = ? where user_id = ?
+	
+	public int editUser(Connection conn, User user) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setDate(3, user.getUserBirthday());
+			pstmt.setString(4, user.getUserEmail());
+			pstmt.setString(5, user.getUserPhone());
+			pstmt.setString(6, user.getUserAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
+			throw new UserException("회원정보수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	//##########minseo UserDao end#############
 	
 
@@ -121,6 +151,8 @@ public class UserDao {
 			return result;
 		}
 		
+
+	
 	//##########janghoon UserDao end#############
 		
 }

@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+
+ul.menu {
+            position: relative;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+     ul.menu li {
+            position: relative;
+            font-size: 23px;
+            list-style-type: none;
+            margin-right: 58px;
+            width: 7em;
+            height: 2.2em;
+            text-align: center;
+
+
+        }
+    /* 마이페이지 a태그 */
+
+     ul.menu li a {
+            display: block;
+            position: relative;
+            padding: .3em;
+            text-decoration: none;
+            color: black;
+            font-weight: 700;
+           
+
+        }
+
+     ul.menu li a:hover {
+            color:navy;
+        }
+        
+
+        

@@ -30,33 +30,34 @@ for(ProductAttachment att : attachList) {
  break; } 
 %>
             </div>
-            <div class="product-text">
-                <h4>Product Info</h4>
-                <h5>상품</h5>
-                <p><%= product.getProName() %></p>
-                <h5>❤️</h5>
-                <p>5개</p>
-                <h5>배송비</h5>
-                <p>무료</p>
-               	<h5>옵션</h5>
-                <form action="" name="productFrm">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>사이즈를 선택해주세요.</option>
-                        <option value="1">L</option>
-                        <option value="2">M</option>
-                        <option value="3">S</option>
-                    </select>
+          	 <form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
+	            <div class="product-text">
+          	 	<input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
+	                <h4>Product Info</h4>
+	                <h5>상품</h5>
+	                <p><%= product.getProName() %></p>
+	                <h5>❤️</h5>
+	                <p>5개</p>
+	                <h5>배송비</h5>
+	                <p>무료</p>
+	               	<h5>옵션</h5>
+	                <select class="form-select" aria-label="Default select example" id="size" name="size">
+	                    <option selected>사이즈를 선택해주세요.</option>
+	                    <option value="L">L</option>
+	                    <option value="M">M</option>
+	                    <option value="S">S</option>
+	                </select>
                    	<h5>수량</h5>
                     <button>-</button>
-                    <input type="text" value="1" disabled>
+                    <input type="text" value=1 id="orderAmount" name="orderAmount" disabled>
                     <button>+</button>
                     <h5>총 결제 금액</h5>
                     <p><%= product.getProPrice() %>원</p>
                     <button id="buy">구매하기</button>
                     <button>찜하기</button>
                     <button>장바구니 담기</button>
-                </form>
-            </div>
+	            </div>
+             </form>
             <hr>
 <% 
 	if(attachList != null && !attachList.isEmpty()){ 
@@ -104,8 +105,11 @@ for(ProductAttachment att : attachList) {
     </div>
 </main>
 <script>
-	document.querySelector("#buy").addEventListener('click', (e) => {
+	document.productFrm.onsubmit = (e) => {
+		
+	};
+<%-- 	document.querySelector("#buy").addEventListener('submit', (e) => {
 		productFrm.action = "<%= request.getContextPath() %>/product/order";
-	});
+	}); --%>
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -49,7 +49,7 @@
             %>
 		            	<li><a href="<%=request.getContextPath()%>/user/mypage">MY PAGE</a></li>
             <%		} else { %>
-		            	<li><a href="#">ADMIN PAGE</a></li>
+		            	<li><a href="<%= request.getContextPath() %>/admin/adminpage">ADMIN PAGE</a></li>
             <%  	} %>
             		<span>[<%= loginUser.getUserId() %>]님, 반갑습니다.</span>
 	            	<li><a href=" <%= request.getContextPath() %>/user/logout">LOGOUT</a></li>

@@ -354,5 +354,3 @@ delete from product_attachment where pro_attachment_no=28;
 insert into product_attachment values (seq_product_attachment_pro_attachment_no.nextval, 'A1024', 'Chilling Full Open T-Shirts(Mint).jpeg', 'Chilling Full Open T-Shirts(Mint).jpeg');
 insert into product_attachment values (seq_product_attachment_pro_attachment_no.nextval, 'A1024', 'Chilling Full Open T-Shirts(Mint)1.jpeg', 'Chilling Full Open T-Shirts(Mint)1.jpeg');
 
-
-select * from ( select row_number () over (order by reg_date desc) rnum, p.* from product p where pro_name like '%와%' ) p where rnum between 1 and 3;

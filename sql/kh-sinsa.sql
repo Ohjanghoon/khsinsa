@@ -354,3 +354,13 @@ delete from product_attachment where pro_attachment_no=28;
 insert into product_attachment values (seq_product_attachment_pro_attachment_no.nextval, 'A1024', 'Chilling Full Open T-Shirts(Mint).jpeg', 'Chilling Full Open T-Shirts(Mint).jpeg');
 insert into product_attachment values (seq_product_attachment_pro_attachment_no.nextval, 'A1024', 'Chilling Full Open T-Shirts(Mint)1.jpeg', 'Chilling Full Open T-Shirts(Mint)1.jpeg');
 
+-- 리뷰 생성 --
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '넘나 멋져요.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+
+-- 주문 생성-
+insert into kh_order values (010||seq_kh_order_order_no.nextval,'ohjang12','A1023','서울 강남구 가로수길 12', '01085674105','ojh9502@gmail.com',default,'빨리 주세요',68000,'배송완료',default);
+
+select * from review;
+select * from kh_order;
+
+commit;

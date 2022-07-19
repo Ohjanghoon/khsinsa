@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file ="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 
-<%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/userEdit.css">
 <%
@@ -28,7 +28,7 @@ if(loginUser != null){
  <div class="container">
         <div class="enroll_container">
             <h2>개인정보 수정</h2>
-            <form action=""  method="post"   name="enrollFrm">
+            <form action="" name="enrollFrm">
                     <div class="input_area">
                         <label>아이디</label>
                         <input type="text" name="userId" id="userId" value="<%=loginUser.getUserId() %>" autocomplete="off" readonly required>

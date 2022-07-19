@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
+
+<%@ include file ="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/myOrderList.css">
@@ -51,3 +52,5 @@
 </section>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+

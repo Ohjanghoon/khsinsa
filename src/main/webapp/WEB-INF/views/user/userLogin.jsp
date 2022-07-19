@@ -16,11 +16,11 @@
 		}
 	}
 %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/login.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userLogin.css">
  <div class="container">
     <div class="login_container">
         <h2>로그인</h2>
-        <form action="<%= request.getContextPath() %>/user/login" method="post">
+        <form action="<%= request.getContextPath() %>/user/userLogin" method="post">
                 <div class="input_area">
                     <input type="text" name="userId" id="userId" autocomplete="off" value="<%= saveId != null ? saveId : "" %>" required>
                     <label>아이디</label>

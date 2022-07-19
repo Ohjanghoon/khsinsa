@@ -3,6 +3,10 @@
 hr{
      padding: 1px;
  }
+.container {
+   	width: 1024px;
+    margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
+}
 .container-md{
      background-color: whitesmoke;
  }

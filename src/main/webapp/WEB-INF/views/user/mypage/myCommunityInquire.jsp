@@ -14,7 +14,7 @@
         <div class="myCommunity_content_header">
             <h1>내 게시글 조회</h1>
             <ul>
-                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire">1:1문의</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire" style="color: black;">1:1문의</a></li>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity">커뮤니티</a></li>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityReview">리뷰</a></li>
             </ul>
@@ -24,7 +24,7 @@
         <table class="myCommunity_list">
             <thead>
                 <th><input type="checkbox"></th>
-                <th>게시글 유형</th>
+                <th>문의 유형</th>
                 <th>제목</th>
                 <th>작성일</th>
                 <th>처리상태</th>

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.mypage.model.exception.MypageException;
@@ -55,7 +56,7 @@ public class MypageDao {
 				list.add(inquireExt);
 			}
 		} catch (SQLException e) {
-			throw new MypageException("내 게시글 조회 오류", e);
+			throw new MypageException("내 문의글 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -121,7 +122,45 @@ public class MypageDao {
 		}
 		return result;
 	}
-	//##########janghoon MypageDao end#############
 
+	public List<Community> communityListFindById(Connection conn, String userId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> list = new ArrayList<>();
+		String sql = prop.getProperty("communityListFindById");
+		//communityListFindById = select * from (select row_number() over(order by comm_date desc) rnum, c.*
+		// 							from community c where user_id = ?) c where rnum between ? and ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(handleCommunityResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new MypageException("내 커뮤니티글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	private Community handleCommunityResultSet(ResultSet rset) throws SQLException {
+		String commNo = rset.getString("comm_no");
+		String userId = rset.getString("user_id");
+		String commTitle = rset.getString("comm_title");
+		String commContent = rset.getString("comm_content");
+		Date commDate = rset.getDate("comm_date");
+		int commRecommend = rset.getInt("comm_recommend");
+		int commReadcount = rset.getInt("comm_readcount");
+		
+		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadcount);
+	}
+	//##########janghoon MypageDao end#############
 	
 }

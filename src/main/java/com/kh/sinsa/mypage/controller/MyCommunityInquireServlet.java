@@ -66,8 +66,6 @@ public class MyCommunityInquireServlet extends HttpServlet {
 			//System.out.println("pagebar = " + pagebar);
 			
 			
-			//c. 답변 처리상태
-			
 			//3. view 응답 처리
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);

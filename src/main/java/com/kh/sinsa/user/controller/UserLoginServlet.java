@@ -37,11 +37,7 @@ public class UserLoginServlet extends HttpServlet {
 			// 1.사용자 입력값 처리
 			String userId = request.getParameter("userId");
 			String password = KhsinsaUtils.getEncryptedPassword(request.getParameter("pwd"), userId);
-			String saveId = request.getParameter("saveId");
-//			System.out.println("userId = " + userId);
-//			System.out.println("password = " + password);
-//			System.out.println("saveId = " + saveId); // "on" | null 
-			
+			String saveId = request.getParameter("saveId");	
 			
 			// 2.업무로직: 로그인 여부 판단 
 			User user = userService.findById(userId);

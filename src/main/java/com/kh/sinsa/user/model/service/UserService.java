@@ -33,9 +33,34 @@ public class UserService {
 
 		return user;
 	}
+
+	public int editUser(User user) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+//			result = userDao.editSUser(conn, user);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; // controller에 예외 던짐.
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
+
+
+	public List<User> findUserLike(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<User> list = userDao.findUserLike(conn, param);
+		close(conn);
+		return list;
+	}
+
 	public int insertUser(User user) {
 		Connection conn = getConnection();
 		int result = 0;
@@ -69,7 +94,8 @@ public class UserService {
 		return totalContent;
 	}
 
-	public List<User> findUserLike(Map<String, Object> param) {
+
+	public List<User> findMemberLike(Map<String, Object> param) {
 		Connection conn = getConnection();
 		List<User> list = userDao.findUserLike(conn, param);
 		close(conn);
@@ -82,6 +108,6 @@ public class UserService {
 		close(conn);
 		return totalContent;
 	}
-	// ##########jaekyung UserService end#############
 }
 
+// ##########jaekyung UserService end#############

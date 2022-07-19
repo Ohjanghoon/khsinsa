@@ -202,4 +202,32 @@ public class ProductDao {
 		return list;
 	}
 
+	public List<Product> productAlign(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Product> list = new ArrayList<>();
+		String sql = prop.getProperty("productAlign");
+		String align = (String) param.get("align");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, align);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(handleProductResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new ProductException("상품 검색 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }

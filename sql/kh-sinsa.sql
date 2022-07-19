@@ -355,4 +355,4 @@ insert into product_attachment values (seq_product_attachment_pro_attachment_no.
 insert into product_attachment values (seq_product_attachment_pro_attachment_no.nextval, 'A1024', 'Chilling Full Open T-Shirts(Mint)1.jpeg', 'Chilling Full Open T-Shirts(Mint)1.jpeg');
 
 
-
+select * from ( select row_number () over (order by reg_date desc) rnum, p.* from product p where pro_name like '%와%' ) p where rnum between 1 and 3;

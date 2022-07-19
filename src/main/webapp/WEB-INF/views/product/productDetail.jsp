@@ -11,10 +11,9 @@
 <%
 	Product product = (Product) request.getAttribute("product");
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
-	
 %>
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <section class="py-5 text-center container">
             <p>상품상세보기</p>
         </section>
@@ -25,7 +24,7 @@
 <% 
 for(ProductAttachment att : attachList) {
 %>
-				<img src="<%= request.getContextPath() %>/upload/product/top/<%= att.getProOriginalFilename() %>.jpg" alt="">
+				<img src="<%= request.getContextPath() %>/upload/product/<%= att.getProOriginalFilename() %>" alt="">
 <% 
  break; } 
 %>
@@ -64,7 +63,7 @@ for(ProductAttachment att : attachList) {
 		for(ProductAttachment pa : attachList){
 %>
             <div class="product-info">
-                <img src="<%= request.getContextPath() %>/upload/product/top/<%= pa.getProOriginalFilename() %>.jpg" alt="">
+                <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="">
 <% 
 		}
 	}

@@ -42,6 +42,13 @@ public class ProductService {
 		close(conn);
 		return attachmentList;
 	}
+
+	public List<ProductAttachment> productAttachmentFindAll() {
+		Connection conn = getConnection();
+		List<ProductAttachment> attachmentList = productDao.productAttachmentFindAll(conn);
+		close(conn);
+		return attachmentList;
+	}
 	
 
 }

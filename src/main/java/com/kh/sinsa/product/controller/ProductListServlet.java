@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.service.ProductService;
 
 /**
@@ -46,11 +47,13 @@ public class ProductListServlet extends HttpServlet {
 			
 			// 업무로직
 			List<Product> list = productService.contentFindAll(param);
+			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
 			int totalContent = productService.getTotalContent();
 			String url = request.getRequestURI(); // /mvc/board/boardList
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
-
+			System.out.println(attachList);
 			// view단 처리
+			request.setAttribute("attachList", attachList);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);

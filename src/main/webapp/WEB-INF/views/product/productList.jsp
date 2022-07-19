@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/product/productList.css" />
 <%
 	List<Product> list = (List<Product>) request.getAttribute("list");
+	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
 %>
 
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <section class="py-5 text-center container">
             <p>TOP</p><p>(상의)</p>
         </section>
@@ -40,20 +41,27 @@
                         </div>
                       </nav>
                       
-                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="productList">
 <% 
 	if(list != null && !list.isEmpty()){ 
-		for(Product _product : list){
-			ProductExt product = (ProductExt) _product;
+		for(Product product : list){
 %>
 					<div class="col">
                     <div class="card shadow-sm">
-                        <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>">
-                        <img src="<%= request.getContextPath() %>/upload/product/top/<%= product.getProOriginalFilename() %>.jpg" alt="" class="img-product">
+                        <a id="moveToOreder" href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>">
+<%
+	for(ProductAttachment pa : attachList){
+		if(product.getProNo().equals(pa.getProNo())){
+%>
+                        <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="" class="img-product">
+<%
+		break; }		
+	}
+%>
                         </a>
                         <div class="card-body">
                         <p class="card-text"><%= product.getProName() %></p>
-                        <p class="card-text"><%= product.getProPrice() %></p>
+                        <p class="card-text"><%= product.getProPrice() %>원</p>
                         <div class="d-flex justify-content-between align-items-center">                            
                             <small class="text-muted">❤️ 1</small>
                         </div>
@@ -61,8 +69,8 @@
                     </div>
                     </div>
 <%
-	}
 		}
+	}
 %>
 			</div>
 		</div>
@@ -71,9 +79,6 @@
     </div>
 </main>
 <script>
-window.onload = () => {
-	document.querySelector(".card").addEventListener('click', (e) =>{
-	});
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -86,7 +86,7 @@
                         <tr>
                             <td><%= community.getCommNo() %></td>
                             <td>
-                            <a href="<%= request.getContextPath() %>/share/shareView?no=<%= community.getCommNo() %>"id="boardTitle">
+                            <a href="<%= request.getContextPath() %>/share/shareView?no=<%= community.getCommNo() %>"id="commTitle">
                             <%= KhsinsaUtils.escapeXml(community.getCommTitle()) %></a>
                             
 

@@ -13,7 +13,7 @@ import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.service.ProductService;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.AdminService;
+import com.kh.sinsa.user.model.service.UserService;
 
 /**
  * Servlet implementation class OrderServlet
@@ -21,7 +21,7 @@ import com.kh.sinsa.user.model.service.AdminService;
 @WebServlet("/product/order")
 public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private  AdminService userService = new AdminService();
+	private  UserService userService = new UserService();
 	private ProductService productService = new ProductService();
 	
 	/**

@@ -14,29 +14,28 @@
 %>
 
 <main>
-    <div class="container-sm">
+    <div class="container">
         <section class="py-5 text-center container">
             <p>TOP</p><p>(상의)</p>
         </section>
         <div class="album py-5 bg-light">
-                <div class="container-sm">
+                <div class="container">
                     <nav class="navbar navbar-light bg-light">
-                        <div class="container-sm">
+                        <div class="container">
                           <form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productFind" method="get">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                             <button class="btn btn-outline-success" type="submit">🔎</button>
                           </form>
 
-                          <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                              정렬 기준
-                            </a>
-                          
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                              <li><a class="dropdown-item" href="#">상품명</a></li>
-                              <li><a class="dropdown-item" href="#">가격</a></li>
-                              <li><a class="dropdown-item" href="#">좋아요순</a></li>
-                            </ul>
+                         <div class="align">
+                          <form action="<%= request.getContextPath() %>/product/productAlign" method="get">
+                            <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
+							  <option value="#" selected>정렬기준</option>
+							  <option value="pro_name">상품명</option>
+							  <option value="pro_price">가격순</option>
+							  <option value="#">좋아요순</option>
+							</select>
+                          </form>
                           </div>
                         </div>
                       </nav>
@@ -79,6 +78,6 @@
     </div>
 </main>
 <script>
-
+	
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

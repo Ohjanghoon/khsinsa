@@ -48,7 +48,7 @@ public class ProductFindServlet extends HttpServlet {
 				List<Product> list = productService.productFind(param);
 				List<ProductAttachment> attachList = productService.productAttachmentFindAll();
 				int totalContent = productService.getTotalContent();
-				String url = request.getRequestURI()+ "?search=" + search;// /mvc/board/boardList
+				String url = request.getRequestURI()+ "?search=" + search;
 				String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 				System.out.println(attachList);
 				// view단 처리

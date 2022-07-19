@@ -17,6 +17,7 @@ import java.util.Properties;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.exception.CommunityException;
 
+
 public class CommunityDao {
 	
 	private Properties prop = new Properties();
@@ -85,6 +86,5 @@ public class CommunityDao {
 		
 		return totalContent;
 	}
-
 
 }

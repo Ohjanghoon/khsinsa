@@ -7,9 +7,6 @@ hr{
    	width: 1024px;
     margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
 }
-.container-md{
-     background-color: whitesmoke;
- }
 #title{
      font-size: 30px;
      font-weight: bold;
@@ -26,7 +23,7 @@ hr{
      margin: 20px;
  }
 .product-info img{
-     width: 100px;
+     width: 10px;
  }
 .product-info{
      padding: 30px;

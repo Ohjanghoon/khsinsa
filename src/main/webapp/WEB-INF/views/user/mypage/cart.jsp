@@ -3,7 +3,7 @@
 <%-- <%@ include file="/WEB-INF/views/common/header.jsp" %> --%>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
+<%@ include file ="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/mypage/cart.css">
 <div class="wrapper relative">
 

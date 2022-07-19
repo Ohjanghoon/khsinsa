@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ include file="/WEB-INF/views/common/myPageHeader.jsp" %>
+<%@ include file="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/mypage/myCommunity.css" />
 <%
 	List<InquireExt> myInquireList = (List<InquireExt>) request.getAttribute("list");
@@ -14,9 +14,9 @@
         <div class="myCommunity_content_header">
             <h1>내 게시글 조회</h1>
             <ul>
-                <li><a href="#">1:1문의</a></li>
-                <li><a href="#">커뮤니티</a></li>
-                <li><a href="#">리뷰</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire">1:1문의</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity">커뮤니티</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityReview">리뷰</a></li>
             </ul>
         </div>
 

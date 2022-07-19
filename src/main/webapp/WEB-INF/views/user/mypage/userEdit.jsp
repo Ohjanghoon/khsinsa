@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
+<%@ include file ="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/userEdit.css">
 <%
 	String[] tempEmail = loginUser.getUserEmail().split("\\@");

@@ -22,7 +22,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 			<ul class="navi">
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
-				<li><a href="#">정보공유</a></li>
+				<li><a href="<%= request.getContextPath()%>/share_community/shareList" />정보공유</a></li>
 				<li><a href="#">자유게시판</a></li>
 				<li><a href="#">패션토크</a></li>
 			</ul>
@@ -61,7 +61,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
 						<form name="communityCommentFrm"
-							action="<%=request.getContextPath()%>/share/shareCommentEnroll"
+							action="<%=request.getContextPath()%>/share/shareCommentAdd"
 							method="post">
 							<input type="hidden" name="commNo"
 								value="<%=community.getCommNo()%>" /> <input type="hidden"
@@ -88,20 +88,20 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 							<td><sub class="comment-writer"><%=cc.getUserId()%></sub> <sub
 								class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
 								<div>
-									<p>짱구야 장난은 이제 그만~~~</p>
+									<p><%= cc.getCommentContent() %></p>
 
 								</div></td>
 							<td>
 								<%
 									if (cc.getCommentLevel() == CommentLevel.COMMENT) {
 								%>
-								<button class="btn-reply" value="<%cc.getNo();%>"
+								<button class="btn-reply" value="<%= cc.getNo()%>"
 									style="margin-top: 30px;">답글</button> <%
  									}
 								 %> <%
  										if (canDelete) {
  									%>
-								<button class="btn-delete" value="<%cc.getNo();%>"
+								<button class="btn-delete" value="<%= cc.getNo()%>"
 									style="margin-top: 30px;">삭제</button> <%
  										}
 								 %>
@@ -120,6 +120,25 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 	</div>
 
 </div>
+<form 
+	action="<%= request.getContextPath() %>/share/shareCommentDelete"
+	method="post" 
+	name="shareCommentDelFrm">
+	<input type="hidden" name="no" />	
+</form>
+
+<script>
+document.querySelectorAll(".btn-delete").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		if(confirm("해당 댓글을 정말 삭제하시겠습니까?")) {
+			const {value} = e.target;
+			const frm = document.shareCommentDelFrm;
+			frm.no.value = value;
+			frm.submit();
+		}
+	});
+});
+</script>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

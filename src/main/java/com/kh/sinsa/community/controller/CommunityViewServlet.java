@@ -72,11 +72,11 @@ public class CommunityViewServlet extends HttpServlet {
 			List<CommunityComment> commentList = communityService.findCommunityCommentByCommNo(no);
 
 			// XSS공격대비 (Cross-site Scripting)
-//			community.setCommTitle(KhsinsaUtils.escapeXml(community.getCommTitle()));		
-//			community.setCommContent(KhsinsaUtils.escapeXml(community.getCommContent()));
+			community.setCommTitle(KhsinsaUtils.escapeXml(community.getCommTitle()));		
+			community.setCommContent(KhsinsaUtils.escapeXml(community.getCommContent()));
 
 			// 개행문자 변환처리
-//			community.setCommContent(KhsinsaUtils.convertLineFeedToBr(community.getCommContent()));
+			community.setCommContent(KhsinsaUtils.convertLineFeedToBr(community.getCommContent()));
 
 			// 3. view단 처리
 			request.setAttribute("community", community);

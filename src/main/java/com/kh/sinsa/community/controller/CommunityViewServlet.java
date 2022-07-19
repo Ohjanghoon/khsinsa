@@ -1,6 +1,7 @@
 package com.kh.sinsa.community.controller;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import javax.servlet.ServletException;

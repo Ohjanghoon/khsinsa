@@ -16,7 +16,7 @@
 	String size = (String) request.getAttribute("size");
 %>
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <section class="py-5 text-center container">
             <p>주문페이지</p>
         </section>
@@ -68,7 +68,7 @@
 <% 
 for(ProductAttachment att : attachList) {
 %>
-                                        <img src="<%= request.getContextPath() %>/upload/product/top/<%= att.getProOriginalFilename() %>.jpg" alt="">
+                                        <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProOriginalFilename() %>" alt="">
 <% 
  break; } 
 %>

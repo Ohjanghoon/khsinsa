@@ -42,6 +42,20 @@ public class ProductService {
 		close(conn);
 		return attachmentList;
 	}
+
+	public List<ProductAttachment> productAttachmentFindAll() {
+		Connection conn = getConnection();
+		List<ProductAttachment> attachmentList = productDao.productAttachmentFindAll(conn);
+		close(conn);
+		return attachmentList;
+	}
+
+	public List<Product> productFind(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Product> list = productDao.productFind(conn, param);
+		close(conn);
+		return list;
+	}
 	
 
 }

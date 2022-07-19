@@ -1,14 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
 <%@ include file ="/WEB-INF/views/common/myPageHeader.jsp" %>
+
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/userEdit.css">
 <%
+String emailId = "";
+String emailAddr="";
+if(loginUser != null){
+	
 	String[] tempEmail = loginUser.getUserEmail().split("\\@");
-	String emailId = tempEmail[0];
-	String emailAddr = tempEmail[1];
+	emailId = tempEmail[0];
+	emailAddr = tempEmail[1];
+	
+	String phone = loginUser.getUserPhone();
+	String phonefront = phone.substring(0,3);
+	String phoneBack = phone.substring(3);
+}
 
 %>
+
+
+
 
 
  <div class="container">

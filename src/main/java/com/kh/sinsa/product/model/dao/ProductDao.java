@@ -60,7 +60,6 @@ public class ProductDao {
 		ResultSet rset = null;
 		List<Product> list = new ArrayList<>();
 		String sql = prop.getProperty("contentFindAll");
-		System.out.println("1");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (int) param.get("start"));
@@ -69,9 +68,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				ProductExt product = handleProductExtResultSet(rset);
-				product.setProOriginalFilename(rset.getString("pro_original_filename"));
-				list.add(product);
+				list.add(handleProductResultSet(rset));
 			}
 			
 		} catch (SQLException e) {
@@ -155,6 +152,54 @@ public class ProductDao {
 		String proOriginalFilename = rset.getString("pro_original_filename");
 		String proRenameFilename = rset.getString("pro_rename_filename");
 		return new ProductAttachment(proAttachmentNo,proNo,proOriginalFilename,proRenameFilename);
+	}
+
+	public List<ProductAttachment> productAttachmentFindAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductAttachment> attachmentList = new ArrayList<>();
+		String sql = prop.getProperty("productAttachmentFindAll");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				attachmentList.add(handleProductAttachmentResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new ProductException("상품 사진 전체가져오기 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attachmentList;
+	}
+
+	public List<Product> productFind(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Product> list = new ArrayList<>();
+		String sql = prop.getProperty("productFind");
+		String search = (String) param.get("search");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + search + "%");
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(handleProductResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new ProductException("상품 검색 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

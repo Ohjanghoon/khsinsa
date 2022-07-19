@@ -10,50 +10,58 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/product/productList.css" />
 <%
 	List<Product> list = (List<Product>) request.getAttribute("list");
+	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
 %>
 
 <main>
-    <div class="container-fluid">
+    <div class="container-sm">
         <section class="py-5 text-center container">
             <p>TOP</p><p>(상의)</p>
         </section>
         <div class="album py-5 bg-light">
-                <div class="container">
+                <div class="container-sm">
                     <nav class="navbar navbar-light bg-light">
-                        <div class="container-fluid">
-                          <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        <div class="container-sm">
+                          <form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productFind" method="get">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                            <button class="btn btn-outline-success" type="submit">🔎</button>
                           </form>
 
                           <div class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                              Dropdown link
+                              정렬 기준
                             </a>
                           
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                              <li><a class="dropdown-item" href="#">Action</a></li>
-                              <li><a class="dropdown-item" href="#">Another action</a></li>
-                              <li><a class="dropdown-item" href="#">Something else here</a></li>
+                              <li><a class="dropdown-item" href="#">상품명</a></li>
+                              <li><a class="dropdown-item" href="#">가격</a></li>
+                              <li><a class="dropdown-item" href="#">좋아요순</a></li>
                             </ul>
                           </div>
                         </div>
                       </nav>
                       
-                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                 <div class="row row-cols-1 row-cols-sm-5 row-cols-md-3 g-3" id="productList">
 <% 
 	if(list != null && !list.isEmpty()){ 
-		for(Product _product : list){
-			ProductExt product = (ProductExt) _product;
+		for(Product product : list){
 %>
 					<div class="col">
                     <div class="card shadow-sm">
-                        <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>">
-                        <img src="<%= request.getContextPath() %>/upload/product/top/<%= product.getProOriginalFilename() %>.jpg" alt="" class="img-product">
+                        <a id="moveToOreder" href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>">
+<%
+	for(ProductAttachment pa : attachList){
+		if(product.getProNo().equals(pa.getProNo())){
+%>
+                        <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="" class="img-product">
+<%
+		break; }		
+	}
+%>
                         </a>
                         <div class="card-body">
                         <p class="card-text"><%= product.getProName() %></p>
-                        <p class="card-text"><%= product.getProPrice() %></p>
+                        <p class="card-text"><%= product.getProPrice() %>원</p>
                         <div class="d-flex justify-content-between align-items-center">                            
                             <small class="text-muted">❤️ 1</small>
                         </div>
@@ -61,8 +69,8 @@
                     </div>
                     </div>
 <%
-	}
 		}
+	}
 %>
 			</div>
 		</div>
@@ -71,9 +79,6 @@
     </div>
 </main>
 <script>
-window.onload = () => {
-	document.querySelector(".card").addEventListener('click', (e) =>{
-	});
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

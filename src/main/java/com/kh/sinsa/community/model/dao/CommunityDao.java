@@ -1,6 +1,5 @@
 package com.kh.sinsa.community.model.dao;
 
-
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
@@ -10,7 +9,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,7 @@ import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.exception.CommunityException;
+
 
 public class CommunityDao {
 	

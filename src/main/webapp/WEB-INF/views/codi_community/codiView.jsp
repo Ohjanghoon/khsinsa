@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사용자가 작성한 게시글 통합 조회 페이지</title>
+<title>Insert title here</title>
 </head>
 <body>
 

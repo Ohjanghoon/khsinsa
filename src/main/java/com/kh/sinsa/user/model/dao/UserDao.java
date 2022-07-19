@@ -94,6 +94,34 @@ public class UserDao {
 		
 		
 	}
+	
+	// editUser = update user set  user_name = ?, birthday = ?, email = ?, phone = ?, address = ? where user_id = ?
+	
+	public int editUser(Connection conn, User user) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editUser");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setDate(3, user.getUserBirthday());
+			pstmt.setString(4, user.getUserEmail());
+			pstmt.setString(5, user.getUserPhone());
+			pstmt.setString(6, user.getUserAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
+			throw new UserException("회원정보수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	//##########minseo UserDao end#############
 	
 
@@ -125,6 +153,8 @@ public class UserDao {
 			return result;
 		}
 		
+
+	
 	//##########janghoon UserDao end#############
 		
 
@@ -179,18 +209,19 @@ public class UserDao {
 		return totalContent;
 }
 	
-	public List<User> findMemberLike(Connection conn, Map<String, Object> param) {
+	public List<User> findUserLike(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<User> list = new ArrayList<>();
 		String sql = prop.getProperty("findUserLike");
-		// select * from member where # like ?
+		// select * from ( select row_number () over (order by enroll_date desc) rnum, u.* from kh_user u where # like ?) u where rnum between ? and ?
 		String col = (String) param.get("searchType");
 		String val = (String) param.get("searchKeyword");
 		int start = (int) param.get("start");
 		int end = (int) param.get("end");
 		
 		sql = sql.replace("#", col);
+		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

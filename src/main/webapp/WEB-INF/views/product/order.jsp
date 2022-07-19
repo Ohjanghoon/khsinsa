@@ -1,11 +1,22 @@
+<%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.sinsa.product.model.dto.Product"%>
+<%@page import="com.kh.sinsa.user.model.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/product/order.css" />
+<%
+	Product product = (Product) request.getAttribute("product");
+	User user = (User) request.getAttribute("user");
+	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
+	String orderAmount = (String) request.getAttribute("orderAmount");
+	String size = (String) request.getAttribute("size");
+%>
 <main>
-    <div class="container-fluid">
+    <div class="container">
         <section class="py-5 text-center container">
             <p>주문페이지</p>
         </section>
@@ -24,13 +35,13 @@
                             <input type="radio" name="home" id="new">
                             <br>
                             <label for="name">수령인</label>
-                            <input type="text" id="name" name="name">
+                            <input type="text" id="name" name="name" value="<%= user.getUserName() %>">
                             <br>
                             <label for="phone">전화번호</label>
-                            <input type="text" id="phone" name="phone">
+                            <input type="text" id="phone" name="phone" value="<%= user.getUserPhone() %>">
                             <br>
                             <label for="address">주소</label>
-                            <input type="text" id="address" name="address">
+                            <input type="text" id="address" name="address" value="<%= user.getUserAddress() %>">
                             <br>
                             <label for="request">배송 요청 사항</label>
                             <select class="form-select" aria-label="Default select example">
@@ -54,27 +65,36 @@
                                 <tbody>
                                   <tr>
                                     <th scope="row">
-                                        <img src="./img/city1.PNG" alt="">
-                                        <p>상품명</p>
-                                        <p>옵션 : L</p>
+<% 
+for(ProductAttachment att : attachList) {
+%>
+                                        <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProOriginalFilename() %>" alt="">
+<% 
+ break; } 
+%>
+                                        <p><%= product.getProName() %></p>
+                                        <p>옵션 : <%= size %></p>
                                     </th>
                                     <td>
-                                        <p>수량</p>
+                                        <p><%= orderAmount %></p>
                                     </td>
                                     <td>
                                         <p>무료</p>
                                     </td>
                                     <td>
-                                        <p>30,000원</p>
+                                        <p><%= product.getProPrice() %>원</p>
                                     </td>
                                   </tr>
                                 </tbody>
                               </table>
                         </div>
                             <div class="product-price">
-                            <p>상품 금액</p>
-                            <p>상품 할인금액</p>
-                            <p>최종 결졔 금액</p>
+                            <h3>결제 금액</h3>
+                            <p><%= product.getProPrice() %>원</p>
+                            <h3>할인 금액</h3>
+                            <p>0원</p>
+                            <h3>최종 결제 금액</h3>
+                            <p><%= product.getProPrice() %>원</p>
                         </div>
                         <button class="button">결제하기</button>
                     </form>

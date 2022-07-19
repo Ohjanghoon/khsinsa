@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.UserService;
+import com.kh.sinsa.admin.model.service.AdminService;
 
 /**
  * Servlet implementation class AdminMemberListServlet
@@ -21,7 +21,7 @@ import com.kh.sinsa.user.model.service.UserService;
 @WebServlet("/admin/adminpage")
 public class adminpageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserService();
+	private AdminService adminService = new AdminService();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,13 +45,13 @@ public class adminpageServlet extends HttpServlet {
 					
 			System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
 							cPage, numPerPage, start, end);
-			List<User> list = userService.findAll(param);
+			List<User> list = adminService.findAll(param);
 			System.out.println("list = " + list);
 						
 			
 			// b. pagebar영역
 			// select count(*) from member
-			int totalContent = userService.getTotalContent();
+			int totalContent = adminService.getTotalContent();
 			System.out.println("totalContent = " + totalContent);
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);

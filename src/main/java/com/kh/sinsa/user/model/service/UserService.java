@@ -14,7 +14,7 @@ import com.kh.sinsa.user.model.dto.User;
 
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
-public class AdminService {
+public class UserService {
 	private UserDao userDao = new UserDao();
 
 	// ##########minseo UserService begin#############

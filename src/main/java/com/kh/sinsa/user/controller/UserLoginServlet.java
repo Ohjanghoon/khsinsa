@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.AdminService;
+import com.kh.sinsa.user.model.service.UserService;
 
 /**
  * Servlet implementation class UserLoginServlet
@@ -19,7 +19,7 @@ import com.kh.sinsa.user.model.service.AdminService;
 @WebServlet("/user/userLogin")
 public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AdminService userService = new AdminService();
+	private UserService userService = new UserService();
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

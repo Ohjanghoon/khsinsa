@@ -19,8 +19,8 @@ import com.kh.sinsa.user.model.dto.User;
 /**
  * Servlet implementation class MypagemyCommunityServlet
  */
-@WebServlet("/mypage/myCommunity")
-public class MyCommunityServlet extends HttpServlet {
+@WebServlet("/mypage/myCommunityInquire")
+public class MyCommunityInquireServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	/**
@@ -71,7 +71,7 @@ public class MyCommunityServlet extends HttpServlet {
 			//3. view 응답 처리
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCommunity.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCommunityInquire.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>1:1문의 게시글 조회 페이지</title>
+<title>Insert title here</title>
 </head>
 <body>
 

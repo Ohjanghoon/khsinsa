@@ -22,7 +22,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 			<ul class="navi">
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
-				<li><a href="<%= request.getContextPath()%>/share_community/shareList" />정보공유</a></li>
+				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
 				<li><a href="#">자유게시판</a></li>
 				<li><a href="#">패션토크</a></li>
 			</ul>
@@ -65,7 +65,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 							method="post">
 							<input type="hidden" name="commNo"
 								value="<%=community.getCommNo()%>" /> <input type="hidden"
-								name="writer" value="<%=community.getUserId()%>" /> <input
+								name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" /> <input
 								type="hidden" name="commentLevel" value="1" /> <input
 								type="hidden" name="commentRef" value="0" />
 							<textarea name="content" cols="60" rows="3"
@@ -138,6 +138,16 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
 		}
 	});
 });
+
+document.communityCommentFrm.content.addEventListener('focus', (e) => {
+	if(<%= loginUser == null %>)
+		loginAlert();
+});
+
+const loginAlert = () => {
+	alert("로그인후 이용할 수 있습니다.");
+	document.querySelector("#btn-comment-enroll1").focus();
+};
 </script>
 
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.UserService;
+import com.kh.sinsa.user.model.service.AdminService;
 
 /**
  * Servlet implementation class UserEnrollServlet
@@ -21,7 +21,7 @@ import com.kh.sinsa.user.model.service.UserService;
 @WebServlet("/user/userEnroll")
 public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserService();
+	private AdminService userService = new AdminService();
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

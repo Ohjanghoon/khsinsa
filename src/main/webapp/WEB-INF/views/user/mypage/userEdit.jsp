@@ -28,7 +28,7 @@ if(loginUser != null){
  <div class="container">
         <div class="enroll_container">
             <h2>개인정보 수정</h2>
-            <form action="" name="enrollFrm">
+            <form action=""  method="post"   name="enrollFrm">
                     <div class="input_area">
                         <label>아이디</label>
                         <input type="text" name="userId" id="userId" value="<%=loginUser.getUserId() %>" autocomplete="off" readonly required>

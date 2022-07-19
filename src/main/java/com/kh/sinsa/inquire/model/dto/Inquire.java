@@ -1,6 +1,9 @@
 package com.kh.sinsa.inquire.model.dto;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.util.List;
+import java.util.Map;
 
 public class Inquire {
 
@@ -91,5 +94,16 @@ public class Inquire {
 				+ ", inquireTitle=" + inquireTitle + ", inquireContent=" + inquireContent + ", inquireDate="
 				+ inquireDate + ", inquireCategory=" + inquireCategory + "]";
 	}
+
+
+
+
+
+
+	}
+
+
+
+
 	
-}
+

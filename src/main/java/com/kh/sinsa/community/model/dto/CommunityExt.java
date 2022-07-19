@@ -11,7 +11,6 @@ public class CommunityExt extends Community {
 	
 	public CommunityExt() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CommunityExt(String commNo, String userId, String commTitle, String commContent, Date commDate,

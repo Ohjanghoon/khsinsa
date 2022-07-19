@@ -14,7 +14,6 @@ import java.util.Properties;
 
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
-
 import com.kh.sinsa.user.model.dto.Del;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.dto.UserRole;
@@ -210,18 +209,19 @@ public class UserDao {
 		return totalContent;
 }
 	
-	public List<User> findMemberLike(Connection conn, Map<String, Object> param) {
+	public List<User> findUserLike(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<User> list = new ArrayList<>();
 		String sql = prop.getProperty("findUserLike");
-		// select * from member where # like ?
+		// select * from ( select row_number () over (order by enroll_date desc) rnum, u.* from kh_user u where # like ?) u where rnum between ? and ?
 		String col = (String) param.get("searchType");
 		String val = (String) param.get("searchKeyword");
 		int start = (int) param.get("start");
 		int end = (int) param.get("end");
 		
 		sql = sql.replace("#", col);
+		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

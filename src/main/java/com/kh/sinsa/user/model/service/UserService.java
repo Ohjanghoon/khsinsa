@@ -48,9 +48,19 @@ public class UserService {
 		}
 		return result;
 	}
+
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
+
+
+	public List<User> findUserLike(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<User> list = userDao.findUserLike(conn, param);
+		close(conn);
+		return list;
+	}
+
 	public int insertUser(User user) {
 		Connection conn = getConnection();
 		int result = 0;
@@ -84,9 +94,10 @@ public class UserService {
 		return totalContent;
 	}
 
+
 	public List<User> findMemberLike(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<User> list = userDao.findMemberLike(conn, param);
+		List<User> list = userDao.findUserLike(conn, param);
 		close(conn);
 		return list;
 	}

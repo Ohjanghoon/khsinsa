@@ -9,7 +9,7 @@ public class CommunityComment {
 	private String userId;
 	private String commentContent;
 	private Date commentDate;
-	private CommentLevel commnetLevel;
+	private CommentLevel commentLevel;
 	private String commentRef;
 	
 	public CommunityComment() {
@@ -18,14 +18,14 @@ public class CommunityComment {
 	}
 
 	public CommunityComment(String no, String commNo, String userId, String commentContent, Date commentDate,
-			CommentLevel commnetLevel, String commentRef) {
+			CommentLevel commentLevel, String commentRef) {
 		super();
 		this.no = no;
 		this.commNo = commNo;
 		this.userId = userId;
 		this.commentContent = commentContent;
 		this.commentDate = commentDate;
-		this.commnetLevel = commnetLevel;
+		this.commentLevel = commentLevel;
 		this.commentRef = commentRef;
 	}
 
@@ -69,12 +69,12 @@ public class CommunityComment {
 		this.commentDate = commentDate;
 	}
 
-	public CommentLevel getCommnetLevel() {
-		return commnetLevel;
+	public CommentLevel getCommentLevel() {
+		return commentLevel;
 	}
 
-	public void setCommnetLevel(CommentLevel commnetLevel) {
-		this.commnetLevel = commnetLevel;
+	public void setCommentLevel(CommentLevel commentLevel) {
+		this.commentLevel = commentLevel;
 	}
 
 	public String getCommentRef() {
@@ -88,7 +88,7 @@ public class CommunityComment {
 	@Override
 	public String toString() {
 		return "CommunityComment [no=" + no + ", commNo=" + commNo + ", userId=" + userId + ", commentContent="
-				+ commentContent + ", commentDate=" + commentDate + ", commnetLevel=" + commnetLevel + ", commentRef="
+				+ commentContent + ", commentDate=" + commentDate + ", commentLevel=" + commentLevel + ", commentRef="
 				+ commentRef + "]";
 	}
 	

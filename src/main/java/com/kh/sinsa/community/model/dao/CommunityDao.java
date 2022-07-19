@@ -1,6 +1,6 @@
 package com.kh.sinsa.community.model.dao;
 
-import static com.kh.sinsa.common.JdbcTemplate.close;
+import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.exception.CommunityException;
 
 
@@ -85,6 +87,86 @@ public class CommunityDao {
 		}
 		
 		return totalContent;
+	}
+
+	
+	public int updateReadCount(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateReadCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("조회수 증가 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Community findByNo(Connection conn,String no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Community community = null;
+		String sql = prop.getProperty("findByNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+				community = handlerCommunityResultSet(rset);
+			
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시글 1건 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return community;
+	}
+
+	public List<CommunityComment> findCommunityCommentByCommNo(Connection conn, String CommNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<CommunityComment> commentList = new ArrayList<>();
+		String sql = prop.getProperty("findCommunityCommentByCommNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, CommNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) 
+				commentList.add(handleCommunityCommentResultSet(rset));
+				
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시글별 댓글 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commentList;
+	}
+
+	private CommunityComment handleCommunityCommentResultSet(ResultSet rset) throws SQLException {
+		String no = rset.getString("comm_comment_no");
+		String commNo = rset.getString("comm_no");
+		String writer = rset.getString("user_id");
+		String content = rset.getString("comm_comment_content");
+		Date regDate = rset.getDate("comm_comment_date");
+		CommentLevel commentLevel = CommentLevel.valueOf(rset.getInt("comm_comment_level"));
+		String commentRef = rset.getString("comment_ref"); // null인 경우 0을 반환
+		return new CommunityComment(no, commNo, writer, content, regDate, commentLevel, commentRef);
 	}
 
 }

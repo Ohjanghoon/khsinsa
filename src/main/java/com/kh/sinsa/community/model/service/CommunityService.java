@@ -19,13 +19,13 @@ public class CommunityService {
 		close(conn);
 		return result;
 	}
-
+	
 	public int getTotalContent() {
 		Connection conn = getConnection();
 		int totalContent = communityDao.getTotalContent(conn); 
 		close(conn);
 		return totalContent;
-
+		
 	}
-
+	                                         
 }

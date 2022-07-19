@@ -56,6 +56,13 @@ public class ProductService {
 		close(conn);
 		return list;
 	}
+
+	public List<Product> productAlign(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Product> list = productDao.productAlign(conn, param);
+		close(conn);
+		return list;
+	}
 	
 
 }

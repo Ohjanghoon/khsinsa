@@ -29,7 +29,7 @@ public class CommunityListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			try {
 				// 1. 사용자입력값
-				int numPerPage = 5;
+				int numPerPage = 10;
 				int cPage = 1;
 				try {
 					cPage = Integer.parseInt(request.getParameter("cPage"));

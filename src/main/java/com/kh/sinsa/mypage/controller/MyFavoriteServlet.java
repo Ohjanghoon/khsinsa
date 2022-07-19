@@ -8,17 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyCommunityCommunityServlet
+ * Servlet implementation class MyFavoriteServlet
  */
-@WebServlet("/mypage/myCommunityCommunity")
-public class MyCommunityCommunityServlet extends HttpServlet {
+@WebServlet("/mypage/myFavorite")
+public class MyFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCommunityCommunity.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

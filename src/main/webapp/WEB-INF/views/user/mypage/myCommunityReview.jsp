@@ -30,10 +30,7 @@
                 <th>처리상태</th>
             </thead>
             <tbody>
-            	<% 
-           		if(myInquireList != null && !myInquireList.isEmpty()) {
-            		for(InquireExt inq : myInquireList) { %>
-            			
+            	<% for(InquireExt inq : myInquireList) { %>
                 <tr>
                     <td><input type="checkbox" id="inquireNo" name="inquireNo" value="<%= inq.getInquireNo() %>"></td>
                     <td><%= inq.getInquireCategory() %></td>
@@ -45,8 +42,7 @@
                     	<td style="color: red">답변대기</td>
                     <% } %>
                 </tr>
-           		<%	}
-            	} %>
+                <% } %>
             </tbody>
         </table>
         

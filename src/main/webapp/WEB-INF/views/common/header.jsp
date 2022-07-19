@@ -47,15 +47,15 @@
             <% if(loginUser != null) {
             		if(loginUser.getUserRole() == UserRole.U){ 
             %>
-		            	<li><a href="<%=request.getContextPath()%>/user/mypage">MY PAGE</a></li>
+		            	<li><a href="<%=request.getContextPath()%>/mypage/myOrderList">MY PAGE</a></li>
             <%		} else { %>
 		            	<li><a href="<%= request.getContextPath() %>/admin/adminpage">ADMIN PAGE</a></li>
             <%  	} %>
             		<span>[<%= loginUser.getUserId() %>]님, 반갑습니다.</span>
-	            	<li><a href=" <%= request.getContextPath() %>/user/logout">LOGOUT</a></li>
+	            	<li><a href=" <%= request.getContextPath() %>/user/userLogout">LOGOUT</a></li>
 			<% }
                else { %>            
-            	<li><a href=" <%= request.getContextPath() %>/user/login">LOGIN</a></li>
+            	<li><a href=" <%= request.getContextPath() %>/user/userLogin">LOGIN</a></li>
             <% } %>
         </nav>
     </header>

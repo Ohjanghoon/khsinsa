@@ -11,15 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.UserService;
+import com.kh.sinsa.user.model.service.AdminService;
 
 /**
  * Servlet implementation class UserLoginServlet
  */
-@WebServlet("/user/login")
+@WebServlet("/user/userLogin")
 public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserService();
+	private AdminService userService = new AdminService();
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

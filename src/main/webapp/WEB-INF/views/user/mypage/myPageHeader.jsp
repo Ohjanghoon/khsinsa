@@ -7,11 +7,11 @@
     <h1>MY PAGE</h1>
     <nav>
         <ul class="menu">
-            <li><a href="<%= request.getContextPath()%>/mypage/transaction">주문내역 조회</a></li>
-            <li><a href="<%= request.getContextPath()%>/mypage/cart">장바구니</a></li>
+            <li><a href="<%= request.getContextPath()%>/mypage/myOrderList">주문내역 조회</a></li>
+            <li><a href="<%= request.getContextPath()%>/mypage/myCart">장바구니</a></li>
             <li><a href="<%= request.getContextPath()%>/mypage/myFavorite">관심상품</a></li>
             <li><a href="<%= request.getContextPath()%>/mypage/myCommunityInquire">게시글 확인</a></li>
-            <li><a href="<%= request.getContextPath()%>/mypage/userEdit">개인정보 수정</a></li>
+            <li><a href="<%= request.getContextPath()%>/mypage/myUserEdit">개인정보 수정</a></li>
             </ul>
     </nav>
 </div>

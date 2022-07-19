@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.UserService;
+import com.kh.sinsa.user.model.service.AdminService;
 
 /**
  * Servlet implementation class UserEditServlet
@@ -21,10 +21,10 @@ import com.kh.sinsa.user.model.service.UserService;
  * 
  * 
  */
-@WebServlet("/mypage/userEdit")
+@WebServlet("/mypage/myUserEdit")
 public class UserEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserService();
+	private AdminService userService = new AdminService();
 
 //	editUser = update user set  user_name = ?, birthday = ?, email = ?, phone = ?, address = ? where user_id = ?
 	/**

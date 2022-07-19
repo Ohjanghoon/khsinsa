@@ -1,4 +1,4 @@
-package com.kh.sinsa.user.controller;
+package com.kh.sinsa.mypage.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MyCartServlet
  */
-@WebServlet("/mypage/cart")
+@WebServlet("/mypage/myCart")
 public class MyCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +19,7 @@ public class MyCartServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/user/mypage/cart.jsp").forward(request,response);
+		request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCart.jsp").forward(request,response);
 	
 		
 	}

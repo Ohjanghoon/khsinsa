@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.sinsa.admin.model.service.AdminService;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
-import com.kh.sinsa.user.model.service.UserService;
+
 
 /**
  * Servlet implementation class AdminMemberFinder
@@ -21,7 +22,7 @@ import com.kh.sinsa.user.model.service.UserService;
 @WebServlet("/admin/userFinder")
 public class adminUserFinder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserService userService = new UserService();
+	private AdminService adminService = new AdminService();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,11 +48,11 @@ public class adminUserFinder extends HttpServlet {
 			
 			// 2. 업무로직
 			// a. content 영역
-			List<User> list = userService.findUserLike(param);
+			List<User> list = adminService.findUserLike(param);
 			System.out.println("list = " + list);
 			
 			// b. pagebar 영역
-			int totalContent = userService.getTotalContentLike(param);
+			int totalContent = adminService.getTotalContentLike(param);
 			System.out.println("totalContent = " + totalContent);
 			String url = request.getRequestURI() + "&searchKeyword=" + searchKeyword;
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);

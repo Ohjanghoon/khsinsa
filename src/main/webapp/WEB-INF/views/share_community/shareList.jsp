@@ -92,7 +92,7 @@
 
                             </td>
                             <td><%= community.getUserId() %></td>
-                            <td><%= new SimpleDateFormat("yyyy-MM-dd HH:mm").format(community.getCommDate()) %></td>
+                            <td><%= new SimpleDateFormat("yyyy-MM-dd").format(community.getCommDate()) %></td>
                             <td><%= community.getCommReadCount() %></td>
                             <td><%= community.getCommRecommand() %></td>
                         </tr>
@@ -107,8 +107,6 @@
 		<% } %>
 
                     </table>
-
-
                     <div id="pagebar">
                     <%= request.getAttribute("pagebar") %>
                     </div>
@@ -120,4 +118,23 @@
         </div>
         
         <div>
+        <script>
+        document.querySelector("#write").addEventListener('click', (e) => {
+        	if(<%= loginUser == null %>){
+        		loginAlert();		
+        	}else{
+        		location.href = "<%= request.getContextPath() %>/share/shareAdd";
+        	}
+        	
+        	
+        	
+        	
+        });
+
+        const loginAlert = () => {
+        	alert("로그인후 이용할 수 있습니다.");
+        	document.querySelector("standard").focus();
+        };
+        </script>
+        
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -44,7 +44,7 @@ public class CommunityListServlet extends HttpServlet {
 				
 				// 2. 업무로직
 				List<Community> list = communityService.findAll(param);
-				System.out.println("list = " + list);
+				
 				
 				// 페이지바
 				int totalContent = communityService.getTotalContent();
@@ -52,10 +52,10 @@ public class CommunityListServlet extends HttpServlet {
 				System.out.println("url : " + request.getRequestURI());
 				String pagebar = 
 						KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
+				System.out.println("cpage = " + cPage + " numPerPage = " + numPerPage + "totalContent" + totalContent + "url : " + url);
 				
 				// 3. view단 처리
 				request.setAttribute("list", list);
-				System.out.println("list = " + list);
 				request.setAttribute("pagebar", pagebar);
 				request.getRequestDispatcher("/WEB-INF/views/share_community/shareList.jsp")
 				.forward(request, response);

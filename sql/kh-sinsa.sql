@@ -413,3 +413,10 @@ insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12
 insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
 insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
 commit;
+
+-- 
+alter table kh_order modify order_status varchar(100) default '주문 대기';
+commit;
+insert into kh_order values (10||seq_kh_order_order_no.nextval,?,?,?,?,?,default,?,?,default,?);
+
+select * from kh_order;

@@ -123,6 +123,7 @@ public class MypageDao {
 		return result;
 	}
 
+	//내 커뮤니티글 조회
 	public List<Community> communityListFindById(Connection conn, String userId, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -161,6 +162,28 @@ public class MypageDao {
 		
 		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadcount);
 	}
-	//##########janghoon MypageDao end#############
+
+	//내 커뮤니티글 수 조회
+	public int getTotalMyCommunityContent(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalMyCommunityContent = 0;
+		String sql = prop.getProperty("totalMyCommunityContent");
+		//totalMyCommunityContent = select count(*) from community where user_id = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalMyCommunityContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("내 커뮤니티글 수 조회 오류", e);
+		}
+		return totalMyCommunityContent;
+	}
 	
+	//##########janghoon MypageDao end#############
 }

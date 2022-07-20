@@ -46,7 +46,12 @@
                     <% } %>
                 </tr>
            		<%	}
-            	} %>
+            	} 
+           		else { %>
+           			<tr>
+           				<td colspan="5">작성된 문의글이 없습니다.</td>
+           			</tr>
+           		<% } %>
             </tbody>
         </table>
         
@@ -54,7 +59,7 @@
 			<button type="submit" id="btn_myInquireList_del" onclick="myInquireListDel()">삭제하기</button>           
 		</div>
 		</form>
-		<div id="pagebar">
+		<div class="pagebar">
 			<%= request.getAttribute("pagebar") %>
 		</div>
     </div>

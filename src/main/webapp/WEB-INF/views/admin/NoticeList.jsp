@@ -1,0 +1,45 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.kh.sinsa.common.KhsinsaUtils"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin/NoticeList.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+ <div align="center" id="body">
+            <br>
+            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
+            <ul class = "ul">
+                <adminmenu>
+                    <li><a href="<%= request.getContextPath() %>/adminpage.jsp">회원 관리</a></li>
+                    <li class = :"li">요청 처리</li>
+                    <li class = :"li"><a href="<%= request.getContextPath() %>/productManagement.jsp">상품 관리</a></li>
+                    <li class = :"li"><a href="<%= request.getContextPath() %>/orderManagement.jsp">주문 관리</a></li>
+                    <li class = :"li"><a href="<%= request.getContextPath() %>/StatisticsView.jsp">통계 관리</a></li>
+            </adminmenu>
+            </ul>
+            <button id="write" type="submit">글쓰기</button>
+           	<table id="tbl-board">
+            	<thead>
+                	<tr>
+                    	<th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
+                        <th>추천수</th>
+                    </tr>
+               </thead>
+					<tr>
+						<td colspan="6">조회된 게시글이 없습니다.</td>
+					</tr>
+             </table>
+             	<div id="pagebar">
+                	<%= request.getAttribute("pagebar") %>
+                </div>
+                <br>
+            	</div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

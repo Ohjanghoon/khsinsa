@@ -8,10 +8,10 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <%
-	List<User> list = (List<User>) request.getAttribute("list");
+	List<User> userlist = (List<User>) request.getAttribute("userlist");
 	//System.out.println("list@adminpage = " + list);
-	String type = request.getParameter("searchType");
-	String kw = request.getParameter("searchKeyword");
+	String type = request.getParameter("usersearchType");
+	String kw = request.getParameter("usersearchKeyword");
 %>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -40,8 +40,8 @@ window.addEventListener('load', (e) => {
   <ul class = "ul">
       <adminmenu>
       <li><a href="#">회원 관리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/requestManagement.jsp">요청 처리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/productManagement.jsp">상품 관리</a></li>
+      <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+      <li class = :"li"><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
       <li class = :"li"><a href="<%= request.getContextPath() %>/orderManagement.jsp">주문 관리</a></li>
       <li class = :"li"><a href="<%= request.getContextPath() %>/StatisticsView.jsp">통계 관리</a></li>
   </adminmenu>
@@ -87,14 +87,14 @@ window.addEventListener('load', (e) => {
         </thead>
         <tbody>
         <%
-			if(list == null || list.isEmpty()){
+			if(userlist == null || userlist.isEmpty()){
 		%>
 			<tr>
 				<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
 			</tr>
 		<%
 			} 
-			else { for(User user : list) { 
+			else { for(User user : userlist) { 
         		if(user.getUserDel() == Del.N) {%>
 		          <tr>
 		            <td><%= user.getUserId() %></td>
@@ -154,7 +154,7 @@ window.addEventListener('load', (e) => {
                     </tr>
                   </thead>
                   <tbody>
-                  <% for(User user : list) { 
+                  <% for(User user : userlist) { 
         			if(user.getUserDel() == Del.Y) {%>
 		          	<tr>
 			            <td><%= user.getUserId() %></td>

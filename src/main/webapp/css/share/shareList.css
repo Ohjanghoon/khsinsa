@@ -61,7 +61,7 @@ li {
 div#list{
     background-color: gainsboro;
    
-    height: 500px;
+    height: 700px;
 }
 #write{
     width: 60px;
@@ -104,7 +104,7 @@ th, td{
 }
 
 div#pagebar{
-			margin-top:10px;
+			margin-top:20px;
 			text-align:center; 
 			background-color:gray; 
 }

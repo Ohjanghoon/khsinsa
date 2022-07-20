@@ -32,27 +32,33 @@
                 <th>추천수</th>
             </thead>
             <tbody>
-            	<% for(Community comm : myCommunityList) { 
-            			String _category = comm.getCommNo().substring(0, 2);
-            			System.out.println(_category);
-            			
-            			String category = "";
-						switch(_category) {
-							case "C1" : category = "ootd 게시판"; break;
-							case "C3" : category = "정보공유 게시판"; break;
-							case "C4" : category = "자유게시판"; break;
-							case "C5" : category = "패션토크 게시판"; break;
-                		}
-            	%>
-                <tr>
-                    <td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
-                   	<td><%= category %></td>
-                    <td><%= comm.getCommTitle() %></td>
-                    <td><%= comm.getCommDate() %></td>
-                  	<td><%= comm.getCommReadCount() %></td>
-                  	<td><%= comm.getCommRecommand() %></td>
-                </tr>
-                <% } %>
+           	<% if(myCommunityList != null && !myCommunityList.isEmpty()) {
+				for(Community comm : myCommunityList) { 
+           			String _category = comm.getCommNo().substring(0, 2);
+           			
+           			String category = "";
+					switch(_category) {
+						case "C1" : category = "ootd 게시판"; break;
+						case "C3" : category = "정보공유 게시판"; break;
+						case "C4" : category = "자유게시판"; break;
+						case "C5" : category = "패션토크 게시판"; break;
+               		}
+           	%>
+               <tr>
+                   <td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
+                  	<td><%= category %></td>
+                   <td><%= comm.getCommTitle() %></td>
+                   <td><%= comm.getCommDate() %></td>
+                 	<td><%= comm.getCommReadCount() %></td>
+                 	<td><%= comm.getCommRecommand() %></td>
+               </tr>
+               <%
+               	 }
+          		} else { %>
+          		<tr>
+          			<td colspan="5">작성된 게시글이 없습니다.</td>
+          		</tr>
+          		<% } %>
             </tbody>
         </table>
         
@@ -60,7 +66,7 @@
 			<button type="submit" id="btn_myInquireList_del" onclick="myInquireListDel()">삭제하기</button>           
 		</div>
 		</form>
-		<div id="pagebar">
+		<div class="pagebar">
 			<%= request.getAttribute("pagebar") %>
 		</div>
     </div>

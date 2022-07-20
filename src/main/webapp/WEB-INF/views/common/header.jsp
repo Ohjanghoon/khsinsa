@@ -44,7 +44,7 @@
         </nav>
             <li id="logo"><img src="<%= request.getContextPath() %>/images/logo.png" onclick="location.href='<%= request.getContextPath() %>'"></li>
         <nav>
-            <li><a href="#">NOTICE</a></li>
+            <li><a href="<%=request.getContextPath()%>/admin/noticeview">NOTICE</a></li>
             <% if(loginUser != null) {
             		if(loginUser.getUserRole() == UserRole.U){ 
             %>

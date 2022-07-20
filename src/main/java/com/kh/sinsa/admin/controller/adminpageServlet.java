@@ -45,20 +45,20 @@ public class adminpageServlet extends HttpServlet {
 					
 			System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
 							cPage, numPerPage, start, end);
-			List<User> list = adminService.findAll(param);
-			System.out.println("list = " + list);
+			List<User> userlist = adminService.userFindAll(param);
+			System.out.println("userlist = " + userlist);
 						
 			
 			// b. pagebar영역
 			// select count(*) from member
-			int totalContent = adminService.getTotalContent();
-			System.out.println("totalContent = " + totalContent);
+			int usertotalContent = adminService.userGetTotalContent();
+			System.out.println("usertotalContent = " + usertotalContent);
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, usertotalContent, url);
 			System.out.println("pagebar = " + pagebar);
 						
 			// 3. view단처리
-			request.setAttribute("list", list);
+			request.setAttribute("userlist", userlist);
 			request.getRequestDispatcher("/WEB-INF/views/admin/adminpage.jsp")
 			.forward(request, response);
 		}

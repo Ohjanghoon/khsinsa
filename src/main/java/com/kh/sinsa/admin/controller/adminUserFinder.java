@@ -36,30 +36,30 @@ public class adminUserFinder extends HttpServlet {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
 			} catch (NumberFormatException e) {}
 			
-			String searchKeyword = request.getParameter("searchKeyword");
-			String searchType = request.getParameter("searchType");
+			String usersearchKeyword = request.getParameter("usersearchKeyword");
+			String usersearchType = request.getParameter("usersearchKeyword");
 			
 			Map<String, Object> param = new HashMap<>();
-			param.put("searchKeyword", searchKeyword);
-			param.put("searchType", searchType);
+			param.put("usersearchKeyword", usersearchKeyword);
+			param.put("usersearchType", usersearchType);
 			param.put("start", (cPage - 1) * numPerPage + 1);
 			param.put("end", cPage * numPerPage);
 			System.out.println(param);
 			
 			// 2. 업무로직
 			// a. content 영역
-			List<User> list = adminService.findUserLike(param);
-			System.out.println("list = " + list);
+			List<User> userlist = adminService.findUserLike(param);
+			System.out.println("userlist = " + userlist);
 			
 			// b. pagebar 영역
-			int totalContent = adminService.getTotalContentLike(param);
-			System.out.println("totalContent = " + totalContent);
-			String url = request.getRequestURI() + "&searchKeyword=" + searchKeyword;
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			int usertotalContent = adminService.userGetTotalContentLike(param);
+			System.out.println("usertotalContent = " + usertotalContent);
+			String url = request.getRequestURI() + "&usersearchKeyword=" + usersearchKeyword;
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, usertotalContent, url);
 			System.out.println("pagebar = " + pagebar);
 			
 			// 3. view단처리
-			request.setAttribute("list", list);
+			request.setAttribute("userlist", userlist);
 			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/admin/adminpage.jsp")
 				.forward(request, response);

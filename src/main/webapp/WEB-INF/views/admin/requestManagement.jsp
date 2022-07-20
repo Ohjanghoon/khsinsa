@@ -68,7 +68,6 @@
                                             <td>1 : 1 문의</td>
                                             <td>1</td>
                                             <td><a href="<%= request.getContextPath() %>/inquiredetail.jsp"><b>주신사 반팔티 교환 문의드립니다.[1]</a></b></td><b>
-                                            <!-- [  <c:out value="${#}" />  ]</b> -->
                                             <td>신사임당</td>
                                             <td>2022.07.13</td>
                                         </tr>

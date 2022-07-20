@@ -202,7 +202,7 @@ create table report(
 
 -- 공지사항 --
 create table notice(
-    notice_no number,
+    notice_no varchar2(100),
     notice_title varchar2(70) not null,
     notice_content varchar2(4000) not null,
     notice_writer varchar2(100) not null,

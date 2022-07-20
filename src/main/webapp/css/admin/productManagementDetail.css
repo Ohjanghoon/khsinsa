@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.container {
+    width: 1024px;
+    margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
+}
+hr{
+    padding: 1px;
+}
+span{
+    display: block;
+    padding: 20px;
+}
+.container-md{
+    background-color: whitesmoke;
+}
+.container-md p{
+    font-weight: bold;
+}
+.product-name{
+    padding: 30px;
+    font-size: 20px;
+}
+.product-img{
+    padding: 20px sauto;
+    display: inline-flex;
+}
+.product-img img{
+    padding: 10px;
+    width: 300px;
+    height: 400px;
+}
+.product-text{
+    display: inline-block;
+    padding-left: 50px;
+}
+.product-text input{
+    width: 30px;
+}
+.product-info{
+    text-align: center;
+}
+.product-info img{
+    padding: 20px;
+}
+.product-info p{
+    font-size: 30px;
+    font-weight: bold;
+}

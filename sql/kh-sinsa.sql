@@ -356,11 +356,18 @@ insert into product_attachment values (seq_product_attachment_pro_attachment_no.
 
 -- 리뷰 생성 --
 insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '넘나 멋져요.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '또 샀어요.!!.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '3번째 구매!!!.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '4번째 구매!!!.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '5번째 구매!!!.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
+insert into review values ('R10'||seq_review_review_no.nextval, 'A1023',101,'ohjang12', '6번째 구매!!!.','반팔리뷰.jpg','반팔리뷰.jpg',default,default);
 
 -- 주문 생성-
 insert into kh_order values (010||seq_kh_order_order_no.nextval,'ohjang12','A1023','서울 강남구 가로수길 12', '01085674105','ojh9502@gmail.com',default,'빨리 주세요',68000,'배송완료',default);
 
 select * from review;
-select * from kh_order;
-
+select * from kh_user;
+desc kh_user;
 commit;
+
+select * from ( select row_number () over (order by review_date desc) rnum, r.* from review r) r where rnum between 1 and 3

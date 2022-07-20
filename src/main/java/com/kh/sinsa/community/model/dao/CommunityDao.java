@@ -217,4 +217,27 @@ public class CommunityDao {
 		return result;
 	}
 
+	public int insertCommunity(Connection conn, Community community) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, community.getCommTitle());
+			pstmt.setString(2, community.getUserId());
+			pstmt.setString(3, community.getCommContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시글 등록 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

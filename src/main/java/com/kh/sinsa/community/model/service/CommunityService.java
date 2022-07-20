@@ -103,5 +103,20 @@ public Community findByNo(String no) {
 		return result;
 	}
 
+	public int insertCommunity(Community community) {
+		Connection conn = getConnection();
+		int result = 0; 
+		
+		try {
+		result = communityDao.insertCommunity(conn, community);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		close(conn);
+		return result;
+	}
+
 	                                         
 }

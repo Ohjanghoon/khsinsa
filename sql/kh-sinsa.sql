@@ -380,3 +380,36 @@ insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12
 insert into community values('C10' || seq_community_comm_no.nextval,  'tmddnjs12', '오늘의 등원룩', '오늘의 5번째 학원 가는 날 코디에요', default, 21, 22);
 insert into community values('C10' || seq_community_comm_no.nextval,  'tmddnjs12', '오늘의 등원룩', '오늘의 6번째 학원 가는 날 코디에요', default, 5, 12);
 commit;
+
+-- 커뮤니티 게시판 게시글 작성 추가 (장훈 0720)
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 5, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 7, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 221);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 227);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 212);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 12);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 5, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 7, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 221);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 227);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 212);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 0, 12);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
+commit;

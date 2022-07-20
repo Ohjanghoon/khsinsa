@@ -31,7 +31,7 @@
                         <form action="">
                             <label for="default">기본 배송지</label>
                             <input type="radio" name="home" id="default" checked>
-                            <label for="new">새로운 배송지</label>
+                            <label for="new" id="new">새로운 배송지</label>
                             <input type="radio" name="home" id="new">
                             <br>
                             <label for="name">수령인</label>
@@ -103,4 +103,9 @@ for(ProductAttachment att : attachList) {
         </div>
     </div>
 </main>
+<script>
+	document.querySelector('#new').addEventListener('click', (e) => {
+		document.querySelector('#name').values = '';
+	});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

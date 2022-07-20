@@ -1,3 +1,4 @@
+<%@page import="com.kh.sinsa.review.model.dto.Review"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -11,6 +12,8 @@
 <%
 	Product product = (Product) request.getAttribute("product");
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
+	int totalPage = (int) request.getAttribute("totalPage");
+	String proNo = (String) request.getAttribute("proNo");
 %>
 <main>
     <div class="container">
@@ -47,10 +50,10 @@ for(ProductAttachment att : attachList) {
 	                    <option value="S">S</option>
 	                </select>
                    	<h5>수량</h5>
-                    <button>-</button>
-                    <input type="text" value=1 id="orderAmount" name="orderAmount" disabled>
-                    <button>+</button>
-                    <h5>총 결제 금액</h5>
+                    <button id="minus" type="button">-</button>
+                    <input type="number" min=1 value=1 id="orderAmount" name="orderAmount" readonly>
+                    <button id="plus" type="button">+</button>
+                    <h5>상품 금액</h5>
                     <p><%= product.getProPrice() %>원</p>
                     <button id="buy">구매하기</button>
                     <button>찜하기</button>
@@ -74,41 +77,78 @@ for(ProductAttachment att : attachList) {
                 <img src="<%= request.getContextPath() %>/images/sizecheck.png" alt="">
             </div>
             <hr>
+             <button>👍 추천</button>
+           	 <button>🚨 신고</button>
             <section>
-                <form action="">
-                    <p>리뷰</p>
-                    <div class="review">
-                    <p>아이디</p>
-                    <p>L</p>
-                    <p>후기</p>
-                    <img src="./img/tiger.jpg" alt="">
-                    <button>👍 추천</button>
-                    <button>🚨 신고</button>
-                </form>
-                <section class="py-5 text-center container">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <a class="page-link" href="#">이전</a>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">다음</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </section>
+            		<br />
+                    <h3>리뷰</h3>
+                    <div class="btn-more-container" id="photo-container">
+ <% if(totalPage != 0) { %>
+                    <button id="btn-more">더보기 ✒️</button>
+                    <span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>
+ <%
+	 } else {
+ %>
+ 					<br />
+ 					<h5>아직 리뷰가 없습니다. 고객님의 소중한 리뷰를 작성해주세요. </h5>
+ 					<br />
+ <%
+	 }
+ %>
+				    </div>
             </section>
             </div>
         </div>
-    </div>
 </main>
 <script>
-	document.productFrm.onsubmit = (e) => {
-		
-	};
-<%-- 	document.querySelector("#buy").addEventListener('submit', (e) => {
-		productFrm.action = "<%= request.getContextPath() %>/product/order";
-	}); --%>
+	document.querySelector('#plus').addEventListener('click', (e) => {
+		document.querySelector('#orderAmount').value++;
+	});
+	document.querySelector('#minus').addEventListener('click', (e) => {
+		document.querySelector('#orderAmount').value--;
+	});
+
+	document.querySelector("#btn-more").addEventListener('click', (e) => {
+		const proNo = '<%= proNo %>';
+		const cPage = Number(document.querySelector("#cPage").textContent) + 1;
+		getPage(cPage);
+	});
+	const getPage = (cPage,proNo) => {
+			$.ajax({
+				url : '<%= request.getContextPath() %>/review/reviewList',
+				data : {cPage, proNo: "<%= proNo %>"},
+				success(response){
+					console.log(response);
+					const container = document.querySelector("#photo-container");
+					
+					response.forEach((review) => {
+						const {reviewNo, proNo, orderNo, reviewWriter, reviewContent, reviewOriginalFilename, reviewRenamedFilename, reviewDate, reviewRecommend} = review;
+						
+						const html = `
+						<div class="polaroid">
+							<img src="<%= request.getContextPath() %>/upload/review/\${reviewOriginalFilename}" alt="" />
+							<p class="info">
+								<span class="writer">\${reviewWriter}</span>
+								<span class="photoDate">\${reviewDate}</span>
+							</p>
+							<p class="caption">\${reviewContent}</p>
+						</div>
+						`;
+						container.insertAdjacentHTML('beforeend', html);
+						
+					});
+				},
+				error : console.log,
+				complete(){
+					document.querySelector('#cPage').innerHTML = cPage;
+					
+					// 마지막페이지 처리
+					if(cPage == <%= totalPage %>){
+						document.querySelector("#btn-more").disabled = true;
+					}
+				}
+			});
+		};
+	getPage(1);
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

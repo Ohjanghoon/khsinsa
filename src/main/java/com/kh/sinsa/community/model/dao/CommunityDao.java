@@ -1,6 +1,5 @@
 package com.kh.sinsa.community.model.dao;
 
-
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
@@ -15,17 +14,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-
 import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.exception.CommunityException;
 
-
 public class CommunityDao {
-	
+
 	private Properties prop = new Properties();
-	
+
 	public CommunityDao() {
 		String filename = CommunityDao.class.getResource("/sql/community/community-query.properties").getPath();
 		try {
@@ -34,21 +31,24 @@ public class CommunityDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 게시글 목록 조회
 	public List<Community> findAll(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Community> list = new ArrayList<>();
 		String sql = prop.getProperty("findAll");
-		
+		//findAll = select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c) c
+		// 			where rnum between ? and ? and substr(comm_no,1,3) in 'C30'
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
 			rset = pstmt.executeQuery();
-			while(rset.next()) {
+			while (rset.next()) {
 				Community communtiy = handlerCommunityResultSet(rset);
 				list.add(communtiy);
-				
+
 			}
 		} catch (SQLException e) {
 			throw new CommunityException("게시글 목록 오류", e);
@@ -56,9 +56,10 @@ public class CommunityDao {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return list;
 	}
+
 	// 게시글 목록 조회
 	private Community handlerCommunityResultSet(ResultSet rset) throws SQLException {
 		String commNo = rset.getString("comm_no");
@@ -68,10 +69,10 @@ public class CommunityDao {
 		Date commDate = rset.getDate("comm_date");
 		int commRecommend = rset.getInt("comm_recommend");
 		int commReadCount = rset.getInt("comm_readCount");
-		
+
 		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadCount);
 	}
-	
+
 	// 게시글 목록 조회 페이지바
 	public int getTotalContent(Connection conn) {
 		PreparedStatement pstmt = null;
@@ -81,7 +82,7 @@ public class CommunityDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
-			if(rset.next())
+			if (rset.next())
 				totalContent = rset.getInt(1);
 		} catch (SQLException e) {
 			throw new CommunityException("총 게시물수 조회 오류!", e);
@@ -89,49 +90,44 @@ public class CommunityDao {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return totalContent;
 	}
 
-	
 	public int updateReadCount(Connection conn, String no) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("updateReadCount");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, no);
 			result = pstmt.executeUpdate();
-		} 
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new CommunityException("조회수 증가 오류!", e);
-		}
-		finally {
+		} finally {
 			close(pstmt);
 		}
-		
+
 		return result;
 	}
 
-	public Community findByNo(Connection conn,String no) {
+	public Community findByNo(Connection conn, String no) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Community community = null;
 		String sql = prop.getProperty("findByNo");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, no);
 			rset = pstmt.executeQuery();
-			while(rset.next())
+			while (rset.next())
 				community = handlerCommunityResultSet(rset);
-			
-		} 
-		catch (SQLException e) {
+
+		} catch (SQLException e) {
 			throw new CommunityException("게시글 1건 조회 오류!", e);
-		}
-		finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
@@ -143,19 +139,17 @@ public class CommunityDao {
 		ResultSet rset = null;
 		List<CommunityComment> commentList = new ArrayList<>();
 		String sql = prop.getProperty("findCommunityCommentByCommNo");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, CommNo);
 			rset = pstmt.executeQuery();
-			while(rset.next()) 
+			while (rset.next())
 				commentList.add(handleCommunityCommentResultSet(rset));
-				
-		} 
-		catch (SQLException e) {
+
+		} catch (SQLException e) {
 			throw new CommunityException("게시글별 댓글 조회 오류!", e);
-		}
-		finally {
+		} finally {
 			close(rset);
 			close(pstmt);
 		}
@@ -177,22 +171,19 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertCommunityComment");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, communityComment.getCommNo());
 			pstmt.setString(2, communityComment.getUserId());
 			pstmt.setString(3, communityComment.getCommentContent());
 			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
-			pstmt.setObject(5, Integer.parseInt(communityComment.getCommentRef()) == 0 ? 
-									null : 
-										communityComment.getCommentRef());
+			pstmt.setObject(5,
+					Integer.parseInt(communityComment.getCommentRef()) == 0 ? null : communityComment.getCommentRef());
 			result = pstmt.executeUpdate();
-		} 
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new CommunityException("댓글/답글 등록 오류!", e);
-		}
-		finally {
+		} finally {
 			close(pstmt);
 		}
 		return result;
@@ -202,16 +193,14 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("deleteCommunityComment");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, no);
 			result = pstmt.executeUpdate();
-		} 
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new CommunityException("댓글/답글 삭제 오류!", e);
-		}
-		finally {
+		} finally {
 			close(pstmt);
 		}
 		return result;
@@ -221,20 +210,18 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertCommunity");
-		
+		//insertCommunity = insert into community (comm_no, user_id, comm_title, comm_content) values ('C30' || seq_community_comm_no.nextval, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, community.getCommTitle());
-			pstmt.setString(2, community.getUserId());
+			pstmt.setString(1, community.getUserId());
+			pstmt.setString(2, community.getCommTitle());
 			pstmt.setString(3, community.getCommContent());
-			
+
 			result = pstmt.executeUpdate();
-			
-		} 
-		catch (SQLException e) {
+
+		} catch (SQLException e) {
 			throw new CommunityException("게시글 등록 오류!", e);
-		}
-		finally {
+		} finally {
 			close(pstmt);
 		}
 		return result;

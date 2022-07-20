@@ -32,18 +32,19 @@ public class CommunityAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 1. 사용자 입력값 처리
-			String title = request.getParameter("title");
 			String writer = request.getParameter("writer");
+			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			Community community = new Community(null, writer, title, content, null, 0, 0 );
+			Community community = new Community(null, writer, title, content, null, 0, 0);
+			System.out.println("writer = " + writer + ", title = " + title + ", content = " + content);
+
 			
 			// 2. 업무로직
 			int result = communityService.insertCommunity(community);
-			System.out.println("community : " + community);
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "게시글 등록 완료입니다.");
-			response.sendRedirect(request.getContextPath() + "/share/shareList");
+		response.sendRedirect(request.getContextPath() + "/share/shareList");
 			
 		}catch(Exception e) {
 			e.printStackTrace();

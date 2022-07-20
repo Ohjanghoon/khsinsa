@@ -66,6 +66,12 @@ a {
     margin-top: 20px;
 }
 
+#date{
+	text-align:right;
+	margin-top:10px;
+	font-weight:200;
+}
+
 #readCount{
     text-align: right;
 }

@@ -13,10 +13,14 @@ public class User {
 	private Del userDel; // Y N
 	private String userEmail;
 	private String userPhone;
+	private String userAddress;
+	private Timestamp enrollDate; // 날짜/ 시각
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public User(String userId, String userPwd, String userName, UserRole userRole, Date userBirthday, Del userDel,
 			String userEmail, String userPhone, String userAddress, Timestamp enrollDate) {
 		super();
@@ -92,8 +96,7 @@ public class User {
 	public void setEnrollDate(Timestamp enrollDate) {
 		this.enrollDate = enrollDate;
 	}
-	public String userAddress;
-	public Timestamp enrollDate; // 날짜/ 시각
+	
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return userPwd;

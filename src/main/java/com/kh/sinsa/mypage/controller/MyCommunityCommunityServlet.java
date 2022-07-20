@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.mypage.model.service.MypageService;
 import com.kh.sinsa.user.model.dto.User;
@@ -51,11 +52,22 @@ public class MyCommunityCommunityServlet extends HttpServlet {
 				userId = loginUser.getUserId();
 				//System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n", cPage, numPerPage, start, end);
 				list = mypageService.communityListFindById(userId, param);
-				System.out.println("list@MyCommunityCommnunityServlet = " + list);
+				//System.out.println("list@MyCommunityCommnunityServlet = " + list);
 				
 			}
+			
+			//b. pagebar 영역
+			// getTotalMyInquireContent = select * from inquire where user_id = ?
+			int totalMyCommunityContent = mypageService.getTotalMyCommunityContent(userId);
+			//System.out.println("totalMyCommunityContent = " + totalMyCommunityContent);
+			
+			String url = request.getRequestURI();
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyCommunityContent, url);
+			//System.out.println("pagebar = " + pagebar);
+		
 			//3. view단 처리
 			request.setAttribute("list", list);
+			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCommunityCommunity.jsp").forward(request, response);
 		} catch (Exception e) {
 		}

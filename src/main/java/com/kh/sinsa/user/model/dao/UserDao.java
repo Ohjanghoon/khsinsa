@@ -49,6 +49,7 @@ public class UserDao {
 		ResultSet rset = null;
 		User user = null;
 		String sql = prop.getProperty("findById");
+
 //		findById = select * from kh_user where user_id = ?
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -86,22 +87,19 @@ public class UserDao {
 
 	}
 
-	// editUser = update user set user_name = ?, birthday = ?, email = ?, phone = ?,
-	// address = ? where user_id = ?
-
 	public int editUser(Connection conn, User user) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("editUser");
-
+//		editUser = update user set  user_name = ?, birthday = ?,  phone = ?, email = ?, address = ? where user_id = ?
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user.getUserId());
-			pstmt.setString(2, user.getUserName());
-			pstmt.setDate(3, user.getUserBirthday());
+			pstmt.setString(1, user.getUserName());
+			pstmt.setDate(2, user.getUserBirthday());
+			pstmt.setString(3, user.getUserPhone());
 			pstmt.setString(4, user.getUserEmail());
-			pstmt.setString(5, user.getUserPhone());
-			pstmt.setString(6, user.getUserAddress());
+			pstmt.setString(5, user.getUserAddress());
+			pstmt.setString(6, user.getUserId());
 
 			result = pstmt.executeUpdate();
 

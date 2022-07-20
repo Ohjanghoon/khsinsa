@@ -67,5 +67,12 @@ public class MypageService {
 		return list;
 	}
 
+	public int getTotalMyCommunityContent(String userId) {
+		Connection conn = getConnection();
+		int totalMyCommunityContent = mypageDao.getTotalMyCommunityContent(conn, userId);
+		close(conn);
+		return totalMyCommunityContent;
+	}
+
 	//##########janghoon MypageService end#############
 }

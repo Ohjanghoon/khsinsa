@@ -26,17 +26,18 @@ public class UserEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService userService = new UserService();
 
-//	editUser = update user set  user_name = ?, birthday = ?, email = ?, phone = ?, address = ? where user_id = ?
+//	editUser = update user set  user_name = ?, birthday = ?,  phone = ?, email = ?, address = ? where user_id = ?
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/views/user/mypage/myUserEdit.jsp").forward(request, response);
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -44,14 +45,21 @@ public class UserEditServlet extends HttpServlet {
 			// 1. 사용자 입력값 처리
 			String userId = request.getParameter("userId");
 			String userName = request.getParameter("userName");
-			String _birthday = request.getParameter("birthday");
-			String phone = request.getParameter("phone");
-			String email = request.getParameter("email");
-			String address = request.getParameter("address");
-
-			Date birthday = (_birthday != null & !"".equals(_birthday)) ? Date.valueOf(_birthday) : null;
-
-			User user = new User(userId, null, userName, null, birthday, null, email, phone, address, null);
+			String birthday = request.getParameter("birthday");
+			String phone1 = request.getParameter("phone1"); // 010
+			String phone2 = request.getParameter("phone2"); // 12344567
+			String emailId = request.getParameter("emailId"); // qwertyu
+			String emailAddr = request.getParameter("emailAddr"); // naver.com
+			String roadAddr = request.getParameter("roadAddr"); // wertyu
+			String roadDetail = request.getParameter("roadDetail"); // wertyu
+			
+			String userPhone = phone1 + phone2;
+			String userEmail = emailId + "@" + emailAddr;
+			String userAddress = roadAddr + roadDetail;
+			
+			Date userBirthday = (birthday != null & !"".equals(birthday)) ? Date.valueOf(birthday) : null;
+			
+			User user = new User(userId, null, userName, null, userBirthday, null, userEmail, userPhone, userAddress, null);
 
 			System.out.println("user@UserEnrollServlet = " + user);
 
@@ -69,7 +77,7 @@ public class UserEditServlet extends HttpServlet {
 			}
 
 			session.setAttribute("msg", msg);
-			response.sendRedirect(request.getContextPath() + "/user/userView"); // 여기 path 어쩌지..
+			response.sendRedirect(request.getContextPath() + "/mypage/myUserEdit"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

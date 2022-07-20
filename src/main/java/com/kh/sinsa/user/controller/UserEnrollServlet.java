@@ -2,6 +2,7 @@ package com.kh.sinsa.user.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.service.UserService;
@@ -26,7 +28,25 @@ public class UserEnrollServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
+		
+		try {
+			
+			//1. 업무로직 
+			List<User> list = userService.findAll();
+			
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+			
+		}
+	
+		
+		
+		
+		
 	}
 
 	/**

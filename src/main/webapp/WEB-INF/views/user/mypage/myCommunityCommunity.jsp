@@ -1,6 +1,4 @@
 <%@page import="com.kh.sinsa.community.model.dto.Community"%>
-<%@page import="com.kh.sinsa.inquire.model.dto.InquireExt"%>
-<%@page import="com.kh.sinsa.inquire.model.dto.Inquire"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

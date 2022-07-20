@@ -49,6 +49,12 @@ public class UserService {
 		return result;
 	}
 
+	public List<User> findAll() {
+		Connection conn = getConnection();
+		List<User> list = userDao.findAll(conn);
+		close(conn);
+		return list;
+	}
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
@@ -69,6 +75,7 @@ public class UserService {
 		return result;
 	}
 	// ##########janghoon UserService end#############
+
 
 	
 }

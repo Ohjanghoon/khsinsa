@@ -107,10 +107,36 @@ public class UserDao {
 			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
 			throw new UserException("회원정보수정 오류", e);
 		} finally {
+			
 			close(pstmt);
+			
 		}
 		return result;
 	}
+	
+
+	public List<User> findAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<User> list = new ArrayList<User>();
+		String sql = prop.getProperty("findAll");
+		// findAll = select * from kh_user
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			 while(rset.next()) {
+				 list.add(handleUserResultSet(rset));
+				 
+				 
+			 }
+			
+		} catch (Exception e) {
+			throw new UserException("전체회원조회 오류",e);
+		}
+		return list;
+	}
+
 
 	// ##########minseo UserDao end#############
 

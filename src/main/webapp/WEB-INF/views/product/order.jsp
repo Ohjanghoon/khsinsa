@@ -12,8 +12,9 @@
 	Product product = (Product) request.getAttribute("product");
 	User user = (User) request.getAttribute("user");
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
-	String orderAmount = (String) request.getAttribute("orderAmount");
+	int orderAmount = (int) request.getAttribute("orderAmount");
 	String size = (String) request.getAttribute("size");
+	int totalPrice = orderAmount * product.getProPrice();
 %>
 <main>
     <div class="container">
@@ -28,27 +29,32 @@
                 <div>
                     <div class="recipient-info">
                         <p>배송지 선택</p>
-                        <form action="">
+                        <form action="<%= request.getContextPath() %>/order/khOrder" name="orderFrm" method='post'>
+                        	<input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
+                        	<input type="hidden" name="orderPrice" value="<%= totalPrice %>" />
+                        	<input type="hidden" name="orderAmount" value="<%= orderAmount %>" />
+                        	<input type="hidden" name="userId" value="<%= loginUser.getUserId() %>" />
+                        	<input type="hidden" name="orderEmail" value="<%= loginUser.getUserEmail() %>"/>
                             <label for="default">기본 배송지</label>
                             <input type="radio" name="home" id="default" checked>
                             <label for="new" id="new">새로운 배송지</label>
                             <input type="radio" name="home" id="new">
                             <br>
                             <label for="name">수령인</label>
-                            <input type="text" id="name" name="name" value="<%= user.getUserName() %>">
+                            <input type="text" id="name" name="name" value="<%= loginUser.getUserName() %>">
                             <br>
                             <label for="phone">전화번호</label>
-                            <input type="text" id="phone" name="phone" value="<%= user.getUserPhone() %>">
+                            <input type="text" id="orderPhone" name="orderPhone" value="<%= loginUser.getUserPhone() %>">
                             <br>
                             <label for="address">주소</label>
-                            <input type="text" id="address" name="address" value="<%= user.getUserAddress() %>">
+                            <input type="text" id="orderAddress" name="orderAddress" value="<%= loginUser.getUserAddress() %>">
                             <br>
                             <label for="request">배송 요청 사항</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>배송 시 요청사항을 선택해주세요.</option>
-                                <option value="1">빠른 배송 부탁드립니다.</option>
-                                <option value="2">부재시 경비실에 보관해주세요.</option>
-                                <option value="3">부재시 현관앞에 보관해주세요.</option>
+                            <select class="form-select" aria-label="Default select example" name="orderReq" required >
+                                <option selected disabled>배송 시 요청사항을 선택해주세요.</option>
+                                <option value="빠른 배송 부탁드립니다.">빠른 배송 부탁드립니다.</option>
+                                <option value="부재시 경비실에 보관해주세요.">부재시 경비실에 보관해주세요.</option>
+                                <option value="부재시 현관앞에 보관해주세요.">부재시 현관앞에 보관해주세요.</option>
                             </select>
                         </div>
                         <div class="product-info">
@@ -82,30 +88,28 @@ for(ProductAttachment att : attachList) {
                                         <p>무료</p>
                                     </td>
                                     <td>
-                                        <p><%= product.getProPrice() %>원</p>
+                                        <p><%= totalPrice %>원</p>
                                     </td>
                                   </tr>
                                 </tbody>
                               </table>
-                        </div>
+                        	</div>
                             <div class="product-price">
-                            <h3>결제 금액</h3>
-                            <p><%= product.getProPrice() %>원</p>
-                            <h3>할인 금액</h3>
-                            <p>0원</p>
-                            <h3>최종 결제 금액</h3>
-                            <p><%= product.getProPrice() %>원</p>
-                        </div>
+	                            <h3>결제 금액</h3>
+	                            <p><%= totalPrice %>원</p>
+	                            <h3>할인 금액</h3>
+	                            <p>0원</p>
+	                            <h3>최종 결제 금액</h3>
+	                            <p><%= totalPrice %>원</p>
+                        	</div>
                         <button class="button">결제하기</button>
-                    </form>
+                    	</form>
                 </div>
             </div>
         </div>
     </div>
 </main>
 <script>
-	document.querySelector('#new').addEventListener('click', (e) => {
-		document.querySelector('#name').values = '';
-	});
+	
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -1,5 +1,6 @@
 package com.kh.sinsa.community.model.dao;
 
+
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 
 import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
@@ -33,18 +35,7 @@ public class CommunityDao {
 		}
 	}
 	
-	private Community handlerCommunityResultSet(ResultSet rset) throws SQLException {
-		String commNo = rset.getString("comm_no");
-		String userId = rset.getString("user_id");
-		String commTitle = rset.getString("comm_title");
-		String commContent = rset.getString("comm_content");
-		Date commDate = rset.getDate("comm_date");
-		int commRecommend = rset.getInt("comm_recommend");
-		int commReadCount = rset.getInt("comm_readCount");
-		
-		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadCount);
-	}
-
+	// 게시글 목록 조회
 	public List<Community> findAll(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -68,7 +59,20 @@ public class CommunityDao {
 		
 		return list;
 	}
-
+	// 게시글 목록 조회
+	private Community handlerCommunityResultSet(ResultSet rset) throws SQLException {
+		String commNo = rset.getString("comm_no");
+		String userId = rset.getString("user_id");
+		String commTitle = rset.getString("comm_title");
+		String commContent = rset.getString("comm_content");
+		Date commDate = rset.getDate("comm_date");
+		int commRecommend = rset.getInt("comm_recommend");
+		int commReadCount = rset.getInt("comm_readCount");
+		
+		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadCount);
+	}
+	
+	// 게시글 목록 조회 페이지바
 	public int getTotalContent(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -165,8 +169,52 @@ public class CommunityDao {
 		String content = rset.getString("comm_comment_content");
 		Date regDate = rset.getDate("comm_comment_date");
 		CommentLevel commentLevel = CommentLevel.valueOf(rset.getInt("comm_comment_level"));
-		String commentRef = rset.getString("comment_ref"); // null인 경우 0을 반환
+		String commentRef = rset.getString("comm_comment_ref"); // null인 경우 0을 반환
 		return new CommunityComment(no, commNo, writer, content, regDate, commentLevel, commentRef);
+	}
+
+	public int insertCommunityComment(Connection conn, CommunityComment communityComment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCommunityComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, communityComment.getCommNo());
+			pstmt.setString(2, communityComment.getUserId());
+			pstmt.setString(3, communityComment.getCommentContent());
+			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
+			pstmt.setObject(5, Integer.parseInt(communityComment.getCommentRef()) == 0 ? 
+									null : 
+										communityComment.getCommentRef());
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("댓글/답글 등록 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteCommunityComment(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCommunityComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("댓글/답글 삭제 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

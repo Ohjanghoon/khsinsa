@@ -1,3 +1,4 @@
+<%@page import="com.kh.sinsa.community.model.dto.Community"%>
 <%@page import="com.kh.sinsa.inquire.model.dto.InquireExt"%>
 <%@page import="com.kh.sinsa.inquire.model.dto.Inquire"%>
 <%@page import="java.util.List"%>
@@ -7,7 +8,7 @@
 <%@ include file="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/mypage/myCommunity.css" />
 <%
-	List<InquireExt> myInquireList = (List<InquireExt>) request.getAttribute("list");
+	List<Community> myCommunityList= (List<Community>) request.getAttribute("list");
 	
 %>
     <div class="myCommunity_content">
@@ -15,7 +16,7 @@
             <h1>내 게시글 조회</h1>
             <ul>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire">1:1문의</a></li>
-                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity">커뮤니티</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity" style="color: black;">커뮤니티</a></li>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityReview">리뷰</a></li>
             </ul>
         </div>
@@ -27,22 +28,37 @@
                 <th>게시글 유형</th>
                 <th>제목</th>
                 <th>작성일</th>
-                <th>처리상태</th>
+                <th>조회수</th>
+                <th>추천수</th>
             </thead>
             <tbody>
-            	<% for(InquireExt inq : myInquireList) { %>
-                <tr>
-                    <td><input type="checkbox" id="inquireNo" name="inquireNo" value="<%= inq.getInquireNo() %>"></td>
-                    <td><%= inq.getInquireCategory() %></td>
-                    <td><%= inq.getInquireTitle() %></td>
-                    <td><%= inq.getInquireDate() %></td>
-                    <% if(inq.getAnswerStatus() > 0) { %>
-	                    <td style="color: lightgreen">답변완료</td>
-                    <% } else {%>
-                    	<td style="color: red">답변대기</td>
-                    <% } %>
-                </tr>
-                <% } %>
+           	<% if(myCommunityList != null && !myCommunityList.isEmpty()) {
+				for(Community comm : myCommunityList) { 
+           			String _category = comm.getCommNo().substring(0, 2);
+           			
+           			String category = "";
+					switch(_category) {
+						case "C1" : category = "ootd 게시판"; break;
+						case "C3" : category = "정보공유 게시판"; break;
+						case "C4" : category = "자유게시판"; break;
+						case "C5" : category = "패션토크 게시판"; break;
+               		}
+           	%>
+               <tr>
+                   <td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
+                  	<td><%= category %></td>
+                   <td><%= comm.getCommTitle() %></td>
+                   <td><%= comm.getCommDate() %></td>
+                 	<td><%= comm.getCommReadCount() %></td>
+                 	<td><%= comm.getCommRecommand() %></td>
+               </tr>
+               <%
+               	 }
+          		} else { %>
+          		<tr>
+          			<td colspan="5">작성된 게시글이 없습니다.</td>
+          		</tr>
+          		<% } %>
             </tbody>
         </table>
         
@@ -50,7 +66,7 @@
 			<button type="submit" id="btn_myInquireList_del" onclick="myInquireListDel()">삭제하기</button>           
 		</div>
 		</form>
-		<div id="pagebar">
+		<div class="pagebar">
 			<%= request.getAttribute("pagebar") %>
 		</div>
     </div>

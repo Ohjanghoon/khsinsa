@@ -70,5 +70,6 @@ header span {
 /* footer */
 footer {
     background-color: lightslategray;
+    margin-top: 100px;
     height: 200px;
 }

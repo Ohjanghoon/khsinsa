@@ -28,10 +28,10 @@ if(loginUser != null){
  <div class="container">
         <div class="enroll_container">
             <h2>개인정보 수정</h2>
-            <form action="" name="enrollFrm">
+            <form action="<%=request.getContextPath() %>/mypage/myUserEdit" name="enrollFrm" method="post">
                     <div class="input_area">
                         <label>아이디</label>
-                        <input type="text" name="userId" id="userId" value="<%=loginUser.getUserId() %>" autocomplete="off" readonly required>
+                        <input type="text" name="userId" id="userId" value="<%=loginUser.getUserId() %>" readonly>
                     </div>
                     <br>
                     <span class="message_box" id="idMsg"></span>
@@ -46,20 +46,20 @@ if(loginUser != null){
                     <span class="message_box" id="nameMsg"></span>
                     <div class="input_area">
                         <label>생년월일</label>
-                        <input type="date" name="birth" id="birth" value="<%=loginUser.getUserBirthday() %>" min="1990-01-01" max="">
+                        <input type="date" name="birthday" id="birth" value="<%=loginUser.getUserBirthday() %>" min="1990-01-01" max="">
                     </div>
                     <br>
                     <div class="input_area phone_area">
                         <label>휴대전화</label>
                         <select name="phone1" id="phone1">
                             <option value="010">010</option>
-                            <option value="011">011</option>
+                       		<option value="011">011</option>
                             <option value="016">016</option>
                             <option value="017">017</option>
                             <option value="018">018</option>
-                            <option value="019">019</option>
+                            <option value="019">019</option> 
                         </select>
-                        <input type="text" name="phone2" id="phone2" value = "<%=loginUser.getUserPhone() %>" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
+                        <input type="text" name="phone2" id="phone2" value = "<%=loginUser.getUserPhone().substring(3,11) %>" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
                     </div>
                     <br>
                     <span class="message_box" id="phoneMsg"></span>

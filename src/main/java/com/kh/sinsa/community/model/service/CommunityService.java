@@ -1,9 +1,9 @@
 package com.kh.sinsa.community.model.service;
 
-import static com.kh.sinsa.common.JdbcTemplate.close;
-import static com.kh.sinsa.common.JdbcTemplate.commit;
-import static com.kh.sinsa.common.JdbcTemplate.getConnection;
-import static com.kh.sinsa.common.JdbcTemplate.rollback;
+
+
+import static com.kh.sinsa.common.JdbcTemplate.*;
+
 
 import java.sql.Connection;
 import java.util.List;
@@ -67,6 +67,40 @@ public Community findByNo(String no) {
 		List<CommunityComment> commentList = communityDao.findCommunityCommentByCommNo(conn, no);
 		close(conn);
 		return commentList;
+	}
+
+	public int insertCommunityComment(CommunityComment communityComment) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.insertCommunityComment(conn, communityComment);
+			commit(conn);
+		} 
+		catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);			
+		}
+		return result;	
+	}
+
+	public int deletecommunityComment(String no) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.deleteCommunityComment(conn, no);
+			commit(conn);
+		} 
+		catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);			
+		}
+		return result;
 	}
 
 	                                         

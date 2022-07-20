@@ -16,7 +16,7 @@
             <ul>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire">1:1문의</a></li>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity">커뮤니티</a></li>
-                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityReview">리뷰</a></li>
+                <li><a href="<%= request.getContextPath() %>/mypage/myCommunityReview" style="color: black">리뷰</a></li>
             </ul>
         </div>
 

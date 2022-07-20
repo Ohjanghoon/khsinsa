@@ -38,7 +38,7 @@ public class UserService {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-//			result = userDao.editSUser(conn, user);
+			result = userDao.editUser(conn, user);
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);

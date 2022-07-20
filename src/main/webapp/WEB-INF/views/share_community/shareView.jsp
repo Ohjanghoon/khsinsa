@@ -11,6 +11,7 @@
 <%
 Community community = (Community) request.getAttribute("community");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
+
 %>
 
 
@@ -48,6 +49,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 
 				</button>
 			</li>
+			<li id="date"><span>작성일 <%= new SimpleDateFormat("yy-MM-dd HH:mm").format(community.getCommDate()) %></span></li>
 			<hr style="color: gainsboro;">
 			<li style="margin-top: 50px; background-color: white; height: 500px;"><p>
 					<%=community.getCommContent()%>

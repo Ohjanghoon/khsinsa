@@ -4,7 +4,6 @@
 	href="<%=request.getContextPath()%>/css/share/shareAdd.css" />
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-
 <body>
 	<div id="container">
 		<div id="header1"></div>
@@ -20,13 +19,12 @@
 		</nav>
 		<form name="shareAddFrm"
 			action="<%=request.getContextPath()%>/share/shareAdd" 
-			method="post"
-			enctype="multipart/form-data">
+			method="post">
 			<h2 style="font-size: 30px; color: black;">정보공유 게시글 작성</h2>
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
-				<span class="dropdown"> <select name="one"
-					class="dropdown-select">
+				<span class="dropdown"> 
+				<select name="one" class="dropdown-select">
 						<option value="0">게시판 선택</option>
 						<option value="1">OOTD</option>
 						<option value="2">코디북</option>
@@ -37,12 +35,12 @@
 				</span> 
 				<br> 
 				
-				<input type="text" name="title" id="title" placeholder="제목 입력" required> 
+				<input type="text" name="title" id="title" placeholder="제목 입력"> 
 					
 				<br> 
 				<div id="writer">
 					<span style="margin-left:130px;">작성자 : </span>
-				<input type="text" name="writer" id="writer" value="<%=loginUser.getUserId()%>" style="border:0px;" readonly />
+				<input type="text" name="writer" id="writer" value="<%= loginUser.getUserId()%>" style="border:0px;" readonly />
 				</div>
 				<p>
 					<textarea name="content" cols="100" rows="50"></textarea>
@@ -62,14 +60,14 @@
 */
 document.shareAddFrm.onsubmit = (e) => {
 	const frm = e.target;
-	//제목을 작성하지 않은 경우 폼제출할 수 없음.
+	//제목을 작성하지 않은 경우
 	if(!/^.+$/.test(frm.title.value)){
 		alert("제목을 작성해주세요.");
 		frm.title.focus();
 		return false;
 	}
 	
-	//내용을 작성하지 않은 경우 폼제출할 수 없음.
+	//내용을 작성하지 않은 경우 
 	if(!/^(.|\n)+$/.test(frm.content.value)){
 		alert("내용을 작성해주세요.");
 		frm.content.focus();	

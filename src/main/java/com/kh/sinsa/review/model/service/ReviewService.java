@@ -1,7 +1,9 @@
 package com.kh.sinsa.review.model.service;
 
 import static com.kh.sinsa.common.JdbcTemplate.close;
+import static com.kh.sinsa.common.JdbcTemplate.commit;
 import static com.kh.sinsa.common.JdbcTemplate.getConnection;
+import static com.kh.sinsa.common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -26,6 +28,25 @@ public class ReviewService {
 		int totalReview = reviewDao.getTotalReview(conn, proNo);
 		close(conn);
 		return totalReview;
+	}
+
+	public int reviewRecommendUp(String reviewNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = reviewDao.favoriteAdd(conn,reviewNo);
+			commit(conn);
+			
+		} catch(Exception e) {
+			rollback(conn);
+			throw e;
+			
+		} finally {
+			close(conn);
+			
+		}
+		return result;
+	
 	}
 
 }

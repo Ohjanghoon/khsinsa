@@ -77,8 +77,6 @@
                 <img src="<%= request.getContextPath() %>/images/sizecheck.png" alt="">
             </div>
             <hr>
-             <button>👍 추천</button>
-           	 <button>🚨 신고</button>
             <section>
             		<br />
                     <h3>리뷰</h3>
@@ -128,9 +126,9 @@
 			success(response){
 				alert("관심상품 등록되었씁니다.");
 				
-				<%-- const body = document.querySelector("body");
+				 const body = document.querySelector("body");
 				
-				 const html = `
+				 <%-- const html = `
 					<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
 					  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
 					    <div class="toast-header">
@@ -155,7 +153,7 @@
 				
 				    toast.show()
 				  })
-				} --%>
+				}  --%>
 			},
 			error : console.log,
 		})
@@ -191,6 +189,8 @@
 								<span class="photoDate">\${reviewDate}</span>
 							</p>
 							<p class="caption">\${reviewContent}</p>
+							<input type="button" id="reviewRecommend" value="👍\${reviewRecommend}"/>
+							<input type="button" id="reprot" value="🚨"/>
 						</div>
 						`;
 						container.insertAdjacentHTML('beforeend', html);
@@ -205,6 +205,22 @@
 					if(cPage == <%= totalPage %>){
 						document.querySelector("#btn-more").disabled = true;
 					}
+					
+					// 리뷰 추천
+					document.querySelector("#reviewRecommend").addEventListener('click', (e) => {
+						$.ajax({
+							url : '<%= request.getContextPath() %>/review/reviewRecommendUp',
+							method : 'POST',
+							data : {${reviewNo}},
+							success(response){
+								alert("해당 리뷰를 추천하였습니다.");
+							},
+							error : console.log
+						})
+					});
+					
+					
+					
 				}
 			});
 		};
@@ -213,6 +229,7 @@
 			const cPage = Number(document.querySelector("#cPage").textContent) + 1;
 			getPage(cPage);
 		});	
+		
 	
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

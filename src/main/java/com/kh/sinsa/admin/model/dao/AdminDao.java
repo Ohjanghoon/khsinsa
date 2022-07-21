@@ -35,6 +35,8 @@ import com.kh.sinsa.admin.model.exception.AdminException;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.exception.CommunityException;
 
+import com.kh.sinsa.order.model.dto.Order;
+
 
 public class AdminDao {
 	private Properties prop = new Properties();
@@ -819,9 +821,89 @@ public int insertInquire(Connection conn, InquireExt inquire) {
 //	return result;
 //}
 
-}
+
 
 // ##########Inquire ends#############
+
+//##########Order begins#############
+
+
+private Order handleOrderResultSet(ResultSet rset) throws SQLException {
+	int orderNo = rset.getInt("order_no"); 
+	String userId = rset.getString("user_id");
+	String proNo = rset.getString("pro_no");
+	String orderAddress = rset.getString("order_address");
+	String orderPhone = rset.getString("order_phone");
+	String orderEmail = rset.getString("order_email");
+	Timestamp orderDate = rset.getTimestamp("order_date");
+	String orderReq = rset.getString("order_req");
+	int orderPrice = rset.getInt("order_price");
+	String orderStatus = rset.getString("order_status");
+	int orderAmount = rset.getInt("order_amount");
+	return new Order(orderNo, userId, proNo, orderAddress, orderPhone, orderEmail,
+				     orderDate, orderReq, orderPrice, orderStatus, orderAmount); }
+
+//order_no number,
+//user_id varchar2(100) not null,
+//pro_no varchar2(100) not null,
+//order_address varchar2(50) not null,
+//order_phone varchar2(11) not null,
+//order_email varchar2(100) not null,
+//order_date date default current_date,
+//order_req varchar2(100) not null,
+//order_price number not null,
+//order_status varchar2(100) not null, 
+//order_amount number default 1,
+ 
+
+public List<Order> orderFindAll(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<Order> orderlist = new ArrayList<>();
+	String sql = prop.getProperty("orderFindAll");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, (int) param.get("start"));
+		pstmt.setInt(2, (int) param.get("end"));
+		rset = pstmt.executeQuery();
+
+		while (rset.next()) {
+			Order order = handleOrderResultSet(rset);
+			orderlist.add(order);
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return orderlist;
+}
+
+public int orderGetTotalContent(Connection conn) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	int orderTotalContent = 0;
+	String sql = prop.getProperty("orderGetTotalContent");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		rset = pstmt.executeQuery();
+		if (rset.next())
+			orderTotalContent = rset.getInt(1);
+	} catch (SQLException e) {
+		throw new UserException("전체 주문 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return orderTotalContent;
+}}
+//##########Order ends#############
+
+
 
 
 

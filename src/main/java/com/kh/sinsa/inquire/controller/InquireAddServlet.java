@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.sinsa.inquire.model.dto.InquireExt;
+import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.service.InquireService;
 
 /**
@@ -46,8 +46,8 @@ public class InquireAddServlet extends HttpServlet {
 			String inquireContent = request.getParameter("inquireContent");
 			String inquireCategory = request.getParameter("inquireCategory");
 			
-			
-			InquireExt inquire = new InquireExt(null, userId, null, inquireTitle, inquireContent, null ,inquireCategory);
+		System.out.println("inquireContent =" + inquireContent);
+			Inquire inquire = new Inquire(null, userId, null, inquireTitle, inquireContent, null ,inquireCategory);
 	
 			
 //			Enumeration<String> filenames = multiReq.getFileNames();
@@ -65,7 +65,7 @@ public class InquireAddServlet extends HttpServlet {
 			
 			// 2. 업무로직
 			int result = inquireService.insertInquire(inquire);
-			
+			System.out.println(result);
 			// 3. redirect
 			request.getSession().setAttribute("msg", "게시글을 성공적으로 등록했습니다.");
 			response.sendRedirect(request.getContextPath() + "/inquire/inquireList");

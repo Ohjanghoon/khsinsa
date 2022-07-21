@@ -80,7 +80,7 @@ window.addEventListener('load', (e) => {
 				<div id="search-inquireTitle" class="search-type">
 					<form action="<%=request.getContextPath()%>/inquire/inquireViewSh">
 						<input type="hidden" name="searchType" value="inquire_title" /> <input
-							type="text" name="searchKeyword"
+							type="text" name="searchTitle" id="searchType"
 							value="<%="inquire_title".equals(type) ? kw : ""%>" />
 						<button type="submit">검색</button>
 					</form>
@@ -89,7 +89,7 @@ window.addEventListener('load', (e) => {
 				<div id="search-inquireNo" class="search-type">
 					<form action="<%=request.getContextPath()%>/inquire/inquireViewSh">
 						<input type="hidden" name="searchType" value="inquire_no" /> <input
-							type="text" name="searchKeyword"
+							type="text" name="searchNo"  id="searchType"
 							value="<%="inquire_no".equals(type) ? kw : ""%>" />
 						<button type="submit">검색</button>
 
@@ -99,7 +99,7 @@ window.addEventListener('load', (e) => {
 				<div id="search-userId" class="search-type">
 					<form action="<%=request.getContextPath()%>/inquire/inquireViewSh">
 						<input type="hidden" name="searchType" value="user_id" /> <input
-							type="text" name="searchKeyword"
+							type="text" name="searchId"	id="searchType"
 							value="<%="user_id".equals(type) ? kw : ""%>" />
 						<button type="submit">검색</button>
 

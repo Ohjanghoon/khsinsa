@@ -18,10 +18,8 @@ public class inquireViewServlet extends HttpServlet {
     private InquireService inquireService = new InquireService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try {
 		String inquireNo = request.getParameter("inquireNo");
-		
 		
 		Inquire inquire = inquireService.findByNo(inquireNo);
 		System.out.println("inquire " + inquire);
@@ -29,7 +27,6 @@ public class inquireViewServlet extends HttpServlet {
 		request.setAttribute("inquire", inquire);
 		request.getRequestDispatcher("/WEB-INF/views/inquire/inquireView.jsp")
 	      .forward(request, response);
-		
 	}catch(Exception e) {
 			e.printStackTrace();
 			throw e;

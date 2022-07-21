@@ -43,8 +43,8 @@ for(ProductAttachment att : attachList) {
 	                <h5>배송비</h5>
 	                <p>무료</p>
 	               	<h5>옵션</h5>
-	                <select class="form-select" aria-label="Default select example" id="size" name="size">
-	                    <option selected>사이즈를 선택해주세요.</option>
+	                <select class="form-select" aria-label="Default select example" id="size" name="size" required>
+	                    <option selected disabled>사이즈를 선택해주세요.</option>
 	                    <option value="L">L</option>
 	                    <option value="M">M</option>
 	                    <option value="S">S</option>
@@ -101,6 +101,13 @@ for(ProductAttachment att : attachList) {
         </div>
 </main>
 <script>
+	
+	if($("[name='size').val().length==0) {
+		  alert("사이즈를 선택하세요.");
+		  return;
+		});
+
+
 	document.querySelector('#plus').addEventListener('click', (e) => {
 		document.querySelector('#orderAmount').value++;
 	});

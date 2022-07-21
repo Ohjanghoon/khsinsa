@@ -86,6 +86,8 @@ textarea{
     height: 56px;
 }
 
+table#tbl-comment textarea{margin: 4px 0 0 0;}
+table#tbl-comment button.btn-comment-enroll2{width:60px; height:23px; color:white; background:#3300ff; position:relative; top:-5px; left:10px;}
 
 /* footer */
 footer {

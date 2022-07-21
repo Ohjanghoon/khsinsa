@@ -31,8 +31,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 
 
 	</div>
-	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">
-		정보공유 게시판 <span style="font-size: 18px;"> Share Information</span>
+	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">정보공유 게시판 <span style="font-size: 18px;"> Share Information</span>
 	</h2>
 	<hr style="border-top: 3px solid rgb(101, 101, 252);">
 	<div class="main">
@@ -40,20 +39,36 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 		<ul>
 			<li id="title"><h2><%=community.getCommTitle()%></h2></li>
 			<li id="writer"><h3><%=community.getUserId()%></h3></li>
-			<li id="readCount">조회수 : <%=community.getCommReadCount()%> | 추천수
-				: <%=community.getCommRecommand()%>
+			<li id="readCount">조회수 : <%=community.getCommReadCount()%> | 추천수 : <%=community.getCommRecommand()%>
+				
 				<button id="good" style="border: 0; background-color: white;">
-
-					<img src="<%=request.getContextPath()%>/images/emptyHeart.png"
-						alt="버튼" style="width: 20px; height: 20px;">
-
+					<img src="<%=request.getContextPath()%>/images/emptyHeart.png" alt="버튼" style="width: 20px; height: 20px;">
 				</button>
 			</li>
-			<li id="date"><span>작성일 <%= new SimpleDateFormat("yy-MM-dd HH:mm").format(community.getCommDate()) %></span></li>
+			
+			<li id="date">
+				<span>작성일 <%= new SimpleDateFormat("yy-MM-dd HH:mm").format(community.getCommDate()) %></span>
+			</li>
+			
 			<hr style="color: gainsboro;">
+			
 			<li style="margin-top: 50px; background-color: white; height: 500px;"><p>
 					<%=community.getCommContent()%>
 				</p></li>
+		<%
+			boolean canEdit = loginUser != null && 
+						(loginUser.getUserId().equals(community.getUserId()) 
+								|| loginUser.getUserRole() == UserRole.A);
+			if(canEdit){ 
+		%>
+
+			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
+			<li>
+				<input type="button" value="수정하기" onclick="editCommunity()">
+				<input type="button" value="삭제하기" onclick="deleteCommunity()">
+			</li>
+		
+		<% } %>
 
 			<hr>
 
@@ -65,13 +80,11 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 						<form name="communityCommentFrm"
 							action="<%=request.getContextPath()%>/share/shareCommentAdd"
 							method="post">
-							<input type="hidden" name="commNo"
-								value="<%=community.getCommNo()%>" /> <input type="hidden"
-								name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" /> <input
-								type="hidden" name="commentLevel" value="1" /> <input
-								type="hidden" name="commentRef" value="0" />
-							<textarea name="content" cols="60" rows="3"
-								placeholder="댓글을 입력하세요."></textarea>
+								<input type="hidden" name="commNo" value="<%=community.getCommNo()%>" /> 
+								<input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
+							<input type="hidden" name="commentLevel" value="1" /> 
+							<input type="hidden" name="commentRef" value="0" />
+							<textarea name="content" cols="60" rows="3" placeholder="댓글을 입력하세요."></textarea>
 							<button type="submit" id="btn-comment-enroll1">등록</button>
 							<br>
 						</form>
@@ -87,26 +100,24 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 						<tr
 							class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
 						<tr class="">
-							<td><sub class="comment-writer"><%=cc.getUserId()%></sub> <sub
-								class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
+							<td>
+							<sub class="comment-writer"><%=cc.getUserId()%></sub> 
+							<sub class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
 								<div>
 									<p><%= cc.getCommentContent() %></p>
 
-								</div></td>
+								</div>
+							</td>
+							
 							<td>
-								<%
-									if (cc.getCommentLevel() == CommentLevel.COMMENT) {
-								%>
-								<button class="btn-reply" value="<%= cc.getNo()%>"
-									style="margin-top: 30px;">답글</button> <%
- 									}
-								 %> <%
- 										if (canDelete) {
- 									%>
+								<% if (cc.getCommentLevel() == CommentLevel.COMMENT) { %>
+								<button class="btn-reply" value="<%= cc.getNo()%>" style="margin-top: 30px;">답글</button> 
+								<% } %> 
+								
+								<% if (canDelete) { %>
 								<button class="btn-delete" value="<%= cc.getNo()%>"
-									style="margin-top: 30px;">삭제</button> <%
- 										}
-								 %>
+									style="margin-top: 30px;">삭제</button> 
+									<% } %>
 							</td>
 						</tr>
 						<%
@@ -122,11 +133,9 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 	</div>
 
 </div>
-<form 
-	action="<%= request.getContextPath() %>/share/shareCommentDelete"
-	method="post" 
-	name="shareCommentDelFrm">
-	<input type="hidden" name="no" />	
+<form action="<%= request.getContextPath() %>/share/shareCommentDelete"
+	method="post" name="shareCommentDelFrm">
+	<input type="hidden" name="no" />
 </form>
 
 <script>
@@ -141,8 +150,57 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
 	});
 });
 
+document.querySelectorAll(".btn-reply").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		<% if(loginUser == null){%>
+			loginAlert(); return;
+		<% } %>
+		
+		const {value} = e.target;
+		console.log(value);
+		
+		const tr = `
+		<tr>
+			<td colspan="2" style="text-align:left;">
+				<form
+		        	name="communityCommentFrm"
+					action="<%=request.getContextPath()%>/share/shareCommentAdd" 
+					method="post">
+		            <input type="hidden" name="commNo" value="<%= community.getCommNo() %>" />
+		            <input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
+		            <input type="hidden" name="commentLevel" value="2" />
+		            <input type="hidden" name="commentRef" value="\${value}" />    
+					<textarea name="content" cols="60" rows="1"></textarea>
+		            <button type="submit" class="btn-comment-enroll2">등록</button>
+		        </form>
+			</td>
+		</tr>`;
+		
+        const target = e.target.parentElement.parentElement; 
+        target.insertAdjacentHTML('afterend', tr);
+        
+	}, {once: true});
+});
+
+document.addEventListener('submit', (e) => {
+if(e.target.matches("form[name=communityCommentFrm]")){		
+	if(<%=loginUser == null%>){
+		loginAlert();
+		e.preventDefault();
+		return;		
+	}
+	
+	if(!/^(.|\n)+$/.test(e.target.content.value)){
+		alert("내용을 작성해주세요.");
+		e.preventDefault();
+		return;			
+	}
+}
+
+});
+
 document.communityCommentFrm.content.addEventListener('focus', (e) => {
-	if(<%= loginUser == null %>)
+	if(<%=loginUser == null%>)
 		loginAlert();
 });
 
@@ -150,6 +208,24 @@ const loginAlert = () => {
 	alert("로그인후 이용할 수 있습니다.");
 	document.querySelector("#btn-comment-enroll1").focus();
 };
+</script>
+
+<form 
+	action="<%= request.getContextPath() %>/share/shareDelete"
+	method="post" 
+	name="shareDelFrm">
+	<input type="hidden" name="no" value="<%= community.getCommNo() %>" />
+</form>
+<script>
+const deleteCommunity = () => {
+	if(confirm("게시글을 삭제하시겠습니까?"))
+		document.shareDelFrm.submit();
+};
+
+const editCommunity = () => {
+	location.href = "<%= request.getContextPath() %>/share/shareEdit?no=<%= community.getCommNo() %>";	
+};
+
 </script>
 
 

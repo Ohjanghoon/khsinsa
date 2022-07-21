@@ -32,6 +32,7 @@ public class CommunityCommentAddServlet extends HttpServlet {
 			CommentLevel commentLevel = CommentLevel.valueOf(Integer.parseInt(request.getParameter("commentLevel")));
 			String commentRef = request.getParameter("commentRef");
 			CommunityComment communityComment = new CommunityComment(null, commNo, writer, content, null, commentLevel, commentRef);
+			System.out.println("ccccc : " + communityComment);
 			
 			// 2. 업무로직
 			int result = communityService.insertCommunityComment(communityComment);

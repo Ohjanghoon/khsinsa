@@ -25,16 +25,14 @@
             <h3><%= product.getProName() %></h3>
             <div class="product-img">
 <% 
-for(ProductAttachment att : attachList) {
+	for(ProductAttachment att : attachList) {
 %>
 				<img src="<%= request.getContextPath() %>/upload/product/<%= att.getProOriginalFilename() %>" alt="">
 <% 
- break; } 
+	break; } 
 %>
             </div>
-          	 <form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
 	            <div class="product-text">
-          	 	<input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
 	                <h4>Product Info</h4>
 	                <h5>상품</h5>
 	                <p><%= product.getProName() %></p>
@@ -43,6 +41,8 @@ for(ProductAttachment att : attachList) {
 	                <h5>배송비</h5>
 	                <p>무료</p>
 	               	<h5>옵션</h5>
+          	 <form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
+          	 	<input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
 	                <select class="form-select" aria-label="Default select example" id="size" name="size" required>
 	                    <option selected disabled>사이즈를 선택해주세요.</option>
 	                    <option value="L">L</option>
@@ -55,12 +55,14 @@ for(ProductAttachment att : attachList) {
                     <button id="plus" type="button">+</button>
                     <h5>상품 금액</h5>
                     <p><%= product.getProPrice() %>원</p>
-                    <button id="buy">구매하기</button>
-                    <button>찜하기</button>
-                    <button>장바구니 담기</button>
-	            </div>
+                    <button>구매하기</button>
              </form>
-            <hr>
+             <input type="button" id="liveToastBtn" value="❤️"/>
+             <form action="">
+             	<button>🛒 장바구니에 담기</button>
+             </form>
+	         </div>
+            <hr>            
 <% 
 	if(attachList != null && !attachList.isEmpty()){ 
 		for(ProductAttachment pa : attachList){
@@ -84,12 +86,13 @@ for(ProductAttachment att : attachList) {
                     <h3>리뷰</h3>
                     <div class="btn-more-container" id="photo-container">
  <% if(totalPage != 0) { %>
-                    <button id="btn-more">더보기 ✒️</button>
+                    <button id="btn-more">리뷰 보기 ✒️</button>
                     <span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>
  <%
 	 } else {
  %>
  					<br />
+ 					<input type="hidden" id="btn-more"/>
  					<h5>아직 리뷰가 없습니다. 고객님의 소중한 리뷰를 작성해주세요. </h5>
  					<br />
  <%
@@ -101,25 +104,60 @@ for(ProductAttachment att : attachList) {
         </div>
 </main>
 <script>
+	 /* 상품 좋아요.. */
+	document.querySelector('#liveToastBtn').addEventListener('click', (e) => {
+		
+		$.ajax({
+			url : '<%= request.getContextPath() %>/favorite/favoriteAdd',
+			method : 'POST',
+			data : {proNo : "<%= proNo %>", userId : "<%= loginUser.getUserId() %>"},
+			success(response){
+				alert("관심상품 등록되었씁니다.");
+				
+				<%-- const body = document.querySelector("body");
+				
+				 const html = `
+					<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+					  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+					    <div class="toast-header">
+					      <img src='<%= request.getContextPath() %>/images/realheart.png' class="rounded me-2" alt="...">
+					      <strong class="me-auto">주신사</strong>
+					      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+					    </div>
+					    <div class="toast-body">
+					      관심 상품에 등록되었습니다. 🥰
+					    </div>
+					  </div>
+					</div>
+				`;
+				
+				body.insertAdjacentHTML('beforeend', html);
+				
+				var toastTrigger = document.getElementById('liveToastBtn')
+				var toastLiveExample = document.getElementById('liveToast')
+				if (toastTrigger) {
+				  toastTrigger.addEventListener('click', function () {
+				    var toast = new bootstrap.Toast(toastLiveExample)
+				
+				    toast.show()
+				  })
+				} --%>
+			},
+			error : console.log,
+		})
+	});
+
 	
-	if($("[name='size').val().length==0) {
-		  alert("사이즈를 선택하세요.");
-		  return;
-		});
-
-
+	/* 벨류값 증가 */
 	document.querySelector('#plus').addEventListener('click', (e) => {
 		document.querySelector('#orderAmount').value++;
 	});
 	document.querySelector('#minus').addEventListener('click', (e) => {
 		document.querySelector('#orderAmount').value--;
 	});
-
-	document.querySelector("#btn-more").addEventListener('click', (e) => {
-		const proNo = '<%= proNo %>';
-		const cPage = Number(document.querySelector("#cPage").textContent) + 1;
-		getPage(cPage);
-	});
+	
+	
+	 /* 리뷰 비동기 처리 */
 	const getPage = (cPage,proNo) => {
 			$.ajax({
 				url : '<%= request.getContextPath() %>/review/reviewList',
@@ -156,6 +194,11 @@ for(ProductAttachment att : attachList) {
 				}
 			});
 		};
-	getPage(1);
+		
+		document.querySelector("#btn-more").addEventListener('click', (e) => {
+			const cPage = Number(document.querySelector("#cPage").textContent) + 1;
+			getPage(cPage);
+		});	
+	
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

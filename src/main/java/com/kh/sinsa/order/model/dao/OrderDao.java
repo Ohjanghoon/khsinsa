@@ -21,7 +21,6 @@ public class OrderDao {
 			prop.load(new FileReader(filename));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("하이~");
 		}
 	}
 

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.sinsa.user.model.dto.User;
+
 
 /**
  * Servlet Filter implementation class LoginFilter
@@ -20,8 +22,7 @@ import javax.servlet.http.HttpSession;
  * @WebFilter#urlPatterns
  * @WebFilter#value (속성명을 생략하고 저장가능)
  */
-@WebFilter({
-			})
+@WebFilter({"/order/khOrder", "/product/order"})
 public class LoginFilter implements Filter {
 
     /**
@@ -47,16 +48,16 @@ public class LoginFilter implements Filter {
 		HttpServletResponse httpRes = (HttpServletResponse) response;
 		HttpSession session = httpReq.getSession();
 		
-		/* 수정
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		User loginUser = (User) session.getAttribute("loginUser");
 		
 		
-		if(loginMember == null) {
+		if(loginUser == null) {
 			session.setAttribute("msg", "로그인후 이용할 수 있습니다.");
 			httpRes.sendRedirect(httpReq.getContextPath() + "/");
 			return;
 		}
-		*/
+		
 		chain.doFilter(request, response);
 	}
 

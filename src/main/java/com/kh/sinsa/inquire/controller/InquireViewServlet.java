@@ -13,7 +13,7 @@ import com.kh.sinsa.inquire.model.service.InquireService;
 
 
 @WebServlet("/inquire/inquireView")
-public class InquireViewServlet extends HttpServlet {
+public class inquireViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private InquireService inquireService = new InquireService();
 

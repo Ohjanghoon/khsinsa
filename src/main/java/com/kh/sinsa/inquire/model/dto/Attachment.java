@@ -3,65 +3,52 @@ package com.kh.sinsa.inquire.model.dto;
 
 
 public class Attachment {
-	private int no;
-	private int boardNo;
-	private String originalFilename;
-	private String renamedFilename;
-
+	private String inqAttachmentNo;
+	private String inquireNo;
+	private String inqOriginalFilename;
+	private String inqRenamedFilename;
 	public Attachment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public Attachment(int no, int boardNo, String originalFilename, String renamedFilename) {
+	public Attachment(String inqAttachmentNo, String inquireNo, String inqOriginalFilename, String inqRenamedFilename) {
 		super();
-		this.no = no;
-		this.boardNo = boardNo;
-		this.originalFilename = originalFilename;
-		this.renamedFilename = renamedFilename;
-	
+		this.inqAttachmentNo = inqAttachmentNo;
+		this.inquireNo = inquireNo;
+		this.inqOriginalFilename = inqOriginalFilename;
+		this.inqRenamedFilename = inqRenamedFilename;
 	}
-
-	public int getNo() {
-		return no;
+	public String getInqAttachmentNo() {
+		return inqAttachmentNo;
 	}
-
-	public void setNo(int no) {
-		this.no = no;
+	public void setInqAttachmentNo(String inqAttachmentNo) {
+		this.inqAttachmentNo = inqAttachmentNo;
 	}
-
-	public int getBoardNo() {
-		return boardNo;
+	public String getInquireNo() {
+		return inquireNo;
 	}
-
-	public void setBoardNo(int boardNo) {
-		this.boardNo = boardNo;
+	public void setInquireNo(String inquireNo) {
+		this.inquireNo = inquireNo;
 	}
-
-	public String getOriginalFilename() {
-		return originalFilename;
+	public String getInqOriginalFilename() {
+		return inqOriginalFilename;
 	}
-
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
+	public void setInqOriginalFilename(String inqOriginalFilename) {
+		this.inqOriginalFilename = inqOriginalFilename;
 	}
-
-	public String getRenamedFilename() {
-		return renamedFilename;
+	public String getInqRenamedFilename() {
+		return inqRenamedFilename;
 	}
-
-	public void setRenamedFilename(String renamedFilename) {
-		this.renamedFilename = renamedFilename;
+	public void setInqRenamedFilename(String inqRenamedFilename) {
+		this.inqRenamedFilename = inqRenamedFilename;
 	}
-
-
-
 	@Override
 	public String toString() {
-		return "Attachment [no=" + no + ", boardNo=" + boardNo + ", originalFilename=" + originalFilename
-				+ ", renamedFilename=" + renamedFilename +"]";
+		return "Attachment [inqAttachmentNo=" + inqAttachmentNo + ", inquireNo=" + inquireNo + ", inqOriginalFilename="
+				+ inqOriginalFilename + ", inqRenamedFilename=" + inqRenamedFilename + "]";
 	}
-	
+
+
 	
 	
 	

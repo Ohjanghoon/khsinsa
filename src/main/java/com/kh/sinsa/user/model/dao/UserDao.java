@@ -169,6 +169,30 @@ public class UserDao {
 
 		return result;
 	}
+
+	public User findByEmail(Connection conn, String userEmail) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User user = null;
+		String sql = prop.getProperty("findByEmail");
+		//findByEmail = select * from kh_user where user_email = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userEmail);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				user = handleUserResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new UserException("회원 이메일 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return user;
+	}
 	// ##########janghoon UserDao end#############
 
 }

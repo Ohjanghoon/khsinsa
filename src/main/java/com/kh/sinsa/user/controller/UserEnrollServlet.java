@@ -24,31 +24,13 @@ import com.kh.sinsa.user.model.service.UserService;
 public class UserEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService userService = new UserService();
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		try {
-			
-			//1. 업무로직 
-			List<User> list = userService.findAll();
-			
-			request.setAttribute("list", list);
-			request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-			
-		}
-	
-		
-		
-		
-		
+        request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -70,7 +52,7 @@ public class UserEnrollServlet extends HttpServlet {
 			//주소
 			String roadAddr = request.getParameter("roadAddr");
 			String roadDetail = request.getParameter("roadDetail");
-			String userAddress = roadAddr + " " + roadDetail;
+			String userAddress = roadAddr + "+" + roadDetail;
 			
 			User user = new User(userId, userPwd, userName, null, userBirth, null, userEmail, userPhone, userAddress, null);
 			System.out.println("user@UserEnrollServlet = " + user);

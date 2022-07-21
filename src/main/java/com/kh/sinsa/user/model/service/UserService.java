@@ -74,8 +74,15 @@ public class UserService {
 		}
 		return result;
 	}
-	// ##########janghoon UserService end#############
 
+	public User findByEmail(String userEmail) {
+		Connection conn = getConnection();
+		User user = userDao.findByEmail(conn, userEmail);
+		close(conn);
+		return user;
+	}
+
+	// ##########janghoon UserService end#############
 
 	
 }

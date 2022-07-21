@@ -10,24 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class InquireAddServlet
  */
-@WebServlet("/inquire/inquireEdit")
-public class InquireEditServlet extends HttpServlet {
+@WebServlet("/inquire/inquireAdd")
+public class InquireAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public InquireEditServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/inquire/inquireEdit.jsp")
-	      .forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/inquire/inquireAdd.jsp")
+		.forward(request, response);
 	}
 
 	/**

@@ -40,7 +40,7 @@ public class Inquire {
 		this.inquireNo = inquireNo;
 	}
 
-	public String getUserId() {
+	public  String getUserId() {
 		return userId;
 	}
 

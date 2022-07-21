@@ -24,6 +24,8 @@ public class CommunityCommentAddServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int result = 0;
+		
 		try {
 			// 1. 사용자 입력값 처리
 			String commNo = request.getParameter("commNo");
@@ -35,7 +37,10 @@ public class CommunityCommentAddServlet extends HttpServlet {
 			System.out.println("ccccc : " + communityComment);
 			
 			// 2. 업무로직
-			int result = communityService.insertCommunityComment(communityComment);
+
+			result = communityService.insertCommunityComment(communityComment);
+
+
 			
 			// 3. redirect 응답
 			response.sendRedirect(request.getContextPath() + "/share/shareView?no=" + commNo);

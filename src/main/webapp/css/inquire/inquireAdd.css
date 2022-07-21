@@ -3,6 +3,7 @@
 body {
 	width: 1024px;
 	margin: 0 auto;
+	
 }
 
 ul, li {
@@ -87,4 +88,8 @@ button {
 
 .form-select {
 	width: 150px;
+}
+.writerFrm{
+	width: 150px;
+	
 }

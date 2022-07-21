@@ -1,5 +1,6 @@
 package com.kh.sinsa.inquire.model.dao;
 
+
 import static com.kh.sinsa.common.JdbcTemplate.close;
 
 import java.io.FileReader;
@@ -17,6 +18,8 @@ import java.util.Properties;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.inquire.model.exception.InquireException;
+
+
 
 public class InquireDao {
 
@@ -157,26 +160,26 @@ public class InquireDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Inquire inquire = null;
-		String sql = prop.getProperty("findByNo");	
+		String sql = prop.getProperty("findByNo");
 		// select * from inquire where inquire_no = ?
-	
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, inquireNo);
-			
+
 			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
+
+			while (rset.next()) {
 				inquire = handleInquireResultSet(rset);
 			}
-			
+
 		} catch (SQLException e) {
 			throw new InquireException("게시 조회 오류!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return inquire;
 	}
 
@@ -184,21 +187,79 @@ public class InquireDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("deleteInquire");
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, inquireNo);
 			result = pstmt.executeUpdate();
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			throw new InquireException("1:1문의 삭제 오류");
+		} finally {
+			close(pstmt);
 		}
-		finally {
-		close(pstmt);
-	}	
 		return result;
 	}
 
-	
+	public String getLastInquireNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String inquireNo = "";
+		String sql = prop.getProperty("getLastInquireNo");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next())
+				inquireNo = rset.getString(1);
+		} catch (SQLException e) {
+			throw new InquireException("게시글번호 오류 ");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return inquireNo;
+	}
+
+	public int insertInquire(Connection conn, InquireExt inquire) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertInquire");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, inquire.getUserId());
+			pstmt.setString(2, inquire.getInquireTitle());
+			pstmt.setString(3, inquire.getInquireContent());
+			pstmt.setString(4, inquire.getInquireCategory());
+			result = pstmt.executeUpdate();
+			
+		} 
+		catch (SQLException e) {
+			throw new InquireException("게시글 등록 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+//	public int insertAttachment(Connection conn, Attachment attach) {
+//		PreparedStatement pstmt = null;
+//		int result = 0;
+//		String sql = prop.getProperty("insertAttachment");
+//
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, attach.getInquireNo());
+//			pstmt.setString(2, attach.getInqOriginalFilename());
+//			pstmt.setString(3, attach.getInqRenamedFilename());
+//			result = pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			throw new InquireException("첨부파일 오류 ");
+//		} finally {
+//			close(pstmt);
+//		}
+//		return result;
+//	}
 
 }

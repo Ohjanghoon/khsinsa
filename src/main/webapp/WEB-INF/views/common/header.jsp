@@ -40,7 +40,7 @@
         <nav>
             <li><a href="<%= request.getContextPath() %>/product/productList">SHOP</a></li>
             <li><a href="#">COMMUNITY</a></li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="<%= request.getContextPath() %>/inquire/inquireList">고객센터</a></li>
         </nav>
             <li id="logo"><img src="<%= request.getContextPath() %>/images/logo.png" onclick="location.href='<%= request.getContextPath() %>'"></li>
         <nav>

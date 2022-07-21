@@ -16,7 +16,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/adminpage/adminpage.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/adminpage.css">
 
 <script>
 window.addEventListener('load', (e) => {
@@ -35,20 +35,20 @@ window.addEventListener('load', (e) => {
 </script>
 
 <div align="center" id="body">
-  <br>
-  <class = "adminpage"><h1>ADMIN PAGE</h1></class>
-  <ul class = "ul">
-      <adminmenu>
-      <li><a href="#">회원 관리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/orderManagement.jsp">주문 관리</a></li>
-      <li class = :"li"><a href="<%= request.getContextPath() %>/StatisticsView.jsp">통계 관리</a></li>
-  </adminmenu>
-  </ul>
-  <br>
-  <a><center>회원 관리</center></a>
-  <br>
+            <br>
+            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
+            <ul class = "ul">
+                <adminmenu>
+                <li><a>회원 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+            </adminmenu>
+            </ul>
+            <br><br><br><br><br>
+            <a><center>회원 관리</center></a>
+            <br>
  <!-- 검색창 -->
 	<div id="search-container">
 		<label for="searchType">검색타입 :</label> 

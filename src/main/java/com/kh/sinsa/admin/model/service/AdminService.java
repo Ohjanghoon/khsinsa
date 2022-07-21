@@ -20,6 +20,7 @@ import com.kh.sinsa.product.model.dto.ProductExt;
 import com.kh.sinsa.inquire.model.dto.Attachment;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
+import com.kh.sinsa.order.model.dto.Order;
 
 public class AdminService {
 
@@ -303,7 +304,24 @@ public class AdminService {
 			return result;
 		}
 
-	}
+	
 		
 	// ##########jaekyung InquireService ends#############
 
+// ##########jaekyung OrderService begins#############
+
+public List<Order> orderFindAll(Map<String, Object> param) {
+	Connection conn = getConnection();
+	List<Order> orderlist = adminDao.orderFindAll(conn, param);
+	close(conn);
+	return orderlist;
+}
+
+public int orderGetTotalContent() {
+	Connection conn = getConnection();
+	int orderTotalContent = adminDao.orderGetTotalContent(conn);
+	close(conn);
+	return orderTotalContent;
+}}
+
+//##########jaekyung OrderService ends#############

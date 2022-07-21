@@ -118,7 +118,7 @@ public class MypageDao {
 				result = pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
-			throw new MypageException("1:1문의글 삭제 오류", e);
+			throw new MypageException("내 문의글 삭제 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -187,6 +187,28 @@ public class MypageDao {
 		return totalMyCommunityContent;
 	}
 
+	//내 커뮤니티글 삭제
+	public int myCommunityDelete(Connection conn, String[] communityList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("myCommunityDelete");
+		// myCommunityDelete = delete from community where comm_no = ?
+		try {
+			for(String commNo : communityList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setObject(1, commNo);
+
+				result = pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw new MypageException("내 커뮤니티글 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//내 리뷰글 조회
 	public List<Review> reviewListFindById(Connection conn, String userId, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -228,7 +250,8 @@ public class MypageDao {
 		
 		return new Review(reviewNo, proNo, orderNo, reviewWriter, reviewContent, reviewOriginalFilename, reviewRenamedFilename, reviewDate, reviewRecommend);
 	}
-
+	
+	//내 리뷰글 수 조회
 	public int getTotalMyReviewContent(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -252,6 +275,29 @@ public class MypageDao {
 		}
 		return totalMyReviewContent;
 	}
+
+	//내 리뷰글 삭제
+	public int myReviewDelete(Connection conn, String[] reviewList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("myReviewDelete");
+		// myReviewDelete = delete from review where review_no = ?
+		try {
+			for(String reviewNo : reviewList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setObject(1, reviewNo);
+
+				result = pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw new MypageException("내 리뷰글 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 	
 	//##########janghoon MypageDao end#############
 }

@@ -49,7 +49,7 @@ window.addEventListener('load', (e) => {
 </script>
 
 
-<div class="header">1:1문의</div>
+<div class="header1">1:1문의</div>
 
 <div class="container">
 	<div class="th">
@@ -124,7 +124,7 @@ window.addEventListener('load', (e) => {
 	</div>
 
 	<%
-	if(list != null && !list.isEmpty()){
+	
 	for (InquireExt iq : list) {
 	%>
 	<div class="container">
@@ -135,6 +135,7 @@ window.addEventListener('load', (e) => {
 				</div>
 				<div class="col-lg-4">
 					<a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= iq.getInquireNo()%>"><%=iq.getInquireTitle()%></a>
+					
 				</div>
 				<div class="col-lg-2">
 					<span><%=iq.getUserId()%></span>
@@ -156,7 +157,7 @@ window.addEventListener('load', (e) => {
 	</div>
 	<%
 		}
-	}
+	
 	%>
 	<div class="container">
 		<div class="td">

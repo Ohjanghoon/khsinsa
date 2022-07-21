@@ -420,3 +420,7 @@ alter table kh_order modify order_address varchar2(2000);
 select * from favorite;
 select count(*) from favorite where pro_no = ?;
 insert into favorite values(?,?);
+select * from cart;
+select * from review;
+
+update review set review_recommend = review_recommend + 1 where review_no = 'R103';

@@ -1,21 +1,29 @@
 package com.kh.sinsa.admin.model.service;
 
 import static com.kh.sinsa.common.JdbcTemplate.close;
+import static com.kh.sinsa.common.JdbcTemplate.commit;
 import static com.kh.sinsa.common.JdbcTemplate.getConnection;
+import static com.kh.sinsa.common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.sinsa.admin.model.dao.AdminDao;
+import com.kh.sinsa.admin.model.dto.ProductManagementExt;
+import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.dto.ProductExt;
 
+import com.kh.sinsa.inquire.model.dto.Attachment;
+import com.kh.sinsa.inquire.model.dto.Inquire;
+import com.kh.sinsa.inquire.model.dto.InquireExt;
+
 public class AdminService {
 
-	private AdminDao adminDao = new AdminDao();
+	private static AdminDao adminDao = new AdminDao();
 	
 	// ##########jaekyung UserService begin#############
 
@@ -98,5 +106,204 @@ public class AdminService {
 		return productlist;
 	}
 	
+	// 상품 등록
+		public int insertProduct(Product product, Map<String, Object> param) {
+			Connection conn = getConnection();
+			int result = 0; 
+			
+			try {
+			result = adminDao.insertProduct(conn, product, param);
+			
+			// 방금 등록된 board.no 컬럼값 조회
+			String proNo = adminDao.getLastProNo(conn);
+			System.out.println("proNo = " + proNo);
+						
+			// attachment테이블 insert
+			List<ProductAttachment> productattachments = ((ProductManagementExt) product).getProductAttachment();
+			if(productattachments != null && !productattachments.isEmpty()) {
+							
+			for(ProductAttachment productattach : productattachments) {
+				productattach.setProNo(proNo);
+				result = adminDao.insertProductAttachment(conn, productattach);
+							}
+						}
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+		
+		public int updateProduct(ProductManagementExt product) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				// 1. 게시글 수정
+				result = adminDao.updateProduct(conn, product);
+				// 2. 첨부파일 등록
+				List<ProductAttachment> productattachments = product.getProductAttachment();
+				if(productattachments != null || !productattachments.isEmpty()) {
+					for(ProductAttachment productattach : productattachments) {
+						result = adminDao.insertProductAttachment(conn, productattach);
+					}
+				}
+				
+				commit(conn);
+			} 
+			catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			finally {
+				close(conn);			
+			}
+			return result;	
+		}
+
+		public int deleteProductAttachment(int proAttachmentNo) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = adminDao.deleteProductAttachment(conn, proAttachmentNo);
+				commit(conn);
+			} 
+			catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			finally {
+				close(conn);			
+			}
+			return result;	
+		}
+
+		public ProductAttachment findProductAttachmentByProAttachmentNo(int proAttachmentNo) {
+			Connection conn = getConnection();
+			ProductAttachment productattach = adminDao.findProductAttachmentByProAttachmentNo(conn, proAttachmentNo);
+			close(conn);
+			return productattach;
+		}
+		
+		public int deleteProduct(String proNo) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = adminDao.deleteProduct(conn, proNo);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			close(conn);
+			return result;
+		}
+
+		public static List<ProductAttachment> findProductAttachmentByProNo(String proNo) {
+			Connection conn = getConnection();
+			List<ProductAttachment> productattachmentList = adminDao.findProductAttachmentByProNo(conn, proNo);
+			close(conn);
+			return productattachmentList;
+		}
 	// ##########jaekyung ProductService ends#############
-}
+		
+	// ##########jaekyung InquireService begins#############
+		
+		public List<Inquire> inquireFindAll(Map<String, Object> param) {
+			Connection conn = null;
+			List<Inquire> inquirelist = null;
+			try {
+				conn = getConnection();
+				inquirelist = adminDao.inquireFindAll(conn, param);
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return inquirelist;
+		}
+
+		public int inquireGetTotalContent() {
+			Connection conn = getConnection();
+			int inquiretotalContent = adminDao.inquireGetTotalContent(conn);
+			close(conn);
+			return inquiretotalContent;
+		}
+
+		public List<Inquire> findInquireLike(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Inquire> inquirelist = adminDao.findInquireLike(conn, param);
+			close(conn);
+			return inquirelist;
+		}
+
+		public int inquireGetTotalContentLike(Map<String, Object> param) {
+			Connection conn = getConnection();
+			int inquiretotalContent = adminDao.inquireGetTotalContentLike(conn, param);
+			close(conn);
+			return inquiretotalContent;
+		}
+
+		public Inquire findByInquireNo(String inquireNo) {
+			Connection conn = getConnection();
+			Inquire inquire = null;
+
+			try {
+				inquire = adminDao.findByInquireNo(conn, inquireNo);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+
+			return inquire;
+		}
+
+		public int deleteInquire(String inquireNo) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = adminDao.deleteInquire(conn, inquireNo);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			close(conn);
+			return result;
+		}
+
+		public int insertInquire(InquireExt inquire) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+
+				result = adminDao.insertInquire(conn, inquire);
+
+//				String inquireNo = inquireDao.getLastInquireNo(conn);
+
+//				List<Attachment> attachments = ((InquireExt) inquire).getAttachments();
+//				if(attachments != null && !attachments.isEmpty()) {
+//					
+//					for(Attachment attach : attachments) {
+//						attach.setInquireNo(inquireNo);
+//						result = inquireDao.insertAttachment(conn, attach);
+//					}
+//				}
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+	}
+		
+	// ##########jaekyung InquireService ends#############
+

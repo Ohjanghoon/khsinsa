@@ -120,6 +120,8 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 									<% } %>
 							</td>
 						</tr>
+						
+						
 						<%
 							}
 						}

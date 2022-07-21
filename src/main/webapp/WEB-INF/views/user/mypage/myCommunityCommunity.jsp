@@ -19,10 +19,10 @@
             </ul>
         </div>
 
-		<form action="" name="myInquireListFrm" method="POST">
+		<form action="" name="myCommunityListFrm" method="POST">
         <table class="myCommunity_list">
             <thead>
-                <th><input type="checkbox"></th>
+                <th><input type="checkbox" id="checkAll" onclick="checkAllorNone(this)"></th>
                 <th>게시글 유형</th>
                 <th>제목</th>
                 <th>작성일</th>
@@ -45,7 +45,7 @@
                <tr>
                    <td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
                   	<td><%= category %></td>
-                   <td><%= comm.getCommTitle() %></td>
+                   <td><a href=""><%= comm.getCommTitle() %></a></td>
                    <td><%= comm.getCommDate() %></td>
                  	<td><%= comm.getCommReadCount() %></td>
                  	<td><%= comm.getCommRecommand() %></td>
@@ -60,8 +60,8 @@
             </tbody>
         </table>
         
-		<div id="btn_area">
-			<button type="submit" id="btn_myInquireList_del" onclick="myInquireListDel()">삭제하기</button>           
+		<div id="myCommunity_btn_area">
+			<button type="submit" id="btn_del" onclick="myCommunityListDel()">삭제하기</button>           
 		</div>
 		</form>
 		<div class="pagebar">
@@ -69,12 +69,20 @@
 		</div>
     </div>
 <script>
-const myInquireListDel = () => {
+const checkAllorNone = (obj) => {
+	
+	const checks = document.querySelectorAll("[name=commNo]");
+	
+	for(let i in checks){
+		checks[i].checked = obj.checked;
+	}
+};
+const myCommunityListDel = () => {
 	
 	const answer = confirm("삭제하시겠습니까?");
 	
 	if(answer){
-		document.myInquireListFrm.action = "<%= request.getContextPath() %>/mypage/myInquireDel";
+		document.myCommunityListFrm.action = "<%= request.getContextPath() %>/mypage/myCommunityDel";
 	}
 };
 </script>

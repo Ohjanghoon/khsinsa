@@ -58,9 +58,7 @@
                     <button>구매하기</button>
              </form>
              <input type="button" id="liveToastBtn" value="❤️"/>
-             <form action="">
-             	<button>🛒 장바구니에 담기</button>
-             </form>
+           	 <input type="button" id="cart" value="🛒"/>
 	         </div>
             <hr>            
 <% 
@@ -104,6 +102,22 @@
         </div>
 </main>
 <script>
+	 /*  장바구니 */
+	document.querySelector('#cart').addEventListener('click', (e) => {
+		const cartSize = document.querySelector('#size').value;
+		const cartBuyStock = document.querySelector('#orderAmount').value;
+		
+		$.ajax({
+			url : '<%= request.getContextPath() %>/cart/cartAdd',
+			method : 'POST',
+			data : {proNo : "<%= proNo %>", userId : "<%= loginUser.getUserId() %>", cartSize, cartBuyStock},
+			success(response){
+				alert("상품을 장바구니에 추가했습니다");
+			},
+			error : console.log,
+		})
+	});
+	
 	 /* 상품 좋아요.. */
 	document.querySelector('#liveToastBtn').addEventListener('click', (e) => {
 		

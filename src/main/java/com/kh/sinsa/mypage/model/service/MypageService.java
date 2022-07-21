@@ -12,6 +12,7 @@ import java.util.Map;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.mypage.model.dao.MypageDao;
+import com.kh.sinsa.order.model.dto.Order;
 import com.kh.sinsa.review.model.dto.Review;
 
 public class MypageService {
@@ -131,6 +132,22 @@ public class MypageService {
 			close(conn);
 		}
 		return result;
+	}
+
+	//내 주문내역 조회
+	public List<Order> orderListFindById(String userId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Order> list = mypageDao.orderListFindById(conn, userId, param);
+		close(conn);
+		return list;
+	}
+	
+	//내 주문내역 수 조회
+	public int getTotalMyOrderListContent(String userId) {
+		Connection conn = getConnection();
+		int totalMyOrderListContent = mypageDao.getTotalMyOrderListContent(conn, userId);
+		close(conn);
+		return totalMyOrderListContent;
 	}
 
 

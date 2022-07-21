@@ -19,6 +19,7 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.mypage.model.exception.MypageException;
+import com.kh.sinsa.order.model.dto.Order;
 import com.kh.sinsa.review.model.dto.Review;
 import com.kh.sinsa.user.model.dao.UserDao;
 
@@ -297,6 +298,76 @@ public class MypageDao {
 		return result;
 	}
 
+	//내 주문내역 조회
+	public List<Order> orderListFindById(Connection conn, String userId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Order> list = new ArrayList<>();
+		String sql = prop.getProperty("orderListFindById");
+		//orderListFindById = select * from (select row_number() over(order by order_date desc) rnum, o.*
+		// 						from kh_order o where user_id = ?) o where rnum between ? and ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(handleOrderResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new MypageException("내 주문내역 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	private Order handleOrderResultSet(ResultSet rset) throws SQLException {
+		int orderNo = rset.getInt("order_no");
+		String userId = rset.getString("user_id");
+		String proNo = rset.getString("pro_no");
+		String orderAddress = rset.getString("order_address");
+		String orderPhone = rset.getString("order_phone");
+		String orderEmail = rset.getString("order_email");
+		Timestamp orderDate = rset.getTimestamp("order_date");
+		String orderReq = rset.getString("order_req");
+		int orderPrice = rset.getInt("order_price");
+		String orderStatus = rset.getString("order_status");
+		int orderAmount = rset.getInt("order_amount");
+		
+		return new Order(orderNo, userId, proNo, orderAddress, orderPhone, orderEmail, orderDate, orderReq, orderPrice, orderStatus, orderAmount);
+	}
+
+	//내 주문내역 수 조회
+	public int getTotalMyOrderListContent(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalMyOrderListContent = 0;
+		String sql = prop.getProperty("totalMyOrderListContent");
+		//totalMyOrderListContent = select count(*) from order where user_id = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalMyOrderListContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("내 주문내역 수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalMyOrderListContent;
+	}
 
 	
 	//##########janghoon MypageDao end#############

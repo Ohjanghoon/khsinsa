@@ -39,7 +39,6 @@ public class ReviewListServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			param.put("proNo", proNo);
-			System.out.println("proNo : " + proNo);
 
 			// 업무로직 
 			List<Review> rList = reviewService.findByReview(param);

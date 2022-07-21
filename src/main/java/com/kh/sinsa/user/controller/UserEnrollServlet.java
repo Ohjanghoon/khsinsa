@@ -29,10 +29,8 @@ public class UserEnrollServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/user/userEnroll.jsp").forward(request, response);
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -54,7 +52,7 @@ public class UserEnrollServlet extends HttpServlet {
 			//주소
 			String roadAddr = request.getParameter("roadAddr");
 			String roadDetail = request.getParameter("roadDetail");
-			String userAddress = roadAddr + " " + roadDetail;
+			String userAddress = roadAddr + "+" + roadDetail;
 			
 			User user = new User(userId, userPwd, userName, null, userBirth, null, userEmail, userPhone, userAddress, null);
 			System.out.println("user@UserEnrollServlet = " + user);

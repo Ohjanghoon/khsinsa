@@ -12,17 +12,18 @@
 	href="<%=request.getContextPath()%>/css/share/shareView.css" />
 <%
 Community community = (Community) request.getAttribute("community");
+List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
 String commNo = (String) request.getAttribute("no");
 %>
 
 
-<div class="content_wrapper">
+<div class="container">
 
 	<div id="headlist">
 		<div id="header2">COMMUNITY</div>
-		<nav>
-			<ul class="navi">
+		<nav class="navi">
+			<ul>
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
 				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
@@ -55,6 +56,12 @@ String commNo = (String) request.getAttribute("no");
 			<hr style="color: gainsboro;">
 			
 			<li style="margin-top: 50px; background-color: white; height: 500px;">
+			<% 
+				if(attachments != null && !attachments.isEmpty()) { 
+					for(CommunityAttachment attach : attachments){
+			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
+				<%}
+					} %>
 				<p><%= community.getCommContent() %></p>
 			</li>
 			

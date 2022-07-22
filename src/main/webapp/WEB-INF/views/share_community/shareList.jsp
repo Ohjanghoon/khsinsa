@@ -11,11 +11,11 @@
 
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/share/shareList.css" />
-        <div class="content_wrapper">
+        <div class="container">
             <div id="headlist">
                 <div id="header2">COMMUNITY</div>
-                <nav>
-                  <ul class="navi">
+                <nav class="navi">
+                  <ul>
                       <li><a href="#">OOTD</a></li>
                       <li><a href="#">코디북</a></li>
                       <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>

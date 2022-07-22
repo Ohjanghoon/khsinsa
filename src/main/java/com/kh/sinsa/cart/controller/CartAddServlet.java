@@ -31,7 +31,7 @@ public class CartAddServlet extends HttpServlet {
 			int cartBuyStock = Integer.parseInt(request.getParameter("cartBuyStock"));
 			String cartSize = request.getParameter("cartSize");
 			
-			Cart cart = new Cart(userId, proNo, cartBuyStock, cartSize); 
+			Cart cart = new Cart(userId, proNo, cartBuyStock, cartSize, null); 
 			
 			// 업무로직
 			int result = cartService.cartAdd(cart);

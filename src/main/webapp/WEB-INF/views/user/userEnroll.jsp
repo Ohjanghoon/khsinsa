@@ -59,7 +59,7 @@ String todayDate = sdf.format(new Date());
 		<%-- 생년월일 --%>
 		<div class="input_area">
 			<label>생년월일 <span class="essential_mark">*</span></label>
-			<input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%=todayDate%>">
+			<input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1900-01-01" max="<%=todayDate%>">
 		</div>
 		<br>
 		
@@ -138,7 +138,12 @@ const checkId = () => {
 	    showMsg(idMsg, "숫자를 하나이상 반드시 포함해주세요.");
 	    return false;
 	}
-	return findById(tempId);
+	if(!findById(tempId)){
+		showMsg(idMsg, "이미 사용중인 아이디입니다.");
+		return false
+	}
+	showMsg(idMsg, "✔️");
+	return true;
 };
 //아이디 유효성 검사 메세지
 const showMsg = (obj, msg) => {
@@ -152,21 +157,12 @@ const findById = (tempId) => {
 		data: {tempId},
 		async: false,
 	    success(response){
-			if(!response){
-				showMsg(idMsg, "이미 사용중인 아이디입니다.");
-			} else {
-				showMsg(idMsg, "✔️");
-				available = true;
-			}
+			available = response;
 		},
-	    error : console.log,
-	    complete: function(response){
-	    	
-	    	return response;
-	    }
-	    
+	    error : console.log
 		
 	});
+	return available;
 }; 
 //onblur시 아이디 유효성 검사 체크
 userId.onblur = () => {
@@ -398,6 +394,7 @@ const frmSubmitCheck = () => {
     
     //회원가입 처리하기 이전에 최종 유효성 검사
     if(!checkId()){
+    	console.log(re_input("아이디", userId));
         return re_input("아이디", userId);
     }
     if(!checkPwd()){

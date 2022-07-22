@@ -12,7 +12,7 @@
 %>
     <div class="myCommunity_content">
         <div class="myCommunity_content_header">
-            <h1>내 게시글 조회</h1>
+            <h2>내 게시글 조회</h2>
             <ul>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityInquire" style="color: black;">1:1문의</a></li>
                 <li><a href="<%= request.getContextPath() %>/mypage/myCommunityCommunity">커뮤니티</a></li>

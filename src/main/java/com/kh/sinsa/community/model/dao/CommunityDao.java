@@ -259,7 +259,7 @@ public class CommunityDao {
 			pstmt.setString(2, communityComment.getUserId());
 			pstmt.setString(3, communityComment.getCommentContent());
 			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
-			pstmt.setObject(5, Integer.parseInt(communityComment.getCommentRef()) == 0 ? null : communityComment.getCommentRef());
+			pstmt.setObject(5, "0".equals(communityComment.getCommentRef()) ? null : communityComment.getCommentRef());
 			
 			result = pstmt.executeUpdate();
 			

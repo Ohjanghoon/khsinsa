@@ -21,6 +21,7 @@ public class InquireDeleteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			// 1. 사용자입력값 처리
+			
 			String inquireNo = request.getParameter("inquireNo");			
 			// 2. 업무로직
 			int result = inquireService.deleteInquire(inquireNo);

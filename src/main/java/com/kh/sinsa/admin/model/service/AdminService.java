@@ -228,83 +228,10 @@ public class AdminService {
 
 		public int inquireGetTotalContent() {
 			Connection conn = getConnection();
-			int inquiretotalContent = adminDao.inquireGetTotalContent(conn);
+			int inquireTotalContent = adminDao.inquireGetTotalContent(conn);
 			close(conn);
-			return inquiretotalContent;
+			return inquireTotalContent;
 		}
-
-		public List<Inquire> findInquireLike(Map<String, Object> param) {
-			Connection conn = getConnection();
-			List<Inquire> inquirelist = adminDao.findInquireLike(conn, param);
-			close(conn);
-			return inquirelist;
-		}
-
-		public int inquireGetTotalContentLike(Map<String, Object> param) {
-			Connection conn = getConnection();
-			int inquiretotalContent = adminDao.inquireGetTotalContentLike(conn, param);
-			close(conn);
-			return inquiretotalContent;
-		}
-
-		public Inquire findByInquireNo(String inquireNo) {
-			Connection conn = getConnection();
-			Inquire inquire = null;
-
-			try {
-				inquire = adminDao.findByInquireNo(conn, inquireNo);
-				commit(conn);
-			} catch (Exception e) {
-				rollback(conn);
-				throw e;
-			} finally {
-				close(conn);
-			}
-
-			return inquire;
-		}
-
-		public int deleteInquire(String inquireNo) {
-			Connection conn = getConnection();
-			int result = 0;
-			try {
-				result = adminDao.deleteInquire(conn, inquireNo);
-			} catch (Exception e) {
-				rollback(conn);
-				throw e;
-			}
-			close(conn);
-			return result;
-		}
-
-		public int insertInquire(InquireExt inquire) {
-			Connection conn = getConnection();
-			int result = 0;
-			try {
-
-				result = adminDao.insertInquire(conn, inquire);
-
-//				String inquireNo = inquireDao.getLastInquireNo(conn);
-
-//				List<Attachment> attachments = ((InquireExt) inquire).getAttachments();
-//				if(attachments != null && !attachments.isEmpty()) {
-//					
-//					for(Attachment attach : attachments) {
-//						attach.setInquireNo(inquireNo);
-//						result = inquireDao.insertAttachment(conn, attach);
-//					}
-//				}
-				commit(conn);
-			} catch (Exception e) {
-				rollback(conn);
-				throw e;
-			} finally {
-				close(conn);
-			}
-			return result;
-		}
-
-	
 		
 	// ##########jaekyung InquireService ends#############
 

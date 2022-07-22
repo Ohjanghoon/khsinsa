@@ -24,6 +24,9 @@ import com.kh.sinsa.order.model.dto.Order;
 
 public class AdminService {
 
+	private static final int String = 0;
+	private static final Map<java.lang.String, Object> Object = null;
+	private static final int Map = 0;
 	private static AdminDao adminDao = new AdminDao();
 	
 	// ##########jaekyung UserService begin#############
@@ -92,20 +95,6 @@ public class AdminService {
 		close(conn);
 		return productattachmentList;
 	}
-
-	public List<Product> productFind(Map<String, Object> param) {
-		Connection conn = getConnection();
-		List<Product> productlist = adminDao.productFind(conn, param);
-		close(conn);
-		return productlist;
-	}
-
-	public List<Product> productAlign(Map<String, Object> param) {
-		Connection conn = getConnection();
-		List<Product> productlist = adminDao.productAlign(conn, param);
-		close(conn);
-		return productlist;
-	}
 	
 	// 상품 등록
 		public int insertProduct(Product product, Map<String, Object> param) {
@@ -113,19 +102,20 @@ public class AdminService {
 			int result = 0; 
 			
 			try {
-			result = adminDao.insertProduct(conn, product, param);
+				// board테이블에 insert
+				result = adminDao.insertProduct(conn, product, param);
 			
-			// 방금 등록된 board.no 컬럼값 조회
-			String proNo = adminDao.getLastProNo(conn);
-			System.out.println("proNo = " + proNo);
+				// 방금 등록된 pro.no 컬럼값 조회
+				String proNo = adminDao.getLastProNo(conn);
+				System.out.println("proNo = " + proNo);
 						
-			// attachment테이블 insert
-			List<ProductAttachment> productattachments = ((ProductManagementExt) product).getProductAttachment();
-			if(productattachments != null && !productattachments.isEmpty()) {
+				// attachment테이블 insert
+				List<ProductAttachment> productattachmentList = ((ProductManagementExt) product).getProductAttachmentList();
+				if(productattachmentList != null && !productattachmentList.isEmpty()) {
 							
-			for(ProductAttachment productattach : productattachments) {
-				productattach.setProNo(proNo);
-				result = adminDao.insertProductAttachment(conn, productattach);
+					for(ProductAttachment productattach : productattachmentList) {
+						productattach.setProNo(proNo);
+						result = adminDao.insertProductAttachment(conn, productattach, param);
 							}
 						}
 				commit(conn);
@@ -138,17 +128,17 @@ public class AdminService {
 			return result;
 		}
 		
-		public int updateProduct(ProductManagementExt product) {
+		public int updateProduct(ProductManagementExt product, Map<String, Object> param) {
 			Connection conn = getConnection();
 			int result = 0;
 			try {
 				// 1. 게시글 수정
 				result = adminDao.updateProduct(conn, product);
 				// 2. 첨부파일 등록
-				List<ProductAttachment> productattachments = product.getProductAttachment();
-				if(productattachments != null || !productattachments.isEmpty()) {
-					for(ProductAttachment productattach : productattachments) {
-						result = adminDao.insertProductAttachment(conn, productattach);
+				List<ProductAttachment> productattachmentList = product.getProductAttachmentList();
+				if(productattachmentList != null || !productattachmentList.isEmpty()) {
+					for(ProductAttachment productattach : productattachmentList) {
+						result = adminDao.insertProductAttachment(conn, productattach, param);
 					}
 				}
 				

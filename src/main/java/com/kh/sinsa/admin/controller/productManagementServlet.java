@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.kh.sinsa.admin.model.dto.ProductManagementExt;
 import com.kh.sinsa.admin.model.service.AdminService;
 
 /**

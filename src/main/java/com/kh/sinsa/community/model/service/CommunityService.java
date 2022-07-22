@@ -125,5 +125,20 @@ public Community findByNo(String no) {
 		return result;
 	}
 
+	public int deleteCommunity(String no) {
+		Connection conn = getConnection();
+		int result = 0; 
+		
+		try {
+		result = communityDao.deleteCommunity(conn, no);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 	                                         
 }

@@ -16,7 +16,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 
 
 <div class="content_wrapper">
-
+<!------------------------- 커뮤니티 목록 --------------------------------------->
 	<div id="headlist">
 		<div id="header2">COMMUNITY</div>
 		<nav>
@@ -28,15 +28,16 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 				<li><a href="#">패션토크</a></li>
 			</ul>
 		</nav>
-
-
 	</div>
+	<!------------------------- 커뮤니티 목록 --------------------------------------->
+	<!------------------------- 정보공유게시판 머리 --------------------------------------->
 	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">
 		정보공유 게시판 <span style="font-size: 18px;"> Share Information</span>
 	</h2>
 	<hr style="border-top: 3px solid rgb(101, 101, 252);">
 	<div class="main">
-
+	<!------------------------- 정보공유게시판 머리 --------------------------------------->
+	<!------------------------- 정보공유게시판 내용 --------------------------------------->
 		<ul>
 			<li id="title"><h2><%=community.getCommTitle()%></h2></li>
 			<li id="writer"><h3><%=community.getUserId()%></h3></li>
@@ -54,28 +55,50 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 			<li style="margin-top: 50px; background-color: white; height: 500px;"><p>
 					<%=community.getCommContent()%>
 				</p></li>
+				<%
+			boolean canEdit = loginUser != null && 
+						(loginUser.getUserId().equals(community.getUserId()) 
+								|| loginUser.getUserRole() == UserRole.A);
+			if(canEdit){ 
+		%>
+
+			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
+			<li>
+				<input type="button" value="수정하기">
+				<input type="button" value="삭제하기" onclick="deleteCommunity()">
+			</li>
+		
+		<% } %>
+				
+				
 
 			<hr>
-
 			<li style="margin-top: 13px;">
-
+<!------------------------- 정보공유게시판 내용 --------------------------------------->
+			
+<!------------------------- 정보공유게시판 댓글 --------------------------------------->
 				<div class="comment-container">
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
-						<form name="communityCommentFrm"
+						<form name="shareCommentFrm"
 							action="<%=request.getContextPath()%>/share/shareCommentAdd"
 							method="post">
-							<input type="hidden" name="commNo"
-								value="<%=community.getCommNo()%>" /> <input type="hidden"
-								name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" /> <input
-								type="hidden" name="commentLevel" value="1" /> <input
-								type="hidden" name="commentRef" value="0" />
-							<textarea name="content" cols="60" rows="3"
-								placeholder="댓글을 입력하세요."></textarea>
+							<input type="hidden" name="commNo" value="<%=community.getCommNo()%>" /> 
+								
+								<input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
+								<input type="hidden" name="commentLevel" value="1" /> 
+								<input type="hidden" name="commentRef" value="0" />
+								
+							<textarea name="content" cols="60" rows="3" placeholder="댓글을 입력하세요."></textarea>
+							
 							<button type="submit" id="btn-comment-enroll1">등록</button>
+							
 							<br>
+							
 						</form>
+						
 					</div>
+					
 					<table id="tbl-comment">
 						<%
 						if (commentList != null && !commentList.isEmpty()) {
@@ -84,29 +107,23 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 								boolean canDelete = loginUser != null
 								&& (loginUser.getUserId().equals(cc.getUserId()) || loginUser.getUserRole() == UserRole.A);
 						%>
-						<tr
-							class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
-						<tr class="">
-							<td><sub class="comment-writer"><%=cc.getUserId()%></sub> <sub
-								class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
+						<tr class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
+							<td>
+								<sub class="comment-writer"><%=cc.getUserId()%></sub> 
+								<sub class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
 								<div>
 									<p><%= cc.getCommentContent() %></p>
-
-								</div></td>
+								</div>
+							</td>
 							<td>
-								<%
-									if (cc.getCommentLevel() == CommentLevel.COMMENT) {
-								%>
-								<button class="btn-reply" value="<%= cc.getNo()%>"
-									style="margin-top: 30px;">답글</button> <%
- 									}
-								 %> <%
- 										if (canDelete) {
- 									%>
+								<% if (cc.getCommentLevel() == CommentLevel.COMMENT) { %>
+								<button class="btn-reply" value="<%= cc.getNo()%>" style="margin-top: 30px;">답글</button> 
+								<% } %> 
+								
+								<% if (canDelete) { %>
 								<button class="btn-delete" value="<%= cc.getNo()%>"
-									style="margin-top: 30px;">삭제</button> <%
- 										}
-								 %>
+									style="margin-top: 30px;">삭제</button> 
+								<% }  %>
 							</td>
 						</tr>
 						<%
@@ -114,13 +131,12 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 						}
 						%>
 					</table>
-					<hr>
 				</div>
 			</li>
 		</ul>
 
 	</div>
-
+<!------------------------- 정보공유게시판 댓글 --------------------------------------->
 </div>
 <form 
 	action="<%= request.getContextPath() %>/share/shareCommentDelete"
@@ -140,8 +156,11 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
 		}
 	});
 });
+s
 
-document.communityCommentFrm.content.addEventListener('focus', (e) => {
+
+
+document.shareCommentFrm.content.addEventListener('focus', (e) => {
 	if(<%= loginUser == null %>)
 		loginAlert();
 });
@@ -153,4 +172,20 @@ const loginAlert = () => {
 </script>
 
 
+<form 
+	action="<%= request.getContextPath() %>/share/shareDelete"
+	method="post" 
+	name="shareDelFrm">
+	<input type="hidden" name="no" value="<%= community.getCommNo() %>" />
+</form>
+<script>
+
+
+const deleteCommunity = () => {
+	if(confirm("게시글을 삭제하시겠습니까?"))
+		document.shareDelFrm.submit();
+};
+</script>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

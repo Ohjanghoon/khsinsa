@@ -227,4 +227,23 @@ public class CommunityDao {
 		return result;
 	}
 
+	public int deleteCommunity(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

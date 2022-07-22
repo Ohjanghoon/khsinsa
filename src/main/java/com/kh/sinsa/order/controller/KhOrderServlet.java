@@ -41,7 +41,7 @@ public class KhOrderServlet extends HttpServlet {
 			
 			// 리다이렉트
 			request.getSession().setAttribute("msg", "주문이 완료 되었습니다.");
-			response.sendRedirect(request.getContextPath()+'/'); 
+			response.sendRedirect(request.getContextPath()+"/mypage/myOrderList"); 
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -20,7 +20,7 @@
  <div class="container">
     <div class="login_container">
         <h2>로그인</h2>
-        <form action="<%= request.getContextPath() %>/user/userLogin" method="post">
+        <form action="<%= request.getContextPath() %>/user/userLogin" method="post"  name="Loginfrm">
                 <div class="input_area">
                     <input type="text" name="userId" id="userId" autocomplete="off" value="<%= saveId != null ? saveId : "" %>" required>
                     <label>아이디</label>
@@ -40,9 +40,9 @@
                         <label for="saveId">아이디저장</label>
                     </div>
                     <div class="forgot_wrapper">
-                        <a href="">아이디 찾기</a> <span>/</span>
+                        <a href="<%= request.getContextPath() %>/user/userForgotId">아이디 찾기</a> <span>/</span>
 
-                        <a href="">비밀번호 찾기</a>
+                        <a href="<%= request.getContextPath() %>/user/userForgotId">비밀번호 찾기</a>
                     </div>
                 </div>
                 <div>

@@ -14,6 +14,10 @@
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 String todayDate = sdf.format(new Date());
 %>
+
+
+
+
 <div class="enroll_container">
 	<h2>회원가입</h2>
 	<form action="<%= request.getContextPath() %>/user/userEnroll" name="userEnrollFrm" method="POST" onsubmit="javascript:frmSubmitCheck();">

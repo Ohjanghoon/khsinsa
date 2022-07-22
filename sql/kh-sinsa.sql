@@ -426,3 +426,6 @@ commit;
 
 update review set review_recommend = review_recommend + 1 where review_no = 'R103';
 select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p where pro_type = '상의' ) p where rnum between 1 and 3;
+
+-- 장바구니 테이블에 cart_date 컬럼 추가
+alter table cart add cart_date date default current_date;

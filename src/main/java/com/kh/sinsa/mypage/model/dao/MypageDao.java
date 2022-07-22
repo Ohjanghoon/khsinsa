@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.kh.sinsa.cart.model.dto.Cart;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
@@ -444,5 +445,42 @@ public class MypageDao {
 		return new ProductAttachment(proAttachmentNo, proNo, proOriginalFilename, proRenameFilename);
 	}
 
+	//장바구니 조회
+	public List<Cart> cartListFindById(Connection conn, String userId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Cart> myCartList = new ArrayList<>();
+		String sql = prop.getProperty("cartListFindById");
+		//cartListFindById = select * from (select row_number() over(order by cart_date desc) rnum, ca.* 
+		//						from cart ca where user_id = ?) ca where rnum between ? and ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				myCartList.add(handleCartResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new MypageException("장바구니 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return myCartList;
+	}
+	
+	private Cart handleCartResultSet(ResultSet rset) throws SQLException {
+		String userId = rset.getString("user_id");
+		String proNo = rset.getString("pro_no");
+		int cartBuyStock = rset.getInt("cart_buy_stock");
+		String cartSize = rset.getString("cart_size");
+		Date cartDate = rset.getDate("cart_date");
+		
+		return new Cart(userId, proNo, cartBuyStock, cartSize, cartDate);
+	}
 	//##########janghoon MypageDao end#############
 }

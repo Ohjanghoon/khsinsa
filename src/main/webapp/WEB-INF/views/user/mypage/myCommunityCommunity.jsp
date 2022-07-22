@@ -43,10 +43,10 @@
                		}
            	%>
                <tr>
-                   <td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
+                   	<td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
                   	<td><%= category %></td>
-                   <td><a href=""><%= comm.getCommTitle() %></a></td>
-                   <td><%= comm.getCommDate() %></td>
+                   	<td><a href=""><%= comm.getCommTitle() %></a></td>
+                   	<td><%= comm.getCommDate() %></td>
                  	<td><%= comm.getCommReadCount() %></td>
                  	<td><%= comm.getCommRecommand() %></td>
                </tr>
@@ -61,7 +61,7 @@
         </table>
         
 		<div id="myCommunity_btn_area">
-			<button type="submit" id="btn_del" onclick="myCommunityListDel()">삭제하기</button>           
+			<button type="submit" id="btn_del" onclick="myCommunityListDel()">선택삭제</button>           
 		</div>
 		</form>
 		<div class="pagebar">

@@ -1,65 +1,93 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
+<%@page import="com.kh.sinsa.product.model.dto.Product"%>
+<%@page import="com.kh.sinsa.cart.model.dto.Cart"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%@ include file="/WEB-INF/views/user/mypage/myPageHeader.jsp"%>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/user/mypage/myCart.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/user/mypage/myCart.css">
+<%
+	List<Cart> myCartList = (List<Cart>) request.getAttribute("myCartList");
+	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
+	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+%>
 
 
-
-<section class="cart">
-	<h2>장바구니</h2>
-
-	<form action="">
-		<table class="cart_list">
-			<thead>
+<div class="myCart_content">
+  	<div class="myCart_content_header">
+  		<h2>장바구니</h2>
+  	</div>
+  	
+	<form action="" name="myCartFrm">
+	    <table class="myCart_list">
+		    <thead>
+		    	<th><input type="checkbox" id="checkAll" onclick="checkAllorNone(this)"></th>
+	            <th name="proNo">상품정보</td>
+	            <th name="proPrice">상품금액</td>
+	            <th name="cartBuyStock">수량</td>
+	            <th name="orderPrice">주문금액</td>
+	            <th name="deliverType">배송형태 / 배송비</td>
+		    </thead>
+		    <tbody>
+		    <% if(myCartList != null && !myCartList.isEmpty()) {
+				for(Cart cart : myCartList) { 
+					for(Product pro : proInfoList){
+						for(ProductAttachment proAttach : proAttachList){
+							if(cart.getProNo().equals(pro.getProNo()) && cart.getProNo().equals(proAttach.getProNo())){
+							
+				%>
 				<tr>
-					<td><input type="checkbox"></td>
-					<td colspan="2">상품정보</td>
-					<td>상품금액</td>
-					<td>수량</td>
-					<td>배송형태/배송비</td>
-
-
+					<td>
+						<input type="checkbox" name="cartNo" value="<%= cart.getUserId() %>">
+						<input type="hidden" name="cartNo" value="<%= cart.getProNo() %>">
+					</td>
+					<td name="proNo">
+						<div class="proInfo">
+				            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
+				            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
+			            	</a>
+			            	<ul>
+				        		<li><%= pro.getProNo() %> / <%= pro.getProType() %></li>
+				        		<li>
+					        		<a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
+					        			<%= pro.getProName() %>
+					        		</a>
+				        		</li>
+				        		<li>사이즈 : <%= pro.getProSize() %></li>
+				        	</ul>
+						</div>
+					</td>
+	            	<td name="proPrice"><%= new DecimalFormat("###,###").format(pro.getProPrice()) %>원</td>
+		            <td name="cartBuyStock">
+		            	<button type="button" id="btn_stock_minus" onclick="">➖</button>
+		            	<%= cart.getCartBuyStock() %>
+		            	<button type="button" id="btn_stock_plus" onclick="">➕</button>
+		            </td>
+		            <td name="orderPrice">
+		            	<span><%= new DecimalFormat("###,###").format(pro.getProPrice() * cart.getCartBuyStock()) %> 원</span>
+	            	</td>
+		            <td name="deliverType">
+		            	<span>택배배송</span>
+		            	<br />
+		            	<span>배송비 무료</span>
+		            </td>
+	            
 				</tr>
-			</thead>
-			<tbody>
-				<tr class="cart_list_detail">
-					<td><input type="checkbox"></td>
-					<td><img src="../kh_sina/img/clothes.png" alt="black-tshirt"></td>
-					<td>
-						<p>주신사 자체제작</p> <span style="color: blue;">10047387483748</span>
-					</td>
-					<!-- 가격 -->
-					<td class="cart-table">
-						<p class="cart-price">50.000</p> <!-- 수량 -->
-					<td>
-						<button class="quantity">-</button> <input id="cart_ipt"
-						type="text" value="1" disabled>
-						<button class="quantity">+</button>
-					</td>
-					<td>
-						<p>택배배송</p>
-						<p>배송비 무료</p>
-					</td>
-
-					</td>
-				</tr>
-			</tbody>
-
-		</table>
-
-		<div class="myCart_btn_area">
-			<button class="delete_btn">삭제</button>
-		</div>
-		<div class="cart_mainbtns">
-
-			<button class="cart_bigorderbtn left">쇼핑계속하기</button>
-			<button class="cart_bigorderbtn right">주문하기</button>
-		</div>
-
+		   	<%   		}
+		   			  }
+		   			}
+		   		 }
+			   }%>
+		    </tbody>
+	           
+	   	</table>
+          
 	</form>
-
-
-</section>
+   	<div class="pagebar">
+		<%= request.getAttribute("pagebar") %>
+	</div>    
+</div>
+	
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

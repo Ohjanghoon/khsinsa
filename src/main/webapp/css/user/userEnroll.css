@@ -106,7 +106,6 @@
     background: none;
     border: none;
     z-index: 3;
-    
     position: absolute;
     bottom: 5px; right: 50px;
     cursor: pointer;

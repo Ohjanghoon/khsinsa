@@ -33,7 +33,7 @@ public class productDeleteServlet extends HttpServlet {
 		try {
 			// 1. 사용자입력값 처리
 			String proNo = request.getParameter("proNo");
-			System.out.println("no = " + proNo);
+			System.out.println("prono = " + proNo);
 			
 			// 2. 업무로직
 			// a. 저장된 첨부파일 조회 및 삭제 (java.io.File#delete)
@@ -51,7 +51,7 @@ public class productDeleteServlet extends HttpServlet {
 				}
 			}
 			
-			// b. board 삭제 (on delete cascade에 의해서 attachment 연쇄 삭제)
+			// b. product 삭제 (on delete cascade에 의해서 productattachment 연쇄 삭제)
 			int result = adminService.deleteProduct(proNo);
 			
 			// 3. 리다이렉트

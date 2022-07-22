@@ -18,7 +18,7 @@
 			</ul>
 		</nav>
 		<form name="productAddFrm"
-			action="<%=request.getContextPath()%>/admin/productManagement/ProductAdd" 
+			action="<%=request.getContextPath()%>/admin/productManagement/productAdd" 
 			method="post"
 			enctype="multipart/form-data">
 			<h2 style="font-size: 30px; color: black;">상품 등록</h2>
@@ -33,8 +33,8 @@
 			Product product = new Product(null, type, name, price, size, null, content); -->
 				<select name="productType" class="dropdown-select">
 						<option value="0" selected>상.하의 선택</option>
-						<option value="P10">상의</option>
-						<option value="P20">하의</option>
+						<option value="A10">상의</option>
+						<option value="A20">하의</option>
 				</select>
 				</span> 
 				<br>

@@ -200,12 +200,24 @@ public class AdminDao {
 		return new ProductExt(proNo, proType, proName, proPrice, proSize, regDate, proContent, proOriginalFilename);
 	}
 	
+	private ProductManagementExt handleProductManagementExtResultSet(ResultSet rset) throws SQLException {
+		String proNo = rset.getString("pro_no");
+		String proType = rset.getString("pro_type");
+		String proName = rset.getString("pro_name");
+		int proPrice = rset.getInt("pro_price");
+		String proSize = rset.getString("pro_size");
+		Timestamp regDate = rset.getTimestamp("reg_date");
+		String proContent = rset.getString("pro_content");		
+		return new ProductManagementExt(proNo, proType, proName, proPrice, proSize, regDate, proContent);
+	}
+	
 	
 	public List<Product> productFindAll(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Product> productlist = new ArrayList<>();
 		String sql = prop.getProperty("productFindAll");
+//		productFindAll = select * from ( select row_number () over (order by pro_no desc) rnum, p.* from product p ) p where rnum between ? and ?
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, (int) param.get("start"));
@@ -214,7 +226,7 @@ public class AdminDao {
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
-				productlist.add(handleProductResultSet(rset));
+				productlist.add(handleProductManagementExtResultSet(rset));
 			}
 
 		} catch (SQLException e) {
@@ -321,61 +333,6 @@ public class AdminDao {
 		}
 		return productattachmentList;
 	}
-
-	public List<Product> productFind(Connection conn, Map<String, Object> param) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<Product> productlist = new ArrayList<>();
-		String sql = prop.getProperty("productFind");
-		String search = (String) param.get("search");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + search + "%");
-			pstmt.setInt(2, (int) param.get("start"));
-			pstmt.setInt(3, (int) param.get("end"));
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				productlist.add(handleProductResultSet(rset));
-			}
-			
-		} catch (SQLException e) {
-			throw new ProductException("상품 검색 오류", e);
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return productlist;
-	}
-
-	public List<Product> productAlign(Connection conn, Map<String, Object> param) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<Product> productlist = new ArrayList<>();
-		String sql = prop.getProperty("productAlign");
-		String align = (String) param.get("align");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, align);
-			pstmt.setInt(2, (int) param.get("start"));
-			pstmt.setInt(3, (int) param.get("end"));
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				productlist.add(handleProductResultSet(rset));
-			}
-			
-		} catch (SQLException e) {
-			throw new ProductException("상품 검색 오류", e);
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return productlist;
-	}
 	
 	public int insertProduct(Connection conn, Product product, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
@@ -386,7 +343,6 @@ public class AdminDao {
 		String col = "'" + (String) param.get("productType") + "'";
 		
 		sql = sql.replace("#", col);
-		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -411,28 +367,7 @@ public class AdminDao {
 //	        pro_original_filename varchar2(255) not null,
 //	        pro_rename_filename varchar2(255) not null,
 	        
-//	insertProductAttachment = insert into attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?) 
-	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = prop.getProperty("insertProductAttachment");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productAttachment.getProNo());
-			pstmt.setString(2, productAttachment.getProOriginalFilename());
-			pstmt.setString(3, productAttachment.getProRenameFilename());
-			result = pstmt.executeUpdate();
-			
-		} 
-		catch (SQLException e) {
-			throw new AdminException("상품 첨부파일 등록 오류!", e);
-		}
-		finally {
-			close(pstmt);
-		}
-		return result;
-	}
+//	insertProductAttachment = insert into attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?)
 	
 	public String getLastProNo(Connection conn) {
 		PreparedStatement pstmt = null;
@@ -454,6 +389,33 @@ public class AdminDao {
 			close(pstmt);
 		}
 		return ProNo;
+	}
+	
+	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertProductAttachment");
+		System.out.println(productAttachment.getProNo());
+		String col = "'" + (String) param.get("productType") + "'";
+		
+		sql = sql.replace("#", col);
+//		insertProductAttachment = insert into product_attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?) 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productAttachment.getProNo());
+			pstmt.setString(2, productAttachment.getProOriginalFilename());
+			pstmt.setString(3, productAttachment.getProRenameFilename());
+			result = pstmt.executeUpdate();
+			
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 첨부파일 등록 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	public int updateProduct(Connection conn, ProductManagementExt product) {

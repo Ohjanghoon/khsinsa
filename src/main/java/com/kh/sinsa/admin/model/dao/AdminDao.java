@@ -1,5 +1,6 @@
 package com.kh.sinsa.admin.model.dao;
 
+import static com.kh.sinsa.common.JdbcTemplate.getConnection;
 import static com.kh.sinsa.common.JdbcTemplate.close;
 
 import java.io.FileReader;
@@ -226,7 +227,7 @@ public class AdminDao {
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
-				productlist.add(handleProductManagementExtResultSet(rset));
+				productlist.add(handleProductResultSet(rset));
 			}
 
 		} catch (SQLException e) {
@@ -334,16 +335,11 @@ public class AdminDao {
 		return productattachmentList;
 	}
 	
-	public int insertProduct(Connection conn, Product product, Map<String, Object> param) {
+	public int insertTopProduct(Connection conn, Product product) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("insertProduct");
-		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (# || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
-		
-		String col = "'" + (String) param.get("productType") + "'";
-		
-		sql = sql.replace("#", col);
-		
+		String sql = prop.getProperty("insertTopProduct");
+		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (A10 || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, product.getProType());
@@ -369,12 +365,11 @@ public class AdminDao {
 	        
 //	insertProductAttachment = insert into attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?)
 	
-	public String getLastProNo(Connection conn) {
+	public String getLastTopProNo(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String ProNo = null;
-		String sql = prop.getProperty("getLastProNo");
-		
+		String sql = prop.getProperty("getLastTopProNo");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -391,21 +386,18 @@ public class AdminDao {
 		return ProNo;
 	}
 	
-	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment, Map<String, Object> param) {
+	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertProductAttachment");
 		System.out.println(productAttachment.getProNo());
-		String col = "'" + (String) param.get("productType") + "'";
-		
-		sql = sql.replace("#", col);
 //		insertProductAttachment = insert into product_attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?) 
-		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, productAttachment.getProNo());
 			pstmt.setString(2, productAttachment.getProOriginalFilename());
 			pstmt.setString(3, productAttachment.getProRenameFilename());
+			
 			result = pstmt.executeUpdate();
 			
 		} 

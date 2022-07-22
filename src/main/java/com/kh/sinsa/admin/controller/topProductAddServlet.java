@@ -26,8 +26,8 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class topProductAddServlet
  */
-@WebServlet("/admin/productManagement/productAdd")
-public class productAddServlet extends HttpServlet {
+@WebServlet("/admin/productManagement/topProductAdd")
+public class topProductAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 	
@@ -36,7 +36,7 @@ public class productAddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/views/admin/productAdd.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/admin/topProductAdd.jsp")
 			.forward(request, response);
 	}
 	
@@ -84,7 +84,6 @@ public class productAddServlet extends HttpServlet {
 //			        constraint pk_pro_no primary key(pro_no));
 			
 			// 1. 사용자 입력값 처리
-			String proNo = multiReq.getParameter("proNo");
 			String productType = multiReq.getParameter("productType");
 			String name = multiReq.getParameter("name");
 			int price = Integer.parseInt(multiReq.getParameter("price").trim());
@@ -97,28 +96,25 @@ public class productAddServlet extends HttpServlet {
 //				// TODO Auto-generated constructor stub
 //			}
 			
-			ProductManagementExt productaddext = new ProductManagementExt(proNo, productType, name, price, size, null, content); 
+			ProductManagementExt product = new ProductManagementExt(null, productType, name, price, size, null, content); 
 			System.out.println("productType = " + productType + ", name = " + name + ", price = " + price + ", size = " + size + ", content = " + content);
 
-			Map<String, Object> param = new HashMap<>();
-			param.put("productType", productType);
-			
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {
 				String filename = filenames.nextElement();
 				File imgproduct = multiReq.getFile(filename);
 				if(imgproduct != null) {
-					ProductAttachment productattach = new ProductAttachment();
-					productattach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
-					productattach.setProRenameFilename(multiReq.getFilesystemName(filename));
-					productaddext.addProductAttachment(productattach);
+					ProductAttachment productAttach = new ProductAttachment();
+					productAttach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
+					productAttach.setProRenameFilename(multiReq.getFilesystemName(filename));
+					product.addProductAttachment(productAttach);
 				}
 			}
 			
-			System.out.println("productaddext = " + productaddext);
+			System.out.println("productManagementExt = " + product);
 			
 			// 2. 업무로직
-			int result = adminService.insertProduct(productaddext, param);
+			int result = adminService.insertTopProduct(product);
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "상품 등록 완료입니다.");

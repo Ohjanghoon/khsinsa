@@ -8,29 +8,30 @@
 	<div id="container">
 		<div id="header1"></div>
 		<div id="header2">COMMUNITY</div>
-		<nav>
-			<ul class="navi">
+		<nav class="navi">
+			<ul>
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
-				<li><a href="#">정보공유</a></li>
+				<li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
 				<li><a href="#">자유게시판</a></li>
 				<li><a href="#">패션토크</a></li>
 			</ul>
 		</nav>
 		<form name="shareAddFrm"
 			action="<%=request.getContextPath()%>/share/shareAdd" 
-			method="post">
+			method="post"
+			encType = "multipart/form-data">
 			<h2 style="font-size: 30px; color: black;">정보공유 게시글 작성</h2>
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
-				<span class="dropdown"> 
-				<select name="one" class="dropdown-select">
-						<option value="0">게시판 선택</option>
-						<option value="1">OOTD</option>
-						<option value="2">코디북</option>
-						<option value="3" href="<%=request.getContextPath()%>/share/shareAdd" selected />정보공유</option>
-						<option value="4">자유게시판</option>
-						<option value="5">패션토크</option>
+				<span class="drop"> 
+				<select name="one" id="drop-select" onchange="if(this.value) location.href=(this.value)">
+						<option class="option" value="">게시판 선택</option>
+						<option class="option" value="#">OOTD</option>
+						<option class="option" value="#">코디북</option>
+						<option class="option" value="<%=request.getContextPath()%>/share/shareAdd"" selected />정보공유</option>
+						<option class="option" value="#">자유게시판</option>
+						<option class="option" value="#">패션토크</option>
 				</select>
 				</span> 
 				<br> 
@@ -45,6 +46,10 @@
 				<p>
 					<textarea name="content" cols="100" rows="50"></textarea>
 				</p>
+				
+				<div>
+					<input type="file" name="filename" accept="image/*">
+				</div>
 
 		<div id="btn-sum" style="margin:30px;">
 			<span class="btn-add"> <input type="submit" id="btn-add" value="작성" style="width:150px;"></span> 

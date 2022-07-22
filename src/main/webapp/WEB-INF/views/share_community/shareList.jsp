@@ -11,14 +11,14 @@
 
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/share/shareList.css" />
-        <div class="content_wrapper">
+        <div class="container">
             <div id="headlist">
                 <div id="header2">COMMUNITY</div>
-                <nav>
-                  <ul class="navi">
+                <nav class="navi">
+                  <ul>
                       <li><a href="#">OOTD</a></li>
                       <li><a href="#">코디북</a></li>
-                      <li><a href="#">정보공유</a></li>
+                      <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
                       <li><a href="#">자유게시판</a></li>
                       <li><a href="#">패션토크</a></li>
                   </ul>
@@ -44,7 +44,7 @@
                     <br>
                     <div id="option">
                     <select name="standard" id="standard" size="1">
-                    <option value="" selected>정렬 기준</option>
+                    <option value="" selected>정렬기준</option>
                     <option value="1">인기게시글</option>
                     <option value="2">높은조회수</option>
                     <option value="3">최신게시글</option>
@@ -55,7 +55,7 @@
                         <option value="" selected>검색조건</option>
                         <option value="1">제목</option>
                         <option value="2">작성자</option>
-                        <option value="3">본문 내용</option>
+                        <option value="3">본문내용</option>
                     </select>
                     
                     <input type="text" name="" id="" placeholder="검색어를 입력하세요" style="height: 26px;">

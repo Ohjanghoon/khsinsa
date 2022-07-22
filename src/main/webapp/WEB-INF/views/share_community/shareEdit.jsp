@@ -13,8 +13,8 @@
 	<div id="container">
 		<div id="header1"></div>
 		<div id="header2">COMMUNITY</div>
-		<nav>
-			<ul class="navi">
+		<nav class="navi">
+			<ul>
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
 				<li><a href="#">정보공유</a></li>

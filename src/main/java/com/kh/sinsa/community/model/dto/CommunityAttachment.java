@@ -3,7 +3,7 @@ package com.kh.sinsa.community.model.dto;
 public class CommunityAttachment {
 	
 	private String no;
-	private String boardNo;
+	private String commNo;
 	private String originalFilename;
 	private String renamedFilename;
 	
@@ -12,10 +12,10 @@ public class CommunityAttachment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommunityAttachment(String no, String boardNo, String originalFilename, String renamedFilename) {
+	public CommunityAttachment(String no, String commNo, String originalFilename, String renamedFilename) {
 		super();
 		this.no = no;
-		this.boardNo = boardNo;
+		this.commNo = commNo;
 		this.originalFilename = originalFilename;
 		this.renamedFilename = renamedFilename;
 	}
@@ -28,12 +28,12 @@ public class CommunityAttachment {
 		this.no = no;
 	}
 
-	public String getBoardNo() {
-		return boardNo;
+	public String getCommNo() {
+		return commNo;
 	}
 
-	public void setBoardNo(String boardNo) {
-		this.boardNo = boardNo;
+	public void setCommNo(String commNo) {
+		this.commNo = commNo;
 	}
 
 	public String getOriginalFilename() {
@@ -54,7 +54,7 @@ public class CommunityAttachment {
 
 	@Override
 	public String toString() {
-		return "CommunityAttachment [no=" + no + ", boardNo=" + boardNo + ", originalFilename=" + originalFilename
+		return "CommunityAttachment [no=" + no + ", commNo=" + commNo + ", originalFilename=" + originalFilename
 				+ ", renamedFilename=" + renamedFilename + "]";
 	}
 	

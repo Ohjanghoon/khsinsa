@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.sinsa.cart.model.dto.Cart;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.mypage.model.dao.MypageDao;
@@ -166,6 +167,14 @@ public class MypageService {
 		ProductAttachment proAttach = mypageDao.findAttachByProNo(conn, proNo);
 		close(conn);
 		return proAttach;
+	}
+
+	//장바구니 조회
+	public List<Cart> cartListFindById(String userId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Cart> myCartList = mypageDao.cartListFindById(conn, userId, param);
+		close(conn);
+		return myCartList;
 	}
 
 

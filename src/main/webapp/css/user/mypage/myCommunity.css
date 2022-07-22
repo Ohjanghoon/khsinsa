@@ -31,8 +31,6 @@
     color: rgb(130, 130, 130);
     margin: 0 20px;
     font-weight: bold;
-
-    
 }
 
 
@@ -113,8 +111,6 @@
 	margin-top: 10px;
 }
 .myCommunity_content #btn_del {
-	float: right;
-	margin: auto 20px; 
 	padding: 5px 10px;
 	border: none;
 	border-radius: 5px;

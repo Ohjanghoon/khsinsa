@@ -1,215 +1,162 @@
 @charset "UTF-8";
-
-body {
-	margin: 0;
-}
-
 * {
-	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	list-style: none;
 }
 
-.cart {
-	
+/* 장바구니 조회 컨텐트 영역*/
+.myCart_content {
+    width: 1000px;
+    margin: 0 auto;
 }
-.cart h2 {
-	margin-left: 10px;
-}
-a {
-	color: black;
-}
-
-/* 상품 사진 이미지 */
-img {
-	display: block;
-	width: 180px;
-	height: 180px;
-	margin: auto;
-}
-
-/* 상품 가격 */
-.cart-price {
-	position: relative;
-	top: 80px;
-}
-
-/* cart_input 버튼 */
-#cart_ipt {
-	width: 20px;
-	border-radius: 5px;
-	border: none;
-	background-color: white;
-}
-
-/* 수량 버튼*/
-.quantity {
-	/* background-color: black; */
-	color: black;
-	border: 1px black;
-	/* width: 20px;
-                height: 20px; */
-}
-
-.cart {
-	width: 800px;
-	margin: auto;
-	padding: 30px;
-}
-
-table {
-	border-top: solid 1.5px black;
-	border-collapse: collapse;
-	width: 100%;
-	font-size: 14px;
-}
-
-thead {
-	text-align: center;
+.myCart_content h2{
 	font-weight: bold;
+	margin-left: 20px;
 }
 
-tbody {
-	font-size: 12px;
+/* 장바구니 리스트 영역 */
+.myCart_list {
+    width: 1000px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+.myCart_list thead {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+.myCart_list th {
+    /* background-color: red; */
+    padding: 10px 0;
+}
+.myCart_list td {
+    /* background-color: blue; */
+    padding: 5px 0;
+}
+.myCart_list tr {
+	border-bottom: 1px solid gray;
 }
 
-td {
-	padding: 15px 0px;
-	border-bottom: 1px solid black;
+/* 체크박스 영역 */
+.myCart_list td:first-child {
+	padding: 5px;
+	text-align: center;
 }
-.myCart_btn_area {
-	width: 1000px;
-	position: relative;
-	float: right;
+.myCart_list input[type=checkbox] {
+	width: 15px;
+	height: 15px;
+	accent-color: black;	
 }
-/* 삭제하기 버튼 */
-.delete_btn {
-	width: 60px;
-	margin-top: 30px;
-	position: relative; float : right; background-color : black;
-	color: white;
-	border-radius: 5px;
-	background-color: black;
+
+/* 상품정보 영역 */
+.myCart_list [name="proNo"] {
+    width: 450px;
+    text-align: center;
 }
-/* 주문번호 */
-.cart-table {
-	vertical-align: top;
+
+.myCart_list .proInfo {
 	padding: 20px;
+	display: flex;
+	align-items: center;
 }
-
-/* 주문번호 p태그 */
-.cart-table p {
-	margin-bottom: 55px;
-	position: relative;
+.myCart_list .proInfo {
+	vertical-align: middle;
 }
-
-/* 상품 디테일 */
-.cart_list_detail :nth-child(4), .cart_list_detail :nth-child(5),
-	.cart_list_detail :nth-child(6), .cart_list_detail :nth-child(7),
-	.cart_list_detail :nth-child(8) {
-	border-left: 1px solid lightgray;
+/* 상품정보 사진 영역 */
+.myCart_list .proInfo img {
+	width: 120px;
+	height: 140px;
 }
-
-.cart_list_detail :nth-child(4), .cart_list_detail :nth-child(5),
-	.cart_list_detail :nth-child(6), .cart_list_detail :nth-child(7) {
-	text-align: center;
+.myCart_list [name="proNo"] ul {
+	text-align: left;
+	padding: 0 10px;
 }
-
-.price {
+.myCart_list [name="proNo"] li:nth-child(2) {
 	font-weight: bold;
 }
-
-/* 쇼핑계속하기/주문하기 버튼 div */
-.cart_mainbtns {
-	width: 420px;
-	height: 200px;
-	padding-top: 40px;
-	display: block;
-	margin: auto;
+.myCart_list [name="proNo"] li:nth-child(2) a {
+	color: black;
+}
+.myCart_list [name="proNo"] li:nth-child(3) {
+	font-weight: bold;
+	color: rgb(125, 125, 125);
 }
 
-.cart_bigorderbtn {
-	width: 200px;
-	height: 50px;
-	font-size: 16px;
-	margin: auto;
-	border-radius: 5px;
-	text-align: center;
-	position: relative;
+/* 상품금액 영역 */
+.myCart_list [name="proPrice"] {
+    width: 130px;
+    text-align: center;
 }
 
-/* 쇼핑계속하기 버튼 */
-.cart_bigorderbtn.left {
-	background-color: white;
-	border: 1px lightgray solid;
+/* 수량 영역 */
+.myCart_list [name="cartBuyStock"] {
+    width: 120px;
+    text-align: center;
 }
-
-/* 주문하기 버튼 */
-.cart_bigorderbtn.right {
-	background-color: rgb(0, 0, 0);
-	color: white;
+.myCart_list [name="cartBuyStock"] button {
+	width: 25px;
+	height: 25px;
 	border: none;
+	border-radius: 5px;
+	color: red;
+	font-weight: bold;
+}
+/* 주문금액 영역 */
+.myCart_list [name="orderPrice"] {
+	width: 130px;
+    text-align: center;
 }
 
-/* 주문내역조회 */
-.orderlist_txt {
-	margin-top: 70px;
-	margin-left: 235px;
-	font-size: 25px;
-	font-weight: 700;
+/* 주문상태 영역 */
+.myCart_list [name="deliverType"] {
+    text-align: center;
 }
-
-.relative {
-	position: relative;
-}
-
-.wrapper {
-	margin-top: 50px;
-	margin-left: 237px;
-	position: relative;
-	text-align: center;
-	background-color: rgb(224, 224, 224);
-	width: 994px;
-	height: 80px;
-	justify-content: center;
-}
-
-.my_page_txt {
-	position: relative;
-	text-align: center;
-	padding-top: 15px;
-	font-size: 30px;
+.myCart_list [name="deliverType"] span:nth-child(3) {
+	font-size: 17px;
 	font-weight: bolder;
 }
 
-/* 
-            ul.menu {
-                position: relative;
-                height: 50px;
-                display: flex;
-                justify-content: center;
-            }
-
-            ul.menu li {
-                position: relative;
-                font-size: 23px;
-                list-style-type: none;
-                margin-right: 58px;
-                width: 7em;
-                height: 2.2em;
-                text-align: center;
-
-
-            }
- */
-/* 마이페이지 a태그 */
-ul.menu li a {
-	display: block;
-	position: relative;
-	padding: .3em;
-	text-decoration: none;
-	color: black;
-	font-weight: 700;
+/* 후기 작성 버튼 영역 */
+.myCart_list [name="reviewAdd"] {
+ 	text-align: center;
+}
+.myCart_list #btn_review_add {
+	border: none;
+	color: white;
+	border-radius: 5px;
+	background-color: black;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 7px 10px;
+}
+.myCart_list #review_wrong {
+	font-size: 12px;
+	color: rgb(125, 125, 125);
+	font-weight: bold;
 }
 
-ul.menu li a:hover {
-	color: navy;
+/* 내 게시글 조회 페이지바 영역*/
+.myCart_content>.pagebar {
+	position: relative;
+	margin: 20px auto;
+	text-align: center;
+}
+.myCart_content>.pagebar a {
+	background-color: #c0c0c0;
+	width: 15px;
+	height: 15px;
+	padding: 5px 10px;
+	color: black;
+	border: none;
+	border-radius: 5px;
+}
+.myCart_content>.pagebar span {
+	background-color: black;
+	padding: 5px 10px;
+	color: white;
+	border: none;
+	border-radius: 5px;
 }

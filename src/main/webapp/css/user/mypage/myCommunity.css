@@ -5,6 +5,17 @@
     list-style: none;
     text-decoration: none;
 }
+/* 내 게시글 조회 컨텐트 영역*/
+.myCommunity_content {
+	width: 1000px;
+    margin: 0 auto;
+}
+.myCommunity_content h2 {
+	font-weight: bold;
+}
+.myCommunity_content a {
+	text-decoration: none;
+}
 /* 내 게시글 조회 헤더 영역 */
 .myCommunity_content_header {
     display: flex;
@@ -13,19 +24,21 @@
 }
 .myCommunity_content_header ul {
     display: flex;
-    margin: 20px 0 0 20px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 .myCommunity_content_header a {
     color: rgb(130, 130, 130);
     margin: 0 20px;
     font-weight: bold;
+
+    
 }
 
 
 /* 내 게시글 조회 1:1문의 리스트 영역 */
 .myCommunity_list {
     width: 1000px;
-    margin-top: 20px;
     border-collapse: collapse;
 }
 .myCommunity_list thead {
@@ -35,6 +48,7 @@
 .myCommunity_list th {
     /* background-color: red; */
     padding: 10px 0;
+    text-align: center;
 }
 .myCommunity_list td {
     /* background-color: blue; */
@@ -96,7 +110,7 @@
 	width: 100%;
 	height: 20px;
 	/* background-color: red; */
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .myCommunity_content #btn_del {
 	float: right;
@@ -106,6 +120,7 @@
 	border-radius: 5px;
 	background-color: black;
 	color: white;
+	font-size: 13px;
 	font-weight: bold;
 	cursor: pointer;
 }
@@ -113,7 +128,7 @@
 /* 내 게시글 조회 페이지바 영역*/
 .myCommunity_content>.pagebar {
 	position: relative;
-	margin: 10px auto;
+	margin: 20px auto;
 	text-align: center;
 }
 .myCommunity_content>.pagebar a {

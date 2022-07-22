@@ -20,6 +20,8 @@ import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.mypage.model.exception.MypageException;
 import com.kh.sinsa.order.model.dto.Order;
+import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.review.model.dto.Review;
 import com.kh.sinsa.user.model.dao.UserDao;
 
@@ -369,6 +371,78 @@ public class MypageDao {
 		return totalMyOrderListContent;
 	}
 
+	//상품정보 조회
+	public Product findByProNo(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Product proInfo = null;
+		String sql = prop.getProperty("findByProNo");
+		//findByProNo = select * from product where pro_no = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				proInfo = handleProductResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("상품정보 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return proInfo;
+	}
+
+	private Product handleProductResultSet(ResultSet rset) throws SQLException {
+		String proNo = rset.getString("pro_no");
+		String proType = rset.getString("pro_type");
+		String proName = rset.getString("pro_name");
+		int proPrice = rset.getInt("pro_price");
+		String proSize = rset.getString("pro_size");
+		Timestamp regDate = rset.getTimestamp("reg_date");
+		String proContent = rset.getString("pro_content");
+		
+		return new Product(proNo, proType, proName, proPrice, proSize, regDate, proContent);
+	}
+
+	//상품정보 첨부파일 조회
+	public ProductAttachment findAttachByProNo(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ProductAttachment proAttach =  null;
+		String sql = prop.getProperty("findAttachByProNo");
+		//findAttachByProNo = select * from product_attachment where pro_no = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				proAttach = handleProductAttachmentResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("상품정보 첨부파일 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return proAttach;
+	}
 	
+	private ProductAttachment handleProductAttachmentResultSet(ResultSet rset) throws SQLException {
+		int proAttachmentNo = rset.getInt("pro_attachment_no");
+		String proNo = rset.getString("pro_no");
+		String proOriginalFilename = rset.getString("pro_original_filename");
+		String proRenameFilename = rset.getString("pro_rename_filename");
+		
+		return new ProductAttachment(proAttachmentNo, proNo, proOriginalFilename, proRenameFilename);
+	}
+
 	//##########janghoon MypageDao end#############
 }

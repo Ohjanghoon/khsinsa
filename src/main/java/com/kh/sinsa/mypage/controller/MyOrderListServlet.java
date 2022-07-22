@@ -1,6 +1,7 @@
 package com.kh.sinsa.mypage.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.mypage.model.service.MypageService;
 import com.kh.sinsa.order.model.dto.Order;
+import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.user.model.dto.User;
 
 /**
@@ -28,7 +31,9 @@ public class MyOrderListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = "";
-		List<Order> myOrderlist = null;
+		List<Order> myOrderList = null;
+		List<Product> proInfoList = new ArrayList<>();
+		List<ProductAttachment> proAttachList = new ArrayList<>();
 		
 		try {
 			//1. 사용자 입력값
@@ -52,9 +57,18 @@ public class MyOrderListServlet extends HttpServlet {
 			if(loginUser != null) {
 				userId = loginUser.getUserId();
 				//System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n", cPage, numPerPage, start, end);
-				myOrderlist = mypageService.orderListFindById(userId, param);
-//				System.out.println("list@MyOrderListServlet = " + list);
+				myOrderList = mypageService.orderListFindById(userId, param);
+				//System.out.println("list@MyOrderListServlet = " + list);
 				
+				Product proInfo = null;
+				ProductAttachment proAttach = null;
+				for(Order ord : myOrderList) {
+					proInfo = mypageService.findByProNo(ord.getProNo());
+					proInfoList.add(proInfo);
+					
+					proAttach = mypageService.findAttachByProNo(ord.getProNo());
+					proAttachList.add(proAttach);
+				}
 			}
 			
 			//b. pagebar 영역
@@ -67,7 +81,13 @@ public class MyOrderListServlet extends HttpServlet {
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리
-			request.setAttribute("myOrderlist", myOrderlist);
+			System.out.println("myOrderList = " + myOrderList);
+			System.out.println("proInfoList = " + proInfoList);
+			System.out.println("proAttachList = " + proAttachList);
+			
+			request.setAttribute("myOrderList", myOrderList);
+			request.setAttribute("proInfoList", proInfoList);
+			request.setAttribute("proAttachList", proAttachList);
 			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myOrderList.jsp").forward(request, response);
 		} catch (Exception e) {

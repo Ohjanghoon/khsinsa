@@ -220,7 +220,7 @@ public class InquireDao {
 		return inquireNo;
 	}
 
-	public int insertInquire(Connection conn, InquireExt inquire) {
+	public int insertInquire(Connection conn, Inquire inquire) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertInquire");

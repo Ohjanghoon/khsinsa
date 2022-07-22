@@ -19,7 +19,7 @@
 	href="<%=request.getContextPath()%>/css/inquire/inquireView.css" />
 
 <%
-InquireExt inquire = (InquireExt) request.getAttribute("inquire");
+Inquire inquire = (Inquire) request.getAttribute("inquire");
 %>
 
 <div id="title">
@@ -70,7 +70,7 @@ InquireExt inquire = (InquireExt) request.getAttribute("inquire");
 
 	<form action="<%=request.getContextPath()%>/inquire/inquireDelete"
 		method="post" name="inquireDel">
-		<input type="hidden" name="no" value="<%=inquire.getInquireNo()%>" />
+		<input type="hidden" name="inquireNo" value="<%=inquire.getInquireNo()%>" />
 	</form>
 	<script>
 		const deleteInquire = () => {

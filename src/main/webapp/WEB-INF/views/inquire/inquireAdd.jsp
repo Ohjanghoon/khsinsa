@@ -11,7 +11,8 @@
 	href="<%=request.getContextPath()%>/css/inquire/inquireAdd.css" />
 
 <div class="container">
-	<form action="<%= request.getContextPath() %>/inquire/inquireAdd" method="POST" id="inqure_Frm">
+	<form action="<%=request.getContextPath()%>/inquire/inquireAdd"
+		method="POST" id="inqure_Frm">
 		<p class="title">문의하기</p>
 		<div class="inquire_input">
 			<table>
@@ -26,10 +27,10 @@
 						</span></th>
 						<td><select class="form-select form-select-sm-1"
 							aria-label=".form-select-sm example" name="inquireCategory">
-								<option value="1">상품</option>
-								<option value="2">커뮤니티</option>
-								<option value="3">계정</option>
-								<option value="4">기타사항</option>
+								<option value="상품">상품</option>
+								<option value="커뮤니티">커뮤니티</option>
+								<option value="계정">계정</option>
+								<option value="기타사항">기타사항</option>
 
 
 						</select></td>
@@ -41,11 +42,11 @@
 						</span></th>
 						<td>
 							<div class="writerFrm">
-							<div class="mb-3">
-								<label for="formGroupExampleInput" class="form-label"></label> <input
-									type="text" name="userId" class="form-control" id="formGroupExampleInput"
-									placeholder="">
-									</div>
+								<div class="mb-3">
+									<label for="formGroupExampleInput" class="form-label"></label>
+									<input type="text" name="userId" class="form-control"
+										id="formGroupExampleInput">
+								</div>
 							</div>
 						</td>
 					</tr>
@@ -57,8 +58,8 @@
 						<td>
 							<div class="mb-3">
 								<label for="formGroupExampleInput" class="form-label"></label> <input
-									type="text" name="inquireTitle" class="form-control" id="formGroupExampleInput"
-									placeholder="제목을 입력하세요">
+									type="text" name="inquireTitle" class="form-control"
+									id="formGroupExampleInput" placeholder="제목을 입력하세요">
 							</div>
 						</td>
 					</tr>
@@ -67,7 +68,7 @@
 						<th scope="row"><span class="label"> <label
 								for="post_content">문의내용</label>
 						</span></th>
-						<td><textarea name="post_content" id="post_content"
+						<td><textarea id="post_content"
 								cols="100" rows="10" name="inquireContent"></textarea></td>
 					</tr>
 				</tbody>
@@ -76,13 +77,13 @@
 
 		<div class="inquire_input2">
 
-	<!-- 		<div class="input-group mb-3">
+			<!-- 		<div class="input-group mb-3">
 				<input type="file" class="form-control" id="inputGroupFile02">
 				<label class="input-group-text" for="inputGroupFile02">파일등록</label>
 			</div>
  -->
 			<button type="submit" class="btn btn-success">등록하기</button>
-			<button type="submit" class="btn btn-light" >취소하기</button>
+			<button type="submit" class="btn btn-light">취소하기</button>
 
 
 		</div>

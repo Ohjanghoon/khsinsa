@@ -15,7 +15,7 @@ import com.kh.sinsa.user.model.dto.User;
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
 public class UserService {
-	private UserDao userDao = new UserDao();
+	private  UserDao userDao = new UserDao();
 
 	// ##########minseo UserService begin#############
 	/**
@@ -55,6 +55,15 @@ public class UserService {
 		close(conn);
 		return list;
 	}
+	
+	
+	public User forgotId(String username, String userEmail) {
+		Connection conn = getConnection();
+		User user = userDao.forgotId(conn, username, userEmail);
+		close(conn);
+		System.out.println("2");
+		return user;
+	}
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
@@ -81,6 +90,8 @@ public class UserService {
 		close(conn);
 		return user;
 	}
+
+
 
 	// ##########janghoon UserService end#############
 

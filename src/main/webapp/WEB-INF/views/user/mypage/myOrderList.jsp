@@ -1,53 +1,91 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
+<%@page import="com.kh.sinsa.product.model.dto.Product"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.kh.sinsa.order.model.dto.Order"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
-
 <%@ include file ="/WEB-INF/views/user/mypage/myPageHeader.jsp" %>
-
-
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/myOrderList.css">
-<section class="cart">
-  
-    <form action="">
-    <table class="cart_list">
-            <thead>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td colspan="2">상품정보</td>
-                    <td>주문번호</td>
-                    <td>주문일자</td>
-                    <td>주문금액</td>
-                    <td>주문상태</td>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="cart_list_detail">
-                    <td><input type="checkbox"></td>
-                    <td><img src="../kh_sina/img/clothes.png" alt="black-tshirt"></td>
-                    <td><p>주신사 자체제작</p>
-                        <span style="color:blue;">10047387483748</span>
-                    </td>
-                    <td class="order_table">
-                        <p class="order_number">2022070212345-423423423</p>
+<%
+	List<Order> myOrderList= (List<Order>) request.getAttribute("myOrderList");
+	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
+	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+%>	
 
-                        <td><p>2022/07/03</p></td>
-                        <td><p>50.000</p></td>
-                        <td><p>배송중</p></td>
-                    </td>
-                </tr>
-            </tbody>
-           
-        </table>
-        <div class="cart_mainbtns">
-    
-            <button class="cart_bigorderbtn left">쇼핑계속하기</button>
-            <button class="cart_bigorderbtn right">주문하기</button>
-        </div>
+	<div class="myOrderList_content">
+  	<div class="myOrderList_content_header">
+  		<h2>주문내역 조회</h2>
+  	</div>
+  	
+	<form action="" name="myOrderListFrm">
+	    <table class="myOrderList_list">
+		    <thead>
+	            <th name="proNo">상품정보</td>
+	            <th name="orderNo">주문번호</td>
+	            <th name="orderDate">주문일자</td>
+	            <th name="orderPrice">주문금액(수량)</td>
+	            <th colspan="2" name="orderStatus">주문상태</td>
+		    </thead>
+		    <tbody>
+		    <% if(myOrderList != null && !myOrderList.isEmpty()) {
+				for(Order ord : myOrderList) { 
+					for(Product pro : proInfoList){
+						for(ProductAttachment proAttach : proAttachList){
+							if(ord.getProNo().equals(pro.getProNo()) && ord.getProNo().equals(proAttach.getProNo())){
+							
+				%>
+				<tr>
+				<td name="proNo">
+					<div class="proInfo">
+			            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
+			            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
+		            	</a>
+		            	<ul>
+			        		<li><%= pro.getProNo() %> / <%= pro.getProType() %></li>
+			        		<li>
+				        		<a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
+				        			<%= pro.getProName() %>
+				        		</a>
+			        		</li>
+			        		<li>사이즈 : <%= pro.getProSize() %></li>
+			        	</ul>
+					</div>
+				</td>
+            	<td name="orderNo"><%= ord.getOrderNo() %></td>
+	            <td name="orderDate"><%= new SimpleDateFormat("yyyy-MM-dd").format(ord.getOrderDate()) %></td>
+	            <td name="orderPrice">
+	            	<span><%= new DecimalFormat("###,###").format(ord.getOrderPrice()) %> 원</span>
+	            	<br>
+	            	<span name="orderAmount"><%= ord.getOrderAmount() %>개</span>
+            	</td>
+	            <td name="orderStatus"><%= ord.getOrderStatus() %></td>
+	            	<%
+		            if("배송완료".equals(ord.getOrderStatus())) { 
+		            %>
+	            	<td name="reviewAdd"><button type="button" id="btn_review_add">후기 작성</button></td>
+		            <%
+		            } else { 
+		            %>
+		            <td name="reviewAdd"><span id="review_wrong">후기작성불가</span></td>	
+					<% } %>
+	            
+				</tr>
+		   	<%   		}
+		   			  }
+		   			}
+		   		 }
+			   }%>
+		    </tbody>
+	           
+	   	</table>
           
-        </form>
-        
+	</form>
+    <div class="pagebar">
+			<%= request.getAttribute("pagebar") %>
+	</div>    
 
 </section>
 

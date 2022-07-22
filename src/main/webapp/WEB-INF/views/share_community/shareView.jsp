@@ -81,12 +81,15 @@ String commNo = (String) request.getAttribute("no");
 				<input type="button" value="삭제하기" onclick="deleteCommunity()">
 			</li>
 		
-		<% } %>
+		<% } %>	
+		
+		
+		</ul>
 
 			<hr>
 
 
-	<li>
+	
 				<div class="comment-container">
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
@@ -114,13 +117,12 @@ String commNo = (String) request.getAttribute("no");
 								&& (loginUser.getUserId().equals(cc.getUserId()) || loginUser.getUserRole() == UserRole.A);
 						%>
 						<tr class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
+
 							<td>
 							<sub class="comment-writer"><%=cc.getUserId()%></sub> 
 							<sub class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
 								<div>
 									<p><%= cc.getCommentContent() %></p>
-									
-
 								</div>
 							</td>
 							
@@ -142,10 +144,9 @@ String commNo = (String) request.getAttribute("no");
 						}
 						%>
 					</table>
-					<hr>
+					
 				</div>
-			</li>
-		</ul>
+		
 
 	</div>
 

@@ -59,7 +59,7 @@ public class MyCommunityInquireServlet extends HttpServlet {
 			//b. pagebar 영역
 			// getTotalMyInquireContent = select * from inquire where user_id = ?
 			int totalMyInquireContent = mypageService.getTotalMyInquireContent(userId);
-			System.out.println("TotalMyInquireContent = " + totalMyInquireContent);
+//			System.out.println("TotalMyInquireContent = " + totalMyInquireContent);
 			
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyInquireContent, url);

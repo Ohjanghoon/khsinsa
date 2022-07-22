@@ -46,6 +46,7 @@ public class UserLoginServlet extends HttpServlet {
 			HttpSession session = request.getSession(true); //세션이 존재하지 않으면, 새로 생성해서 반환, true 생락 가능.
 			System.out.println(session.getId()); //클라이언트쪽과 동일 
 			
+			String location = "";
 			//로그인 성공
 			if(user != null && password.equals(user.getPassword())) {
 //				System.out.println("로그인 성공");
@@ -66,16 +67,17 @@ public class UserLoginServlet extends HttpServlet {
 					cookie.setMaxAge(0);
 				}
 				response.addCookie(cookie);
+				location = request.getContextPath();
 			}
 			//로그인 실패 (아이디가 존재하지 않는 경우 || 비밀번호가 틀린 경우)
 			else {
 				session.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다. ");
+				location = request.getHeader("Referer");
 			}
 			// 3. 응답처리 : 로그인 후 url변경을 위해 리다이렉트 처리
 			// 응답 302 redirect 전송.
 			// 브라우저에게 location으로 재요청을 명령.
-			
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(location);
 		} catch (Exception e) {
 			e.printStackTrace(); // 로깅
 			throw e; // 톰캣에 예외 던짐 

@@ -13,6 +13,17 @@
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 	System.out.println("productattachList = " + productattachList);
 %>
+<div align="center" id="body">
+            <br>
+            <class = "adminpage"><h1>Admin page</h1></class>
+            <ul class = "ul">
+                <adminmenu>
+                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/productmanagement">상품 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
+                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+            </adminmenu>
 <main>
     <div class="container">
         <section class="py-5 text-center container">

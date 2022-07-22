@@ -1,5 +1,6 @@
 package com.kh.sinsa.community.model.dao;
 
+
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 
 import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
@@ -98,7 +100,7 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("updateReadCount");
-
+		// updateReadCount = update community set comm_read_count = comm_read_count + 1 where comm_no = ?
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, no);
@@ -117,7 +119,7 @@ public class CommunityDao {
 		ResultSet rset = null;
 		Community community = null;
 		String sql = prop.getProperty("findByNo");
-
+//		findByNo = select * from community where comm_no = ?
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, no);
@@ -163,31 +165,10 @@ public class CommunityDao {
 		String content = rset.getString("comm_comment_content");
 		Date regDate = rset.getDate("comm_comment_date");
 		CommentLevel commentLevel = CommentLevel.valueOf(rset.getInt("comm_comment_level"));
-		String commentRef = rset.getString("comm_comment_ref"); // null인 경우 0을 반환
+		String commentRef = rset.getString("comm_comment_ref"); 
 		return new CommunityComment(no, commNo, writer, content, regDate, commentLevel, commentRef);
 	}
 
-	public int insertCommunityComment(Connection conn, CommunityComment communityComment) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = prop.getProperty("insertCommunityComment");
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, communityComment.getCommNo());
-			pstmt.setString(2, communityComment.getUserId());
-			pstmt.setString(3, communityComment.getCommentContent());
-			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
-			pstmt.setObject(5,
-					Integer.parseInt(communityComment.getCommentRef()) == 0 ? null : communityComment.getCommentRef());
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new CommunityException("댓글/답글 등록 오류!", e);
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
 
 	public int deleteCommunityComment(Connection conn, String no) {
 		PreparedStatement pstmt = null;
@@ -245,5 +226,53 @@ public class CommunityDao {
 		}
 		return result;
 	}
+
+	public int editCommunity(Connection conn, Community community) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editCommunity");
+		// updateCommunity = update community set comm_title = ?, comm_content = ? where comm_no = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, community.getCommTitle());
+			pstmt.setString(2, community.getCommContent());
+			pstmt.setString(3, community.getCommNo());
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시글 수정 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertCommunityComment(Connection conn, CommunityComment communityComment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCommunityComment");
+		// insertCommunityComment = insert into comm_comment values ('C31' || seq_comm_comment_comm_comment_no.nextval, ?, ?, ?, default, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, communityComment.getCommNo());
+			pstmt.setString(2, communityComment.getUserId());
+			pstmt.setString(3, communityComment.getCommentContent());
+			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
+			pstmt.setObject(5, Integer.parseInt(communityComment.getCommentRef()) == 0 ? null : communityComment.getCommentRef());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			throw new CommunityException("댓글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+
 
 }

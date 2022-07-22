@@ -39,12 +39,10 @@ adminmenu {
 ul {
     list-style: none !important;
     margin: auto 20px !important;
-    float: right
-
 }
 
 li {
-    float: right !important;
+    float: left !important;
     margin: auto 20px !important; 
 }
 #logo {

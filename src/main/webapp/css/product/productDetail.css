@@ -1,52 +1,58 @@
 @charset "UTF-8";
 
-.container {
-    width: 1024px;
-    margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
-}
 hr{
     padding: 1px;
 }
-span{
-    display: block;
-    padding: 20px;
+.figure{
+    padding: 5px;
+    text-align: center;
 }
-.container-md{
-    background-color: whitesmoke;
+.valSave{
+	text-align: center;
 }
-.container-md p{
-    font-weight: bold;
+.valSave table td{
+	text-align: left;
 }
-.product-name{
-    padding: 30px;
-    font-size: 20px;
+.valSave input, button{
+	width: 55px;
+	height: 35px;
+	text-align: center;
+	border-radius: 12%;
+	margin: 3px;
 }
-.product-img{
-    padding: 20px sauto;
-    display: inline-flex;
+.valSave select{
+	width: 250px;
 }
-.product-img img{
-    padding: 10px;
-    width: 300px;
-    height: 400px;
+#buy, #cart, #liveToastBtn{
+	border-radius: 18%;
+	width: 100px;
 }
-.product-text{
-    display: inline-block;
-    padding-left: 50px;
-}
-.product-text input{
-    width: 30px;
-}
+
 .product-info{
     text-align: center;
 }
 .product-info img{
-    padding: 20px;
+    width: 65%;
+    margin: 15px
 }
 .product-info p{
     font-size: 30px;
     font-weight: bold;
 }
+h6{
+	margin : 80px
+}
+#photo-container{
+	text-align: center;
+}
+#review{
+	font-size: 30px;
+    font-weight: bold;
+}
+#btn-more{
+	width: 100px;
+}
+
 
 /* 리스트보기 */
 section#photo-wrapper{width:600px; margin:0 auto; text-align:center;}

@@ -70,6 +70,8 @@ public class MyCommunityCommunityServlet extends HttpServlet {
 			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myCommunityCommunity.jsp").forward(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
 		
 	}

@@ -413,3 +413,16 @@ insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12
 insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
 insert into community values('C30' || seq_community_comm_no.nextval,  'tmddnjs12', '8월 강남 패션쇼 정보', '강남 KH 정보교육원에서 패션쇼 열린다고 하네요~', default, 3, 22);
 commit;
+
+-- 테이블 수정 --  
+alter table kh_order modify order_status varchar(100) default '주문 대기';
+alter table kh_order modify order_address varchar2(2000);
+select * from favorite;
+select count(*) from favorite where pro_no = ?;
+insert into favorite values(?,?);
+select * from cart;
+select * from product;
+commit;
+
+update review set review_recommend = review_recommend + 1 where review_no = 'R103';
+select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p where pro_type = '상의' ) p where rnum between 1 and 3;

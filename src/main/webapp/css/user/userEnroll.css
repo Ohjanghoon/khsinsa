@@ -51,19 +51,22 @@
     text-indent: 5px;
 }
 /* 휴대전화 영역 */
-.phone_area select {
-    margin-left: 120px;
-    padding-right: 40px;
-    border: 2px solid black;
+.phone_area #phone1 {
+	width: 100px;
+    margin: 0 0 0 120px;
+    border: none;
+    border-radius: 5px;
+	background-color: #b9b9b9;
+    text-align: center;
 }
-.phone_area input {
+.phone_area #phone2 {
     width: 300px;
     position: relative;
 }
 
 /* 이메일 영역 */
 .email_area #emailId {
-    width: 150px;
+    width: 180px;
     margin: 0 0 0 120px;
 }
 .email_area #emailAddr {

@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.inquire.model.dto.Inquire;
+import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.inquire.model.service.InquireService;
 
 /**
  * Servlet implementation class inquireListServlet
  */
 @WebServlet("/inquire/inquireList")
-public class inquireListServlet extends HttpServlet {
+public class InquireListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private InquireService inquireService = new InquireService(); 
 
@@ -39,14 +40,18 @@ public class inquireListServlet extends HttpServlet {
 				param.put("start", start);
 				param.put("end", end);
 				
+				
+				
 				// 2. 업무로직
 				// a. content 영역
+				
+				
 				List<Inquire> list = inquireService.findAll(param);
-			
+				
 				
 				// b. pagebar 영역
 				int totalContent = inquireService.getTotalContent();
-				String url = request.getRequestURI(); // /mvc/board/boardList
+				String url = request.getRequestURI();
 				String pagebar = 
 						KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 				

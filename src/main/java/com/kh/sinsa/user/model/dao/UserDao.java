@@ -107,10 +107,36 @@ public class UserDao {
 			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
 			throw new UserException("회원정보수정 오류", e);
 		} finally {
+			
 			close(pstmt);
+			
 		}
 		return result;
 	}
+	
+
+	public List<User> findAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<User> list = new ArrayList<User>();
+		String sql = prop.getProperty("findAll");
+		// findAll = select * from kh_user
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			 while(rset.next()) {
+				 list.add(handleUserResultSet(rset));
+				 
+				 
+			 }
+			
+		} catch (Exception e) {
+			throw new UserException("전체회원조회 오류",e);
+		}
+		return list;
+	}
+
 
 	// ##########minseo UserDao end#############
 
@@ -142,6 +168,30 @@ public class UserDao {
 		}
 
 		return result;
+	}
+
+	public User findByEmail(Connection conn, String userEmail) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User user = null;
+		String sql = prop.getProperty("findByEmail");
+		//findByEmail = select * from kh_user where user_email = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userEmail);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				user = handleUserResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new UserException("회원 이메일 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return user;
 	}
 	// ##########janghoon UserDao end#############
 

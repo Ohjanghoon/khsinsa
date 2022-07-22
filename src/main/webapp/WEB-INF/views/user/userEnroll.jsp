@@ -1,99 +1,118 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="javax.swing.text.Document"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userEnroll.css" />
+	pageEncoding="UTF-8"%>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/user/userEnroll.css" />
 <title>회원가입 페이지</title>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String todayDate = sdf.format(new Date());
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+String todayDate = sdf.format(new Date());
 %>
 <div class="enroll_container">
-    <h2>회원가입</h2>
-    <form action="<%= request.getContextPath() %>/user/userEnroll" name="userEnrollFrm" method="POST">
-            <div class="input_area">
-                <label>아이디 <span class="essential_mark">*</span></label>
-                <input type="text" name="userId" id="userId" autocomplete="off" required>
-            </div>
-            <br>
-            <span class="message_box" id="idMsg"></span>
-            <div class="input_area">
-                <label>비밀번호 <span class="essential_mark">*</span></label>
-                <input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
-                <button type="button" id="btn_show_pwd"><img src="<%= request.getContextPath() %>/images/eye_visible_icon.png" alt="버튼"></button>
-            </div>
-            <br>
-            <span class="message_box" id="pwdMsg">8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
-            <div class="input_area">
-                <label>비밀번호 확인 <span class="essential_mark">*</span></label>
-                <input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
-            </div>
-            <br>
-            <span class="message_box" id="pwdCheckMsg"></span>
-            <div class="input_area">
-                <label>이름 <span class="essential_mark">*</span></label>
-                <input type="text" name="userName" id="userName" autocomplete="off" required>
-            </div>
-            <br>
-            <span class="message_box" id="nameMsg"></span>
-            <div class="input_area">
-                <label>생년월일 <span class="essential_mark">*</span></label>
-                <input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%= todayDate %>">
-            </div>
-            <br>
-            <div class="input_area phone_area">
-                <label>휴대전화 <span class="essential_mark">*</span></label>
-                <select name="phone1" id="phone1">
-                    <option value="010">010</option>
-                    <option value="011">011</option>
-                    <option value="016">016</option>
-                    <option value="017">017</option>
-                    <option value="018">018</option>
-                    <option value="019">019</option>
-                </select>
-                <input type="text" name="phone2" id="phone2" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
-            </div>
-            <br>
-            <span class="message_box" id="phoneMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
-            <div class="input_area email_area">
-                <label>이메일 <span class="essential_mark">*</span></label>
-                <input type="text" name="emailId" id="emailId" title="이메일을 입력해주세요" autocomplete="off" required>
-                <span id="email_at">@</span>
-                <input type="text" name="emailAddr" id="emailAddr" list="emailAddrs" autocomplete="off" required>
-                <datalist id="emailAddrs">
-                    <option value="naver.com">
-                    <option value="hanmail.net">
-                    <option value="gmail.com">
-                    <option value="yahoo.com">
-                    <option value="hotmail.com">
-                    <option value="korea.com">
-                    <option value="nate.com">
-                </datalist> 
-            </div>
-            <br>
-            <span class="message_box" id="emailMsg"></span>
-            <div class="input_area">
-                <label>주소 <span class="essential_mark">*</span></label>
-                <input type="text" name="roadAddr" id="roadAddr" readonly>
-                <button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
-            </div>
-            <br>
-            <div class="input_area addr_area">
-                <input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력" >
-            </div>
-            <br>
-            <span class="message_box" id="addressMsg"></span>
-            <div class="btn_area">
-                <button type="submit" id="btn_enroll">회원가입</button>
-            </div>
-        </form>
+	<h2>회원가입</h2>
+	<form action="<%= request.getContextPath() %>/user/userEnroll" name="userEnrollFrm" method="POST" onsubmit="javascript:frmSubmitCheck();">
+		<%-- 아이디 --%>
+		<div class="input_area">
+			<label>아이디 <span class="essential_mark">*</span></label>
+			<input type="text" name="userId" id="userId" autocomplete="off" required>
+		</div>
+		<br>
+		<span class="message_box" id="idMsg"></span>
+		
+		<%-- 비밀번호 --%>
+		<div class="input_area">
+			<label>비밀번호 <span class="essential_mark">*</span></label>
+			<input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
+			<button type="button" id="btn_show_pwd">
+				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
+			</button>
+		</div>
+		<br>
+		<span class="message_box" id="pwdMsg">8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
+		
+		<%-- 비밀번호 확인 --%>
+		<div class="input_area">
+			<label>비밀번호 확인 <span class="essential_mark">*</span></label>
+			<input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
+		</div>
+		<br>
+		<span class="message_box" id="pwdCheckMsg"></span>
+		
+		<%-- 이름 --%>
+		<div class="input_area">
+			<label>이름 <span class="essential_mark">*</span></label>
+			<input type="text" name="userName" id="userName" autocomplete="off" required>
+		</div>
+		<br>
+		<span class="message_box" id="nameMsg"></span>
+		
+		<%-- 생년월일 --%>
+		<div class="input_area">
+			<label>생년월일 <span class="essential_mark">*</span></label>
+			<input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%=todayDate%>">
+		</div>
+		<br>
+		
+		<%-- 휴대전화 --%>
+		<div class="input_area phone_area">
+			<label>휴대전화 <span class="essential_mark">*</span></label>
+			<input type="text" name="phone1" id="phone1" value="010" readonly>
+			<input type="text" name="phone2" id="phone2" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
+		</div>
+		<br>
+		<span class="message_box" id="phoneMsg"></span>
+		
+		<%-- 이메일 --%>
+		<div class="input_area email_area">
+			<label>이메일 <span class="essential_mark">*</span></label>
+			<input type="text" name="emailId" id="emailId" title="이메일을 입력해주세요" autocomplete="off" required>
+			<span id="email_at">@</span>
+			<input type="text" name="emailAddr" id="emailAddr" list="emailAddrs" autocomplete="off" required> 
+			<datalist id="emailAddrs">
+				<option value="naver.com">
+				<option value="hanmail.net">
+				<option value="gmail.com">
+				<option value="yahoo.com">
+				<option value="hotmail.com">
+				<option value="korea.com">
+				<option value="nate.com">
+			</datalist>
+		</div>
+		<br>
+		<span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
+		
+		<%-- 주소 --%>
+		<div class="input_area">
+			<label>주소 <span class="essential_mark">*</span></label> <input
+				type="text" name="roadAddr" id="roadAddr" readonly>
+			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
+		</div>
+		<br>
+		<div class="input_area addr_area">
+			<input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력">
+		</div>
+		<br>
+		<span class="message_box" id="addressMsg"></span>
+		
+		<%-- 회원가입 버튼 영역 --%>
+		<div class="btn_area">
+			<button type="submit" id="btn_enroll">회원가입</button>
+		</div>
+	</form>
 </div>
+
 <script>
+
 //----------------------------------아이디----------------------------------------
 //아이디 유효성 검사 (중복 검사 기능 추가)
 const checkId = () => {
-	const tempId = document.querySelector("#userId").value;
+	let tempId = document.querySelector("#userId").value;
 	const idRegexp1 = /^[a-z]/g
 	const idRegexp2 = /^[a-z][a-z0-9]{3,11}$/g;
 	const idRegexp3 = /\d+/g;
@@ -115,14 +134,36 @@ const checkId = () => {
 	    showMsg(idMsg, "숫자를 하나이상 반드시 포함해주세요.");
 	    return false;
 	}
-	
-	showMsg(idMsg, "✔️");
-	return true;
+	return findById(tempId);
 };
 //아이디 유효성 검사 메세지
 const showMsg = (obj, msg) => {
     obj.innerHTML = msg;
 };
+//아이디 중복검사
+const findById = (tempId) => {
+	let available = false;
+	$.ajax({
+		url : '<%= request.getContextPath() %>/user/userEnroll/findById',
+		data: {tempId},
+		async: false,
+	    success(response){
+			if(!response){
+				showMsg(idMsg, "이미 사용중인 아이디입니다.");
+			} else {
+				showMsg(idMsg, "✔️");
+				available = true;
+			}
+		},
+	    error : console.log,
+	    complete: function(response){
+	    	
+	    	return response;
+	    }
+	    
+		
+	});
+}; 
 //onblur시 아이디 유효성 검사 체크
 userId.onblur = () => {
     checkId();
@@ -276,7 +317,7 @@ const checkEmailId = () => {
 	
 	// 이메일 주소 체크
 	emailAddr.onblur = () => {
-	    checkEmailAddr();
+	    checkEmailAddr(tempEmailId);
 	};
 	return true;
 };
@@ -287,7 +328,7 @@ emailId.onblur = () => {
 };
 
 //이메일 주소 유효성 검사
-const checkEmailAddr = () => {
+const checkEmailAddr = (tempEmailId) => {
   const tempEmailAddr = document.querySelector("#emailAddr").value;
   const emailAddrRegexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   
@@ -299,9 +340,31 @@ const checkEmailAddr = () => {
       showMsg(emailMsg, "이메일 주소를 다시 확인해주세요.");
       return false;
   }
+  if(!findByEmail(tempEmailId+"@"+tempEmailAddr)){
+	  showMsg(emailMsg, "이미 사용중인 이메일입니다.");
+	  return false;
+  }
   showMsg(emailMsg, "✔️");
   return true;
 };      
+
+
+
+//이메일 중복검사
+const findByEmail = (tempEmail) => {
+	let available;
+	$.ajax({
+		url : '<%= request.getContextPath() %>/user/userEnroll/findByEmail',
+		data: {tempEmail},
+		async: false,
+	    success(response){
+			available = response;
+		},
+	    error : console.log
+		
+	});
+	return available;
+}; 
 
 //----------------------------------주소----------------------------------------
 //주소 유효성 검사
@@ -322,12 +385,12 @@ roadAddr.onblur = () => {
 
 //사용자 입력값이 올바르지 않은데 가입하기 버튼을 클릭시 출력 메세지
 const re_input = (msg, ele) => {
-    alert(`${msg} 입력을 다시 확인해주세요!`);
+    alert(msg + " 입력을 다시 확인해주세요!");
     ele.focus();       //잘못 입력된 input focus 처리
     return false;
 };
 //----------------------------------회원가입 폼 제출 전 체크----------------------------------------
-document.userEnrollFrm.addEventListener('submit', () => {
+const frmSubmitCheck = () => {
     
     //회원가입 처리하기 이전에 최종 유효성 검사
     if(!checkId()){
@@ -354,12 +417,13 @@ document.userEnrollFrm.addEventListener('submit', () => {
     if(!checkAddress()){
         return re_input("주소", roadAddr);
     }
-
-    return true;
-});
+	
+	return true;
+};
 </script>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
 //----------------------------------주소 검색 팝업----------------------------------------
@@ -406,4 +470,4 @@ function addressPopup() {
     }).open();
 }
 </script>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

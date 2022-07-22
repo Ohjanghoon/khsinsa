@@ -29,7 +29,6 @@ public class ProductListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 9;

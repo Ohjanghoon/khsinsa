@@ -32,12 +32,10 @@ public class OrderServlet extends HttpServlet {
 
 			// 사용자 입력값
 			String size = request.getParameter("size");
-			String orderAmount = request.getParameter("orderAmount");
+			int orderAmount = Integer.parseInt(request.getParameter("orderAmount"));
 			String proNo = request.getParameter("proNo");
-			String userId = "dlfcks0808";
 			
 			// 업무로직
-			User user = userService.findById(userId);
 			Product product = productService.findByProNo(proNo);
 			List<ProductAttachment> attachList = productService.findProductAttachmentByProductProNo(proNo);
 			
@@ -47,7 +45,6 @@ public class OrderServlet extends HttpServlet {
 			request.setAttribute("size", size);
 			request.setAttribute("orderAmount", orderAmount);
 			request.setAttribute("product", product);
-			request.setAttribute("user", user);
 			request.getRequestDispatcher("/WEB-INF/views/product/order.jsp").forward(request, response);
 			
 		} catch (Exception e) {

@@ -49,6 +49,12 @@ public class UserService {
 		return result;
 	}
 
+	public List<User> findAll() {
+		Connection conn = getConnection();
+		List<User> list = userDao.findAll(conn);
+		close(conn);
+		return list;
+	}
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
@@ -68,6 +74,14 @@ public class UserService {
 		}
 		return result;
 	}
+
+	public User findByEmail(String userEmail) {
+		Connection conn = getConnection();
+		User user = userDao.findByEmail(conn, userEmail);
+		close(conn);
+		return user;
+	}
+
 	// ##########janghoon UserService end#############
 
 	

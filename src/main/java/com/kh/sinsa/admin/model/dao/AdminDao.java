@@ -25,10 +25,17 @@ import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.dto.ProductExt;
 import com.kh.sinsa.product.model.exception.ProductException;
+import com.kh.sinsa.admin.model.dto.ProductManagementExt;
 
-import com.kh.sinsa.admin.model.dto.Notice;
+import com.kh.sinsa.inquire.model.dto.Inquire;
+import com.kh.sinsa.inquire.model.dto.InquireExt;
+import com.kh.sinsa.inquire.model.exception.InquireException;
 
 import com.kh.sinsa.admin.model.exception.AdminException;
+import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.exception.CommunityException;
+
+import com.kh.sinsa.order.model.dto.Order;
 
 
 public class AdminDao {
@@ -286,11 +293,12 @@ public class AdminDao {
 	}
 
 	private ProductAttachment handleProductAttachmentResultSet(ResultSet rset) throws SQLException {
-		int proAttachmentNo = rset.getInt("pro_attachment_no");
-		String proNo = rset.getString("pro_no");
-		String proOriginalFilename = rset.getString("pro_original_filename");
-		String proRenameFilename = rset.getString("pro_rename_filename");
-		return new ProductAttachment(proAttachmentNo,proNo,proOriginalFilename,proRenameFilename);
+		ProductAttachment productattach = new ProductAttachment();
+		productattach.setProAttachmentNo(rset.getInt("pro_attachment_no"));
+		productattach.setProNo(rset.getString("pro_no"));
+		productattach.setProOriginalFilename(rset.getString("pro_original_filename"));
+		productattach.setProRenameFilename(rset.getString("pro_rename_filename"));
+		return productattach;
 	}
 
 	public List<ProductAttachment> productAttachmentFindAll(Connection conn) {
@@ -369,88 +377,533 @@ public class AdminDao {
 		return productlist;
 	}
 	
-	// ##########Product ends#############
+	public int insertProduct(Connection conn, Product product, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertProduct");
+		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (# || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
+		
+		String col = "'" + (String) param.get("productType") + "'";
+		
+		sql = sql.replace("#", col);
+		System.out.println(sql);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getProType());
+			pstmt.setString(2, product.getProName());
+			pstmt.setInt(3, product.getProPrice());
+			pstmt.setString(4, product.getProSize());
+			pstmt.setString(5, product.getProContent());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new AdminException("상품 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+//	create table product_attachment(
+//	        pro_attachment_no number,
+//	        pro_no varchar2(100) not null,
+//	        pro_original_filename varchar2(255) not null,
+//	        pro_rename_filename varchar2(255) not null,
+	        
+//	insertProductAttachment = insert into attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?) 
+	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertProductAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productAttachment.getProNo());
+			pstmt.setString(2, productAttachment.getProOriginalFilename());
+			pstmt.setString(3, productAttachment.getProRenameFilename());
+			result = pstmt.executeUpdate();
+			
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 첨부파일 등록 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
-	//##########Notice begins#############
-
-	// 게시글 목록 조회
-		private Notice handlerNoticeResultSet(ResultSet rset) throws SQLException {
-		String notice_no = rset.getString("notice_no");
-		String notice_title = rset.getString("notice_title");
-		String notice_content = rset.getString("notice_content");
-		String notice_writer = rset.getString("notice_writer");
-		Date notice_date = rset.getDate("notice_date");
-		int notice_read_count = rset.getInt("notice_read_count");
+	public String getLastProNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String ProNo = null;
+		String sql = prop.getProperty("getLastProNo");
 		
-		return new Notice(notice_no, notice_title, notice_content, notice_writer, notice_date, notice_read_count);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				ProNo = rset.getString(1);
+		} 
+		catch (SQLException e) {
+			throw new AdminException("생성된 게시글번호 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return ProNo;
 	}
-		
-		public List<Notice> noticeFindAll(Connection conn, Map<String, Object> param) {
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			List<Notice> noticelist = new ArrayList<>();
-			String sql = prop.getProperty("noticeFindAll");
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				rset = pstmt.executeQuery();
-				while(rset.next()) {
-					Notice notice = handlerNoticeResultSet(rset);
-					noticelist.add(notice);
-					
-				}
-			} catch (SQLException e) {
-				throw new AdminException("공지사항 게시글 목록 오류", e);
-			} finally {
-				close(rset);
-				close(pstmt);
-			}
-			
-			return noticelist;
+	
+	public int updateProduct(Connection conn, ProductManagementExt product) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateProduct");
+//		update board set pro_type = ?, pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getProType());
+			pstmt.setString(2, product.getProName());
+			pstmt.setInt(3, product.getProPrice());
+			pstmt.setString(4, product.getProSize());
+			pstmt.setString(5, product.getProContent());
+			pstmt.setString(6, product.getProNo());
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 수정 오류!", e);
 		}
-		
-		// 게시글 목록 조회 페이지바
-		public int noticeGetTotalContent(Connection conn) {
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			int noticetotalContent = 0;
-			String sql = prop.getProperty("noticegetTotalContent");
-			try {
-				pstmt = conn.prepareStatement(sql);
-				rset = pstmt.executeQuery();
-				if(rset.next())
-					noticetotalContent = rset.getInt(1);
-			} catch (SQLException e) {
-				throw new AdminException("총 게시물수 조회 오류!", e);
-			} finally {
-				close(rset);
-				close(pstmt);
-			}
-			
-			return noticetotalContent;
+		finally {
+			close(pstmt);
 		}
-
-		
-		public int updateNoticeReadCount(Connection conn, String no) {
-			PreparedStatement pstmt = null;
-			int result = 0;
-			String sql = prop.getProperty("updateReadCount");
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, no);
-				result = pstmt.executeUpdate();
-			} 
-			catch (SQLException e) {
-				throw new AdminException("조회수 증가 오류!", e);
-			}
-			finally {
-				close(pstmt);
-			}
-			
-			return result;
-		}
-
-		//##########Notice ends##############
+		return result;
 	}
+	
+	public int deleteProductAttachment(Connection conn, int proAttachmentNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteProductAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, proAttachmentNo);
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 사진 삭제 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ProductAttachment findProductAttachmentByProAttachmentNo(Connection conn, int proAttachmentNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ProductAttachment productattach = null;
+		String sql = prop.getProperty("findProductAttachmentByProAttachmentNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, proAttachmentNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) 
+				productattach = handleProductAttachmentResultSet(rset);
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 사진 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productattach;
+	}
+	
+	public int deleteProduct(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 삭제 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<ProductAttachment> findProductAttachmentByProNo(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ProductAttachment> productattachmentList = new ArrayList<>();
+		String sql = prop.getProperty("findProductAttachmentByProNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+				productattachmentList.add(handleProductAttachmentResultSet(rset));
+		} 
+		catch (SQLException e) {
+			throw new AdminException("상품 사진 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return productattachmentList;
+	}
+	
+
+
+//create table product(
+//        pro_no varchar2(100) ,
+//        pro_type varchar2(30),
+//        pro_name varchar2(50) not null,
+//        pro_price number not null,
+//        pro_size varchar2(2) not null,
+//        reg_date date default current_date,
+//        pro_content varchar2(4000) not null,
+//        constraint pk_pro_no primary key(pro_no)
+//);
+//
+//create table product_attachment(
+//        pro_attachment_no number,
+//        pro_no varchar2(100) not null,
+//        pro_original_filename varchar2(255) not null,
+//        pro_rename_filename varchar2(255) not null,
+//        constraint pk_pro_attachment_no primary key (pro_attachment_no),
+//        constraint fk_pro_no_03 foreign key (pro_no) references product(pro_no)
+//);
+//
+//create sequence seq_product_pro_no;
+//create sequence seq_product_attachment_pro_attachment_no;
+	
+	// ##########Product ends#############
+
+	//##########Inquire begins#############
+
+public List<Inquire> inquireFindAll(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<Inquire> inquirelist = new ArrayList<>();
+	String sql = prop.getProperty("inquireFindAll");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+
+		pstmt.setInt(1, (int) param.get("start"));
+		pstmt.setInt(2, (int) param.get("end"));
+//		pstmt.setString(1, (String) param.get("inquireNo"));
+//		pstmt.setString(2, (String) param.get("inquireTitle"));
+//		pstmt.setString(3, (String) param.get("userId"));
+//		pstmt.setDate(4, (Date) param.get("inquireDate"));
+//		pstmt.setString(5, (String) param.get("inquireAnswerRe"));
+
+		rset = pstmt.executeQuery();
+		while (rset.next()) {
+			InquireExt inquireExt = handleInquireResultSet(rset);
+			inquireExt.setAnswerStatus(rset.getInt("answer_status"));
+			inquirelist.add(inquireExt);
+		}
+
+	} catch (SQLException e) {
+		throw new InquireException("조회목오류", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return inquirelist;
+}
+
+private InquireExt handleInquireResultSet(ResultSet rset) throws SQLException {
+	String inquireNo = rset.getString("inquire_no");
+	String userId = rset.getString("user_id");
+	String inquireAnswerRef = rset.getString("inquire_answer_ref");
+	String inquireTitle = rset.getString("inquire_title");
+	String inquireContent = rset.getString("inquire_content");
+	Date inquireDate = rset.getDate("inquire_date");
+	String inquireCategory = rset.getString("inquire_category");
+	return new InquireExt(inquireNo, userId, inquireAnswerRef, inquireTitle, inquireContent, inquireDate,
+			inquireCategory);
+}
+
+public int inquireGetTotalContent(Connection conn) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	int totalContent = 0;
+	String sql = prop.getProperty("inquireGetTotalContent");
+	try {
+		pstmt = conn.prepareStatement(sql);
+		rset = pstmt.executeQuery();
+		if (rset.next())
+			totalContent = rset.getInt(1);
+	} catch (SQLException e) {
+		throw new InquireException("총 게시물수 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+
+	return totalContent;
+}
+
+public List<Inquire> findInquireLike(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<Inquire> list = new ArrayList<>();
+	String sql = prop.getProperty("findInquireLike");
+
+	String col = (String) param.get("searchType");
+	String val = (String) param.get("searchKeyword");
+	int start = (int) param.get("start");
+	int end = (int) param.get("end");
+
+	sql = sql.replace("#", col);
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "%" + val + "%");
+		pstmt.setInt(2, start);
+		pstmt.setInt(3, end);
+		rset = pstmt.executeQuery();
+		while (rset.next())
+			list.add(handleInquireResultSet(rset));
+
+	} catch (SQLException e) {
+		throw new InquireException("검색 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return list;
+}
+
+public int inquireGetTotalContentLike(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	int totalContent = 0;
+	String sql = prop.getProperty("inquireGetTotalContentLike");
+	String col = (String) param.get("searchType");
+	String val = (String) param.get("searchKeyword");
+	sql = sql.replace("#", col);
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "%" + val + "%");
+		rset = pstmt.executeQuery();
+		if (rset.next())
+			totalContent = rset.getInt(1);
+
+	} catch (SQLException e) {
+		throw new InquireException("관리자 검색된 회원수 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return totalContent;
+}
+
+public Inquire findByInquireNo (Connection conn, String inquireNo) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	Inquire inquire = null;
+	String sql = prop.getProperty("findByInquireNo");
+	// select * from inquire where inquire_no = ?
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, inquireNo);
+
+		rset = pstmt.executeQuery();
+
+		while (rset.next()) {
+			inquire = handleInquireResultSet(rset);
+		}
+
+	} catch (SQLException e) {
+		throw new InquireException("게시 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+
+	return inquire;
+}
+
+public int deleteInquire(Connection conn, String inquireNo) {
+	PreparedStatement pstmt = null;
+	int result = 0;
+	String sql = prop.getProperty("deleteInquire");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, inquireNo);
+		result = pstmt.executeUpdate();
+	} catch (SQLException e) {
+		throw new InquireException("1:1문의 삭제 오류");
+	} finally {
+		close(pstmt);
+	}
+	return result;
+}
+
+public String getLastInquireNo(Connection conn) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	String inquireNo = "";
+	String sql = prop.getProperty("getLastInquireNo");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		rset = pstmt.executeQuery();
+		if (rset.next())
+			inquireNo = rset.getString(1);
+	} catch (SQLException e) {
+		throw new InquireException("게시글번호 오류 ");
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return inquireNo;
+}
+
+public int insertInquire(Connection conn, InquireExt inquire) {
+	PreparedStatement pstmt = null;
+	int result = 0;
+	String sql = prop.getProperty("insertInquire");
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, inquire.getUserId());
+		pstmt.setString(2, inquire.getInquireTitle());
+		pstmt.setString(3, inquire.getInquireContent());
+		pstmt.setString(4, inquire.getInquireCategory());
+		result = pstmt.executeUpdate();
+		
+	} 
+	catch (SQLException e) {
+		throw new InquireException("게시글 등록 오류!", e);
+	}
+	finally {
+		close(pstmt);
+	}
+	return result;
+}
+
+//public int insertAttachment(Connection conn, Attachment attach) {
+//	PreparedStatement pstmt = null;
+//	int result = 0;
+//	String sql = prop.getProperty("insertAttachment");
+//
+//	try {
+//		pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1, attach.getInquireNo());
+//		pstmt.setString(2, attach.getInqOriginalFilename());
+//		pstmt.setString(3, attach.getInqRenamedFilename());
+//		result = pstmt.executeUpdate();
+//	} catch (SQLException e) {
+//		throw new InquireException("첨부파일 오류 ");
+//	} finally {
+//		close(pstmt);
+//	}
+//	return result;
+//}
+
+
+
+// ##########Inquire ends#############
+
+//##########Order begins#############
+
+
+private Order handleOrderResultSet(ResultSet rset) throws SQLException {
+	int orderNo = rset.getInt("order_no"); 
+	String userId = rset.getString("user_id");
+	String proNo = rset.getString("pro_no");
+	String orderAddress = rset.getString("order_address");
+	String orderPhone = rset.getString("order_phone");
+	String orderEmail = rset.getString("order_email");
+	Timestamp orderDate = rset.getTimestamp("order_date");
+	String orderReq = rset.getString("order_req");
+	int orderPrice = rset.getInt("order_price");
+	String orderStatus = rset.getString("order_status");
+	int orderAmount = rset.getInt("order_amount");
+	return new Order(orderNo, userId, proNo, orderAddress, orderPhone, orderEmail,
+				     orderDate, orderReq, orderPrice, orderStatus, orderAmount); }
+
+//order_no number,
+//user_id varchar2(100) not null,
+//pro_no varchar2(100) not null,
+//order_address varchar2(50) not null,
+//order_phone varchar2(11) not null,
+//order_email varchar2(100) not null,
+//order_date date default current_date,
+//order_req varchar2(100) not null,
+//order_price number not null,
+//order_status varchar2(100) not null, 
+//order_amount number default 1,
+ 
+
+public List<Order> orderFindAll(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<Order> orderlist = new ArrayList<>();
+	String sql = prop.getProperty("orderFindAll");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, (int) param.get("start"));
+		pstmt.setInt(2, (int) param.get("end"));
+		rset = pstmt.executeQuery();
+
+		while (rset.next()) {
+			Order order = handleOrderResultSet(rset);
+			orderlist.add(order);
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return orderlist;
+}
+
+public int orderGetTotalContent(Connection conn) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	int orderTotalContent = 0;
+	String sql = prop.getProperty("orderGetTotalContent");
+
+	try {
+		pstmt = conn.prepareStatement(sql);
+		rset = pstmt.executeQuery();
+		if (rset.next())
+			orderTotalContent = rset.getInt(1);
+	} catch (SQLException e) {
+		throw new UserException("전체 주문 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return orderTotalContent;
+}}
+//##########Order ends#############
+
+
+
+
 

@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.inquire.model.dto.Inquire;
 import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.mypage.model.exception.MypageException;
+import com.kh.sinsa.review.model.dto.Review;
 import com.kh.sinsa.user.model.dao.UserDao;
 
 public class MypageDao {
@@ -81,7 +83,7 @@ public class MypageDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int totalMyInquireContent = 0;
-		String sql = prop.getProperty("getTotalMyInquireContent");
+		String sql = prop.getProperty("totalMyInquireContent");
 		// getTotalMyInquireContent = select count(*) from inquire where user_id = ?
 		
 		try {
@@ -116,7 +118,7 @@ public class MypageDao {
 				result = pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
-			throw new MypageException("1:1문의글 삭제 오류", e);
+			throw new MypageException("내 문의글 삭제 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -184,6 +186,118 @@ public class MypageDao {
 		}
 		return totalMyCommunityContent;
 	}
+
+	//내 커뮤니티글 삭제
+	public int myCommunityDelete(Connection conn, String[] communityList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("myCommunityDelete");
+		// myCommunityDelete = delete from community where comm_no = ?
+		try {
+			for(String commNo : communityList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setObject(1, commNo);
+
+				result = pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw new MypageException("내 커뮤니티글 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	//내 리뷰글 조회
+	public List<Review> reviewListFindById(Connection conn, String userId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Review> list = new ArrayList<>();
+		String sql = prop.getProperty("reviewListFindById");
+		//reviewListFindById = select * from (select row_number() over(order by review_date desc) rnum, r.*
+		// 						from review r where user_id = ?) r where rnum between ? and ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				list.add(handleReviewResultSet(rset));
+			}
+		
+		} catch (SQLException e) {
+			throw new MypageException("내 리뷰글 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	private Review handleReviewResultSet(ResultSet rset) throws SQLException {
+		String reviewNo = rset.getString("review_no");
+		String proNo = rset.getString("pro_no");
+		int orderNo = rset.getInt("order_no");
+		String reviewWriter = rset.getString("review_writer");
+		String reviewContent = rset.getString("review_content");
+		String reviewOriginalFilename = rset.getString("review_original_filename");
+		String reviewRenamedFilename = rset.getString("review_renamed_filename");
+		Timestamp reviewDate = rset.getTimestamp("review_date");
+		int reviewRecommend = rset.getInt("review_recommend");
+		
+		return new Review(reviewNo, proNo, orderNo, reviewWriter, reviewContent, reviewOriginalFilename, reviewRenamedFilename, reviewDate, reviewRecommend);
+	}
+	
+	//내 리뷰글 수 조회
+	public int getTotalMyReviewContent(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalMyReviewContent = 0;
+		String sql = prop.getProperty("totalMyReviewContent");
+		//totalMyReviewContent = select count(*) from review where review_writer = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalMyReviewContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("내 리뷰글 수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalMyReviewContent;
+	}
+
+	//내 리뷰글 삭제
+	public int myReviewDelete(Connection conn, String[] reviewList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("myReviewDelete");
+		// myReviewDelete = delete from review where review_no = ?
+		try {
+			for(String reviewNo : reviewList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setObject(1, reviewNo);
+
+				result = pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			throw new MypageException("내 리뷰글 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 	
 	//##########janghoon MypageDao end#############
 }

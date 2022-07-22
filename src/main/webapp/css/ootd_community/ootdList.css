@@ -1,0 +1,86 @@
+@charset "UTF-8";
+      body{
+            width: 1024px;
+            margin: 0 auto;
+        }
+    .container .title {
+    padding: 5px 10px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px #eee;
+    border: 1px solid #dedede;
+    }
+    .container .topMenu {
+display: flex;
+    }
+    .container .btn-rigth{
+        float: right;
+    }
+    p{
+        color: rgb(249, 0, 0);
+    }
+    h5{
+        font-size: 12px;
+    }
+    #alignment {
+        width: 120px;
+        margin-top: 50px;
+    }
+    #search {
+        width: 300px;
+        margin-top: 50px;
+    }
+   button{
+        margin-top: 50px;
+
+    }
+    .content{
+        padding: 10px 10px;
+        overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    }
+    .content{
+        display: flex;
+    }
+    img{
+        width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+        .header h1 {text-align: center;}
+        ul,li {
+            list-style: none;
+        }
+        .header nav	{transform: translateY(-10px);}
+        .header nav ul {display: flex; justify-content:center; }
+        .header nav ul li a {text-decoration:none;
+            color:rgb(131, 130, 130); 
+            padding:0 30px;
+            font-weight: bold; 
+            font-size: 20px;
+        }
+        .header nav ul li:not(:last-of-type)::after {content: "|"}
+        .header nav ul li a:hover	{color:#000;}
+        img {width: 200px; 
+            height: 250px; 
+        }
+        .content ul li{  
+                     line-height: 40px; 
+                     text-align: center; 
+                     display: inline-block;
+                     margin:15px auto;
+                     width:300px;
+                     background-color:#fff;
+	                 box-shadow: 3px 3px 3px rgba(49, 73, 81, 0.4);
+	                 transition: 0.3s;
+                     font-weight:bold;
+                     font-size:15px;
+        }
+        .content ul li:hover{
+                     box-shadow: 10px 10px 8px rgba(135, 139, 133, 0.4);
+        }
+        .topMenu {justify-content: space-evenly;}
+        .recommend:not(:last-of-type)::after {content: "|"}	
+        .readcount:not(:last-of-type)::after {content: "|"}	
+
+        .contain {object-fit: contain;}

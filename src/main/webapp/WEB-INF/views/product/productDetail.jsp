@@ -18,88 +18,127 @@
 <main>
     <div class="container">
         <section class="py-5 text-center container">
-            <p>상품상세보기</p>
+            <h3>Product Detail</h3>
         </section>
-
-        <div class="container-md">
-            <h3><%= product.getProName() %></h3>
-            <div class="product-img">
+        <hr />
+  		<div class="valSave">
 <% 
 	for(ProductAttachment att : attachList) {
 %>
-				<img src="<%= request.getContextPath() %>/upload/product/<%= att.getProOriginalFilename() %>" alt="">
+		<figure class="figure">
+		  <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProRenameFilename() %>" class="figure-img img-fluid rounded" alt="..." width="400" height="500">
+		  <figcaption class="figure-caption"><%= product.getProName() %></figcaption>
+		</figure>
 <% 
 	break; } 
 %>
-            </div>
-	            <div class="product-text">
-	                <h4>Product Info</h4>
-	                <h5>상품</h5>
-	                <p><%= product.getProName() %></p>
-	                <h5>❤️</h5>
-	                <p>5개</p>
-	                <h5>배송비</h5>
-	                <p>무료</p>
-	               	<h5>옵션</h5>
-          	 <form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
-          	 	<input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
-	                <select class="form-select" aria-label="Default select example" id="size" name="size" required>
-	                    <option selected disabled>사이즈를 선택해주세요.</option>
-	                    <option value="L">L</option>
-	                    <option value="M">M</option>
-	                    <option value="S">S</option>
-	                </select>
-                   	<h5>수량</h5>
-                    <button id="minus" type="button">-</button>
-                    <input type="number" min=1 value=1 id="orderAmount" name="orderAmount" readonly>
-                    <button id="plus" type="button">+</button>
-                    <h5>상품 금액</h5>
-                    <p><%= product.getProPrice() %>원</p>
-                    <button>구매하기</button>
-             </form>
-             <input type="button" id="liveToastBtn" value="❤️"/>
-           	 <input type="button" id="cart" value="🛒"/>
-	         </div>
-            <hr>            
+			<table class="table caption-top">
+			<thead></thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">
+			      	<h5>Product Name</h5>
+			      </th>
+			      <td>
+			      	<p><%= product.getProName() %></p>
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">
+			      	<img src="<%= request.getContextPath() %>/images/colorHeart.png" alt="" width="25" height="25">
+			      </th>
+			      <td>
+			      	0
+			      </td>
+			    </tr>
+			    <tr>
+			      <th scope="row">
+			      	<h5>배송비</h5>
+			      </th>
+			      <td>
+			      	<p>무료</p>
+			      </td>
+			      <tr>
+			       <th scope="row">
+			      	<h5>옵션</h5>
+			       </th>
+			       <td>
+			      	<form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
+			       	 <input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
+			         <select class="form-select" aria-label="Default select example" id="size" name="size" required>
+			           <option selected disabled>사이즈를 선택해주세요.</option>
+			           <option value="L">L</option>
+			           <option value="M">M</option>
+			           <option value="S">S</option>
+			         </select>
+			       </td>
+			      </tr>
+			      <th scope="row">
+			      	<h5>수량</h5>
+			      </th>
+			      <td>
+			      	 <button id="minus" type="button">-</button>
+			         <input type="number" min=1 value=1 id="orderAmount" name="orderAmount" readonly>
+			         <button id="plus" type="button">+</button>
+			      </td>
+			      <tr>
+			      <th scope="row">
+			      	<h5>상품 금액</h5>
+			      </th>
+			      <td>
+			      	 <p><%= product.getProPrice() %>원</p>
+			      </td>
+			     </tr>
+			  </tbody>
+			</table>
+			       	<button id="buy">Buy</button>
+			       	<input type="button" id="cart" value="🛒"/>
+			        <input type="button" id="liveToastBtn" value="❤️"/>
+      		</form>
+       	</div>
+       	<hr /><br /><br />
+  		<div class="product-info">
+  		 <p>Product More Images</p>          
 <% 
 	if(attachList != null && !attachList.isEmpty()){ 
 		for(ProductAttachment pa : attachList){
 %>
-            <div class="product-info">
-                <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="">
+         <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="">
 <% 
 		}
 	}
 %>
-                <p>상품설명</p>
-                <span><%= product.getProContent() %></span>
-                <p>사이즈 기준표</p>
-                <img src="<%= request.getContextPath() %>/images/sizecheck.png" alt="">
-            </div>
-            <hr>
-            <section>
-            		<br />
-                    <h3>리뷰</h3>
-                    <div class="btn-more-container" id="photo-container">
+		 <br /><br />
+         <p>Product Description<p>
+         <h6><%= product.getProContent() %></h6>
+         <p>Size Reference Table </p>
+         <br />
+         <img src="<%= request.getContextPath() %>/images/sizecheck.png" alt="">
+         <br /><br />
+        </div>
+        <hr><br />
+         
+        <div class="btn-more-container" id="photo-container">
+        <p id="review">Review</p>
  <% if(totalPage != 0) { %>
-                    <button id="btn-more">리뷰 보기 ✒️</button>
-                    <span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>
+         <button id="btn-more">Review️</button>
+         <span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>
  <%
 	 } else {
  %>
- 					<br />
- 					<input type="hidden" id="btn-more"/>
- 					<h5>아직 리뷰가 없습니다. 고객님의 소중한 리뷰를 작성해주세요. </h5>
- 					<br />
+		 <br />
+		 <input type="hidden" id="btn-more"/>
+		 <h6>아직 리뷰가 없습니다. 고객님의 소중한 리뷰를 작성해주세요. </h6>
+		 <br />
  <%
 	 }
  %>
-				    </div>
-            </section>
-            </div>
-        </div>
+	    </div>
+     </div>
+        
 </main>
 <script>
+<% if(loginUser != null) { %>
 	 /*  장바구니 */
 	document.querySelector('#cart').addEventListener('click', (e) => {
 		const cartSize = document.querySelector('#size').value;
@@ -158,7 +197,7 @@
 			error : console.log,
 		})
 	});
-
+<% } %>
 	
 	/* 벨류값 증가 */
 	document.querySelector('#plus').addEventListener('click', (e) => {
@@ -189,8 +228,9 @@
 								<span class="photoDate">\${reviewDate}</span>
 							</p>
 							<p class="caption">\${reviewContent}</p>
-							<input type="button" id="reviewRecommend" value="👍\${reviewRecommend}"/>
+							<input type="button" id="reviewRecommend" value="👍"/>
 							<input type="button" id="reprot" value="🚨"/>
+							<br /><br />
 						</div>
 						`;
 						container.insertAdjacentHTML('beforeend', html);

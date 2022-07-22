@@ -56,7 +56,7 @@
         </table>
         
 		<div id="myCommunity_btn_area">
-			<button type="submit" id="btn_del" onclick="myInquireListDel()">삭제하기</button>           
+			<button type="submit" id="btn_del" onclick="myInquireListDel()">선택삭제</button>           
 		</div>
 		</form>
 		<div class="pagebar">

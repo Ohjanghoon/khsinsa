@@ -65,7 +65,7 @@
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Style Book</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Info Sharing</a></li>
+                      <li><a class="dropdown-item" href="<%=request.getContextPath()%>/share/shareList">Info Sharing</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Free Board</a></li>
                       <li><hr class="dropdown-divider"></li>
@@ -73,7 +73,7 @@
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/images/admin/noticeview">공지사항</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/notice/noticeView">공지사항</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/inquire/inquireList">1:1문의</a>

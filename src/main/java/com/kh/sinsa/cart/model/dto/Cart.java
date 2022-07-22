@@ -1,22 +1,26 @@
 package com.kh.sinsa.cart.model.dto;
 
+import java.sql.Date;
+
 public class Cart {
 	private String userId;
 	private String proNo;
 	private int cartBuyStock;
 	private String cartSize;
+	private Date cartDate;
 	
 	public Cart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(String userId, String proNo, int cartBuyStock, String cartSize) {
+	public Cart(String userId, String proNo, int cartBuyStock, String cartSize, Date cartDate) {
 		super();
 		this.userId = userId;
 		this.proNo = proNo;
 		this.cartBuyStock = cartBuyStock;
 		this.cartSize = cartSize;
+		this.cartDate = cartDate;
 	}
 
 	public String getUserId() {
@@ -51,10 +55,18 @@ public class Cart {
 		this.cartSize = cartSize;
 	}
 
+	public Date getCartDate() {
+		return cartDate;
+	}
+
+	public void setCartDate(Date cartDate) {
+		this.cartDate = cartDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Cart [userId=" + userId + ", proNo=" + proNo + ", cartBuyStock=" + cartBuyStock + ", cartSize="
-				+ cartSize + "]";
+				+ cartSize + ", cartDate=" + cartDate + "]";
 	}
 	
 }

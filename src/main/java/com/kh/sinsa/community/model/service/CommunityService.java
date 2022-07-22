@@ -8,7 +8,9 @@ import java.util.Map;
 
 import com.kh.sinsa.community.model.dao.CommunityDao;
 import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
+import com.kh.sinsa.community.model.dto.CommunityExt;
 
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
@@ -83,6 +85,7 @@ public class CommunityService {
 		return result;
 	}
 
+	                                         
 	// 게시글 상세보기 댓글 삭제
 	public int deletecommunityComment(String no) {
 		Connection conn = getConnection();
@@ -106,6 +109,18 @@ public class CommunityService {
 
 		try {
 			result = communityDao.insertCommunity(conn, community);
+			
+			// 방금 등록된 boaard.no 컬럼값 조회
+			String commNo = communityDao.getLastCommNo(conn);
+					
+			List<CommunityAttachment> attachments = ((CommunityExt) community).getAttachments();
+			if(attachments != null && !attachments.isEmpty()) {
+							
+				for(CommunityAttachment attach : attachments) {
+					attach.setCommNo(commNo);
+					result = communityDao.insertAttachment(conn, attach);
+				}
+						}
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);
@@ -149,5 +164,11 @@ public class CommunityService {
 		return result;
 	}
 
+	public List<CommunityAttachment> findAttachmentByCommNo(String no) {
+		Connection conn = getConnection();
+		List<CommunityAttachment> attach = communityDao.findAttachmentByCommNo(conn, no);
+		close(conn);
+		return attach;
+	}
 
 }

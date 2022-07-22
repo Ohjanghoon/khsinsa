@@ -16,16 +16,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.oreilly.servlet.multipart.FileRenamePolicy;
-
+import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.kh.sinsa.admin.model.dto.ProductManagementExt;
 import com.kh.sinsa.admin.model.service.AdminService;
 import com.kh.sinsa.common.KhsinsaRenamePolicy;
-import com.kh.sinsa.community.model.dto.Community;
-import com.kh.sinsa.admin.model.dto.ProductManagementExt;
-import com.kh.sinsa.product.model.dto.Product;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
  * Servlet implementation class topProductAddServlet
@@ -75,8 +71,7 @@ public class productAddServlet extends HttpServlet {
 			
 			MultipartRequest multiReq = new MultipartRequest(
 					request, saveDirectory, maxPostSize, encoding, policy);
-			
-			// 1. 사용자 입력값 처리
+
 			//insertTopProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values ('C30' || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
 //			create table product(
 //			        pro_no varchar2(100) ,
@@ -86,13 +81,15 @@ public class productAddServlet extends HttpServlet {
 //			        pro_size varchar2(2) not null,
 //			        reg_date date default current_date,
 //			        pro_content varchar2(4000) not null,
-//			        constraint pk_pro_no primary key(pro_no)
-//			); 
-			String productType = request.getParameter("productType");
-			String name = request.getParameter("name");
-			int price = Integer.parseInt(request.getParameter("price").trim());
-			String size = request.getParameter("size");
-			String content = request.getParameter("content");
+//			        constraint pk_pro_no primary key(pro_no));
+			
+			// 1. 사용자 입력값 처리
+			String proNo = multiReq.getParameter("proNo");
+			String productType = multiReq.getParameter("productType");
+			String name = multiReq.getParameter("name");
+			int price = Integer.parseInt(multiReq.getParameter("price").trim());
+			String size = multiReq.getParameter("size");
+			String content = multiReq.getParameter("content");
 			
 //			public ProductExt(String proNo, String proType, String proName, int proPrice, String proSize, Timestamp regDate,
 //					String proContent, String proOriginalFilename2) {
@@ -100,7 +97,7 @@ public class productAddServlet extends HttpServlet {
 //				// TODO Auto-generated constructor stub
 //			}
 			
-			ProductManagementExt productaddext = new ProductManagementExt(null, productType, name, price, size, null, content); 
+			ProductManagementExt productaddext = new ProductManagementExt(proNo, productType, name, price, size, null, content); 
 			System.out.println("productType = " + productType + ", name = " + name + ", price = " + price + ", size = " + size + ", content = " + content);
 
 			Map<String, Object> param = new HashMap<>();

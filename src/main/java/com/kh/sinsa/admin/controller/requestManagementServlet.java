@@ -63,6 +63,7 @@ public class requestManagementServlet extends HttpServlet {
 				request.setAttribute("pagebar", pagebar);
 				request.getRequestDispatcher("/WEB-INF/views/admin/requestManagement.jsp")
 					.forward(request, response);
+				System.out.println("list@requestmanagement = " + inquirelist);
 			} 
 			catch(Exception e) {
 				e.printStackTrace();

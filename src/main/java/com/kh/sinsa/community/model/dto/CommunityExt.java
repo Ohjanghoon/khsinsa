@@ -4,22 +4,22 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CommunityExt extends Community {
+	
 	private int attachCount;
 	private List<CommunityAttachment> attachments = new ArrayList<>();
-	private int commentCount;
+
 	
 	public CommunityExt() {
 		super();
 	}
 
 	public CommunityExt(String commNo, String userId, String commTitle, String commContent, Date commDate,
-			int commRecommand, int commReadCount, int attachCount, List<CommunityAttachment> attachments,
-			int commentCount) {
+			int commRecommand, int commReadCount, int attachCount) {
 		super(commNo, userId, commTitle, commContent, commDate, commRecommand, commReadCount);
 		this.attachCount = attachCount;
-		this.attachments = attachments;
-		this.commentCount = commentCount;
+
 	}
 
 	public int getAttachCount() {
@@ -37,18 +37,15 @@ public class CommunityExt extends Community {
 	public void setAttachments(List<CommunityAttachment> attachments) {
 		this.attachments = attachments;
 	}
-
-	public int getCommentCount() {
-		return commentCount;
+	
+	public void addAttachment(CommunityAttachment attach) {
+		this.attachments.add(attach);
 	}
 
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
-	}
+
 
 	@Override
 	public String toString() {
-		return "CommunityExt [attachCount=" + attachCount + ", attachments=" + attachments + ", commentCount="
-				+ commentCount + "]";
+		return "CommunityExt [attachCount=" + attachCount + ", attachments=" + attachments + ", toString()=" + super.toString()  + "]";
 	}
 }

@@ -1,7 +1,7 @@
 package com.kh.sinsa.community.model.dao;
 
 
-import static com.kh.sinsa.common.JdbcTemplate.*;
+import static com.kh.sinsa.common.JdbcTemplate.close;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-
 import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.exception.CommunityException;
 
@@ -259,7 +259,7 @@ public class CommunityDao {
 			pstmt.setString(2, communityComment.getUserId());
 			pstmt.setString(3, communityComment.getCommentContent());
 			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
-			pstmt.setObject(5, Integer.parseInt(communityComment.getCommentRef()) == 0 ? null : communityComment.getCommentRef());
+			pstmt.setObject(5, "0".equals(communityComment.getCommentRef()) ? null : communityComment.getCommentRef());
 			
 			result = pstmt.executeUpdate();
 			
@@ -271,7 +271,81 @@ public class CommunityDao {
 		}
 		return result;
 	}
-	
+
+	public List<CommunityAttachment> findAttachmentByCommNo(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<CommunityAttachment> attach = new ArrayList<>();
+		String sql = prop.getProperty("findAttachmentByCommNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+				attach.add(handlerAttachmentResultSet(rset));
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시물 첨부파일 1건 조회 오류", e);	
+		} 
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return attach;
+	}
+
+	private CommunityAttachment handlerAttachmentResultSet(ResultSet rset) throws SQLException {
+
+		String no = rset.getString("comm_attachment_no");
+		String commNo = rset.getString("comm_no");
+		String originalFilename =rset.getString("comm_original_filename");
+		String renamedFilename = rset.getString("comm_rename_filename");
+		return new CommunityAttachment(no, commNo, originalFilename, renamedFilename);
+	}
+
+	public String getLastCommNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String commNo = null;
+		String sql = prop.getProperty("getLastCommNo");
+		// getLastCommNo = select 'C30' || seq_community_comm_no.currval from dual
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				commNo = rset.getString(1);
+		} catch (SQLException e) {
+			throw new CommunityException("생성된 게시글 번호 조회 오류", e);
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commNo;
+	}
+
+	public int insertAttachment(Connection conn, CommunityAttachment attach) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertAttachment");
+		//insertAttachment = insert into comm_attachment values('C32' || seq_comm_attachment_comm_attachment_no.nextval, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, attach.getCommNo());
+			pstmt.setString(2, attach.getOriginalFilename());
+			pstmt.setString(3, attach.getRenamedFilename());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 등록 오류", e);
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 
 

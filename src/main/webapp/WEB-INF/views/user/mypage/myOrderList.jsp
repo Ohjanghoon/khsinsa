@@ -15,7 +15,7 @@
 	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
 %>	
 
-	<div class="myOrderList_content">
+<div class="myOrderList_content">
   	<div class="myOrderList_content_header">
   		<h2>주문내역 조회</h2>
   	</div>
@@ -86,8 +86,7 @@
     <div class="pagebar">
 			<%= request.getAttribute("pagebar") %>
 	</div>    
-
-</section>
+</div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

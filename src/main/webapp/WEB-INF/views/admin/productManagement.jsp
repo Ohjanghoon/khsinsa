@@ -3,12 +3,22 @@
 <%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
 <%@page import="com.kh.sinsa.admin.model.dto.ProductManagementExt"%>
 <%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/productManagement.css">
+<link 
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+<link
+	rel="stylesheet"
+	href="<%= request.getContextPath() %>/css/admin/productManagement.css">
 <%
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
@@ -68,15 +78,13 @@
 							<div class = 'img-container'>
 								<img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" width = "100px" height = "100px" colspan = "2" alt="" class="img-product">
 							</div>
-						<td>
+						</td>
 <%
 		break; }		
 	}
 %>
-						<td></td>
 						<td><%= product.getProPrice() %></td>
-                        <td><%= product.getProContent() %></td>
-                        <td><%= product.getProPrice() %></td>
+						<td><%= product.getProContent() %></td>
                         <td><%= product.getProSize() %></td>
                         <td><%= product.getRegDate() %></td>
                         <td>
@@ -85,9 +93,8 @@
                             	   onclick="location.href='<%= request.getContextPath() %>/admin/productManagement/productEdit'"
                             	   value="수정하기">
                             <input type="button"
-                            	   class="btn_delete"
                             	   value="삭제하기"
-                            	   onclick="deleteProduct()">
+                            	   onclick="deleteProduct(<%= product.getProNo() %>)">
                         </td>
                         <% 		}
        		} %>
@@ -97,11 +104,11 @@
 	action="<%= request.getContextPath() %>/admin/productManagement/productDelete"
 	method="post" 
 	name="productDelFrm">
-	<input type="hidden" name="no" value="<%-- <%= p.getProNo() %> --%>" />
+	<input type="hidden" name="no"/>
 </form>
 <script>
 const deleteProduct = () => {
-	if(confirm("게시글을 삭제하시겠습니까?"))
+	if(confirm("상품을 삭제하시겠습니까?"))
 		document.productDelFrm.submit();
 };
 

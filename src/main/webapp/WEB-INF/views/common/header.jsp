@@ -51,9 +51,9 @@
                       SHOP
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="<%= request.getContextPath() %>/product/productList">TOP(상의)</a></li>
+                      <li><a class="dropdown-item" href="<%= request.getContextPath() %>/product/productTopFind">TOP(상의)</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">BOTTOM(하의)</a></li>
+                      <li><a class="dropdown-item" href="<%= request.getContextPath() %>/product/productBottomFindServlet">BOTTOM(하의)</a></li>
                     </ul>
                   </li>
                   <li class="nav-item dropdown">
@@ -73,7 +73,7 @@
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/admin/noticeview">공지사항</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/images/admin/noticeview">공지사항</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/inquire/inquireList">1:1문의</a>

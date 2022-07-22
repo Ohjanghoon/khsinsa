@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.kh.sinsa.favorite.model.exception.FavoriteException;
 import com.kh.sinsa.review.model.dto.Review;
 import com.kh.sinsa.review.model.exception.ReviewException;
 
@@ -84,6 +85,25 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		return totalReview;
+	}
+
+	public int favoriteAdd(Connection conn, String reviewNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("favoriteAdd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+	
+		} catch (SQLException e) {
+			throw new FavoriteException("관심 상품 등록 오류",e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }

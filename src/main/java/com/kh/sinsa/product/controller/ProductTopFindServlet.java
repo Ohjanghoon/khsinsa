@@ -17,10 +17,10 @@ import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.service.ProductService;
 
 /**
- * Servlet implementation class ProductListServlet
+ * Servlet implementation class productTopFindServlet
  */
-@WebServlet("/product/productList")
-public class ProductListServlet extends HttpServlet {
+@WebServlet("/product/productTopFind")
+public class ProductTopFindServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductService();
 
@@ -32,6 +32,7 @@ public class ProductListServlet extends HttpServlet {
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 9;
+			String type = "상의";
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -43,9 +44,11 @@ public class ProductListServlet extends HttpServlet {
 			Map<String, Object> param = new HashMap<>();
 			param.put("start", start);
 			param.put("end", end);
+			param.put("type", type);
 			
 			// 업무로직
-			List<Product> list = productService.contentFindAll(param);
+			
+			List<Product> list = productService.productTypeFind(param);
 			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
 			int totalContent = productService.getTotalContent();
 			String url = request.getRequestURI(); // /mvc/board/boardList
@@ -55,13 +58,12 @@ public class ProductListServlet extends HttpServlet {
 			request.setAttribute("attachList", attachList);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/product/productTop.jsp").forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.kh.sinsa.community.controller;
 
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.service.CommunityService;
 
@@ -70,6 +70,8 @@ public class CommunityViewServlet extends HttpServlet {
 						communityService.findByNo(no, hasRead);
 			System.out.println("community : " + community);
 			List<CommunityComment> commentList = communityService.findCommunityCommentByCommNo(no);
+			
+			List<CommunityAttachment> attach = communityService.findAttachmentByCommNo(no);
 
 			// XSS공격대비 (Cross-site Scripting)
 			community.setCommTitle(KhsinsaUtils.escapeXml(community.getCommTitle()));		
@@ -82,6 +84,8 @@ public class CommunityViewServlet extends HttpServlet {
 			request.setAttribute("community", community);
 			System.out.println("community : " + community);
 			request.setAttribute("commentList", commentList);
+			request.setAttribute("attach", attach);
+			System.out.println("attach" + attach);
 			request.getRequestDispatcher("/WEB-INF/views/share_community/shareView.jsp")
 				.forward(request, response);
 		} catch (Exception e) {

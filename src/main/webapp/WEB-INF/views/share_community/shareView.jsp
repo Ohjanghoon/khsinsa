@@ -1,3 +1,5 @@
+<%@page import="com.kh.sinsa.community.model.dto.CommunityExt"%>
+<%@page import="com.kh.sinsa.community.model.dto.CommunityAttachment"%>
 <%@page import="com.kh.sinsa.community.model.dto.CommentLevel"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.sinsa.community.model.dto.CommunityComment"%>
@@ -10,17 +12,18 @@
 	href="<%=request.getContextPath()%>/css/share/shareView.css" />
 <%
 Community community = (Community) request.getAttribute("community");
+List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
-
+String commNo = (String) request.getAttribute("no");
 %>
 
 
-<div class="content_wrapper">
+<div class="container">
 
 	<div id="headlist">
 		<div id="header2">COMMUNITY</div>
-		<nav>
-			<ul class="navi">
+		<nav class="navi">
+			<ul>
 				<li><a href="#">OOTD</a></li>
 				<li><a href="#">코디북</a></li>
 				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
@@ -41,7 +44,7 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 			<li id="writer"><h3><%=community.getUserId()%></h3></li>
 			<li id="readCount">조회수 : <%=community.getCommReadCount()%> | 추천수 : <%=community.getCommRecommand()%>
 				
-				<button id="good" style="border: 0; background-color: white;">
+				<button id="like" name="like" style="border: 0; background-color: white;">
 					<img src="<%=request.getContextPath()%>/images/emptyHeart.png" alt="버튼" style="width: 20px; height: 20px;">
 				</button>
 			</li>
@@ -52,11 +55,21 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 			
 			<hr style="color: gainsboro;">
 			
-			<li style="margin-top: 50px; background-color: white; height: 500px;"><p>
-					<%=community.getCommContent()%>
-				</p></li>
+			<li style="margin-top: 50px; background-color: white; height: 500px;">
+			<% 
+				if(attachments != null && !attachments.isEmpty()) { 
+					for(CommunityAttachment attach : attachments){
+			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
+				<%}
+					} %>
+				<p><%= community.getCommContent() %></p>
+			</li>
+			
+		
+			
+
 		<%
-			boolean canEdit = loginUser != null && 
+				boolean canEdit = loginUser != null && 
 						(loginUser.getUserId().equals(community.getUserId()) 
 								|| loginUser.getUserRole() == UserRole.A);
 			if(canEdit){ 
@@ -72,14 +85,14 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 
 			<hr>
 
-			<li style="margin-top: 13px;">
 
+	<li>
 				<div class="comment-container">
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
 						<form name="communityCommentFrm"
 							action="<%=request.getContextPath()%>/share/shareCommentAdd"
-							method="post">
+							method="post" style="border-bottom:0px;">
 								<input type="hidden" name="commNo" value="<%=community.getCommNo()%>" /> 
 								<input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
 							<input type="hidden" name="commentLevel" value="1" /> 
@@ -89,6 +102,9 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 							<br>
 						</form>
 					</div>
+					
+					
+					
 					<table id="tbl-comment">
 						<%
 						if (commentList != null && !commentList.isEmpty()) {
@@ -97,14 +113,13 @@ List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribu
 								boolean canDelete = loginUser != null
 								&& (loginUser.getUserId().equals(cc.getUserId()) || loginUser.getUserRole() == UserRole.A);
 						%>
-						<tr
-							class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
-						<tr class="">
+						<tr class="<%=cc.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2"%>">
 							<td>
 							<sub class="comment-writer"><%=cc.getUserId()%></sub> 
 							<sub class="comment-date"><%=sdf.format(cc.getCommentDate())%></sub>
 								<div>
 									<p><%= cc.getCommentContent() %></p>
+									
 
 								</div>
 							</td>
@@ -206,10 +221,15 @@ document.communityCommentFrm.content.addEventListener('focus', (e) => {
 		loginAlert();
 });
 
-const loginAlert = () => {
-	alert("로그인후 이용할 수 있습니다.");
-	document.querySelector("#btn-comment-enroll1").focus();
-};
+document.querySelector("#like").addEventListener('click', (e) => {
+		
+	$.ajax({
+		url : '<%= request.getContextPath() %>/share/shareLike',
+		method : 'POST',
+		data : {commNo : "<%= commNo %>"}
+	})
+});
+
 </script>
 
 <form 
@@ -219,6 +239,12 @@ const loginAlert = () => {
 	<input type="hidden" name="no" value="<%= community.getCommNo() %>" />
 </form>
 <script>
+
+const loginAlert = () => {
+	alert("로그인후 이용할 수 있습니다.");
+	document.querySelector("#btn-comment-enroll1").focus();
+};
+
 const deleteCommunity = () => {
 	if(confirm("게시글을 삭제하시겠습니까?"))
 		document.shareDelFrm.submit();

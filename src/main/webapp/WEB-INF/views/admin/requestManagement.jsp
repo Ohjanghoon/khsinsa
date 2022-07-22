@@ -30,7 +30,7 @@
             </adminmenu>
             </ul>
             <br><br><br><br><br>
-            <a><center>1:1 문의 </center></a>
+            <a><center>1:1 문의 [답변 대기중] </center></a>
             	<table class="table table-hover table-striped">
                 	<thead>
                     	<tr class = tablehead>
@@ -54,7 +54,7 @@
                                         <tr>
                                             <td>1 : 1 문의</td>
                                             <td><%=inquire.getInquireNo()%></td>
-                                            <td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a><td>
+                                            <td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a></td>
                                             <td><%=inquire.getUserId()%></td>
                                             <td><%=inquire.getInquireDate()%></td>
                                         </tr>

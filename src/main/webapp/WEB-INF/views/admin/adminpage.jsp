@@ -104,7 +104,7 @@ window.addEventListener('load', (e) => {
 		            <td><%= user.getUserEmail()!=null ? user.getUserEmail() : "" %></td>
 		            <td><%= user.getUserAddress() %></td>
 		            <td><%= user.getUserRole() %></td>
-		            <td>탈퇴여부</td>
+		            <td><%= user.getUserDel() %></td>
 		            <!-- 탈퇴회원 처리 물어보기 -->
 		          </tr>
        <% 		}
@@ -164,7 +164,7 @@ window.addEventListener('load', (e) => {
 			            <td><%= user.getUserEmail()!=null ? user.getUserEmail() : "" %></td>
 			            <td><%= user.getUserAddress() %></td>
 			            <td><%= user.getUserRole() %></td>
-			            <td>탈퇴여부</td>
+			            <td><%= user.getUserDel() %></td>
 			            <!-- 탈퇴회원 처리 물어보기 -->
 		          </tr>
        <% 		}}

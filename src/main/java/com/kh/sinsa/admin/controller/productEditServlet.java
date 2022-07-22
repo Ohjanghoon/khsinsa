@@ -110,8 +110,10 @@ public class productEditServlet extends HttpServlet {
 			}
 			System.out.println("product = " + product);
 			
-			// 2. 업무로직
-			int result = adminService.updateProduct(product);
+			
+			 //2. 업무로직
+			int result = adminService.updateProduct(product, null);
+			 
 			
 			// 3. redirect
 			request.getSession().setAttribute("msg", "상품을 성공적으로 수정했습니다.");

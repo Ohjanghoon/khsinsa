@@ -593,33 +593,39 @@ public class AdminDao {
 	// ##########Product ends#############
 
 	//##########Inquire begins#############
-
+	
+private Inquire handleInquireResultSet(ResultSet rset) throws SQLException {
+		String inquireNo = rset.getString("inquire_no");
+		String userId = rset.getString("user_id");
+		String inquireAnswerRef = rset.getString("inquire_answer_ref");
+		String inquireTitle = rset.getString("inquire_title");
+		String inquireContent = rset.getString("inquire_content");
+		Date inquireDate = rset.getDate("inquire_date");
+		String inquireCategory = rset.getString("inquire_category");
+		return new Inquire(inquireNo, userId, inquireAnswerRef, inquireTitle, inquireContent, inquireDate,
+				inquireCategory);
+	}
+//inquireFindAll = select * from (select row_number() over(order by inquire_date desc) rnum, i.*, (select count(*) from inquire inq where i.inquire_no = inq.inquire_answer_ref) answer_status from inquire i) i where rnum between ? and ?
 public List<Inquire> inquireFindAll(Connection conn, Map<String, Object> param) {
 	PreparedStatement pstmt = null;
 	ResultSet rset = null;
 	List<Inquire> inquirelist = new ArrayList<>();
 	String sql = prop.getProperty("inquireFindAll");
-
+	System.out.println(sql);
 	try {
 		pstmt = conn.prepareStatement(sql);
 
 		pstmt.setInt(1, (int) param.get("start"));
 		pstmt.setInt(2, (int) param.get("end"));
-//		pstmt.setString(1, (String) param.get("inquireNo"));
-//		pstmt.setString(2, (String) param.get("inquireTitle"));
-//		pstmt.setString(3, (String) param.get("userId"));
-//		pstmt.setDate(4, (Date) param.get("inquireDate"));
-//		pstmt.setString(5, (String) param.get("inquireAnswerRe"));
-
 		rset = pstmt.executeQuery();
+		
 		while (rset.next()) {
-			InquireExt inquireExt = handleInquireResultSet(rset);
-			inquireExt.setAnswerStatus(rset.getInt("answer_status"));
-			inquirelist.add(inquireExt);
+			Inquire inquire = handleInquireResultSet(rset);
+			inquirelist.add(inquire);
 		}
 
 	} catch (SQLException e) {
-		throw new InquireException("조회목오류", e);
+		throw new InquireException("요청처리 목록 조회 오류", e);
 	} finally {
 		close(rset);
 		close(pstmt);
@@ -627,181 +633,25 @@ public List<Inquire> inquireFindAll(Connection conn, Map<String, Object> param) 
 	return inquirelist;
 }
 
-private InquireExt handleInquireResultSet(ResultSet rset) throws SQLException {
-	String inquireNo = rset.getString("inquire_no");
-	String userId = rset.getString("user_id");
-	String inquireAnswerRef = rset.getString("inquire_answer_ref");
-	String inquireTitle = rset.getString("inquire_title");
-	String inquireContent = rset.getString("inquire_content");
-	Date inquireDate = rset.getDate("inquire_date");
-	String inquireCategory = rset.getString("inquire_category");
-	return new InquireExt(inquireNo, userId, inquireAnswerRef, inquireTitle, inquireContent, inquireDate,
-			inquireCategory);
-}
-
 public int inquireGetTotalContent(Connection conn) {
 	PreparedStatement pstmt = null;
 	ResultSet rset = null;
-	int totalContent = 0;
+	int inquireTotalContent = 0;
 	String sql = prop.getProperty("inquireGetTotalContent");
 	try {
 		pstmt = conn.prepareStatement(sql);
 		rset = pstmt.executeQuery();
 		if (rset.next())
-			totalContent = rset.getInt(1);
+			inquireTotalContent = rset.getInt(1);
 	} catch (SQLException e) {
-		throw new InquireException("총 게시물수 조회 오류!", e);
+		throw new InquireException("총 요청처리 조회 오류!", e);
 	} finally {
 		close(rset);
 		close(pstmt);
 	}
 
-	return totalContent;
+	return inquireTotalContent;
 }
-
-public List<Inquire> findInquireLike(Connection conn, Map<String, Object> param) {
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
-	List<Inquire> list = new ArrayList<>();
-	String sql = prop.getProperty("findInquireLike");
-
-	String col = (String) param.get("searchType");
-	String val = (String) param.get("searchKeyword");
-	int start = (int) param.get("start");
-	int end = (int) param.get("end");
-
-	sql = sql.replace("#", col);
-
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "%" + val + "%");
-		pstmt.setInt(2, start);
-		pstmt.setInt(3, end);
-		rset = pstmt.executeQuery();
-		while (rset.next())
-			list.add(handleInquireResultSet(rset));
-
-	} catch (SQLException e) {
-		throw new InquireException("검색 오류!", e);
-	} finally {
-		close(rset);
-		close(pstmt);
-	}
-	return list;
-}
-
-public int inquireGetTotalContentLike(Connection conn, Map<String, Object> param) {
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
-	int totalContent = 0;
-	String sql = prop.getProperty("inquireGetTotalContentLike");
-	String col = (String) param.get("searchType");
-	String val = (String) param.get("searchKeyword");
-	sql = sql.replace("#", col);
-
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "%" + val + "%");
-		rset = pstmt.executeQuery();
-		if (rset.next())
-			totalContent = rset.getInt(1);
-
-	} catch (SQLException e) {
-		throw new InquireException("관리자 검색된 회원수 조회 오류!", e);
-	} finally {
-		close(rset);
-		close(pstmt);
-	}
-	return totalContent;
-}
-
-public Inquire findByInquireNo (Connection conn, String inquireNo) {
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
-	Inquire inquire = null;
-	String sql = prop.getProperty("findByInquireNo");
-	// select * from inquire where inquire_no = ?
-
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, inquireNo);
-
-		rset = pstmt.executeQuery();
-
-		while (rset.next()) {
-			inquire = handleInquireResultSet(rset);
-		}
-
-	} catch (SQLException e) {
-		throw new InquireException("게시 조회 오류!", e);
-	} finally {
-		close(rset);
-		close(pstmt);
-	}
-
-	return inquire;
-}
-
-public int deleteInquire(Connection conn, String inquireNo) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-	String sql = prop.getProperty("deleteInquire");
-
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, inquireNo);
-		result = pstmt.executeUpdate();
-	} catch (SQLException e) {
-		throw new InquireException("1:1문의 삭제 오류");
-	} finally {
-		close(pstmt);
-	}
-	return result;
-}
-
-public String getLastInquireNo(Connection conn) {
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
-	String inquireNo = "";
-	String sql = prop.getProperty("getLastInquireNo");
-
-	try {
-		pstmt = conn.prepareStatement(sql);
-		rset = pstmt.executeQuery();
-		if (rset.next())
-			inquireNo = rset.getString(1);
-	} catch (SQLException e) {
-		throw new InquireException("게시글번호 오류 ");
-	} finally {
-		close(rset);
-		close(pstmt);
-	}
-	return inquireNo;
-}
-
-public int insertInquire(Connection conn, InquireExt inquire) {
-	PreparedStatement pstmt = null;
-	int result = 0;
-	String sql = prop.getProperty("insertInquire");
-	
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, inquire.getUserId());
-		pstmt.setString(2, inquire.getInquireTitle());
-		pstmt.setString(3, inquire.getInquireContent());
-		pstmt.setString(4, inquire.getInquireCategory());
-		result = pstmt.executeUpdate();
-		
-	} 
-	catch (SQLException e) {
-		throw new InquireException("게시글 등록 오류!", e);
-	}
-	finally {
-		close(pstmt);
-	}
-	return result;
-}
-
 //public int insertAttachment(Connection conn, Attachment attach) {
 //	PreparedStatement pstmt = null;
 //	int result = 0;

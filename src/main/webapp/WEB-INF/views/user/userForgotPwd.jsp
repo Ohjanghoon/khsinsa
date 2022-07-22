@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비밀번호 찾기</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userLogin.css">
 </head>
 <body>
@@ -12,35 +13,31 @@
  <div class="container">
     <div class="login_container">
         <h2>로그인</h2>
-        <form action="<%= request.getContextPath() %>/user/userLogin" method="post"  name="Loginfrm">
-                <div class="input_area">
-                    <input type="text" name="userId" id="userId" autocomplete="off" value= "" required>
-                    <label>아이디</label>
-                    <br>
-                    <span class="message_box" id="loginMsg"></span>   <!-- input 태그 밑에 유효성 검사 메세지 -->
-                </div>
-                <div class="input_area">
-                    <input type="password" name="pwd" id="pwd" autocomplete="off" required>
-                    <label>비밀번호</label>
-                    <button type="button" id="btn_show_pwd"><img src="<%=request.getContextPath() %>/images/eye_visible_icon.png" alt="버튼"></button>
-                    <br>
-                    <span class="message_box" id="pwdMsg"></span>
-                </div>
-                <div>
-                    <div class="saveId_wrapper">
-                        <input type="checkbox" name="saveId" id="saveId" value = "">
-                        <label for="saveId">아이디저장</label>
-                    </div>
-                    <div class="forgot_wrapper">
-                        <a href="<%= request.getContextPath() %>/user/userForgotId">아이디 찾기</a> <span>/</span>
-
-                        <a href="<%= request.getContextPath() %>/user/userForgotPwd">비밀번호 찾기</a>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" id="btn_login">로그인</button>
-                    <button type="button" id="btn_signup" onclick="location.href = '<%= request.getContextPath() %>/user/userEnroll'">회원가입</button>
-                </div>
+        <form  name="pwdfindscreen" method="post" action="<%= request.getContextPath() %>/user/userForgotPwd" >
+              <div class = "search-title">
+				<h3>비밀번호 찾기</h3>
+			</div>
+		<section class = "form-search">
+			<div class = "find-id">
+				<label>아이디 </label>
+				<input type="text" name="userid" class = "btn-name" placeholder = "등록된 아이디를 입력하세요. ">
+			<br>
+			</div>
+			<div class = "find-name">
+				<label>이름</label>
+				<input type="text" name="username" class = "btn-name" placeholder = "등록된 이름을 입력하세요. ">
+			<br>
+			</div>
+			<div class = "find-email">
+				<label>이메일 </label>
+				<input type="text" onKeyup = "addHypen(this);" name="userEmail" class = "btn-email" placeholder = "등록된 이메일을 입력하세요. " value=qkralstj08@naver.com>
+			</div>
+			<br>
+	</section>
+	<div class ="btnSearch">
+		<input type="submit" name="enter" value="찾기" class="btn_open" onClick="pwd_search()">
+		<input type="button" name="cancle" value="취소" onClick="history.back()">
+ 	</div>
         </form>
     </div>
 

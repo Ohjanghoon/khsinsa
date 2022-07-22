@@ -127,14 +127,47 @@ public class UserDao {
 			rset = pstmt.executeQuery();
 			 while(rset.next()) {
 				 list.add(handleUserResultSet(rset));
-				 
-				 
 			 }
 			
 		} catch (Exception e) {
 			throw new UserException("전체회원조회 오류",e);
 		}
 		return list;
+	}
+	/**
+	 * DQL요청 - dao 1. PreparedStatement객체 생성 (sql전달) & 값대입 2. 쿼리실행 executeQuery -
+	 * ResultSet 반환 3. ResultSet처리 - dto객체 변환 4. ResulstSet, PreparedStatement객체 반환
+	 * 
+	 * @param conn
+	 * @param memberId
+	 * @return
+	 */
+	public User forgotId(Connection conn, String username, String userEmail) {
+		PreparedStatement pstmt =  null;
+		ResultSet rset = null;
+		User user = null;
+		String sql= prop.getProperty("forgotId");
+		System.out.println("3");
+	
+		// forgotId =  select * from kh_user where user_name= ? and user_email= ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, username);
+			pstmt.setString(2, userEmail);
+			rset = pstmt.executeQuery();
+			 if(rset.next()) {
+				 user = handleUserResultSet(rset);
+			 }
+			
+			
+		} catch (Exception e) {
+			throw new UserException("회원정보를 조회할 수 없습니다.",e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
 	}
 
 
@@ -194,5 +227,7 @@ public class UserDao {
 		return user;
 	}
 	// ##########janghoon UserDao end#############
+
+
 
 }

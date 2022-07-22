@@ -82,7 +82,7 @@ public class InquireService {
 		return result;
 	}
 
-	public int insertInquire(InquireExt inquire) {
+	public int insertInquire(Inquire inquire) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {

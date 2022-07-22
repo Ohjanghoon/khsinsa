@@ -22,7 +22,7 @@ import com.kh.sinsa.user.model.dto.User;
  * @WebFilter#urlPatterns
  * @WebFilter#value (속성명을 생략하고 저장가능)
  */
-@WebFilter({"/order/khOrder", "/product/order"})
+@WebFilter({"/order/khOrder", "/product/order", "/cart/cartAdd", "/favorite/favoriteAdd"})
 public class LoginFilter implements Filter {
 
     /**

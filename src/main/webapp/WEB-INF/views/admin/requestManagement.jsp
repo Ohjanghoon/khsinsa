@@ -1,5 +1,7 @@
 <%@page import="com.kh.sinsa.inquire.model.dto.InquireExt"%>
 <%@page import="com.kh.sinsa.inquire.model.dto.Inquire"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -9,7 +11,8 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/requestManagement.css">
 
 <%
-	List<InquireExt> inquirelist = (List<InquireExt>) request.getAttribute("inquirelist");
+	List<Inquire> inquirelist = (List<Inquire>) request.getAttribute("inquirelist");
+	System.out.println("list@requestmanagement = " + inquirelist);
 	String type = request.getParameter("searchType");
 	String kw = request.getParameter("searchKeyword");
 %>
@@ -26,67 +29,44 @@
                     <li class = :"li"><a href="<%= request.getContextPath() %>/StatisticsView.jsp">통계 관리</a></li>
             </adminmenu>
             </ul>
-            <main class="mt-5 pt-5">
-                <div class="container-fluid px-4">
-                <%
-	
-	for (InquireExt iq : inquirelist) {
-	%><% if(iq.getAnswerStatus() > 0) { %>
-	                    <h1 class="mt-4">1:1 문의 [ 답변 대기중 ]</h1>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>문의 유형</th>
-                                        <th>번호</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>게시일</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${boards}" var="board">
+            <br><br><br><br><br>
+            <a><center>1:1 문의 </center></a>
+            	<table class="table table-hover table-striped">
+                	<thead>
+                    	<tr class = tablehead>
+                        	<th>문의 유형</th>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>게시일</th>
+                        </tr>
+                        	</thead>
+                            	<tbody>
+                            	<%
+								if(inquirelist == null || inquirelist.isEmpty()){
+								%>
+									<tr>
+										<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
+									</tr>
+								<%
+								} 
+								else { for(Inquire inquire : inquirelist) {%>
                                         <tr>
                                             <td>1 : 1 문의</td>
-                                            <td><%=iq.getInquireNo()%></td>
-                                            <td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= iq.getInquireNo()%>"><%=iq.getInquireTitle()%></a>
-                                            <td><%=iq.getUserId()%></td>
-                                            <td><%=iq.getInquireDate()%></td>
+                                            <td><%=inquire.getInquireNo()%></td>
+                                            <td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a><td>
+                                            <td><%=inquire.getUserId()%></td>
+                                            <td><%=inquire.getInquireDate()%></td>
                                         </tr>
-                                    </c:forEach>
+                                        <% 		}}
+       		 %>
                                 </tbody>
                             </table>
                         </div>
+                        <div id="pagebar">
+						<%= request.getAttribute("pagebar") %>
+						</div>
                         <br><br><br><br><br>
- <% 			} else {%>
-                    <h1 class="mt-4">1:1 문의 [ 답변 완료 ]</h1>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>문의 유형</th>
-                                        <th>번호</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>게시일</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${boards}" var="board">
-                                        <tr>
-                                            <td>1 : 1 문의</td>
-                                            <td><%=iq.getInquireNo()%></td>
-                                            <td><%-- <a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= iq.getInquireNo()%>"> --%><%=iq.getInquireTitle()%><!-- </a> -->
-                                            <td><%=iq.getUserId()%></td>
-                                            <td><%=iq.getInquireDate()%></td><%   }
-       }  %>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                            <br><br><br><br><br>
                             <h1 class="mt-4"><center>신고</center></h1>
                         </div>
                         <div class="card-body">
@@ -116,11 +96,6 @@
                         <br>
                         </div>
                     </div>
-                    	
-                    
-                    
-                    
-                    
                 </div>
                 </main>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

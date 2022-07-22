@@ -421,6 +421,8 @@ select * from favorite;
 select count(*) from favorite where pro_no = ?;
 insert into favorite values(?,?);
 select * from cart;
-select * from review;
+select * from product;
+commit;
 
 update review set review_recommend = review_recommend + 1 where review_no = 'R103';
+select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p where pro_type = '상의' ) p where rnum between 1 and 3;

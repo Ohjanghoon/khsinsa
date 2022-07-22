@@ -63,6 +63,13 @@ public class ProductService {
 		close(conn);
 		return list;
 	}
+
+	public List<Product> productTypeFind(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Product> list = productDao.productTypeFind(conn, param);
+		close(conn);
+		return list;
+	}
 	
 
 }

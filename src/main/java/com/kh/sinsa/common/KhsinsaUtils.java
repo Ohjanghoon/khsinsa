@@ -86,7 +86,7 @@ public class KhsinsaUtils {
 			}
 			//현재 페이지가 아닌 경우
 			else {
-				pagebar.append("<button type='button' class='btn btn-outline-primary'><a href='" + url + pageNo + "'>" + pageNo + "</a></button>\n");
+				pagebar.append("<a href='" + url + pageNo + "'>" + pageNo + "</a>\n");
 			}
 			pageNo++;
 		}
@@ -96,7 +96,7 @@ public class KhsinsaUtils {
 			
 		}
 		else {
-			pagebar.append("<a href='" + url + pageNo + "'>다음</a>\n");
+			pagebar.append("<button type='button' class='btn btn-outline-primary'>다음<a href='" + url + pageNo + "'></a></button>\n");
 		}
 		return pagebar.toString();
 	}

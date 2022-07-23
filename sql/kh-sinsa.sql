@@ -430,6 +430,7 @@ select * from (select row_number() over(order by pro_no desc) rnum, p.* from pro
 -- 장바구니 테이블에 cart_date 컬럼 추가
 alter table cart add cart_date date default current_date;
 
+
 select * from product;
 
 delete from product where pro_no = 'A1071';

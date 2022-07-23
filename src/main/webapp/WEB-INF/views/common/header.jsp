@@ -63,7 +63,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                       <li><a class="dropdown-item" href="#">Outfit Of The Day</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Style Book</a></li>
+                      <li><a class="dropdown-item" href="<%= request.getContextPath() %>/community/codiList">Style Book</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<%=request.getContextPath()%>/share/shareList">Info Sharing</a></li>
                       <li><hr class="dropdown-divider"></li>

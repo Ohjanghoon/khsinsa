@@ -170,5 +170,12 @@ public class CommunityService {
 		close(conn);
 		return attach;
 	}
+	
+	 // 코디 전체 불러오기  // ilchan
+//	public List<Community> findCodiAll(Map<String, Object> param) {
+//		Connection conn = getConnection();
+//		List<Community> codiList
+//		return null;
+//	}
 
 }

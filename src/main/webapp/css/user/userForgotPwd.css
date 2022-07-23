@@ -1,4 +1,4 @@
-          @charset "UTF-8";
+@charset "UTF-8";
  * {
         margin: 0px;
         padding: 0px;
@@ -12,8 +12,8 @@
         margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
     }
 
-    /* 아이디 찾기 폼 컨테이너 */
-    .forgotid_container {
+    /* 비밀번호 찾기 폼 컨테이너 */
+    .forgotPwd_container {
         width: 450px;
         height: 400px;
         background-color: white;
@@ -30,7 +30,7 @@
         align-items: center;
     }
     /* 컨테이너 제목 */
-    .forgotid_container h2 {
+    .forgotPwd_container h2 {
         line-height: 80px;
         letter-spacing: 5px;
         color:white;

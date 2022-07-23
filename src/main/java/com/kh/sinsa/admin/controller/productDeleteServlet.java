@@ -35,9 +35,8 @@ public class productDeleteServlet extends HttpServlet {
 			String proNo = request.getParameter("proNo");
 			System.out.println("prono = " + proNo);
 			
-			// 2. 업무로직
 			// a. 저장된 첨부파일 조회 및 삭제 (java.io.File#delete)
-			List<ProductAttachment> productattachmentList = AdminService.findProductAttachmentByProNo(proNo);
+			List<ProductAttachment> productattachmentList = adminService.findProductAttachmentByProNo(proNo);
 			System.out.println("productattachmentList = " + productattachmentList);
 			if(productattachmentList != null && !productattachmentList.isEmpty()) {
 				String saveDirectory = getServletContext().getRealPath("/upload/product");

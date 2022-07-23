@@ -41,10 +41,10 @@
 					<textarea name="content" cols="100" rows="50"></textarea>
 				</p>
 				<div>
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
+					<input type="file" name="filename1" accept="image/*">
+					<input type="file" name="filename2" accept="image/*">
+					<input type="file" name="filename3" accept="image/*">
+					<input type="file" name="filename4" accept="image/*">
 				</div>
 
 		<div id="btn-sum" style="margin:30px;">

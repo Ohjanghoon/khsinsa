@@ -36,7 +36,7 @@ public class productManagementDetailServlet extends HttpServlet{
 			// 업무처리
 			Product product = productService.findByProNo(proNo);
 			
-			List<ProductAttachment> attachList = productService.findProductAttachmentByProductProNo(proNo);
+			List<ProductAttachment> productattachmentList = productService.findProductAttachmentByProductProNo(proNo);
 			
 			int totalReview = reviewService.getTotalReview(proNo);
 			int numPerPage = 1;
@@ -46,8 +46,8 @@ public class productManagementDetailServlet extends HttpServlet{
 			request.setAttribute("proNo", proNo);
 			request.setAttribute("totalPage", totalPage);
 			request.setAttribute("product", product);
-			request.setAttribute("attachList", attachList);
-			request.getRequestDispatcher("/WEB-INF/views/product/productDetail.jsp").forward(request, response);
+			request.setAttribute("productattachmentList", productattachmentList);
+			request.getRequestDispatcher("/WEB-INF/views/admin/productManagementDetail.jsp").forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

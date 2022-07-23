@@ -433,3 +433,12 @@ alter table cart add cart_date date default current_date;
 select * from comm_attachment;
 select * from comm_comment;
 select * from kh_user;
+
+-- 테스트용 데이터 삭제
+select * from product;
+select * from product_attachment;
+delete from product where pro_no = 'A1088';
+delete from product_attachment where pro_no = 'A1088';
+commit;
+
+

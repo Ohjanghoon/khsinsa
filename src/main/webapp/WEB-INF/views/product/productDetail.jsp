@@ -14,6 +14,10 @@
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
 	int totalPage = (int) request.getAttribute("totalPage");
 	String proNo = (String) request.getAttribute("proNo");
+	
+	for(ProductAttachment att : attachList){
+		String proNoo = att.getProNo();
+	}
 %>
 <main>
     <div class="container">

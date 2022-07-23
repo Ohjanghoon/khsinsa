@@ -96,7 +96,7 @@ public class AdminService {
 		return productattachmentList;
 	}
 	
-	// 상품 등록
+	// 상의 등록
 		public int insertTopProduct(Product product) {
 			Connection conn = getConnection();
 			int result = 0; 
@@ -127,6 +127,38 @@ public class AdminService {
 			}
 			return result;
 		}
+		
+		// 하의 등록
+			public int insertBottomProduct(Product product) {
+				Connection conn = getConnection();
+				int result = 0; 
+					
+				try {
+					// product테이블에 insert
+					result = adminDao.insertTopProduct(conn, product);
+					
+					// 방금 등록된 pro.no 컬럼값 조회
+					String proNo = adminDao.getLastTopProNo(conn);
+					System.out.println("proNo = " + proNo);
+								
+					// attachment테이블 insert
+					List<ProductAttachment> productAttachmentList = ((ProductManagementExt) product).getProductAttachmentList();
+					if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
+									
+						for(ProductAttachment productAttach : productAttachmentList) {
+							productAttach.setProNo(proNo);
+							result = adminDao.insertProductAttachment(conn, productAttach);
+								}
+							}
+					commit(conn);
+				} catch (Exception e) {
+					rollback(conn);
+					throw e;
+				} finally {
+					close(conn);
+				}
+				return result;
+			}
 		
 		public int updateProduct(ProductManagementExt product) {
 			Connection conn = getConnection();

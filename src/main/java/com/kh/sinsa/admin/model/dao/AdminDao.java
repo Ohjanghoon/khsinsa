@@ -377,7 +377,58 @@ public class AdminDao {
 				ProNo = rset.getString(1);
 		} 
 		catch (SQLException e) {
-			throw new AdminException("생성된 게시글번호 조회 오류!", e);
+			throw new AdminException("생성된 상품번호 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return ProNo;
+	}
+	
+	public int insertBottomProduct(Connection conn, Product product) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertBottomProduct");
+		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (A10 || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getProType());
+			pstmt.setString(2, product.getProName());
+			pstmt.setInt(3, product.getProPrice());
+			pstmt.setString(4, product.getProSize());
+			pstmt.setString(5, product.getProContent());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new AdminException("상품 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+//	create table product_attachment(
+//	        pro_attachment_no number,
+//	        pro_no varchar2(100) not null,
+//	        pro_original_filename varchar2(255) not null,
+//	        pro_rename_filename varchar2(255) not null,
+	        
+//	insertProductAttachment = insert into attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?)
+	
+	public String getLastBottomProNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String ProNo = null;
+		String sql = prop.getProperty("getLastBottomProNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				ProNo = rset.getString(1);
+		} 
+		catch (SQLException e) {
+			throw new AdminException("생성된 상품번호 조회 오류!", e);
 		}
 		finally {
 			close(rset);

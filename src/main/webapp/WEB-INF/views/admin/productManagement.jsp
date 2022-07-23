@@ -3,6 +3,8 @@
 <%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
 <%@page import="com.kh.sinsa.admin.model.dto.ProductManagementExt"%>
 <%@page import="java.util.List"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.kh.sinsa.common.KhsinsaUtils"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -24,6 +26,7 @@
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 	//System.out.println(productlist);
 	System.out.println(productattachList);
+	System.out.println(productlist);
 %>
 
 <div align="center" id="body">
@@ -42,7 +45,7 @@
             <a><center>상품 관리</center></a>
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-secondary float-right" onclick="location.href='<%= request.getContextPath() %>/admin/productManagement/topProductAdd'">상품 등록</button></div>
+                <button id="productadd" type="submit">상품 등록</button></div>
             <table class="table table-bordered">
 <%
 			if(productlist == null || productlist.isEmpty()){
@@ -53,12 +56,6 @@
 		<%
 			} 
 			else { for(Product product : productlist){
-				System.out.println(productlist);
-			String productType = "";
-			switch(product.getProType()) {
-			case "P10" : productType = "상의"; break;
-			case "P20" : productType = "하의"; break;
-			}
 %>
                 <thead>
                     <tr class = tablehead>
@@ -75,7 +72,7 @@
                 </thead>
                     <tbody>
                         <td><%= product.getProNo() %></td>
-                        <td><%= productType %></td>
+                        <td><%= product.getProType() %></td>
                         <td><%= product.getProName() %></td>
 <%
 	for(ProductAttachment pa : productattachList){
@@ -108,18 +105,18 @@
        		} %>
                     </tbody>
             </table>
-<form 
-	action="<%= request.getContextPath() %>/admin/productManagement/productDelete"
-	method="post" 
-	name="productDelFrm">
-	<input type="hidden" name="no"/>
-</form>
 <script>
-const deleteProduct = () => {
-	if(confirm("상품을 삭제하시겠습니까?"))
-		document.productDelFrm.submit();
-};
+document.querySelector("#productadd").addEventListener('click', (e) => {
+	if(<%= loginUser == null %>){
+		loginAlert();		
+	}else{
+		location.href = "<%= request.getContextPath() %>/share/shareAdd";
+	}
+	
+	
+	
+	
+});
 
 </script>
-            <p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
  <%@ include file="/WEB-INF/views/common/footer.jsp" %>

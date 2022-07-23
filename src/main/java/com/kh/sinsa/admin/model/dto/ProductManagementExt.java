@@ -21,7 +21,6 @@ public class ProductManagementExt extends Product{
 	public ProductManagementExt(String proNo, String proType, String proName, int proPrice, String proSize, Timestamp regDate,
 			String proContent) {
 		super(proNo, proType, proName, proPrice, proSize, regDate, proContent);
-		this.productAttachCount = productAttachCount;
 	}
 	
 	

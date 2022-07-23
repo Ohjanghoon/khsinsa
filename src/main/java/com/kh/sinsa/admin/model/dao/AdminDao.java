@@ -461,6 +461,10 @@ public class AdminDao {
 		return result;
 	}
 	
+//updateProduct = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+//deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
+//findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
+		
 	public int updateProduct(Connection conn, ProductManagementExt product) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -536,11 +540,10 @@ public class AdminDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, proNo);
 			result = pstmt.executeUpdate();
-		} 
-		catch (SQLException e) {
+			
+		} catch (SQLException e) {
 			throw new AdminException("상품 삭제 오류!", e);
-		}
-		finally {
+		} finally {
 			close(pstmt);
 		}
 		return result;

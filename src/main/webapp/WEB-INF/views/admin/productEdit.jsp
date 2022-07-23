@@ -7,8 +7,9 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	Product product = (Product) request.getAttribute("product");
-	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
+	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
 	String proNo = (String) request.getAttribute("proNo");
+	System.out.println(productattachmentList);
 %>
 
 <!-- // board -> product / attachments -> productattachList -->
@@ -28,24 +29,42 @@
 				<li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계관리</a></li>
 			</ul>
 		</nav>
-		<form name="productEditFrm"
-			action="<%=request.getContextPath()%>/admin/productManagement/productEdit" 
-			method="post"
-			enctype="multipart/form-data">
-			<h2 style="font-size: 30px; color: black;">상품 수정</h2>
-			<hr style="border-top: 3px solid black;">
-			<div id="content" style="margin: 30px;">
-				<br>
-				<input type="text" name="proName" id="proName" value="<%= product.getProName() %>" required>
-				<br>
-				<input type="text" name="proPrice" id="proPrice" value="<%= Integer.toString(product.getProPrice())%>" required>
-				<br>
-				<input type="text" name="proSize" id="proSize" value="<%= product.getProSize().replace("\"", " &quot;") %>" required>
-				<br>
-				<% 
-			if(productattachList != null && !productattachList.isEmpty()){
-				for(int i = 0; i < productattachList.size(); i++){
-					ProductAttachment productattach = productattachList.get(i);
+<h2>상품등록</h2>
+<form 
+	name="productEditFrm" 
+	action="<%=request.getContextPath() %>/admin/productManagement/productEdit"
+	enctype="multipart/form-data" 
+	method="post">
+	<table>
+	<tr>
+		<th>상품 이름</th>
+		<td><input type="text" name="proName" value="<%= product.getProName().replace("\"", " &quot;") %>" required></td>
+	</tr>
+	<tr>
+		<th>상품 가격</th>
+		<td>
+			<input type="text" name="proPrice" value="<%= product.getProPrice() %>" required/>
+		</td>
+	</tr>
+	<tr>
+		<th>상품 사이즈</th>
+		<td>
+			<input type="text" name="proSize" value="<%= product.getProPrice() %>" required/>
+		</td>
+	</tr>
+	<tr>
+		<th>상품 내용</th>
+		<td>
+			<textarea rows="5" cols="40" name="content"><%= product.getProContent() %></textarea>
+		</td>
+	</tr>
+	<tr>
+		<th>상품 사진</th>
+		<td>
+		<% 
+			if(productattachmentList != null && !productattachmentList.isEmpty()){
+				for(int i = 0; i < productattachmentList.size(); i++){
+					ProductAttachment productattach = productattachmentList.get(i);
 		%>
 				<img src="<%= request.getContextPath() %>/images/file.png" width="16px" />
 				<%= productattach.getProOriginalFilename() %>
@@ -58,16 +77,58 @@
 				}
 			}
 		%>
-			<input type="file" name="upFile1">
-			<input type="file" name="upFile2">
-				<p>
-				<textarea name="proContent" cols="10" rows="10"><%= product.getProContent() %></textarea>
-				</p>
-
-		<div id="btn-sum" style="margin:30px;">
-			<span class="btn-edit"> <input type="submit" id="btn-edit" value="수정" style="width:150px;"></span> 
-			<span class="btn-sel"> <input type="button" value="취소" style="width:150px;" onclick="history.go(-1);"/></span>
-		</div>
-
-	</div>
-	</form>
+			<input type="file" name="imgproduct1">
+			<input type="file" name="imgproduct2">
+			<input type="file" name="imgproduct3">
+			<input type="file" name="imgproduct4">
+			<input type="file" name="imgproduct5">
+			<input type="file" name="imgproduct6">
+		</td>
+	</tr>
+	<tr>
+		<th colspan="2">
+			<input type="submit" value="수정하기"/>
+			<input type="button" value="취소" onclick="history.go(-1);"/>
+		</th>
+	</tr>
+</table>
+</form>
+</section>
+<script>
+document.productEditFrm.onsubmit = (e) => {
+	const frm = e.target;
+	//상품 이름을 작성하지 않은 경우 폼제출할 수 없음.
+	const proNameVal = frm.proName.value.trim(); // 좌우공백
+	if(!/^.+$/.test(proNameVal)){
+		alert("상품 이름을 작성해주세요.");
+		frm.proName.select();
+		return false;
+	}		
+					   
+	//상품 가격을 작성하지 않은 경우 폼제출할 수 없음.
+	const proPriceVal = frm.proPrice.value.trim();
+	if(!/^(.|\n)+$/.test(proPriceVal)){
+		alert("상품 가격을 작성해주세요.");
+		frm.proPrice.select();
+		return false;
+	}
+	
+	//상품 사이즈를 작성하지 않은 경우 폼제출할 수 없음.
+	const proSizeVal = frm.proSize.value.trim();
+	if(!/^(.|\n)+$/.test(proSizeVal)){
+		alert("상품 사이즈를 작성해주세요.");
+		frm.proSize.select();
+		return false;
+	}
+	
+	//상품 내용을 작성하지 않은 경우 폼제출할 수 없음.
+	const proContentVal = frm.proContent.value.trim();
+	if(!/^(.|\n)+$/.test(proContentVal)){
+		alert("상품 내용을 작성해주세요.");
+		frm.proContent.select();
+		return false;
+	}
+	
+}
+</script>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

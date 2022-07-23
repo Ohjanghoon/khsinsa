@@ -20,7 +20,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
- * Servlet implementation class BoardUpateServlet
+ * Servlet implementation class productEditServlet
  */
 @WebServlet("/admin/productManagement/productEdit")
 public class productEditServlet extends HttpServlet {
@@ -87,7 +87,7 @@ public class productEditServlet extends HttpServlet {
 			}
 			
 			
-			int proAttachmentNo = Integer.parseInt(multiReq.getParameter("proAttachmentNo"));
+			String proNo = request.getParameter("proNo");
 			String productType = request.getParameter("productType");
 			String proName = request.getParameter("proName");
 			int proPrice = Integer.parseInt(request.getParameter("proPrice").trim());
@@ -102,7 +102,7 @@ public class productEditServlet extends HttpServlet {
 				File imgproduct = multiReq.getFile(filename);
 				if(imgproduct != null) {
 					ProductAttachment productattach = new ProductAttachment();
-					productattach.setProAttachmentNo(proAttachmentNo); // 게시글 번호 PK
+					productattach.setProNo(proNo); // 상품 번호 PK
 					productattach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
 					productattach.setProRenameFilename(multiReq.getFilesystemName(filename));
 					product.addProductAttachment(productattach);
@@ -112,12 +112,12 @@ public class productEditServlet extends HttpServlet {
 			
 			
 			 //2. 업무로직
-				/* int result = adminService.updateProduct(product, null); */
+			int result = adminService.updateProduct(product);
 			 
 			
 			// 3. redirect
 			request.getSession().setAttribute("msg", "상품을 성공적으로 수정했습니다.");
-			response.sendRedirect(request.getContextPath() + "/admin/productManagement?proAttachmentNo=" + proAttachmentNo);
+			response.sendRedirect(request.getContextPath() + "/admin/productManagement?proNo=" + proNo);
 			
 			
 			

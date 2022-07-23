@@ -31,7 +31,8 @@
 	<div id="gita">
  	<p>작성일 : <%= codi.getCommDate() %></p>
  	<p>조회수 : <%= codi.getCommReadCount() %></p>
- 	<p>추천수 : <%= codi.getCommRecommand() %></p>
+ 	<span>추천수 : </span><span id="recommand"><%= codi.getCommRecommand() %></span>
+ 	<br /><br />
  	<button type="button" id="like" class="btn btn-outline-secondary">👍</button>
  	<br /><br />
 	</div>
@@ -175,6 +176,7 @@
 	});
 	// 추천이여!!
  	document.querySelector("#like").addEventListener('click', (e) => {
+ 		const reco = Number(document.querySelector('#recommand').textContent) + 1;
 <% if(loginUser != null){%>
  		$.ajax({
 			url : '<%= request.getContextPath() %>/community/commnityRecommend',
@@ -184,11 +186,13 @@
 				alert("해당 게시물을 추천하였습니다.");
 			},
 			error : console.log,
-		})
-	});
+			complete(){
+				document.querySelector('#recommand').innerHTML = reco;
+			}
+	  })
  <% } else { %>
  		loginAlert();
  <% } %>
- }
+ });
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

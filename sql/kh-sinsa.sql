@@ -458,7 +458,15 @@ desc comm_comment;
 select * from comm_attachment where comm_no like 'C20%';
 select * from comm_comment;
 select * from kh_user;
-select count(*) from community where comm_no like 'C20%';
-update community set comm_recommend = comm_recommend +1 where comm_no = ?;
-select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c) c where rnum between 1 and 30 and comm_no like 'C20%';
-select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c where comm_no like 'C20%') c where rnum between 1 and 30;
+
+
+
+
+
+
+
+
+
+
+
+

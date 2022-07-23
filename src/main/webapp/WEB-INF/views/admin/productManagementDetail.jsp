@@ -1,3 +1,4 @@
+<%@page import="com.kh.sinsa.review.model.dto.Review"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductExt"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -5,35 +6,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/productManagementDetail.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/product/productDetail.css" />
 <%
 	Product product = (Product) request.getAttribute("product");
-	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
+	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
 	int totalPage = (int) request.getAttribute("totalPage");
 	String proNo = (String) request.getAttribute("proNo");
+	
+	for(ProductAttachment att : productattachmentList){
+		String proNoo = att.getProNo();
+	}
 %>
-<div align="center" id="body">
-            <br>
-            <class = "adminpage"><h1>Admin page</h1></class>
-            <ul class = "ul">
-                <adminmenu>
-                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/productmanagement">상품 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-            </adminmenu>
 <main>
     <div class="container">
         <section class="py-5 text-center container">
             <h3>Product Detail</h3>
         </section>
+        <input type="button" value="상품수정" onclick="updateProduct()">
+		<input type="button" value="상품삭제" onclick="deleteProduct()">
         <hr />
   		<div class="valSave">
 <% 
-	for(ProductAttachment att : attachList) {
+	for(ProductAttachment att : productattachmentList) {
 %>
 		<figure class="figure">
 		  <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProRenameFilename() %>" class="figure-img img-fluid rounded" alt="..." width="400" height="500">
@@ -110,10 +104,10 @@
   		<div class="product-info">
   		 <p>Product More Images</p>          
 <% 
-	if(attachList != null && !attachList.isEmpty()){ 
-		for(ProductAttachment pa : attachList){
+	if(productattachmentList != null && !productattachmentList.isEmpty()){ 
+		for(ProductAttachment pa : productattachmentList){
 %>
-         <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="">
+         <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" alt="">
 <% 
 		}
 	}
@@ -147,7 +141,18 @@
      </div>
         
 </main>
+<form 
+	action="<%= request.getContextPath() %>/admin/productManagement/productDelete"
+	method="post" 
+	name="productDelFrm">
+	<input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
+</form>
 <script>
+const deleteProduct = () => {
+	if(confirm("정말 상품을 삭제하시겠습니까?"))
+		document.productDelFrm.submit();
+};
+
 <% if(loginUser != null) { %>
 	 /*  장바구니 */
 	document.querySelector('#cart').addEventListener('click', (e) => {

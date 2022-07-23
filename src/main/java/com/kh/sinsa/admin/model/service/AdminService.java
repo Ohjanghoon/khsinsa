@@ -210,6 +210,7 @@ public class AdminService {
 			return productattach;
 		}
 		
+		// 상품 삭제
 		public int deleteProduct(String proNo) {
 			Connection conn = getConnection();
 			int result = 0;

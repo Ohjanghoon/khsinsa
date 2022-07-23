@@ -1,5 +1,6 @@
 package com.kh.sinsa.admin.model.dto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +10,7 @@ import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 public class ProductManagementExt extends Product{
 	
-	private String proNo;
-	private String proType;
-	private String proName;
-	private int proPrice;
-	private String proSize;
-	private Timestamp regDate;
-	private String proContent;
-	private int productattachcount;
-	private String proOriginalFilename;
+	private int productAttachCount;
 	private List<ProductAttachment> productAttachmentList = new ArrayList<>();
 
 	public ProductManagementExt() {
@@ -27,103 +20,35 @@ public class ProductManagementExt extends Product{
 
 	public ProductManagementExt(String proNo, String proType, String proName, int proPrice, String proSize, Timestamp regDate,
 			String proContent) {
-		super();
-		this.proNo = proNo;
-		this.proType = proType;
-		this.proName = proName;
-		this.proPrice = proPrice;
-		this.proSize = proSize;
-		this.regDate = regDate;
-		this.proContent = proContent;
+		super(proNo, proType, proName, proPrice, proSize, regDate, proContent);
+		this.productAttachCount = productAttachCount;
 	}
 	
-	public String getProNo() {
-		return proNo;
-	}
-
-	public void setProNo(String proNo) {
-		this.proNo = proNo;
-	}
-
-	public String getProType() {
-		return proType;
-	}
-
-	public void setProType(String proType) {
-		this.proType = proType;
-	}
-
-	public String getProName() {
-		return proName;
-	}
-
-	public void setProName(String proName) {
-		this.proName = proName;
-	}
-
-	public int getProPrice() {
-		return proPrice;
-	}
-
-	public void setProPrice(int proPrice) {
-		this.proPrice = proPrice;
-	}
-
-	public String getProSize() {
-		return proSize;
-	}
-
-	public void setProSize(String proSize) {
-		this.proSize = proSize;
-	}
-
-	public Timestamp getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(Timestamp regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getProContent() {
-		return proContent;
-	}
-
-	public void setProContent(String proContent) {
-		this.proContent = proContent;
-	}
+	
 	
 	public int getProductAttachCount() {
-		return productattachcount;
+		return productAttachCount;
 	}
 
-	public void ProductAttachCount(int attachCount) {
-		this.productattachcount = productattachcount;
-	}
-
-	public String getProOriginalFilename() {
-		return proOriginalFilename;
-	}
-
-	public void setProOriginalFilename(String proOriginalFilename) {
-		this.proOriginalFilename = proOriginalFilename;
+	public void setProductAttachCount(int attachCount) {
+		this.productAttachCount = productAttachCount;
 	}
 
 	public List<ProductAttachment> getProductAttachmentList() {
 		return productAttachmentList;
 	}
 
-	public void setProductAttachment(List<ProductAttachment> productAttachmentList) {
+	public void setProductAttachmentList(List<ProductAttachment> productAttachmentList) {
 		this.productAttachmentList = productAttachmentList;
 	}
 	
-	public void addProductAttachment(ProductAttachment productattach) {
-		this.productAttachmentList.add(productattach);
+	public void addProductAttachment(ProductAttachment productAttach) {
+		this.productAttachmentList.add(productAttach);
 	}
 
 	@Override
 	public String toString() {
-		return "ProductAddExt [proOriginalFilename=" + proOriginalFilename + ", productAttachmentList=" + productAttachmentList
+		return "ProductManagementExt [productAttachCount=" + productAttachCount + ", productAttachmentList=" + productAttachmentList
 				+ ", toString()=" + super.toString() + "]";
 	}
 

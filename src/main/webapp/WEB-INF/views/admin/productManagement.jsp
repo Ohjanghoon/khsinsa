@@ -22,6 +22,7 @@
 <%
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
+	//System.out.println(productlist);
 	System.out.println(productattachList);
 %>
 
@@ -41,11 +42,18 @@
             <a><center>상품 관리</center></a>
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-secondary float-right" onclick="location.href='<%= request.getContextPath() %>/admin/productManagement/productAdd'">상품 등록</button></div>
+                <button type="button" class="btn btn-secondary float-right" onclick="location.href='<%= request.getContextPath() %>/admin/productManagement/topProductAdd'">상품 등록</button></div>
             <table class="table table-bordered">
-<% 
-	if(productlist != null && !productlist.isEmpty()){ 
-		for(Product product : productlist){
+<%
+			if(productlist == null || productlist.isEmpty()){
+		%>
+			<tr>
+				<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
+			</tr>
+		<%
+			} 
+			else { for(Product product : productlist){
+				System.out.println(productlist);
 			String productType = "";
 			switch(product.getProType()) {
 			case "P10" : productType = "상의"; break;

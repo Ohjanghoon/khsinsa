@@ -112,7 +112,7 @@ public class productEditServlet extends HttpServlet {
 			
 			
 			 //2. 업무로직
-			int result = adminService.updateProduct(product, null);
+				/* int result = adminService.updateProduct(product, null); */
 			 
 			
 			// 3. redirect

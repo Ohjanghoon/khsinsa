@@ -12,7 +12,7 @@
 		<div class="search-title">
 			<h3>비밀번호 찾기</h3>
 		</div>
-		<form name="pwdfindfrm" method="POST" action="<%=request.getContextPath()%>/user/userForgotPwd" onsubmit="javascript:frmSubmitCheck();">
+		<form name="pwdfindfrm" method="POST" action="<%=request.getContextPath()%>/user/userForgotPwd" >
 
 			<section class="form-search">
 
@@ -33,13 +33,24 @@
 
 			</section>
 			<div class="btnSearch">
-				<input type="submit" name="enter"  id="btn_find" value="찾기" class="btn_open" onClick="pwd_search()"> 
+				<input type="submit" name="enter"  id="btn_find" value="찾기" class="btn_open"> 
 				<input type="button" name="cancle" value="취소" id="btn_cancel" onClick="history.back()">
+				
 			</div>
+			
 			
 			
 
 		</form>
+		
+		
+		
+			<% if(user != null) { %>
+      		<p>임시비밀번호는 <%= request.getAttribute("tempPwd")  %>입니다.</p>
+			<% } %> 
+			
+			
+			
 	</div>
 </div>
 

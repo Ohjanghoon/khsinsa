@@ -93,7 +93,7 @@
                 <%  	} %>
 	            	<a class="btn btn-sm btn-outline-secondary" href="<%= request.getContextPath() %>/user/userLogout">LogOut</a>
 			    <% } else { %> 
-                    <a class="btn btn-sm btn-outline-secondary" href="<%= request.getContextPath() %>/user/userLogin">LogIn</a>
+                    <a class="btn btn-sm btn-outline-secondary btn-longin" href="<%= request.getContextPath() %>/user/userLogin">LogIn</a>
                     <% } %>
                 </form>
               </div>

@@ -2,11 +2,12 @@
 /* 전체 요소 제거 후 시작 */
 * {
     list-style: none;
-    text-decoration: none;
+    text-decoration: none !important;
     margin: 0px;
     padding: 0px;
     font-family: 'Noto Sans', sans-serif;
 }
+
 /* header */
 header {
     background-color: #e5e5e5;

@@ -61,9 +61,9 @@
 					</td>
 	            	<td name="proPrice"><%= new DecimalFormat("###,###").format(pro.getProPrice()) %>원</td>
 		            <td name="cartBuyStock">
-		            	<button type="button" id="btn_stock_minus" onclick="">➖</button>
-		            	<%= cart.getCartBuyStock() %>
-		            	<button type="button" id="btn_stock_plus" onclick="">➕</button>
+		            	<button	type="button" id="btn_stock_minus" onclick="stockMinus();">➖</button>
+		            	<input type="number" name="cartBuyStock" min="1" value="<%= cart.getCartBuyStock() %>" />	
+		            	<button type="button" id="btn_stock_plus" onclick="stockPlus();">➕</button>
 		            </td>
 		            <td name="orderPrice">
 		            	<span><%= new DecimalFormat("###,###").format(pro.getProPrice() * cart.getCartBuyStock()) %> 원</span>
@@ -85,9 +85,30 @@
 	   	</table>
           
 	</form>
+	<div id="myCart_btn_del_area">
+		<button type="submit" id="btn_del" onclick="myCartListDel()">선택삭제</button>           
+	</div>
    	<div class="pagebar">
 		<%= request.getAttribute("pagebar") %>
 	</div>    
+	<div id="myCart_btn_order_area">
+		<button type="submit" id="btn_order" onclick="">선택 상품 주문하기</button>           
+	</div>
 </div>
 	
+<script>
+document.cartBuyStock
+const stockMinus = () => {
+	let cartBuyStock = document.querySelector("#btn_stock_minus").nextElementSibling.value;
+	console.log(cartBuyStock);
+};
+
+const stockPlus = () => {
+
+};
+
+const stockInput = () => {
+	console.log(document.querySelector("[name=cartBuyStock").value);
+};
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

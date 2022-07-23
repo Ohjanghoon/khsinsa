@@ -42,7 +42,7 @@
                     <div class="forgot_wrapper">
                         <a href="<%= request.getContextPath() %>/user/userForgotId">아이디 찾기</a> <span>/</span>
 
-                        <a href="<%= request.getContextPath() %>/user/userForgotPwd">비밀번호 찾기</a>
+                        <a href="<%= request.getContextPath() %>/user/userForgotㅖ">비밀번호 찾기</a>
                     </div>
                 </div>
                 <div>

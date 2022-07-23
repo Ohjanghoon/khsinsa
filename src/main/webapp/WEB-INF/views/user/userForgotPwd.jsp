@@ -6,14 +6,14 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userLogin.css">
+
 </head>
 <body>
 
  <div class="container">
     <div class="login_container">
         <h2>로그인</h2>
-        <form  name="pwdfindscreen" method="post" action="<%= request.getContextPath() %>/user/userForgotPwd" >
+        <form  name="pwdfindscreen" method="post" action="<%= request.getContextPath() %>/user/userForgotPwd"  onsubmit ="javascript:frmSubmitCheck();">
               <div class = "search-title">
 				<h3>비밀번호 찾기</h3>
 			</div>

@@ -451,3 +451,6 @@ insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment
 commit;
 select * from comm_attachment;
 select * from kh_user;
+
+-- 장훈 관심상품(favorite) 테이블에 fav_date 컬럼 추가
+alter table favorite add fav_date date default current_date;

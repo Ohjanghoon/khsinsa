@@ -30,7 +30,30 @@
         <p>전문 스타일리스트가 제안하는 다양한 코디로 매일 반복되는 코디 고민을 덜어보세요.</p>
         <p>최신 트렌드부터 누구나 입기 쉬운 룩까지 다양한 코디법을 담았습니다.</p>
         <p id="warn">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
+<% if(loginUser != null && loginUser.getUserRole() == UserRole.A) { %>        
+        <br />
+        <button type="button" class="btn btn-outline-dark">글쓰기</button>
+<% } %>
 	    </div>
+	    <br />
+	    <div class="d-flex flex-wrap justify-content-between">
+	    	<div class="align">
+	       	 <form action="<%= request.getContextPath() %>" method="get">
+	             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
+				  <option value="#" selected>정렬기준</option>
+				  <option value="pro_name">게시글명</option>
+				  <option value="pro_price">등록순</option>
+				  <option value="#">추천순</option>
+				 </select>
+	         </form>
+	       	</div>
+			<div class="search">
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>" method="get">
+		          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
+		          <button type="button" class="btn btn-outline-dark">🔎</button>
+		        </form>
+			</div>
+		</div>
         <br />
 	    <div class="album py-6 bg-white">
             <div class="row row-cols-6 row-cols-md-3 g-5">

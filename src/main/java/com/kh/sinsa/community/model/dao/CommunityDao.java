@@ -20,6 +20,8 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.exception.CommunityException;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
+import com.kh.sinsa.product.model.exception.ProductException;
 
 public class CommunityDao {
 
@@ -346,7 +348,69 @@ public class CommunityDao {
 		}
 		return result;
 	}
-	
+
+	public List<Community> findCodaiAll(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("findCodiAll");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new CommunityException("코디북 불러오기 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
+	}
+
+	public List<CommunityAttachment> findCodiAttachmentFindAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<CommunityAttachment> codiAttachmentList = new ArrayList<>();
+		String sql = prop.getProperty("findCodiAttachmentFindAll");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				codiAttachmentList.add(handlerAttachmentResultSet(rset));
+			}
+		} catch (SQLException e) {
+			throw new ProductException("코디 사진 전체가져오기 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiAttachmentList;
+	}
+
+	public int getCodiTotalContent(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int codiTotalContent = 0;
+		String sql = prop.getProperty("getCodiTotalContent");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next())
+				codiTotalContent = rset.getInt(1);
+		} catch (SQLException e) {
+			throw new CommunityException("코디게시물 수 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return codiTotalContent;
+	}
 
 
 }

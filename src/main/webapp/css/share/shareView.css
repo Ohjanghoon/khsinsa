@@ -14,6 +14,7 @@
 
 .comment-container{
     width: 1024px;
+    heigth : 500px;
     margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
 }
 
@@ -73,12 +74,12 @@ table#tbl-comment button.btn-reply{display:none;}
 table#tbl-comment tr:hover {background:lightgray;}
 table#tbl-comment tr:hover button.btn-reply{display:inline;}
 table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
-table#tbl-comment sub.comment-date {color:tomato; font-size:10px}
+table#tbl-comment sub.comment-date {color:rgb(128, 0, 255); font-size:10px}
 
 table#tbl-comment tr.level2 {color:gray; font-size: 14px;}
 table#tbl-comment tr.level2 td:first-of-type{padding-left:100px;}
-table#tbl-comment tr.level2 sub.comment-writer {color:#8e8eff; font-size:14px}
-table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
+table#tbl-comment tr.level2 sub.comment-writer {color:black; font-size:14px}
+table#tbl-comment tr.level2 sub.comment-date {color:rgb(128, 0, 255); font-size:10px}
 table#tbl-comment textarea{margin: 4px 0 0 0;}
 table#tbl-comment button.btn-comment-enroll2{width:60px; height:23px; color:white; background:lightslategray; position:relative; top:-5px; left:10px;}
 

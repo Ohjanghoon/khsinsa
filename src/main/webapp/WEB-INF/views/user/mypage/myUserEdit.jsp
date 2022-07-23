@@ -53,19 +53,17 @@ if (loginUser != null) {
 
 		<%-- 아이디 명시 --%>
 		<div class="input_area">
-			<label>아이디</label> <input type="text" name="userId" id="userId"
-				value="<%=loginUser.getUserId()%>" readonly>
+			<label>아이디</label> 
+			<input type="text" name="userId" id="userId" value="<%=loginUser.getUserId()%>" readonly>
 		</div>
 		<br> <span class="message_box" id="idMsg"></span>
 
 		<%-- 비밀번호 --%>
 		<div class="input_area">
-			<label>비밀번호 <span class="essential_mark">*</span></label> <input
-				type="password" name="userPwd" id="userPwd" autocomplete="off"
-				required>
+			<label>비밀번호 <span class="essential_mark">*</span></label> 
+			<input type="password" name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>"autocomplete="off" required>
 			<button type="button" id="btn_show_pwd">
-				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png"
-					alt="버튼">
+				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
 			</button>
 		</div>
 		<br> <span class="message_box" id="pwdMsg">8~12자리
@@ -73,9 +71,8 @@ if (loginUser != null) {
 
 		<%-- 비밀번호 확인 --%>
 		<div class="input_area">
-			<label>비밀번호 확인 <span class="essential_mark">*</span></label> <input
-				type="password" name="userPwdCheck" id="userPwdCheck"
-				autocomplete="off" required>
+			<label>비밀번호 확인 <span class="essential_mark">*</span></label> 
+			<input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
 		</div>
 		<br> <span class="message_box" id="pwdCheckMsg"></span>
 
@@ -83,45 +80,40 @@ if (loginUser != null) {
 
 
 		<div class="input_area">
-			<label>이름 <span class="essential_mark">*</span></label> <input
-				type="text" name="userName" id="userName" autocomplete="off"
-				required>
+			<label>이름 <span class="essential_mark">*</span></label> 
+			<input type="text" name="userName" id="userName" autocomplete="off" required>
 		</div>
 		<br> <span class="message_box" id="nameMsg"></span>
 
 		<%-- 생년월일 수정 --%>
 		<div class="input_area">
-			<label>생년월일 <span class="essential_mark">*</span></label> <input
-				type="date" name="userBirth" id="userBirth" value="1999-09-09"
-				min="1990-01-01" max="<%=todayDate%>">
+			<label>생년월일 <span class="essential_mark">*</span></label>
+			 <input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%=todayDate%>">
 		</div>
 		<br>
 
 
 		<%-- 휴대전화 수정 --%>
 		<div class="input_area phone_area">
-			<label>휴대전화</label> <select name="phone1" id="phone1">
+			<label>휴대전화</label> 
+			<select name="phone1" id="phone1">
 				<option value="010">010</option>
 				<option value="011">011</option>
 				<option value="016">016</option>
 				<option value="017">017</option>
 				<option value="018">018</option>
 				<option value="019">019</option>
-			</select> <input type="text" name="phone2" id="phone2"
-				value="<%=loginUser.getUserPhone().substring(3, 11)%>" maxlength="8"
-				placeholder="ex)12341234" autocomplete="off" required>
+			</select> 
+			<input type="text" name="phone2" id="phone2" value="<%=loginUser.getUserPhone().substring(3, 11)%>" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
 		</div>
 		<br> <span class="message_box" id="phoneMsg"></span>
 
 		<%-- 이메일 수정 --%>
 		<div class="input_area email_area">
 			<label>이메일</label> 
-			<input type="text" name="emailId" id="emailId"
-				value="<%=emailId%>" title="이메일을 입력해주세요" autocomplete="off" required>
+			<input type="text" name="emailId" id="emailId" value="<%=emailId%>" title="이메일을 입력해주세요" autocomplete="off" required>
 			<span id="email_at">@</span>
-			 <input type="text" name="emailAddr"
-				id="emailAddr" value="<%=emailAddr%>" list="emailAddrs"
-				autocomplete="off" required>
+			 <input type="text" name="emailAddr" id="emailAddr" value="<%=emailAddr%>" list="emailAddrs" autocomplete="off" required>
 			<datalist id="emailAddrs">
 				<option value="naver.com">
 				<option value="hanmail.net">
@@ -132,8 +124,7 @@ if (loginUser != null) {
 				<option value="nate.com">
 			</datalist>
 		</div>
-		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증
-			정보로 사용됩니다.</span>
+		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
 
 
 		<%-- 주소  수정 --%>
@@ -144,8 +135,7 @@ if (loginUser != null) {
 		</div>
 		<br>
 		<div class="input_area addr_area">
-			<input type="text" name="roadDetail" id="roadDetail"
-				placeholder="상세주소 입력">
+		<input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력">
 		</div>
 		<br> <span class="message_box" id="addressMsg"></span>
 

@@ -64,6 +64,12 @@ public class UserService {
 		System.out.println("2");
 		return user;
 	}
+	
+	public User forgotPwd(String userId, String username, String userEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
@@ -90,6 +96,7 @@ public class UserService {
 		close(conn);
 		return user;
 	}
+
 
 
 

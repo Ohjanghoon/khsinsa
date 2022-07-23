@@ -169,6 +169,34 @@ public class UserDao {
 		
 		return user;
 	}
+	
+	public User forgotPwd(Connection conn, String userId, String username, String userEmail) {
+		PreparedStatement pstmt =  null;
+		ResultSet rset = null;
+		User user = new User();
+		String sql= prop.getProperty("forgotPwd");
+		System.out.println("3");
+		// forgotPwd = select * from kh_user where user_id =? and user_name= ? and user_email= ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, username);
+			pstmt.setString(3, userEmail);
+			rset = pstmt.executeQuery();
+			 if(rset.next()) {
+				 user = handleUserResultSet(rset);
+			 }
+			
+		} catch (Exception e) {
+			throw new UserException("회원정보를 조회할 수 없습니다.",e);
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return user;
+	}
 
 
 	// ##########minseo UserDao end#############
@@ -227,6 +255,10 @@ public class UserDao {
 		return user;
 	}
 	// ##########janghoon UserDao end#############
+
+
+
+
 
 
 

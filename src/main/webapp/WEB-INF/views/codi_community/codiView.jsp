@@ -11,6 +11,7 @@
 	Community codi = (Community) request.getAttribute("codi");
 	List<CommunityComment> codiCommentList = (List<CommunityComment>) request.getAttribute("codiCommentList");
 	List<CommunityAttachment> codiAttach = (List<CommunityAttachment>) request.getAttribute("codiAttach"); 
+	String commNo = codi.getCommNo();
 %>
 <main>
  <div class="container">
@@ -30,6 +31,9 @@
 	<div id="gita">
  	<p>작성일 : <%= codi.getCommDate() %></p>
  	<p>조회수 : <%= codi.getCommReadCount() %></p>
+ 	<p>추천수 : <%= codi.getCommRecommand() %></p>
+ 	<button type="button" id="like" class="btn btn-outline-secondary">👍</button>
+ 	<br /><br />
 	</div>
 	<div class="text-center">              
 		<h3><%= codi.getCommTitle() %></h3>
@@ -49,20 +53,28 @@
         <tbody>
 <% 
 	if(codiCommentList != null && !codiCommentList.isEmpty()){
-		for(CommunityComment cl : codiCommentList){ 
-			boolean canDelete = loginUser != null && (loginUser.getUserId().equals(cl.getUserId()) || loginUser.getUserRole() == UserRole.A);
+		for(CommunityComment cl : codiCommentList){
 %>
         <tr>
-            <th class="<%= cl.getCommentLevel() == CommentLevel.COMMENT ? "level1" : "level2" %>"></th>
-            <th scope="row"><%= cl.getUserId() %></th>
+<%
+           if(cl.getCommentLevel().equals(CommentLevel.COMMENT)){
+%>
+			<th>💬</th>
+            <th><%= cl.getUserId() %></th>
+<%} else { %>
+			<td>↳</td>
+            <th><%= cl.getUserId() %></th>
+			
+<% } %>
             <td><%= cl.getCommentContent() %></td>
             <td><%= cl.getCommentDate() %></td>
             <td>
+<% if(loginUser != null) {%>
 <% if(cl.getCommentLevel() == CommentLevel.COMMENT){ %>            
-            	<button type="button" class="btn btn-outline-success">답글</button>
-<% } if(canDelete){ %>
-            	<button type="button" class="btn btn-outline-danger">삭제</button>
-<% } %>
+            	<button type="button" value="<%= cl.getNo() %>" class="btn btn-outline-primary replyComment">답글</button>
+<%  } if(loginUser.getUserId().equals(cl.getUserId()) || loginUser.getUserRole() == UserRole.A){ %>
+            	<button type="button" value="<%= cl.getNo() %>" class="btn btn-outline-danger deleteComment">삭제</button>
+<% } } %>
             </td>
         </tr>
 <% 
@@ -70,19 +82,113 @@
 	} else {
 %>
 		<tr>
+			<th></th><td></td><td></td><td></td><td></td><td></td><td></td><th></th><td></td>
 			<td>여러분의 댓글이 필요해요 🥲</td>
 		</tr>
 <% } %>
         </tbody>
       </table>
       <br>
-      <form action="">
+      <form action="<%= request.getContextPath() %>/community/codiCommentAdd" name="commentFrm" method="post">
         <div class="input-group input-group-md">
+        	<input type="hidden" name="commNo" value="<%= codi.getCommNo() %>" />
+            <input type="hidden" name="userId" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
+            <input type="hidden" name="commCommentLevel" value="1" />
+            <input type="hidden" name="commCommentRef" value="0" />  
             <span class="input-group-text" id="inputGroup-sizing-md">COMMENT</span>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-            <a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Enter</a>
+            <input type="text" name="commCommentContent" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+            <button type="submit" class="btn btn-secondary btn-md">Enter</button>
         </div>
     </form>
  </div>
 </main>
+<form action="<%= request.getContextPath() %>/share/shareCommentDelete" method="post" name="deleteCommunityCommentFrm">
+<input type="hidden" name="no" />
+</form>
+<script>
+	// 로그인 메시징
+	const loginAlert = () => {
+		alert("로그인후 이용할 수 있습니다.");
+	};
+	
+	// 댓글 등록시 유효성검사와 로그인 검사
+	document.commentFrm.addEventListener('submit', (e) => {
+		if(e.target.matches("form[name=commentFrm]")){		
+			if(<%=loginUser == null %>){
+				loginAlert();
+				e.preventDefault();
+				return;		
+			}
+			
+			if(!/^(.|\n)+$/.test(e.target.content.value)){
+				alert("내용을 작성해주세요.");
+				e.preventDefault();
+				return;			
+			}
+		}
+
+	});
+
+	// 댓글 삭제
+	document.querySelectorAll(".deleteComment").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+			if(confirm("해당 댓글을 정말 삭제하시겠습니까?")){
+				const {value} = e.target;
+				const frm = document.deleteCommunityCommentFrm;
+				frm.no.value = value;
+				frm.submit();
+			}	
+		});
+	});
+	
+	// 답글 등록
+	document.querySelectorAll(".replyComment").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+			<% if(loginUser == null){%>
+				loginAlert(); return;
+			<% } %>
+			
+			const {value} = e.target;
+			console.log(value);
+			
+			const tr = `
+			<tr>
+				<td colspan="5">
+					<form name="recommentAddFrm" action="<%=request.getContextPath()%>/community/codiCommentAdd" method="post">
+			            <input type="hidden" name="commNo" value="<%= codi.getCommNo() %>" />
+			            <input type="hidden" name="userId" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
+			            <input type="hidden" name="commCommentLevel" value="2" />
+			            <input type="hidden" name="commCommentRef" value="\${value}" />    
+		            	<div class="input-group input-group-md recomand">
+			                <span class="input-group-text" id="inputGroup-sizing-md">RECOMMENT</span>
+			                <input type="text" name="commCommentContent" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-md">
+			                <button type="submit" class="btn btn-secondary btn-md">Enter</button>
+		            	</div>
+			        </form>
+				</td>
+			</tr>`;
+			
+	        const target = e.target.parentElement.parentElement; 
+	        target.insertAdjacentHTML('afterend', tr);
+	        
+		}, {once: true});
+	});
+	// 추천이여!!
+ 	document.querySelector("#like").addEventListener('click', (e) => {
+<% if(loginUser != null){%>
+ 		$.ajax({
+			url : '<%= request.getContextPath() %>/community/commnityRecommend',
+			method : 'POST',
+			data : {commNo : "<%= commNo %>"},
+			success(response){
+				alert("해당 게시물을 추천하였습니다.");
+			},
+			error : console.log,
+		})
+	});
+ <% } else { %>
+ 		loginAlert();
+ <% } %>
+ }
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

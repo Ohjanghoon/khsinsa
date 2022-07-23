@@ -3,3 +3,8 @@
 .nav{
     justify-content: space-around;
 }
+
+.recomand{
+	text-align: right;
+	border-bottom: none;
+}

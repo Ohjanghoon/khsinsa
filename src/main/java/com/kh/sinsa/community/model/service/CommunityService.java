@@ -194,4 +194,34 @@ public class CommunityService {
 		return codiTotalContent;
 	}
 
+	public int codiCommentAdd(CommunityComment communityComment) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.codiCommentAdd(conn, communityComment);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int recommendAdd(Community community) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.recommendAdd(conn, community);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 }

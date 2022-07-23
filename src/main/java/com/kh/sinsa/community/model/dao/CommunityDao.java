@@ -412,5 +412,45 @@ public class CommunityDao {
 		return codiTotalContent;
 	}
 
+	public int codiCommentAdd(Connection conn, CommunityComment communityComment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("codiCommentAdd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, communityComment.getCommNo());
+			pstmt.setString(2, communityComment.getUserId());
+			pstmt.setString(3, communityComment.getCommentContent());
+			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
+			pstmt.setObject(5, "0".equals(communityComment.getCommentRef()) ? null : communityComment.getCommentRef());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			throw new CommunityException("댓글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int recommendAdd(Connection conn, Community community) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("recommendAdd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, community.getCommNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new CommunityException("게시물 추천 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 }

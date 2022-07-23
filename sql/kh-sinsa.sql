@@ -449,5 +449,5 @@ insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment
 insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20299', ' 코디추천4.jpeg', '코디추천4.jpeg');
 insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20298', ' 코디추천5.jpeg', '코디추천5.jpeg');
 commit;
-
+select * from comm_attachment;
 select * from kh_user;

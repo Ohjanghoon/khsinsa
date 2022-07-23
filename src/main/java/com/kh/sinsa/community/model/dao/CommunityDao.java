@@ -411,7 +411,6 @@ public class CommunityDao {
 
 		return codiTotalContent;
 	}
-	
 
 
 }

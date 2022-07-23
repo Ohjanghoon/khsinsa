@@ -443,20 +443,22 @@ commit;
 select * from community;
 insert into comm_comment values ('C21' || seq_comm_comment_comm_comment_no.nextval, 'C20301', 'dlfcks0808', '비가 요즘 많이 와요 ㅠㅠ', default,default, null);
 commit;
-insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20301', ' 코디추천1.jpeg', '코디추천1.jpeg');
+insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20335', ' 코디추천1.jpeg', '코디추천1.jpeg');
 commit;
-insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20300', ' 코디추천2.jpeg', '코디추천2.jpeg');
-insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20302', ' 코디추천3.jpeg', '코디추천3.jpeg');
-insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20299', ' 코디추천4.jpeg', '코디추천4.jpeg');
-insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20298', ' 코디추천5.jpeg', '코디추천5.jpeg');
+insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20336', ' 코디추천2.jpeg', '코디추천2.jpeg');
+insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20337', ' 코디추천3.jpeg', '코디추천3.jpeg');
+insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20338', ' 코디추천4.jpeg', '코디추천4.jpeg');
+insert into comm_attachment values ('C22' || seq_comm_attachment_comm_attachment_no.nextval, 'C20339', ' 코디추천5.jpeg', '코디추천5.jpeg');
 commit;
 
-
+select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p) p where rnum between 1 and 10;
 commit;
 insert into comm_comment values ('C21' || seq_comm_comment_comm_comment_no.nextval, 'C20301', 'dlfcks0808', '이 코디 정말 제 스타일인것같아요.', default,2, 'C21141');
 desc comm_comment;
-select * from comm_attachment;
+select * from comm_attachment where comm_no like 'C20%';
 select * from comm_comment;
 select * from kh_user;
-
-update community set comm_recommend = comm_recommend +1 where comm_no = ?
+select count(*) from community where comm_no like 'C20%';
+update community set comm_recommend = comm_recommend +1 where comm_no = ?;
+select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c) c where rnum between 1 and 30 and comm_no like 'C20%';
+select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c where comm_no like 'C20%') c where rnum between 1 and 30;

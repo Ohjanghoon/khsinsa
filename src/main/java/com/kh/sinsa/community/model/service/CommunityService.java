@@ -11,6 +11,7 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
@@ -169,6 +170,28 @@ public class CommunityService {
 		List<CommunityAttachment> attach = communityDao.findAttachmentByCommNo(conn, no);
 		close(conn);
 		return attach;
+	}
+	
+	 // 코디 전체 불러오기  // ilchan
+	public List<Community> findCodiAll(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> codiList = communityDao.findCodaiAll(conn, param);
+		close(conn);
+		return codiList;
+	}
+
+	public List<CommunityAttachment> findCodiAttachmentFindAll() {
+		Connection conn = getConnection();
+		List<CommunityAttachment> codiAttachmentList = communityDao.findCodiAttachmentFindAll(conn);
+		close(conn);
+		return codiAttachmentList;
+	}
+
+	public int getCodiTotalContent() {
+		Connection conn = getConnection();
+		int codiTotalContent = communityDao.getCodiTotalContent(conn);
+		close(conn);
+		return codiTotalContent;
 	}
 
 }

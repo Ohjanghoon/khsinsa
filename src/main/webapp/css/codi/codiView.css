@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+.container d-flex flex-wrap{
+    flex-direction: column-reverse;
+    align-content: space-around;
+}

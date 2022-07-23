@@ -25,8 +25,8 @@
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 	//System.out.println(productlist);
-	System.out.println(productattachList);
-	System.out.println(productlist);
+	//System.out.println(productattachList);
+	//System.out.println(productlist);
 %>
 
 <div align="center" id="body">

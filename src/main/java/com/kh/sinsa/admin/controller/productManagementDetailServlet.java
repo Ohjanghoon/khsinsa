@@ -14,6 +14,8 @@ import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.service.ProductService;
 import com.kh.sinsa.review.model.dto.Review;
 import com.kh.sinsa.review.model.service.ReviewService;
+import com.kh.sinsa.admin.model.service.AdminService;
+
 
 /**
  * Servlet implementation class productManagementDetailServlet
@@ -24,6 +26,7 @@ public class productManagementDetailServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductService();
 	private ReviewService reviewService = new ReviewService();
+	private AdminService adminService = new AdminService();
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,9 +37,9 @@ public class productManagementDetailServlet extends HttpServlet{
 			String proNo = request.getParameter("proNo");
 			
 			// 업무처리
-			Product product = productService.findByProNo(proNo);
+			Product product = adminService.findByProNo(proNo);
 			
-			List<ProductAttachment> productattachmentList = productService.findProductAttachmentByProductProNo(proNo);
+			List<ProductAttachment> productattachmentList = adminService.findProductAttachmentByProductProNo(proNo);
 			
 			int totalReview = reviewService.getTotalReview(proNo);
 			int numPerPage = 1;

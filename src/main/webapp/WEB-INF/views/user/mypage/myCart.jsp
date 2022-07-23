@@ -1,3 +1,5 @@
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Set"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -10,8 +12,16 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/user/mypage/myCart.css">
 <%
 	List<Cart> myCartList = (List<Cart>) request.getAttribute("myCartList");
-	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
-	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	List<Product> _proInfoList = (List<Product>) request.getAttribute("proInfoList");
+	List<ProductAttachment> _proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	
+	HashSet<Product> proInfoList = new HashSet<>(_proInfoList);
+	HashSet<ProductAttachment> proAttachList = new HashSet<>(_proAttachList);
+	
+	System.out.println("myCartList = " + myCartList);
+	System.out.println("proInfoList = " + proInfoList);
+	System.out.println("proAttachList = " + proAttachList);
+	
 	String proNo = "";
 %>
 
@@ -34,8 +44,11 @@
 		    <% if(myCartList != null && !myCartList.isEmpty()) {
 				for(Cart cart : myCartList) { 
 					for(Product pro : proInfoList){
+						if(cart.getProNo().equals(pro.getProNo())){
 						for(ProductAttachment proAttach : proAttachList){
-							if(cart.getProNo().equals(pro.getProNo()) && cart.getProNo().equals(proAttach.getProNo())){
+							if(cart.getProNo().equals(proAttach.getProNo())){
+													
+						
 							
 				%>
 				<tr>
@@ -56,7 +69,7 @@
 					        			<%= pro.getProName() %>
 					        		</a>
 				        		</li>
-				        		<li>사이즈 : <%= pro.getProSize() %></li>
+				        		<li>사이즈 : <%= cart.getCartSize() %></li>
 				        	</ul>
 						</div>
 					</td>
@@ -78,7 +91,8 @@
 		            </form>
 	            
 				</tr>
-		   	<%   		}
+		   	<%   			}
+		   				}
 		   			  }
 		   			}
 		   		 }

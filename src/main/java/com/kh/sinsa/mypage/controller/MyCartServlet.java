@@ -3,8 +3,10 @@ package com.kh.sinsa.mypage.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.sinsa.cart.model.dto.Cart;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.mypage.model.service.MypageService;
-import com.kh.sinsa.order.model.dto.Order;
 import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.user.model.dto.User;

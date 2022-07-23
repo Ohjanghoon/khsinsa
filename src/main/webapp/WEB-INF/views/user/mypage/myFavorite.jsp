@@ -1,3 +1,4 @@
+<%@page import="java.util.Set"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -10,8 +11,8 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/user/mypage/myFavorite.css">
 <%
 	List<String> myFavList = (List<String>) request.getAttribute("myFavList");
-	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
-	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	Set<Product> proInfoList = (Set<Product>) request.getAttribute("proInfoList");
+	Set<ProductAttachment> proAttachList = (Set<ProductAttachment>) request.getAttribute("proAttachList");
 %>
 
 

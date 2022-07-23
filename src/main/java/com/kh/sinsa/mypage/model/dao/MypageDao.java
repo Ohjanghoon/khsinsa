@@ -482,5 +482,81 @@ public class MypageDao {
 		
 		return new Cart(userId, proNo, cartBuyStock, cartSize, cartDate);
 	}
-	//##########janghoon MypageDao end#############
+	
+	//장바구니 수량 변경
+	public int editStock(Connection conn, String userId, String proNo, int cartBuyStock) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editStock");
+		//editStock = update cart set cart_buy_stock = ? where user_id = ? and pro_no = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cartBuyStock);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, proNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MypageException("장바구니 수량 변경 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//관심상품 조회
+	public List<String> favListFindById(Connection conn, String userId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<String> myFavList = new ArrayList<>();
+		String sql = prop.getProperty("favListFindById");
+		//favListFindById = select pro_no from (select row_number() over(order by fav_date desc) rnum, f.*
+		//						from favorite f where user_id = ?) f where rnum between ? and ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				myFavList.add(rset.getString("pro_no"));
+			}
+		} catch (SQLException e) {
+			throw new MypageException("관심상품 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return myFavList;
+	}
+
+	//관심상품 수 조회
+	public int getTotalMyFavListContent(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalMyFavListContent = 0;
+		String sql = prop.getProperty("totalMyFavListContent");
+		//totalMyFavListContent = select count(*) from favorite where user_id = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalMyFavListContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("관심상품 수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalMyFavListContent;
+	}
+//##########janghoon MypageDao end#############
 }

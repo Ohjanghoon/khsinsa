@@ -12,6 +12,7 @@
 	List<Cart> myCartList = (List<Cart>) request.getAttribute("myCartList");
 	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
 	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	String proNo = "";
 %>
 
 
@@ -20,7 +21,6 @@
   		<h2>장바구니</h2>
   	</div>
   	
-	<form action="" name="myCartFrm">
 	    <table class="myCart_list">
 		    <thead>
 		    	<th><input type="checkbox" id="checkAll" onclick="checkAllorNone(this)"></th>
@@ -39,11 +39,12 @@
 							
 				%>
 				<tr>
+	            	<form action="<%= request.getContextPath() %>/mypage/myCart/editStock " method="post" name="myCartEditFrm">
 					<td>
-						<input type="checkbox" name="cartNo" value="<%= cart.getUserId() %>">
-						<input type="hidden" name="cartNo" value="<%= cart.getProNo() %>">
+						<input type="checkbox" name="cartNo" >
+						<input type="hidden" name="proNo" value="<%= cart.getProNo() %>">
 					</td>
-					<td name="proNo">
+					<td class="proNo">
 						<div class="proInfo">
 				            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
 				            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
@@ -59,20 +60,22 @@
 				        	</ul>
 						</div>
 					</td>
-	            	<td name="proPrice"><%= new DecimalFormat("###,###").format(pro.getProPrice()) %>원</td>
-		            <td name="cartBuyStock">
-		            	<button	type="button" id="btn_stock_minus" onclick="stockMinus();">➖</button>
-		            	<input type="number" name="cartBuyStock" min="1" value="<%= cart.getCartBuyStock() %>" />	
-		            	<button type="button" id="btn_stock_plus" onclick="stockPlus();">➕</button>
-		            </td>
-		            <td name="orderPrice">
+	            	<td class="proPrice"><%= new DecimalFormat("###,###").format(pro.getProPrice()) %>원</td>
+			            <td class="cartBuyStock">
+			            	<button	type="button" class="btn_stock_minus" onclick="stockMinus();">➖</button>
+			            	<input type="number" name="cartBuyStock" min="1" value="<%= cart.getCartBuyStock() %>"/>	
+			            	<button type="button" class="btn_stock_plus">➕</button>
+							<button type="submit" class="btn_edit" >변경</button>
+			            </td>
+		            <td class="orderPrice">
 		            	<span><%= new DecimalFormat("###,###").format(pro.getProPrice() * cart.getCartBuyStock()) %> 원</span>
 	            	</td>
-		            <td name="deliverType">
+		            <td class="deliverType">
 		            	<span>택배배송</span>
 		            	<br />
 		            	<span>배송비 무료</span>
 		            </td>
+		            </form>
 	            
 				</tr>
 		   	<%   		}
@@ -83,8 +86,6 @@
 		    </tbody>
 	           
 	   	</table>
-          
-	</form>
 	<div id="myCart_btn_del_area">
 		<button type="submit" id="btn_del" onclick="myCartListDel()">선택삭제</button>           
 	</div>
@@ -94,13 +95,31 @@
 	<div id="myCart_btn_order_area">
 		<button type="submit" id="btn_order" onclick="">선택 상품 주문하기</button>           
 	</div>
+	
+	
 </div>
 	
 <script>
-document.cartBuyStock
+document.querySelectorAll("[name=cartBuyStock]").forEach((inp) => {
+	inp.addEventListener('blur', (e) => {
+		const stock = e.target;
+		if(stock.value < 1) {
+			alert("1 이상의 숫자만 입력가능합니다.");
+			stock.value = 1;
+			return false;
+		}
+	});
+});
+const checkAllorNone = (obj) => {
+	
+	const checks = document.querySelectorAll("[name=cartNo]");
+	
+	for(let i in checks){
+		checks[i].checked = obj.checked;
+	}
+};
 const stockMinus = () => {
-	let cartBuyStock = document.querySelector("#btn_stock_minus").nextElementSibling.value;
-	console.log(cartBuyStock);
+	
 };
 
 const stockPlus = () => {

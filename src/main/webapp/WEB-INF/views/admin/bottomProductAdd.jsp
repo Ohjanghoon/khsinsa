@@ -18,7 +18,7 @@
 			</ul>
 		</nav>
 		<form name="shareAddFrm"
-			action="<%=request.getContextPath()%>/admin/productManagement/topProductAdd" 
+			action="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd" 
 			method="post"
 			encType = "multipart/form-data">
 			<h2 style="font-size: 30px; color: black;">상품 등록</h2>
@@ -26,9 +26,9 @@
 			<div id="content" style="margin: 30px;">
 				<span class="drop"> 
 				<select name="one" id="drop-select" onchange="if(this.value) location.href=(this.value)">
-						<option class="option" value="">상품 분류</option>
-						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/topProductAdd"" selected/>상의</option>
-						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd""/>하의</option>
+						<option class="option" value="" >상품 분류</option>
+						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/topProductAdd""/>상의</option>
+						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd"" selected//>하의</option>
 				</select>
 				</span> 
 				<br> 

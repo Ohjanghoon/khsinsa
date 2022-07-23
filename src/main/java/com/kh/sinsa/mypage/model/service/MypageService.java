@@ -177,6 +177,38 @@ public class MypageService {
 		return myCartList;
 	}
 
+	//장바구니 수량 변경
+	public int editStock(String userId, String proNo, int cartBuyStock) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = mypageDao.editStock(conn, userId, proNo, cartBuyStock);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	//관심상품 조회
+	public List<String> favListFindById(String userId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<String> myFavList = mypageDao.favListFindById(conn, userId, param);
+		close(conn);
+		return myFavList;
+	}
+
+	//관심상품 수 조회
+	public int getTotalMyFavListContent(String userId) {
+		Connection conn = getConnection();
+		int totalMyFavListContent = mypageDao.getTotalMyFavListContent(conn, userId);
+		close(conn);
+		return totalMyFavListContent;
+	}
+
 
 
 	//##########janghoon MypageService end#############

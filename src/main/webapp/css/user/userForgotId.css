@@ -1,0 +1,137 @@
+          @charset "UTF-8";
+ * {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        text-decoration: none;
+        font-family: 'Noto Sans', sans-serif;
+    }
+    /* 홈페이지 규격 */
+    .container {
+        width: 1024px;
+        margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
+    }
+
+    /* 아이디 찾기 폼 컨테이너 */
+    .forgotid_container {
+        width: 450px;
+        height: 400px;
+        background-color: white;
+        margin: 100px auto;
+        position: relative;
+        color:black;
+        border-style: double;
+        border-radius:10px;
+        padding:50px;
+     
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    /* 컨테이너 제목 */
+    .forgotid_container h2 {
+        line-height: 80px;
+        letter-spacing: 5px;
+        color:white;
+    }
+    /* 입력 영역 */
+    .input_area{
+        width: 100%;
+        position: relative;
+        margin-top: 30px;
+    }
+    .input_area:first-child{
+        margin-top: 50px;
+    }
+    .input_area input {
+        width: 300px;
+        /* margin: 0 20px; */
+        padding: 20px 10px 5px;
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid rgb(0, 0, 0);
+        font-size: 15px;
+        outline: none;
+    }
+    .input_area input:valid {
+        background: transparent;
+    }
+    .input_area label {
+        position: absolute; left: 10px; top: 15px;         /* input 태그 위에 위치 */
+        font-size: 15px; color: rgba(133, 133, 133, 0.5);
+        transition: top .5s ease;     /* -3px의 위치로 올라가면서 트랜지션 효과 */
+        margin-top: 5px;   /* 위칸과 겹치기 않도록 */
+    }   
+
+    .input_area input:focus + label,
+    .input_area input:valid + label{
+        top: -3px;
+        font-size: 10px; color: rgb(0, 70, 113);
+    }
+
+    /* 비밀번호 확인 버튼 */
+    .input_area #btn_show_pwd {
+        background: none;
+        border: none;
+        z-index: 3;
+        
+        position: absolute;
+        top: 10px; right: 10px;
+        cursor: pointer;
+    }
+    
+    div:nth-child(3){
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    #saveId {
+        width: 17px;
+        height: 17px;
+        accent-color: black;
+    }
+    .saveId_wrapper>label {
+        font-size: 13px;
+        position: absolute; left: 110px;
+    }
+    .forgot_wrapper a, span{
+        font-size: 12px;
+        color: rgb(120, 120, 120);
+    }
+
+	
+    /* 찾기 버튼 */
+    #btn_find {
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        padding: 7px 0;
+        margin-top: 30px;
+        margin-right: 70px;/*  */
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        background-color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    /* 취소 버튼 */
+    #btn_cancel {
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        padding: 7px 0;
+        margin-top: 30px;
+      	box-shadow:30px;
+        font-size: 15px;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+        background-color: rgb(125, 125, 125);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }

@@ -1,4 +1,4 @@
-package com.kh.sinsa.favorite.controller;
+package com.kh.sinsa.community.controller;
 
 import java.io.IOException;
 
@@ -9,30 +9,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.kh.sinsa.favorite.model.dto.Favorite;
-import com.kh.sinsa.favorite.model.service.FavoriteService;
+import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class FavoriteAddServlet
+ * Servlet implementation class CommunityRecommendServlet
  */
-@WebServlet("/favorite/favoriteAdd")
-public class FavoriteAddServlet extends HttpServlet {
+@WebServlet("/community/commnityRecommend")
+public class CommunityRecommendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private FavoriteService favoriteService = new FavoriteService();
-	
+	private CommunityService communityService = new CommunityService();
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 사용자 입력값
-			String proNo = request.getParameter("proNo");
-			String userId = request.getParameter("userId");
-			
-			Favorite favorite = new Favorite(proNo, userId);
+			String commNo = request.getParameter("commNo");
+			Community community = new Community(commNo, null, null, null, null,  0, 0);
 			
 			// 업무로직
-			int result = favoriteService.favoriteAdd(favorite);
+			int result = communityService.recommendAdd(community);
 			
 			// gson 전달
 			response.setContentType("application/json; charset=utf-8");
@@ -43,6 +41,5 @@ public class FavoriteAddServlet extends HttpServlet {
 			throw e;
 		}
 	}
-
 
 }

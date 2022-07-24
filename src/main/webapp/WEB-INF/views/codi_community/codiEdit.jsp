@@ -14,7 +14,7 @@
 <input type="hidden" name="commNo" value="<%= codi.getCommNo() %>" />
  <div class="container">
        <section class="py-5 text-center container">
-           <h3>Out Fit Add</h3>
+           <h3>Out Fit Edit</h3>
        </section>
        <div class="mb-3">
            <label for="exampleFormControlInput1" class="form-label">Title</label>
@@ -47,7 +47,7 @@
        </div>
        <div class="text-center">
            <button type="button" class="btn btn-outline-danger btn-sm" onclick="history.go(-1);">Cancle</button>
-           <button type="submit" class="btn btn-outline-primary btn-sm">Add</button>
+           <button type="submit" class="btn btn-outline-primary btn-sm">Edit</button>
        </div>
    </div>
 </form>

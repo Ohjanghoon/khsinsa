@@ -537,5 +537,46 @@ public class CommunityDao {
 		return result;
 	}
 
+	public int codiAdd(Connection conn, CommunityExt codi) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("codiAdd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, codi.getUserId());
+			pstmt.setString(2, codi.getCommTitle());
+			pstmt.setString(3, codi.getCommContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("코디게시글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public String getLastCodiCommNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String commNo = null;
+		String sql = prop.getProperty("getLastCodiCommNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				commNo = rset.getString(1);
+		} catch (SQLException e) {
+			throw new CommunityException("생성된 게시글 번호 조회 오류", e);
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commNo;
+	}
+
 
 }

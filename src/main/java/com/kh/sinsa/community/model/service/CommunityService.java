@@ -273,4 +273,35 @@ public class CommunityService {
 		return result;	
 	}
 
+	public int codiAdd(CommunityExt codi) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			// board테이블에 insert
+			result = communityDao.codiAdd(conn, codi);
+			
+			// 방금 등록된 board.no 컬럼값 조회
+			String commNo = communityDao.getLastCodiCommNo(conn);
+			
+			// attachment테이블 insert
+			List<CommunityAttachment> commAttachs = ((CommunityExt) codi).getAttachments();
+			if(commAttachs != null && !commAttachs.isEmpty()) {
+				
+				for(CommunityAttachment commAttach : commAttachs) {
+					commAttach.setCommNo(commNo);
+					result = communityDao.insertCodiAttachment(conn, commAttach);
+				}
+			}
+			commit(conn);
+		}
+		catch(Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);
+		}
+		return result;
+	}
+
 }

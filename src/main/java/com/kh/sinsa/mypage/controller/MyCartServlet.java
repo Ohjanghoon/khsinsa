@@ -3,8 +3,10 @@ package com.kh.sinsa.mypage.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.sinsa.cart.model.dto.Cart;
 import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.mypage.model.service.MypageService;
-import com.kh.sinsa.order.model.dto.Order;
 import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.user.model.dto.User;
@@ -74,12 +75,12 @@ public class MyCartServlet extends HttpServlet {
 			}
 			
 			//b. pagebar 영역
-			// getTotalMyInquireContent = select * from inquire where user_id = ?
-			int totalMyOrderListContent = mypageService.getTotalMyOrderListContent(userId);
-			//System.out.println("totalMyOrderListContent = " + totalMyOrderListContent);
+			// totalMyCartListContent = select count(*) from cart where user_id = ?
+			int totalMyCartListContent = mypageService.getTotalMyCartListContent(userId);
+			//System.out.println("totalMyCartListContent = " + totalMyCartListContent);
 			
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyOrderListContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyCartListContent, url);
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리

@@ -25,16 +25,32 @@ public class CartDao {
 		}
 	}
 	
-	public int favoriteAdd(Connection conn, Cart cart) {
+	public int cartAdd(Connection conn, Cart cart) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("cartAdd");
+		/*
+		 * cartAdd = 
+		 * 		merge into cart c
+		 * 		using dual 
+		 * 			on (c.user_id = ? and c.pro_no = ? and c.cart_size = ?)
+		 * 		when matched then
+		 * 			update set c.cart_buy_stock = c.cart_buy_stock + ?, c.cart_date = current_date
+		 * 		when not matched then
+		 * 		 	insert (c.user_id, c.pro_no, c.cart_buy_stock, c.cart_size, c.cart_date)
+		 * 			values (?, ?, ?, ?, default)
+		 */
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, cart.getUserId());
 			pstmt.setString(2, cart.getProNo());
-			pstmt.setInt(3, cart.getCartBuyStock());
-			pstmt.setString(4, cart.getCartSize());
+			pstmt.setString(3, cart.getCartSize());
+			pstmt.setInt(4, cart.getCartBuyStock());
+			pstmt.setString(5, cart.getUserId());
+			pstmt.setString(6, cart.getProNo());
+			pstmt.setInt(7, cart.getCartBuyStock());
+			pstmt.setString(8, cart.getCartSize());
+			
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -44,5 +60,6 @@ public class CartDao {
 		}
 		return result;
 	}
+
 
 }

@@ -151,26 +151,10 @@
 }
 
 /* 장바구니 페이지바 영역*/
-.myCart_content>.pagebar {
+.myCart_content .pagebar {
 	position: relative;
 	margin: 20px auto;
 	text-align: center;
-}
-.myCart_content>.pagebar a {
-	background-color: #c0c0c0;
-	width: 15px;
-	height: 15px;
-	padding: 5px 10px;
-	color: black;
-	border: none;
-	border-radius: 5px;
-}
-.myCart_content>.pagebar span {
-	background-color: black;
-	padding: 5px 10px;
-	color: white;
-	border: none;
-	border-radius: 5px;
 }
 
 /* 장바구니 주문 버튼 영역 */

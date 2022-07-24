@@ -1,6 +1,7 @@
 package com.kh.sinsa.product.model.dto;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Product {
 	
@@ -89,6 +90,26 @@ public class Product {
 	public String toString() {
 		return "Product [proNo=" + proNo + ", proType=" + proType + ", proName=" + proName + ", proPrice=" + proPrice
 				+ ", proSize=" + proSize + ", regDate=" + regDate + ", proContent=" + proContent + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(proContent, proName, proNo, proPrice, proSize, proType, regDate);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(proContent, other.proContent) && Objects.equals(proName, other.proName)
+				&& Objects.equals(proNo, other.proNo) && proPrice == other.proPrice
+				&& Objects.equals(proSize, other.proSize) && Objects.equals(proType, other.proType)
+				&& Objects.equals(regDate, other.regDate);
 	}
 	
 }

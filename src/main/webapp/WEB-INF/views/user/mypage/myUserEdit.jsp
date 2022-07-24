@@ -5,21 +5,16 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/user/mypage/userEdit.css">
 <title>회원정보 수정 페이지</title>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%@ include file="/WEB-INF/views/user/mypage/myPageHeader.jsp"%>
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <%
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 String todayDate = sdf.format(new Date());
 %>
 
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/user/mypage/userEdit.css">
-
-
-	
 <%
 String emailId = "";
 String emailAddr = "";
@@ -34,18 +29,6 @@ if (loginUser != null) {
 	String phoneBack = phone.substring(3);
 }
 %>
-	
-
-<%-- 	
-<%
-	String userid = request.getParameter("userId");
-	String useremail = request.getparameter();
-
-
-
-%> --%>
-
-
 <div class="edit_container">
 	<h2>개인정보 수정</h2>
 	<form action="<%=request.getContextPath()%>/mypage/myUserEdit"
@@ -61,7 +44,7 @@ if (loginUser != null) {
 		<%-- 비밀번호 --%>
 		<div class="input_area">
 			<label>비밀번호 <span class="essential_mark">*</span></label> 
-			<input type="password" name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>"autocomplete="off" required>
+			<input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
 			<button type="button" id="btn_show_pwd">
 				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
 			</button>
@@ -81,14 +64,14 @@ if (loginUser != null) {
 
 		<div class="input_area">
 			<label>이름 <span class="essential_mark">*</span></label> 
-			<input type="text" name="userName" id="userName" autocomplete="off" required>
+			<input type="text" name="userName" id="userName" value="<%=loginUser.getUserName()%>" autocomplete="off" required>
 		</div>
 		<br> <span class="message_box" id="nameMsg"></span>
 
 		<%-- 생년월일 수정 --%>
 		<div class="input_area">
 			<label>생년월일 <span class="essential_mark">*</span></label>
-			 <input type="date" name="userBirth" id="userBirth" value="1999-09-09" min="1990-01-01" max="<%=todayDate%>">
+			 <input type="date" name="userBirth" id="userBirth" value="<%=loginUser.getUserBirthday()%>"min="1990-01-01" max="<%=todayDate%>">
 		</div>
 		<br>
 
@@ -133,7 +116,7 @@ if (loginUser != null) {
 				type="text" name="roadAddr" id="roadAddr" readonly>
 			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
 		</div>
-		<br>
+		<br> 
 		<div class="input_area addr_area">
 		<input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력">
 		</div>
@@ -141,7 +124,7 @@ if (loginUser != null) {
 
 		<%-- 수정/취소 버튼 영역 --%>
 		<div class="btn_area">
-			<button type="submit" id="btn_enroll">수정하기</button>
+			<button type="submit" id="btn_edit">수정하기</button>
 			<button type="reset" id="btn_cancel">취소하기</button>
 		</div>
 
@@ -149,10 +132,46 @@ if (loginUser != null) {
 </div>
 <script>
 
+//----------------------------------비밀번호----------------------------------------
+//비밀번호 유효성 검사
+const checkPwd = () => {
+	const tempPwd = document.querySelector("#userPwd").value;
+	const pwdRegExp1 = /^[\da-zA-z!@#$%&]{8,12}$/g;
+	const pwdRegExp2 = /\d+/g;
+	const pwdRegExp3 = /[a-zA-z]+/g;
+	const pwdRegExp4 = /[!@#$%&]+/;
+	const pwdRegExp5 = /`\${tempId}`/;
+	
+	if(tempPwd === ""){
+	    showMsg(pwdMsg, "필수 정보입니다.");
+	    return false;
+	}
+	if(!pwdRegExp1.test(tempPwd)){
+	    showMsg(pwdMsg, "8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.")
+	    return false;
+	}
+	if(!pwdRegExp2.test(tempPwd)){
+	    showMsg(pwdMsg, "숫자를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	if(!pwdRegExp3.test(tempPwd)){
+	    showMsg(pwdMsg, "영대소문자를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	if(!pwdRegExp4.test(tempPwd)){
+	    showMsg(pwdMsg, "특수문자(!, @, #, $, %, &)를 하나이상 반드시 포함해주세요.");
+	    return false;
+	}
+	showMsg(pwdMsg, "✔️");
+	
+	userPwdCheck.focus();
+	return true;
+};
 //onblur시 비밀번호 유효성 검사 체크
 userPwd.onblur = () => {
-  checkPwd();
+checkPwd();
 };
+
 
 //----------------------------------비밀번호 확인----------------------------------------
 //비밀번호 일치여부 확인
@@ -413,10 +432,5 @@ function addressPopup() {
         }
     }).open();
 }
-
-
-
 </script>
-
-
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

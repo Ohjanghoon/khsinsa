@@ -28,7 +28,7 @@
 	flex-wrap: wrap;
 }
 .myFavorite_list .myFavorite_wrapper {
-	border-bottom: 1px solid gray;
+	box-shadow: 10px 10px 10px 0 #c0c0c0;
 }
 /* 상품정보 영역 */
 .myFavorite_list .proNo {

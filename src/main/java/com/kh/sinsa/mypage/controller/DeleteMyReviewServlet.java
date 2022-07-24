@@ -17,7 +17,7 @@ import com.kh.sinsa.mypage.model.service.MypageService;
  * Servlet implementation class MyInquireDeleteServlet
  */
 @WebServlet("/mypage/myReviewDel")
-public class MyReviewDeleteServlet extends HttpServlet {
+public class DeleteMyReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	/**

@@ -1,3 +1,5 @@
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Set"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -10,8 +12,11 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/user/mypage/myFavorite.css">
 <%
 	List<String> myFavList = (List<String>) request.getAttribute("myFavList");
-	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
-	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	List<Product> _proInfoList = (List<Product>) request.getAttribute("proInfoList");
+	List<ProductAttachment> _proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	
+	HashSet<Product> proInfoList = new HashSet<>(_proInfoList);
+	HashSet<ProductAttachment> proAttachList = new HashSet<>(_proAttachList);
 %>
 
 
@@ -24,10 +29,10 @@
     	<ul class="myFavorite_container">
 	    <% if(myFavList != null && !myFavList.isEmpty()) {
 			for(String fav : myFavList) { 
-				System.out.println("fav = " + fav);
 				for(Product pro : proInfoList){
+					if(fav.equals(pro.getProNo())){
 					for(ProductAttachment proAttach : proAttachList){
-						if(fav.equals(pro.getProNo()) && fav.equals(proAttach.getProNo())){
+						if(fav.equals(proAttach.getProNo())){
 						
 			%>
 			<li class="myFavorite_wrapper">
@@ -51,12 +56,13 @@
 			</li>
 	   	<%   			}
 	   			 	}
-	   			 }
-	   		 }
+	   			 	}
+	   		 	}
+			}
 		   } else {%>
 		   		<p>등록된 관심상품이 없습니다.</p>
 		   
-		   <% } %>
+		<% } %>
 		   </ul>
 	           
 	</div>

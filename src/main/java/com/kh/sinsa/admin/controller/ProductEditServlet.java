@@ -72,7 +72,7 @@ public class ProductEditServlet extends HttpServlet {
 			// 1. 서버컴퓨터 파일저장
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
-			int maxPostSize = 1024 * 1024 * 10 * 30;// 10MB
+			int maxPostSize = 1024 * 1024 * 10 * 30;// 300MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
 			

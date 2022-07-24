@@ -19,8 +19,8 @@ import com.kh.sinsa.product.model.service.ProductService;
 /**
  * Servlet implementation class ProductFindServlet
  */
-@WebServlet("/product/productFind")
-public class ProductFindServlet extends HttpServlet {
+@WebServlet("/product/productTopSearch")
+public class ProductSearchTopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductService();
 	
@@ -30,6 +30,7 @@ public class ProductFindServlet extends HttpServlet {
 				// 사용자 입력값
 				int cPage = 1;
 				int numPerPage = 9;
+				String type = "상의";
 				
 				try {
 					cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -38,24 +39,26 @@ public class ProductFindServlet extends HttpServlet {
 				int start = (cPage - 1) * numPerPage + 1;
 				int end = cPage * numPerPage;
 				String search = request.getParameter("search");
+				System.out.println(search);
 				
 				Map<String, Object> param = new HashMap<>();
 				param.put("start", start);
 				param.put("end", end);
 				param.put("search", search);
+				param.put("type", type);
 				
 				// 업무로직
-				List<Product> list = productService.productFind(param);
+				List<Product> list = productService.productSearch(param);
 				List<ProductAttachment> attachList = productService.productAttachmentFindAll();
 				int totalContent = productService.getTotalContent();
 				String url = request.getRequestURI()+ "?search=" + search;
 				String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
-				System.out.println(attachList);
+
 				// view단 처리
 				request.setAttribute("attachList", attachList);
 				request.setAttribute("list", list);
 				request.setAttribute("pagebar", pagebar);
-				request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/views/product/productTop.jsp").forward(request, response);
 				
 			} catch(Exception e) {
 				e.printStackTrace();

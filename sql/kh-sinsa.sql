@@ -463,12 +463,13 @@ select * from favorite;
 desc favorite;
 select * from kh_order;
 commit;
+select * from product_attachment;
+select * from product;
 
 
 
+select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p where pro_type = '상의' ) p where rnum between 1 and 10;
 
-
-
-
-
+select * from ( select row_number () over (order by reg_date desc) rnum, p.* from product p where pro_type = '상의' and pro_name like '%니%' ) p where rnum between 1 and 10;
+select * from ( select row_number () over (order by pro_name desc) rnum, p.* from product p where pro_type = '상의') p where rnum between 1 and 10;
 

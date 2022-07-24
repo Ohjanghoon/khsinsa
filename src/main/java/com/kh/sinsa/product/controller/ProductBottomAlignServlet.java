@@ -19,8 +19,8 @@ import com.kh.sinsa.product.model.service.ProductService;
 /**
  * Servlet implementation class ProductAlignServlet
  */
-@WebServlet("/product/productAlign")
-public class ProductAlignServlet extends HttpServlet {
+@WebServlet("/product/productBottomAlign")
+public class ProductBottomAlignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductService();
 	
@@ -33,6 +33,7 @@ public class ProductAlignServlet extends HttpServlet {
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 9;
+			String type = "하의";
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -46,6 +47,7 @@ public class ProductAlignServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			param.put("align", align);
+			param.put("type", type);
 			
 			// 업무로직
 			List<Product> list = productService.productAlign(param);
@@ -58,7 +60,7 @@ public class ProductAlignServlet extends HttpServlet {
 			request.setAttribute("attachList", attachList);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/product/productBottom.jsp").forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();

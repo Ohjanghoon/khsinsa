@@ -458,7 +458,7 @@ desc comm_comment;
 select * from comm_attachment where comm_no like 'C20%';
 select * from comm_comment;
 select * from kh_user;
-
+select * from community;
 select * from favorite;
 desc favorite;
 select * from kh_order;
@@ -466,7 +466,7 @@ commit;
 select * from product_attachment;
 select * from product;
 
-
+select * from (select row_number () over (order by comm_recommend desc)rnum, c.* from community c where comm_no like 'C20%') c where rnum between 1 and 10;
 
 select * from (select row_number() over(order by pro_no desc) rnum, p.* from product p where pro_type = '상의' ) p where rnum between 1 and 10;
 

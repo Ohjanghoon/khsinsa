@@ -38,19 +38,19 @@
 	    <br />
 	    <div class="d-flex flex-wrap justify-content-between">
 	    	<div class="align">
-	       	 <form action="<%= request.getContextPath() %>" method="get">
-	             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
+	       	 <form action="<%= request.getContextPath() %>/community/codiAlign" method="get">
+	             <select class="form-select" aria-label="Default select example" id="align" name="align" onchange="this.form.submit()">
 				  <option value="#" selected>정렬기준</option>
-				  <option value="pro_name">게시글명</option>
-				  <option value="pro_price">등록순</option>
-				  <option value="#">추천순</option>
+				  <option value="comm_content">게시글명</option>
+				  <option value="comm_readcount">조회순</option>
+				  <option value="comm_recommend">추천순</option>
 				 </select>
 	         </form>
 	       	</div>
 			<div class="search">
-				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>" method="get">
-		          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
-		          <button type="button" class="btn btn-outline-dark">🔎</button>
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/community/codiSearch" method="get">
+		          <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search..." aria-label="Search">
+		          <button type="submit" class="btn btn-outline-dark">🔎</button>
 		        </form>
 			</div>
 		</div>

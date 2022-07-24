@@ -69,7 +69,7 @@
 			      	<form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
 			       	 <input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
 			         <select class="form-select" aria-label="Default select example" id="size" name="size" required>
-			           <option selected disabled>사이즈를 선택해주세요.</option>
+			           <option value="none" selected disabled>사이즈를 선택해주세요.</option>
 			           <option value="L">L</option>
 			           <option value="M">M</option>
 			           <option value="S">S</option>
@@ -80,9 +80,9 @@
 			      	<h5>수량</h5>
 			      </th>
 			      <td>
-			      	 <button id="minus" type="button">-</button>
+			      	 <button id="minus" type="button" class="btn btn-outline-dark">-</button>
 			         <input type="number" min=1 value=1 id="orderAmount" name="orderAmount" readonly>
-			         <button id="plus" type="button">+</button>
+			         <button id="plus" type="button" class="btn btn-outline-dark">+</button>
 			      </td>
 			      <tr>
 			      <th scope="row">
@@ -94,9 +94,9 @@
 			     </tr>
 			  </tbody>
 			</table>
-			       	<button id="buy">Buy</button>
-			       	<input type="button" id="cart" value="🛒"/>
-			        <input type="button" id="liveToastBtn" value="❤️"/>
+			       	<button id="buy" class="btn btn-outline-primary">Buy</button>
+			       	<input type="button" id="cart" value="🛒" class="btn btn-outline-secondary"/>
+			        <input type="button" id="liveToastBtn" value="❤️" class="btn btn-outline-danger"/>
       		</form>
        	</div>
        	<hr /><br /><br />
@@ -144,7 +144,8 @@
 <script>
 	/* 옵션값 검사 */
 	document.productFrm.addEventListener('submit', (e) => {
-		if(e.size.value.lenght < 4){
+		if(document.querySelector('#size').value == 'none'){
+			e.preventDefault();
 			alert("사이즈를 선택해주세요.");
 		} 
 	});
@@ -181,7 +182,7 @@
 			success(response){
 				alert("관심상품 등록되었씁니다.");
 				
-				 const body = document.querySelector("body");
+				 <%-- const body = document.querySelector("body"); -%>
 				
 				 <%-- const html = `
 					<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -212,7 +213,7 @@
 			},
 			error : console.log,
 			complete(){
-				document.querySelector('#like').innerHTML = pl;
+				<%-- document.querySelector('#like').innerHTML = pl; --%>
 			}
 		})
 	});

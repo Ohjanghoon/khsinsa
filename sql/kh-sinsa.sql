@@ -461,7 +461,8 @@ select * from kh_user;
 
 select * from favorite;
 desc favorite;
-
+select * from kh_order;
+commit;
 
 
 

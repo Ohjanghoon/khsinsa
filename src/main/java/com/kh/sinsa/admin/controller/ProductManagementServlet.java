@@ -22,7 +22,7 @@ import com.kh.sinsa.admin.model.service.AdminService;
  */
 
 @WebServlet("/admin/productManagement")
-public class productManagementServlet extends HttpServlet {
+public class ProductManagementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 
@@ -33,7 +33,7 @@ public class productManagementServlet extends HttpServlet {
 		try {
 			// 1. 사용자입력값
 			int cPage = 1;
-			int numPerPage = 10;
+			int numPerPage = 6;
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -48,8 +48,6 @@ public class productManagementServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 								
-			System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
-			cPage, numPerPage, start, end);
 			List<Product> productlist = adminService.productFindAll(param);
 			List<ProductAttachment> productattachList = adminService.productAttachmentFindAll();
 			

@@ -362,6 +362,7 @@ insert into kh_order values (010||seq_kh_order_order_no.nextval,'ohjang12','A102
 
 select * from review;
 select * from kh_order;
+select*from kh_order;
 
 commit;
 
@@ -473,5 +474,3 @@ select * from (select row_number() over(order by pro_no desc) rnum, p.* from pro
 
 select * from ( select row_number () over (order by reg_date desc) rnum, p.* from product p where pro_type = '상의' and pro_name like '%니%' ) p where rnum between 1 and 10;
 select * from ( select row_number () over (order by pro_name desc) rnum, p.* from product p where pro_type = '상의') p where rnum between 1 and 10;
-
-

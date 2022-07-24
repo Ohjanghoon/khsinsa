@@ -362,6 +362,7 @@ insert into kh_order values (010||seq_kh_order_order_no.nextval,'ohjang12','A102
 
 select * from review;
 select * from kh_order;
+select*from kh_order;
 
 commit;
 

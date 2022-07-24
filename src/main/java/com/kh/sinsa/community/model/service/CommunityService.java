@@ -303,5 +303,131 @@ public class CommunityService {
 		}
 		return result;
 	}
+	
+	public List<Community> findFreeAll(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> result = communityDao.findFreeAll(conn, param);
+		close(conn);
+		return result;
+	}
+
+	// 게시글 상세조회
+		public Community findByFreeNo(String no) {
+
+			return findByFreeNo(no, true);
+		}
+
+		public Community findByFreeNo(String no, boolean hasRead) {
+			Connection conn = getConnection();
+			Community community = null;
+
+			try {
+				if (!hasRead) {
+					int result = communityDao.updateReadCount(conn, no);
+				}
+
+				// community 테이블에서 조회
+				community = communityDao.findByFreeNo(conn, no);
+
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+
+			} finally {
+				close(conn);
+			}
+			return community;
+		}
+
+		public int insertFree(CommunityExt community) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				result = communityDao.insertFree(conn, community);
+				
+				// 방금 등록된 boaard.no 컬럼값 조회
+				String commNo = communityDao.getLastFreeNo(conn);
+						
+				List<CommunityAttachment> attachments = ((CommunityExt) community).getAttachments();
+				if(attachments != null && !attachments.isEmpty()) {
+								
+					for(CommunityAttachment attach : attachments) {
+						attach.setCommNo(commNo);
+						result = communityDao.insertFreeAttachment(conn, attach);
+					}
+							}
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int insertFreeComment(CommunityComment communityComment) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.insertFreeComment(conn, communityComment);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int deleteFreeComment(String no) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.deleteFreeComment(conn, no);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int editFree(Community community) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				result = communityDao.editFree(conn, community);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int deleteFree(String no) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				result = communityDao.deleteFree(conn, no);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
 
 }

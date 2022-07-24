@@ -67,7 +67,7 @@
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<%=request.getContextPath()%>/share/shareList">Info Sharing</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Free Board</a></li>
+                      <li><a class="dropdown-item" href="<%= request.getContextPath() %>/community/freeList">Free Board</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Fashion Talk</a></li>
                     </ul>

@@ -67,6 +67,7 @@
                         <th>내용</th>
                         <th>사이즈</th>
                         <th>등록일</th>
+                        <th>수정/삭제</th>
                     </tr>
                 </thead>
                     <tbody>
@@ -93,17 +94,34 @@
 						<td><%= product.getProContent() %></td>
                         <td><%= product.getProSize() %></td>
                         <td><%= product.getRegDate() %></td>
+                        <td><button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary editProduct">Edit</button>
+                            <button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary delProduct">Delete</button>
+                        </td>
                         <% 		}
        		} %>
                     </tbody>
             </table>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="editProductFrm" method="get">
+	<input type="hidden" name="proNo" />
+</form>
 <script>
+/* 상품 등록 */
 document.querySelector("#productadd").addEventListener('click', (e) => {
 	if(<%= loginUser == null %>){
 		loginAlert();		
 	}else{
 		location.href = "<%= request.getContextPath() %>/admin/productManagement/topProductAdd";
 	}	
+});
+
+/* 상품 수정 */
+document.querySelectorAll(".editProduct").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+			const {value} = e.target;
+			const frm = document.editProductFrm;
+			frm.proNo.value = value;
+			frm.submit();
+	});
 });
 
 </script>

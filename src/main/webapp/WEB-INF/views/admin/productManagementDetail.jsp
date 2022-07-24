@@ -24,10 +24,11 @@
         <hr />
   		<div class="valSave">
 <% 
-	for(ProductAttachment att : productattachmentList) {
+	for(ProductAttachment pa : productattachmentList) {
+		//System.out.println(productattachmentList);
 %>
 		<figure class="figure">
-		  <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProRenameFilename() %>" class="figure-img img-fluid rounded" alt="..." width="400" height="500">
+		  <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" class="figure-img img-fluid rounded" alt="..." width="400" height="500">
 		  <figcaption class="figure-caption"><%= product.getProName() %></figcaption>
 		</figure>
 <% 
@@ -103,7 +104,7 @@
 <% 
 	if(productattachmentList != null && !productattachmentList.isEmpty()){ 
 		for(ProductAttachment pa : productattachmentList){
-%>
+%>		
          <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" alt="">
 <% 
 		}
@@ -136,7 +137,7 @@
  %>
 	    </div>
      </div>
-        
+System.out.println(productattachmentList);       
 </main>
 <form 
 	action="<%= request.getContextPath() %>/admin/productManagement/productDelete"
@@ -179,7 +180,7 @@ const deleteProduct = () => {
 			method : 'POST',
 			data : {proNo : "<%= proNo %>", userId : "<%= loginUser.getUserId() %>"},
 			success(response){
-				alert("관심상품 등록되었씁니다.");
+				alert("관심상품 등록되었습니다.");
 				
 				 const body = document.querySelector("body");
 				

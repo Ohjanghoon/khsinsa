@@ -437,17 +437,16 @@ public class AdminDao {
 		return ProNo;
 	}
 	
-	public int insertProductAttachment(Connection conn, ProductAttachment productAttachment) {
+	public int insertProductAttachment(Connection conn, ProductAttachment productAttach) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertProductAttachment");
-		System.out.println(productAttachment.getProNo());
 //		insertProductAttachment = insert into product_attachment values(seq_product_attachment_pro_attachment_no.nextval, ?, ?, ?) 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productAttachment.getProNo());
-			pstmt.setString(2, productAttachment.getProOriginalFilename());
-			pstmt.setString(3, productAttachment.getProRenameFilename());
+			pstmt.setString(1, productAttach.getProNo());
+			pstmt.setString(2, productAttach.getProOriginalFilename());
+			pstmt.setString(3, productAttach.getProRenameFilename());
 			
 			result = pstmt.executeUpdate();
 			
@@ -461,23 +460,22 @@ public class AdminDao {
 		return result;
 	}
 	
-//updateProduct = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
-//deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
-//findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
+//	productEdit = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+//	deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
+//	findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
 		
-	public int updateProduct(Connection conn, ProductManagementExt product) {
+	public int productEdit(Connection conn, ProductManagementExt product) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("updateProduct");
-//		update board set pro_type = ?, pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+		String sql = prop.getProperty("productEdit");
+//		update board set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, product.getProType());
-			pstmt.setString(2, product.getProName());
-			pstmt.setInt(3, product.getProPrice());
-			pstmt.setString(4, product.getProSize());
-			pstmt.setString(5, product.getProContent());
-			pstmt.setString(6, product.getProNo());
+			pstmt.setString(1, product.getProName());
+			pstmt.setInt(2, product.getProPrice());
+			pstmt.setString(3, product.getProSize());
+			pstmt.setString(4, product.getProContent());
+			pstmt.setString(5, product.getProNo());
 			result = pstmt.executeUpdate();
 		} 
 		catch (SQLException e) {

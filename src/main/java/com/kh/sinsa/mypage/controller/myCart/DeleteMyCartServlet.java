@@ -1,4 +1,4 @@
-package com.kh.sinsa.mypage.controller;
+package com.kh.sinsa.mypage.controller.myCart;
 
 import java.io.IOException;
 import java.util.Arrays;

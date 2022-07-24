@@ -32,7 +32,7 @@
         <p id="warn">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
 <% if(loginUser != null && loginUser.getUserRole() == UserRole.A) { %>        
         <br />
-        <button type="button" class="btn btn-outline-dark">글쓰기</button>
+        <button type="button" id="addComm" class="btn btn-outline-dark">글쓰기</button>
 <% } %>
 	    </div>
 	    <br />
@@ -104,7 +104,14 @@
 <form action="<%= request.getContextPath() %>/community/codiEdit" name="editCommFrm" method="get">
 	<input type="hidden" name="commNo" />
 </form>
+<form action="<%= request.getContextPath() %>/community/codiAdd" name="addCommFrm" method="get"></form>
 <script>
+	/* 게시글 등록 */
+	document.querySelector("#addComm").addEventListener('click', (e) => {
+				const frm = document.addCommFrm;
+				frm.submit();
+	});
+
 	/* 게시글 수정 */
 	document.querySelectorAll(".delComm").forEach((btn) => {
 		btn.addEventListener('click', (e) => {

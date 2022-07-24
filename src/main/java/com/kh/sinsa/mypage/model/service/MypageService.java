@@ -177,6 +177,14 @@ public class MypageService {
 		return myCartList;
 	}
 
+	//장바구니 수 조회
+	public int getTotalMyCartListContent(String userId) {
+		Connection conn = getConnection();
+		int totalMyCartListContent = mypageDao.getTotalMyCartListContent(conn, userId);
+		close(conn);
+		return totalMyCartListContent;
+	}
+	
 	//장바구니 수량 변경
 	public int editStock(String userId, String proNo, int cartBuyStock) {
 		Connection conn = getConnection();
@@ -193,6 +201,24 @@ public class MypageService {
 		return result;
 	}
 
+	//장바구니 삭제
+	public int myCartDelete(String userId, String[] cartList) {
+		Connection conn = getConnection();
+		int result = 0;
+		
+		try {
+			result = mypageDao.myCartDelete(conn, userId, cartList);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+				
+		return result;
+	}
+	
 	//관심상품 조회
 	public List<String> favListFindById(String userId, Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -208,6 +234,9 @@ public class MypageService {
 		close(conn);
 		return totalMyFavListContent;
 	}
+
+	
+
 
 
 

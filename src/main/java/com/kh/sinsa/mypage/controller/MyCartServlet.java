@@ -75,12 +75,12 @@ public class MyCartServlet extends HttpServlet {
 			}
 			
 			//b. pagebar 영역
-			// getTotalMyInquireContent = select * from inquire where user_id = ?
-			int totalMyOrderListContent = mypageService.getTotalMyOrderListContent(userId);
-			//System.out.println("totalMyOrderListContent = " + totalMyOrderListContent);
+			// totalMyCartListContent = select count(*) from cart where user_id = ?
+			int totalMyCartListContent = mypageService.getTotalMyCartListContent(userId);
+			//System.out.println("totalMyCartListContent = " + totalMyCartListContent);
 			
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyOrderListContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyCartListContent, url);
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리

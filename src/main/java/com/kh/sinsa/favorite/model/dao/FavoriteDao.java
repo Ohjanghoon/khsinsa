@@ -28,11 +28,19 @@ public class FavoriteDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("favoriteAdd");
+		//favoriteAdd =
+		//	merge into favorite f
+		//  using dual
+		//		on (f.user_id = ? and f.pro_no = ?)
+		//	when not matched then
+		//	insert (f.pro_no, f.user_id, f.fav_date) values (?, ?, default)
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, favorite.getProNo());
-			pstmt.setString(2, favorite.getUserId());
+			pstmt.setString(1, favorite.getUserId());
+			pstmt.setString(2, favorite.getProNo());
+			pstmt.setString(3, favorite.getProNo());
+			pstmt.setString(4, favorite.getUserId());
 			
 			result = pstmt.executeUpdate();
 	

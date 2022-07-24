@@ -3,6 +3,7 @@ package com.kh.sinsa.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.admin.model.dto.ProductManagementExt;
 import com.kh.sinsa.admin.model.service.AdminService;
 import com.kh.sinsa.common.KhsinsaRenamePolicy;
+import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
@@ -31,9 +33,16 @@ public class productEditServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			// 사용자 입력값
 			String proNo = request.getParameter("proNo");
+			
+			//업무로직
 			Product product = adminService.findByProNo(proNo);
+			List<ProductAttachment> productattachmentList = adminService.findProductAttachmentByProNo(proNo);
+			
+			// view처리
 			request.setAttribute("product", product);
+			request.setAttribute("productattachmentList", productattachmentList);
 			request.getRequestDispatcher("/WEB-INF/views/admin/productEdit.jsp")
 			.forward(request, response);
 		}
@@ -67,8 +76,7 @@ public class productEditServlet extends HttpServlet {
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
 			
-			MultipartRequest multiReq = new MultipartRequest(
-					request, saveDirectory, maxPostSize, encoding, policy);
+			MultipartRequest multiReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
 	
 			// 2. db update처리
 			// 삭제파일 처리
@@ -77,22 +85,22 @@ public class productEditServlet extends HttpServlet {
 				for(String temp : delFiles) {
 					int proAttachmentNo = Integer.parseInt(temp);
 					// 첨부파일 삭제
-					ProductAttachment productattach = adminService.findProductAttachmentByProAttachmentNo(proAttachmentNo);
-					File delFile = new File(saveDirectory, productattach.getProRenameFilename());
+					ProductAttachment productAttach = adminService.findProductAttachmentByProAttachmentNo(proAttachmentNo);
+					File delFile = new File(saveDirectory, productAttach.getProRenameFilename());
 					delFile.delete();
 					// db 레코드 삭제
 					int result = adminService.deleteProductAttachment(proAttachmentNo);
-					System.out.println("[첨부파일 " + proAttachmentNo + "번 삭제! : " + productattach.getProRenameFilename());
+					System.out.println("[첨부파일 " + proAttachmentNo + "번 삭제! : " + productAttach.getProRenameFilename());
 				}
 			}
 			
 			
-			String proNo = request.getParameter("proNo");
-			String productType = request.getParameter("productType");
-			String proName = request.getParameter("proName");
-			int proPrice = Integer.parseInt(request.getParameter("proPrice").trim());
-			String proSize = request.getParameter("proSize");
-			String proContent = request.getParameter("proContent");
+			String proNo = multiReq.getParameter("proNo");
+			String productType = multiReq.getParameter("productType");
+			String proName = multiReq.getParameter("proName");
+			int proPrice = Integer.parseInt(multiReq.getParameter("proPrice").trim());
+			String proSize = multiReq.getParameter("proSize");
+			String proContent = multiReq.getParameter("proContent");
 			ProductManagementExt product = new ProductManagementExt(null, productType, proName, proPrice, proSize, null, proContent); 
 //			pro_no,pro_type,pro_name,pro_price,pro_size,pro_content
 			
@@ -101,23 +109,24 @@ public class productEditServlet extends HttpServlet {
 				String filename = filenames.nextElement();
 				File imgproduct = multiReq.getFile(filename);
 				if(imgproduct != null) {
-					ProductAttachment productattach = new ProductAttachment();
-					productattach.setProNo(proNo); // 상품 번호 PK
-					productattach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
-					productattach.setProRenameFilename(multiReq.getFilesystemName(filename));
-					product.addProductAttachment(productattach);
+					ProductAttachment productAttach = new ProductAttachment();
+					productAttach.setProNo(proNo); // 상품 번호 PK
+					productAttach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
+					productAttach.setProRenameFilename(multiReq.getFilesystemName(filename));
+					product.addProductAttachment(productAttach);
 				}
 			}
 			System.out.println("product = " + product);
 			
 			
 			 //2. 업무로직
-			int result = adminService.updateProduct(product);
+			int result = adminService.productEdit(product);
 			 
 			
 			// 3. redirect
 			request.getSession().setAttribute("msg", "상품을 성공적으로 수정했습니다.");
 			response.sendRedirect(request.getContextPath() + "/admin/productManagement?proNo=" + proNo);
+			
 			
 			
 			

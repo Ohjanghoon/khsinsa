@@ -519,6 +519,7 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("codiEdit");
+//		codiEdit = update community set comm_title =?, comm_content = ? where comm_no = ?
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

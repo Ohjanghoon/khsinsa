@@ -19,7 +19,7 @@ import com.kh.sinsa.admin.model.dto.ProductManagementExt;
  */
 @WebServlet("/admin/productManagement/productDelete")
 
-public class productDeleteServlet extends HttpServlet {
+public class ProductDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 

@@ -26,8 +26,8 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class topProductAddServlet
  */
-@WebServlet("/admin/productManagement/topProductAdd")
-public class topProductAddServlet extends HttpServlet {
+@WebServlet("/admin/productManagement/productAdd")
+public class ProductAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 	
@@ -36,7 +36,7 @@ public class topProductAddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/views/admin/topProductAdd.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/admin/productAdd.jsp")
 			.forward(request, response);
 	}
 	
@@ -65,45 +65,28 @@ public class topProductAddServlet extends HttpServlet {
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
 			System.out.println("saveDirectory = " + saveDirectory);
-			int maxPostSize = 1024 * 1024 * 10; //10MB
+			int maxPostSize = 1024 * 1024 * 10 * 30; //10MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy();
 			
 			MultipartRequest multiReq = new MultipartRequest(
 					request, saveDirectory, maxPostSize, encoding, policy);
 
-			//insertTopProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values ('C30' || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
-//			create table product(
-//			        pro_no varchar2(100) ,
-//			        pro_type varchar2(30),
-//			        pro_name varchar2(50) not null,
-//			        pro_price number not null,
-//			        pro_size varchar2(2) not null,
-//			        reg_date date default current_date,
-//			        pro_content varchar2(4000) not null,
-//			        constraint pk_pro_no primary key(pro_no));
-			
 			// 1. 사용자 입력값 처리
-			String productType = multiReq.getParameter("productType");
-			String name = multiReq.getParameter("name");
-			int price = Integer.parseInt(multiReq.getParameter("price").trim());
-			String size = multiReq.getParameter("size");
-			String content = multiReq.getParameter("content");
+			String proName = multiReq.getParameter("proName");
+			String proType = multiReq.getParameter("proType");
+			int proPrice = Integer.parseInt(multiReq.getParameter("proPrice"));
+			String proSize = multiReq.getParameter("proSize");
+			String proContent = multiReq.getParameter("proContent");
 			
-//			public ProductExt(String proNo, String proType, String proName, int proPrice, String proSize, Timestamp regDate,
-//					String proContent, String proOriginalFilename2) {
-//				super(proNo, proType, proName, proPrice, proSize, regDate, proContent);
-//				// TODO Auto-generated constructor stub
-//			}
 			
-			ProductManagementExt product = new ProductManagementExt(null, productType, name, price, size, null, content); 
-			System.out.println("productType = " + productType + ", name = " + name + ", price = " + price + ", size = " + size + ", content = " + content);
+			ProductManagementExt product = new ProductManagementExt(null, proType, proName, proPrice, proSize, null, proContent); 
 
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {
 				String filename = filenames.nextElement();
-				File imgproduct = multiReq.getFile(filename);
-				if(imgproduct != null) {
+				File upFile = multiReq.getFile(filename);
+				if(upFile != null) {
 					ProductAttachment productAttach = new ProductAttachment();
 					productAttach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
 					productAttach.setProRenameFilename(multiReq.getFilesystemName(filename));
@@ -111,10 +94,9 @@ public class topProductAddServlet extends HttpServlet {
 				}
 			}
 			
-			System.out.println("productManagementExt = " + product);
 			
 			// 2. 업무로직
-			int result = adminService.insertTopProduct(product);
+			int result = adminService.insertProduct(product);
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "상품 등록 완료입니다.");

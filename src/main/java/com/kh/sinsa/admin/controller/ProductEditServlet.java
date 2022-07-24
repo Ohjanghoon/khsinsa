@@ -25,7 +25,7 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
  * Servlet implementation class productEditServlet
  */
 @WebServlet("/admin/productManagement/productEdit")
-public class productEditServlet extends HttpServlet {
+public class ProductEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 	/**
@@ -72,7 +72,7 @@ public class productEditServlet extends HttpServlet {
 			// 1. 서버컴퓨터 파일저장
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
-			int maxPostSize = 1024 * 1024 * 10; // 10MB
+			int maxPostSize = 1024 * 1024 * 10 * 30;// 10MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
 			
@@ -98,7 +98,7 @@ public class productEditServlet extends HttpServlet {
 			String proNo = multiReq.getParameter("proNo");
 			String productType = multiReq.getParameter("productType");
 			String proName = multiReq.getParameter("proName");
-			int proPrice = Integer.parseInt(multiReq.getParameter("proPrice").trim());
+			int proPrice = Integer.parseInt(multiReq.getParameter("proPrice"));
 			String proSize = multiReq.getParameter("proSize");
 			String proContent = multiReq.getParameter("proContent");
 			ProductManagementExt product = new ProductManagementExt(null, productType, proName, proPrice, proSize, null, proContent); 
@@ -107,8 +107,8 @@ public class productEditServlet extends HttpServlet {
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {
 				String filename = filenames.nextElement();
-				File imgproduct = multiReq.getFile(filename);
-				if(imgproduct != null) {
+				File upFile = multiReq.getFile(filename);
+				if(upFile != null) {
 					ProductAttachment productAttach = new ProductAttachment();
 					productAttach.setProNo(proNo); // 상품 번호 PK
 					productAttach.setProOriginalFilename(multiReq.getOriginalFileName(filename));
@@ -116,8 +116,6 @@ public class productEditServlet extends HttpServlet {
 					product.addProductAttachment(productAttach);
 				}
 			}
-			System.out.println("product = " + product);
-			
 			
 			 //2. 업무로직
 			int result = adminService.productEdit(product);

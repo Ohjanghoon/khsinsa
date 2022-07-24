@@ -6,46 +6,37 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin/productEdit.css" />
-<%
-	Product product = (Product) request.getAttribute("product");
-	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
-	String proNo = (String) request.getAttribute("proNo");
-%>
 <main>
-<form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="productUpdateFrm" method="post" enctype="multipart/form-data">
-<input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
+<form action="<%= request.getContextPath() %>/admin/productManagement/productAdd" name="productAddFrm" method="post" enctype="multipart/form-data">
 	<div class="container">
        <section class="py-5 text-center container">
            <h3>상품 수정</h3>
        </section>
        <div class="mb-3">
            <label for="exampleFormControlInput1" class="form-label">상품 이름</label>
-           <input type="text" class="form-control" name="proName" id="exampleFormControlInput1" value="<%= product.getProName() %>">
+           <input type="text" class="form-control" name="proName" id="exampleFormControlInput1" value="">
        </div>
+       <div class="mb-3">
+	       <label for="exampleFormControlInput1" size="2" class="form-label">상품 타입</label>
+	       <select class="form-select" name="proType" size="2" aria-label="size 2 select example">
+			  <option value="상의" selected>상의</option>
+			  <option value="하의">하의</option>
+			</select>
+		</div>
        <div class="mb-3">
            <label for="exampleFormControlInput1" class="form-label">상품 가격</label>
-           <input type="text" class="form-control" name="proPrice" id="exampleFormControlInput1" value="<%= product.getProPrice() %>">
+           <input type="number" class="form-control" name="proPrice" id="exampleFormControlInput1" value="">
        </div>
-       <div class="mb-3">
-           <label for="exampleFormControlInput1" class="form-label">상품 사이즈</label>
-           <input type="text" class="form-control" name="proSize" id="exampleFormControlInput1" value="<%= product.getProSize() %>">
-       </div>
-       <div class="mb-5">
-       		<label for="exampleFormControlInput1" class="form-label">상품 사진</label><br /><br />
-<% 
-	for(ProductAttachment pa : productattachmentList){
-		if(product.getProNo().equals(pa.getProNo())){ 
-%>
-           	<input type="checkbox" name="delFile" value="<%= pa.getProAttachmentNo() %>" checked>
-       		<img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" alt="" width="180" height="250"/>
-       	
-<%
-		}
-	}
-%>
-			<br /><br />
-           	<small>* 선택된 파일은 삭제 됩니다.</small>
-       </div>
+        <div class="mb-3">
+	       <label for="exampleFormControlInput1" size="2" class="form-label">상품 타입</label>
+	       <select class="form-select" name="proSize" size="5" aria-label="size 5 select example">
+			  <option value="XL">XL</option>
+			  <option value="L">L</option>
+			  <option value="M" selected>M</option>
+			  <option value="S">S</option>
+			  <option value="XS">XS</option>
+			</select>
+		</div>
        <div class="mb-3">
            <label for="formFile" class="form-label">Select The File</label>
            <small>* 처음 선택한 사진이 대표사진으로 등록됩니다. *</small>
@@ -60,17 +51,17 @@
        </div>
        <div class="mb-3">
            <label for="exampleFormControlTextarea1" class="form-label">상품 내용</label>
-           <textarea class="form-control" name="proContent" id="exampleFormControlTextarea1" rows="10"><%= product.getProContent() %></textarea>
+           <textarea class="form-control" name="proContent" id="exampleFormControlTextarea1" rows="10"></textarea>
        </div>
        <div class="text-center">
            <button type="button" class="btn btn-outline-danger btn-sm" onclick="history.go(-1);">취소</button>
-           <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+           <button type="submit" class="btn btn-outline-primary btn-sm">등록</button>
        </div>
    </div>
 </form>
 </main>	
 <script>
-	document.productUpdateFrm.onsubmit = (e) => {
+	document.productAddFrm.onsubmit = (e) => {
 		const frm = e.target;
 		//상품 이름을 작성하지 않은 경우 폼제출할 수 없음.
 		const nameVal = frm.proName.value.trim(); // 좌우공백

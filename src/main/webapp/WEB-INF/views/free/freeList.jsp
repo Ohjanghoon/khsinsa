@@ -19,7 +19,7 @@
                       <li><a href="#">OOTD</a></li>
                       <li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
                       <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
-                      <li><a href="<%= request.getContextPath() %>/community/freeist">자유게시판</a></li>
+                      <li><a href="<%=request.getContextPath()%>/community/freeList">자유게시판</a></li>
                       <li><a href="#">패션토크</a></li>
                   </ul>
               </nav>
@@ -30,7 +30,7 @@
 
 
             <div id="main">
-                <h1>정보공유 게시판<span style="font-size: 20px;"> Share Information</span></h1>
+                <h1>자유 게시판<span style="font-size: 20px;"> You are free here</span></h1>
                 <hr style="width: 370px;">
                 <br>
                 <p>국내,외의 다양한 패션 트렌드, 브랜드 소식, 패션쇼 등의 패션 정보를 공유하는 커뮤니티 공간입니다.</p>
@@ -86,7 +86,7 @@
                         <tr>
                             <td><%= community.getCommNo() %></td>
                             <td>
-                            <a href="<%= request.getContextPath() %>/share/shareView?no=<%= community.getCommNo() %>"id="commTitle">
+                            <a href="<%= request.getContextPath() %>/community/freeView?no=<%= community.getCommNo() %>"id="commTitle">
                             <%= KhsinsaUtils.escapeXml(community.getCommTitle()) %></a>
                             
 
@@ -123,7 +123,7 @@
         	if(<%= loginUser == null %>){
         		loginAlert();		
         	}else{
-        		location.href = "<%= request.getContextPath() %>/share/shareAdd";
+        		location.href = "<%= request.getContextPath() %>/community/freeAdd";
         	}
         	
         	

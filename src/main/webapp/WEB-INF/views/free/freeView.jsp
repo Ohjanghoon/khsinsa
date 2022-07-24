@@ -14,7 +14,6 @@
 Community community = (Community) request.getAttribute("community");
 List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
-System.out.println("############commentList = " + commentList + "########################");
 String commNo = (String) request.getAttribute("no");
 %>
 
@@ -26,8 +25,8 @@ String commNo = (String) request.getAttribute("no");
 		<nav class="navi">
 			<ul>
 				<li><a href="#">OOTD</a></li>
-				<li><a href="<%= request.getContextPath()%>/community/freeList">코디북</a></li>
-				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
+				<li><a href="<%= request.getContextPath()%>/community/codiList">코디북</a></li>
+				<li><a href="<%= request.getContextPath()%>/share/shareList">정보공유</a></li>
 				<li><a href="<%= request.getContextPath()%>/community/freeList">자유게시판</a></li>
 				<li><a href="#">패션토크</a></li>
 			</ul>
@@ -35,7 +34,7 @@ String commNo = (String) request.getAttribute("no");
 
 
 	</div>
-	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">정보공유 게시판 <span style="font-size: 18px;"> Share Information</span>
+	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">자유게시판 <span style="font-size: 18px;"> You are free here</span>
 	</h2>
 	<hr style="border-top: 3px solid rgb(101, 101, 252);">
 	<div class="main">
@@ -60,7 +59,7 @@ String commNo = (String) request.getAttribute("no");
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
-			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
+			%> <img src ="<%= request.getContextPath() %>/upload/free/<%= attach.getRenamedFilename() %>" name="upload">
 				<%}
 					} %>
 				<p><%= community.getCommContent() %></p>
@@ -95,7 +94,7 @@ String commNo = (String) request.getAttribute("no");
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
 						<form name="communityCommentFrm"
-							action="<%=request.getContextPath()%>/share/shareCommentAdd"
+							action="<%=request.getContextPath()%>/community/freeCommentAdd"
 							method="post" style="border-bottom:0px;">
 								<input type="hidden" name="commNo" value="<%=community.getCommNo()%>" /> 
 								<input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
@@ -152,8 +151,8 @@ String commNo = (String) request.getAttribute("no");
 	</div>
 
 </div>
-<form action="<%= request.getContextPath() %>/share/shareCommentDelete"
-	method="post" name="shareCommentDelFrm">
+<form action="<%= request.getContextPath() %>/community/freeCommentDelete"
+	method="post" name="freeCommentDelFrm">
 	<input type="hidden" name="no" />
 </form>
 
@@ -162,7 +161,7 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
 	btn.addEventListener('click', (e) => {
 		if(confirm("해당 댓글을 정말 삭제하시겠습니까?")) {
 			const {value} = e.target;
-			const frm = document.shareCommentDelFrm;
+			const frm = document.freeCommentDelFrm;
 			frm.no.value = value;
 			frm.submit();
 		}
@@ -183,7 +182,7 @@ document.querySelectorAll(".btn-reply").forEach((btn) => {
 			<td colspan="2" style="text-align:left;">
 				<form
 		        	name="communityCommentFrm"
-					action="<%=request.getContextPath()%>/share/shareCommentAdd" 
+					action="<%=request.getContextPath()%>/community/freeCommentAdd" 
 					method="post">
 		            <input type="hidden" name="commNo" value="<%= community.getCommNo() %>" />
 		            <input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
@@ -226,7 +225,7 @@ document.communityCommentFrm.content.addEventListener('focus', (e) => {
 document.querySelector("#like").addEventListener('click', (e) => {
 		
 	$.ajax({
-		url : '<%= request.getContextPath() %>/share/shareLike',
+		url : '<%= request.getContextPath() %>/community/freeLike',
 		method : 'POST',
 		data : {commNo : "<%= commNo %>"}
 	})
@@ -235,9 +234,9 @@ document.querySelector("#like").addEventListener('click', (e) => {
 </script>
 
 <form 
-	action="<%= request.getContextPath() %>/share/shareDelete"
+	action="<%= request.getContextPath() %>/community/freeDelete"
 	method="post" 
-	name="shareDelFrm">
+	name="freeDelFrm">
 	<input type="hidden" name="no" value="<%= community.getCommNo() %>" />
 </form>
 <script>
@@ -249,11 +248,11 @@ const loginAlert = () => {
 
 const deleteCommunity = () => {
 	if(confirm("게시글을 삭제하시겠습니까?"))
-		document.shareDelFrm.submit();
+		document.freeDelFrm.submit();
 };
 
 const editCommunity = () => {
-	location.href = "<%= request.getContextPath() %>/share/shareEdit?no=<%= community.getCommNo() %>";	
+	location.href = "<%= request.getContextPath() %>/community/freeEdit?no=<%= community.getCommNo() %>";	
 };
 
 </script>

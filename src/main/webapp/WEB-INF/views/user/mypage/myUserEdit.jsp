@@ -113,7 +113,7 @@ if (loginUser != null) {
 		<%-- 주소  수정 --%>
 		<div class="input_area">
 			<label>주소 <span class="essential_mark">*</span></label> 
-			<input type="text" name="roadAddr" id="roadAddr" readonly value ="<%=loginUser.getUserAddress()%>">
+			<input type="text" name="roadAddr" id="roadAddr" readonly value =" <%=loginUser.getUserAddress()%>">
 			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
 		</div>
 		<br> 

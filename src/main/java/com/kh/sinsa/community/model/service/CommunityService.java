@@ -11,7 +11,6 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
@@ -222,6 +221,56 @@ public class CommunityService {
 			close(conn);
 		}
 		return result;
+	}
+
+	public CommunityAttachment findCodiAttachmentByNo(String commAttachNo) {
+		Connection conn = getConnection();
+		CommunityAttachment commAttach = communityDao.findCodiAttachmentByNo(conn, commAttachNo);
+		close(conn);
+		return commAttach;
+	}
+
+	public int deleteCodiAttachment(String commAttachNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.deleteCodiAttachment(conn, commAttachNo);
+			commit(conn);
+		} 
+		catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);			
+		}
+		return result;
+	}
+
+	public int codiEdit(CommunityExt codi) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			// 1. 게시글 수정
+			result = communityDao.codiEdit(conn, codi);
+			// 2. 첨부파일 등록
+			List<CommunityAttachment> commAttachs = codi.getAttachments();
+			if(commAttachs != null || !commAttachs.isEmpty()) {
+				for(CommunityAttachment commAttach : commAttachs) {
+					result = communityDao.insertCodiAttachment(conn, commAttach);
+				}
+			}
+			
+			commit(conn);
+		} 
+		catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);			
+		}
+		return result;	
 	}
 
 }

@@ -33,7 +33,7 @@ public class CommunityDeleteServlet extends HttpServlet {
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "게시글 삭제 성공!");
-			response.sendRedirect(request.getContextPath() + "/share/shareList");
+			response.sendRedirect(request.getHeader("Referer"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -26,8 +26,8 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class topProductAddServlet
  */
-@WebServlet("/admin/productManagement/productAdd")
-public class ProductAddServlet extends HttpServlet {
+@WebServlet("/admin/productManagement/productBottomAdd")
+public class ProductBottomAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 	
@@ -36,7 +36,7 @@ public class ProductAddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/views/admin/productAdd.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/admin/productBottomAdd.jsp")
 			.forward(request, response);
 	}
 	
@@ -64,8 +64,7 @@ public class ProductAddServlet extends HttpServlet {
 			// 0. 첨부파일처리
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
-			System.out.println("saveDirectory = " + saveDirectory);
-			int maxPostSize = 1024 * 1024 * 10 * 30; //10MB
+			int maxPostSize = 1024 * 1024 * 10 * 30; //300MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy();
 			
@@ -96,7 +95,7 @@ public class ProductAddServlet extends HttpServlet {
 			
 			
 			// 2. 업무로직
-			int result = adminService.insertProduct(product);
+			int result = adminService.insertBottomProduct(product);
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "상품 등록 완료입니다.");

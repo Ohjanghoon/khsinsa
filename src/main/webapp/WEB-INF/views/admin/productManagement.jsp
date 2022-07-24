@@ -32,7 +32,8 @@
                 <h3>상품관리</h3>
             </section>
             <div class="container px-4 py-5" id="featured-3">
-                <button type="button" id="addProduct" class="btn btn-outline-secondary btn-sm">상품 등록</button><br /><br />
+                <button type="button" id="addTopProduct" class="btn btn-outline-secondary btn-sm">상의 상품 등록</button><br /><br />
+                <button type="button" id="addBottomProduct" class="btn btn-outline-secondary btn-sm">하의 상품 등록</button><br /><br />
                 <h2 class="pb-2 border-bottom">등록된 상품</h2>
                 <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 <%
@@ -71,18 +72,25 @@
 <form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="editProFrm" method="get">
     <input type="hidden" name="proNo" />
 </form>
-<form action="<%= request.getContextPath() %>/admin/productManagement/productAdd" name="addProFrm" method="get"></form>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productTopAdd" name="addTopProFrm" method="get"></form>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productBottomAdd" name="addBottomProFrm" method="get"></form>
 <form action="<%= request.getContextPath() %>/admin/productManagement/productDelete" name="delProFrm" method="post">
 	<input type="hidden" name="proNo" />
 </form>
 </main>
 <script>
-    /* 게시글 등록 */
-	document.querySelector("#addProduct").addEventListener('click', (e) => {
-				const frm = document.addProFrm;
+    /* 게시글 등록 하의 */
+	document.querySelector("#addTopProduct").addEventListener('click', (e) => {
+				const frm = document.addTopProFrm
 				frm.submit();
 	});
 
+	/* 게시글 등록 상의 */
+	document.querySelector("#addBottomProduct").addEventListener('click', (e) => {
+				const frm = document.addBottomProFrm;
+				frm.submit();
+	});
+	
 	/* 게시글 수정 */
 	document.querySelectorAll(".delProduct").forEach((btn) => {
 		btn.addEventListener('click', (e) => {

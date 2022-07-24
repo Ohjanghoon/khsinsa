@@ -73,8 +73,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
 <% if(loginUser != null && loginUser.getUserRole() == UserRole.A) { %>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                    <button type="button" value="<%= codi.getCommNo() %>" class="btn btn-sm btn-outline-secondary editComm">Edit</button>
+                                    <button type="button" value="<%= codi.getCommNo() %>" class="btn btn-sm btn-outline-secondary delComm">Delete</button>
+                                    
 <% } else { %>
 									<middeum class="text-muted">조회수 : <%= codi.getCommReadCount() %></middeum>
 									
@@ -97,4 +98,33 @@
 	<br />
 	<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
 </main>
+<form action="<%= request.getContextPath() %>/share/shareDelete" name="delCommFrm" method="post">
+	<input type="hidden" name="no" />
+</form>
+<form action="<%= request.getContextPath() %>/community/codiEdit" name="editCommFrm" method="get">
+	<input type="hidden" name="commNo" />
+</form>
+<script>
+	/* 게시글 수정 */
+	document.querySelectorAll(".delComm").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+			if(confirm("해당 게시물을 정말 삭제하시겠습니까?")){
+				const {value} = e.target;
+				const frm = document.delCommFrm;
+				frm.no.value = value;
+				frm.submit();
+			}	
+		});
+	});
+
+	/* 게시글 삭제 */
+	document.querySelectorAll(".editComm").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+				const {value} = e.target;
+				const frm = document.editCommFrm;
+				frm.commNo.value = value;
+				frm.submit();
+		});
+	});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

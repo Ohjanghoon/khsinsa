@@ -19,6 +19,7 @@ import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
+import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.exception.CommunityException;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.exception.ProductException;
@@ -448,6 +449,90 @@ public class CommunityDao {
 			throw new CommunityException("게시물 추천 오류!", e);
 		} finally {
 			close(pstmt);
+		}
+		return result;
+	}
+
+	public CommunityAttachment findCodiAttachmentByNo(Connection conn, String commAttachNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CommunityAttachment commAttach = null;
+		String sql = prop.getProperty("findCodiAttachmentByNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttachNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				commAttach = handlerAttachmentResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 조회 오류",e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commAttach;
+	}
+
+	public int deleteCodiAttachment(Connection conn, String commAttachNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCodiAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttachNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 삭제 오류!", e);
+			
+		} finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+	
+	public int insertCodiAttachment(Connection conn, CommunityAttachment commAttach) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCodiAttachment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttach.getCommNo());
+			pstmt.setString(2, commAttach.getOriginalFilename());
+			pstmt.setString(3, commAttach.getRenamedFilename());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CommunityException("코디 첨부파일 등록 오류", e);
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int codiEdit(Connection conn, CommunityExt codi) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("codiEdit");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, codi.getCommTitle());
+			pstmt.setString(2, codi.getCommContent());
+			pstmt.setString(3, codi.getCommNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("코디게시글 업데이트 오류!", e);
+			
+		} finally {
+			close(pstmt);
+			
 		}
 		return result;
 	}

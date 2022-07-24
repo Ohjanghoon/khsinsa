@@ -335,10 +335,10 @@ public class AdminDao {
 		return productattachmentList;
 	}
 	
-	public int insertTopProduct(Connection conn, Product product) {
+	public int insertProduct(Connection conn, Product product) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("insertTopProduct");
+		String sql = prop.getProperty("insertProduct");
 		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (A10 || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -386,28 +386,6 @@ public class AdminDao {
 		return ProNo;
 	}
 	
-	public int insertBottomProduct(Connection conn, Product product) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = prop.getProperty("insertBottomProduct");
-		//insertProduct = insert into product (pro_no,pro_type,pro_name,pro_price,pro_size,pro_content) values (A10 || seq_product_pro_no.nextval, ?, ?, ?, ?, ?)
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, product.getProType());
-			pstmt.setString(2, product.getProName());
-			pstmt.setInt(3, product.getProPrice());
-			pstmt.setString(4, product.getProSize());
-			pstmt.setString(5, product.getProContent());
-
-			result = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			throw new AdminException("상품 등록 오류!", e);
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
 //	create table product_attachment(
 //	        pro_attachment_no number,
 //	        pro_no varchar2(100) not null,

@@ -97,69 +97,37 @@ public class AdminService {
 	}
 	
 	// 상의 등록
-		public int insertTopProduct(Product product) {
-			Connection conn = getConnection();
-			int result = 0; 
-			
-			try {
-				// product테이블에 insert
-				result = adminDao.insertTopProduct(conn, product);
-			
-				// 방금 등록된 pro.no 컬럼값 조회
-				String proNo = adminDao.getLastTopProNo(conn);
-				System.out.println("proNo = " + proNo);
-						
-				// attachment테이블 insert
-				List<ProductAttachment> productAttachmentList = ((ProductManagementExt) product).getProductAttachmentList();
-				if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
-							
-					for(ProductAttachment productAttach : productAttachmentList) {
-						productAttach.setProNo(proNo);
-						result = adminDao.insertProductAttachment(conn, productAttach);
-							}
-						}
-				commit(conn);
-			} catch (Exception e) {
-				rollback(conn);
-				throw e;
-			} finally {
-				close(conn);
-			}
-			return result;
-		}
+	public int insertProduct(Product product) {
+		Connection conn = getConnection();
+		int result = 0; 
 		
-		// 하의 등록
-			public int insertBottomProduct(Product product) {
-				Connection conn = getConnection();
-				int result = 0; 
+		try {
+			// product테이블에 insert
+			result = adminDao.insertProduct(conn, product);
+		
+			// 방금 등록된 pro.no 컬럼값 조회
+			String proNo = adminDao.getLastTopProNo(conn);
+			System.out.println("proNo = " + proNo);
 					
-				try {
-					// product테이블에 insert
-					result = adminDao.insertTopProduct(conn, product);
-					
-					// 방금 등록된 pro.no 컬럼값 조회
-					String proNo = adminDao.getLastTopProNo(conn);
-					System.out.println("proNo = " + proNo);
-								
-					// attachment테이블 insert
-					List<ProductAttachment> productAttachmentList = ((ProductManagementExt) product).getProductAttachmentList();
-					if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
-									
-						for(ProductAttachment productAttach : productAttachmentList) {
-							productAttach.setProNo(proNo);
-							result = adminDao.insertProductAttachment(conn, productAttach);
-								}
-							}
-					commit(conn);
-				} catch (Exception e) {
-					rollback(conn);
-					throw e;
-				} finally {
-					close(conn);
-				}
-				return result;
-			}
-			
+			// attachment테이블 insert
+			List<ProductAttachment> productAttachmentList = ((ProductManagementExt) product).getProductAttachmentList();
+			if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
+						
+				for(ProductAttachment productAttach : productAttachmentList) {
+					productAttach.setProNo(proNo);
+					result = adminDao.insertProductAttachment(conn, productAttach);
+						}
+					}
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+		
 //			productEdit = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
 //			deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
 //			findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?

@@ -50,11 +50,19 @@
 	text-indent: 5px;
 }
 /* 휴대전화 영역 */
-.phone_area select {
-	margin-left: 120px;
-	padding-right: 40px;
-	border: 2px solid black;
+.phone_area #phone1 {
+	width: 100px;
+    margin: 0 0 0 120px;
+    border: none;
+    border-radius: 5px;
+	background-color: #b9b9b9;
+    text-align: center;
 }
+.phone_area #phone2 {
+    width: 300px;
+    position: relative;
+}
+
 
 .phone_area input {
 	width: 300px;
@@ -109,33 +117,27 @@
 	right: 50px; 
 	cursor: pointer;
 }
+.btn_area{
+	text-align: center;
+	margin-top: 30px;
+	
+	
+}
+#btn_edit{
+	margin:30px;
+}
 
-/* 수정하기 버튼 */
-#btn_edit {
-	width: 300px;
-	padding: 10px 0;
-	margin-top: 100px;
-	font-size: 15px;
-	font-weight: bold;
-	color: white;
-	background-color: black;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+#btn_cancel{
+	
+	margin:30px;
 }
-/* 취소하기 버튼 */
-#btn_cancel {
-	width: 100px;
-	padding: 10px 0;
-	margin-top: 20px;
-	font-size: 15px;
-	font-weight: bold;
-	color: white;
-	background-color: rgb(125, 125, 125);
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
+
+
+
+
+
+	
+
 
 /* 유효성 검사 메세지 */
 .message_box {

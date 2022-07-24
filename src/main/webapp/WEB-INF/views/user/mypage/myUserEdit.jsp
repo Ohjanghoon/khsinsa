@@ -36,12 +36,12 @@ if (loginUser != null) {
 
 		<%-- 아이디 명시 --%>
 		<div class="input_area">
-			<label>아이디</label> 
+			<label>아이디<span class="essential_mark">*</span></label> 
 			<input type="text" name="userId" id="userId" value="<%=loginUser.getUserId()%>" readonly>
 		</div>
 		<br> <span class="message_box" id="idMsg"></span>
 
-		<%-- 비밀번호 --%>
+		<%-- 비밀번호 수정 --%>
 		<div class="input_area">
 			<label>비밀번호 <span class="essential_mark">*</span></label> 
 			<input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
@@ -78,22 +78,16 @@ if (loginUser != null) {
 
 		<%-- 휴대전화 수정 --%>
 		<div class="input_area phone_area">
-			<label>휴대전화</label> 
-			<select name="phone1" id="phone1">
-				<option value="010">010</option>
-				<option value="011">011</option>
-				<option value="016">016</option>
-				<option value="017">017</option>
-				<option value="018">018</option>
-				<option value="019">019</option>
-			</select> 
+			<label>휴대전화 <span class="essential_mark">*</span></label>
+			<input type="text" name="phone1" id="phone1" value="010" readonly>
 			<input type="text" name="phone2" id="phone2" value="<%=loginUser.getUserPhone().substring(3, 11)%>" maxlength="8" placeholder="ex)12341234" autocomplete="off" required>
 		</div>
-		<br> <span class="message_box" id="phoneMsg"></span>
+		<br> 
+		<span class="message_box" id="phoneMsg"></span>
 
 		<%-- 이메일 수정 --%>
 		<div class="input_area email_area">
-			<label>이메일</label> 
+			<label>이메일 <span class="essential_mark">*</span></label> 
 			<input type="text" name="emailId" id="emailId" value="<%=emailId%>" title="이메일을 입력해주세요" autocomplete="off" required>
 			<span id="email_at">@</span>
 			 <input type="text" name="emailAddr" id="emailAddr" value="<%=emailAddr%>" list="emailAddrs" autocomplete="off" required>
@@ -107,7 +101,7 @@ if (loginUser != null) {
 				<option value="nate.com">
 			</datalist>
 		</div>
-		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다뇨.</span>
+		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
 
 
 		<%-- 주소  수정 --%>
@@ -124,9 +118,12 @@ if (loginUser != null) {
 
 		<%-- 수정/취소 버튼 영역 --%>
 		<div class="btn_area">
-			<button type="submit" id="btn_edit">수정하기</button>
-			<button type="reset" id="btn_cancel">취소하기</button>
+		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
+		<button type="reset" class="btn btn-secondary btn-lg">취소하기</button>
 		</div>
+		
+			<!-- <button type="submit" id="btn_edit">수정하기</button>
+			<button type="reset" id="btn_cancel">취소하기</button> -->
 
 	</form>
 </div>

@@ -25,8 +25,8 @@
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 	//System.out.println(productlist);
-	System.out.println(productattachList);
-	System.out.println(productlist);
+	//System.out.println(productattachList);
+	//System.out.println(productlist);
 %>
 
 <div align="center" id="body">
@@ -67,21 +67,22 @@
                         <th>내용</th>
                         <th>사이즈</th>
                         <th>등록일</th>
-                        <th>수정/삭제</th>
                     </tr>
                 </thead>
                     <tbody>
                         <td><%= product.getProNo() %></td>
                         <td><%= product.getProType() %></td>
-                        <td><%= product.getProName() %></td>
+                        <td>
+                        	<a href="<%= request.getContextPath() %>/admin/productManagementDetail?proNo=<%= product.getProNo() %>">
+                        	<%= product.getProName() %>
+                        </td>
 <%
 	for(ProductAttachment pa : productattachList){
 		if(product.getProNo().equals(pa.getProNo())){
 %>
 						<td>
-							<a href="<%= request.getContextPath() %>/admin/productManagementDetail?proNo=<%= product.getProNo() %>">
 							<div class = 'img-container'>
-								<img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" width = "100px" height = "100px" colspan = "2" alt="" class="img-product">
+								<img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" width = "100px" height = "100px" colspan = "2" alt="" class="img-product">
 							</div>
 						</td>
 <%
@@ -92,15 +93,6 @@
 						<td><%= product.getProContent() %></td>
                         <td><%= product.getProSize() %></td>
                         <td><%= product.getRegDate() %></td>
-                        <td>
-                            <input type="button"
-                            	   class="btn_edit"
-                            	   onclick="location.href='<%= request.getContextPath() %>/admin/productManagement/productEdit'"
-                            	   value="수정하기">
-                            <input type="button"
-                            	   value="삭제하기"
-                            	   onclick="deleteProduct(<%= product.getProNo() %>)">
-                        </td>
                         <% 		}
        		} %>
                     </tbody>
@@ -110,12 +102,8 @@ document.querySelector("#productadd").addEventListener('click', (e) => {
 	if(<%= loginUser == null %>){
 		loginAlert();		
 	}else{
-		location.href = "<%= request.getContextPath() %>/share/shareAdd";
-	}
-	
-	
-	
-	
+		location.href = "<%= request.getContextPath() %>/admin/productManagement/topProductAdd";
+	}	
 });
 
 </script>

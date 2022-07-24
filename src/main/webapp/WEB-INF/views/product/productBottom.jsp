@@ -17,21 +17,23 @@
             <h3>BOTTOM</h3>
         </section>
 		<hr />
-    	<div class="align">
-       	 <form action="<%= request.getContextPath() %>/product/productAlign" method="get">
-             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
-			  <option value="#" selected>정렬기준</option>
-			  <option value="pro_name">상품명</option>
-			  <option value="pro_price">가격순</option>
-			  <option value="#">좋아요순</option>
-			 </select>
-         </form>
-       	</div>
-		<div class="search">
-			<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productFind" method="get">
-	          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
-	          <button type="button" class="btn btn-outline-dark">🔎</button>
-	        </form>
+		<div class="d-flex flex-wrap justify-content-between">
+	    	<div class="align">
+	       	 <form action="<%= request.getContextPath() %>/product/productAlign" method="get">
+	             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
+				  <option value="#" selected>정렬기준</option>
+				  <option value="pro_name">상품명</option>
+				  <option value="pro_price">가격순</option>
+				  <option value="#">좋아요순</option>
+				 </select>
+	         </form>
+	       	</div>
+			<div class="search">
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productFind" method="get">
+		          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
+		          <button type="button" class="btn btn-outline-dark">🔎</button>
+		        </form>
+			</div>
 		</div>
        	<div class="row row-cols-3 row-cols-lg-3 align-items-stretch g-5 py-5">			    
 <% 

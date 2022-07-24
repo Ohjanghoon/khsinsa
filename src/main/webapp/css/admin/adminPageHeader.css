@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    text-decoration: none;
+}   
+.adminPageHeader {
+    width: 1000px;
+    margin: 50px auto;
+}
+.adminPageHeader h1 {
+    width: 100%;
+    background-color: lightgrey;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+}
+.adminPageHeader nav {
+    width: 1000px;
+}
+.adminPageHeader ul {
+    display: flex;
+}
+.adminPageHeader li {
+    margin: 30px 40px;
+}
+.adminPageHeader a {
+    color: rgb(125, 125, 125);
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}

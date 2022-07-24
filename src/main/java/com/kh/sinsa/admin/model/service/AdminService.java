@@ -159,12 +159,15 @@ public class AdminService {
 				}
 				return result;
 			}
-		
+//updateProduct = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+//deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
+//findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
+			
 		public int updateProduct(ProductManagementExt product) {
 			Connection conn = getConnection();
 			int result = 0;
 			try {
-				// 1. 게시글 수정
+				// 1. 상품 수정
 				result = adminDao.updateProduct(conn, product);
 				// 2. 첨부파일 등록
 				List<ProductAttachment> productattachmentList = product.getProductAttachmentList();
@@ -210,6 +213,7 @@ public class AdminService {
 			return productattach;
 		}
 		
+		// 상품 삭제
 		public int deleteProduct(String proNo) {
 			Connection conn = getConnection();
 			int result = 0;

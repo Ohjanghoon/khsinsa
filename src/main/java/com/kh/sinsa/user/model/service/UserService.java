@@ -66,8 +66,11 @@ public class UserService {
 	}
 	
 	public User forgotPwd(String userId, String username, String userEmail) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = getConnection();
+		User user = userDao.forgotPwd(conn, userId, username, userEmail);
+		close(conn);
+		System.out.println("2");
+		return user;
 	}
 
 	// ##########minseo UserService end#############

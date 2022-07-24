@@ -28,8 +28,6 @@ public class FavoriteAddServlet extends HttpServlet {
 			// 사용자 입력값
 			String proNo = request.getParameter("proNo");
 			String userId = request.getParameter("userId");
-			System.out.println(proNo);
-			System.out.println(userId);
 			
 			Favorite favorite = new Favorite(proNo, userId);
 			

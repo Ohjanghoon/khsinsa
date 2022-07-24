@@ -19,12 +19,7 @@
         background-color: white;
         margin: 100px auto;
         position: relative;
-        color:black;
-        border-style: double;
-        border-radius:10px;
         padding:50px;
-     
-
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -39,14 +34,15 @@
     .input_area{
         width: 100%;
         position: relative;
-        margin-top: 30px;
+       	margin-top:10px;
+      
     }
     .input_area:first-child{
         margin-top: 50px;
     }
     .input_area input {
         width: 300px;
-        /* margin: 0 20px; */
+       /*  margin: 0 20px;  */
         padding: 20px 10px 5px;
         position: relative;
         z-index: 2;
@@ -72,17 +68,7 @@
         font-size: 10px; color: rgb(0, 70, 113);
     }
 
-    /* 비밀번호 확인 버튼 */
-    .input_area #btn_show_pwd {
-        background: none;
-        border: none;
-        z-index: 3;
-        
-        position: absolute;
-        top: 10px; right: 10px;
-        cursor: pointer;
-    }
-    
+  
     div:nth-child(3){
         margin-top: 10px;
         display: flex;
@@ -103,14 +89,22 @@
     }
 
 	
-    /* 찾기 버튼 */
-    #btn_find {
-        text-align: center;
-        width: 50px;
+   
+    .btnSearch{
+    	text-align: center;
+    }
+    
+    .btn-primary {
+    	background-color:#3f51b5;
+    	border-color: #3f51b5;
+    }
+    
+    .btn btn-primary {
+    	text-align: center;
         height: 30px;
         padding: 7px 0;
         margin-top: 30px;
-        margin-right: 70px;/*  */
+        margin-right: 70px;
         font-size: 15px;
         font-weight: bold;
         color: white;
@@ -118,11 +112,13 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+    
+    
     }
     /* 취소 버튼 */
-    #btn_cancel {
+   .btn btn-secondary{
         text-align: center;
-        width: 50px;
+        width: 30px;
         height: 30px;
         padding: 7px 0;
         margin-top: 30px;
@@ -134,4 +130,4 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-    }
+    } 

@@ -31,6 +31,7 @@ public class CodiViewServlet extends HttpServlet {
 		try {
 			// 사용자 입력값
 			String commNo = request.getParameter("commNo");
+			String no = request.getParameter("commNo");
 			
 			// 읽음여부판단
 			Cookie[] cookies = request.getCookies();
@@ -43,7 +44,7 @@ public class CodiViewServlet extends HttpServlet {
 					String value = c.getValue();
 					if("boardCookie".equals(name)) {
 						boardCookieVal = value;
-						if(value.contains("["+commNo+"]")) {
+						if(value.contains("["+no+"]")) {
 							hasRead = true;
 						}
 						break;
@@ -53,7 +54,7 @@ public class CodiViewServlet extends HttpServlet {
 			
 			// 쿠키처리
 			if(!hasRead) {
-				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "[" + commNo + "]");
+				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "[" + no + "]");
 				cookie.setPath(request.getContextPath()+ "/board/boardView");
 				cookie.setMaxAge(365*24*60*60);
 				response.addCookie(cookie);
@@ -61,7 +62,7 @@ public class CodiViewServlet extends HttpServlet {
 			
 			// 업무처리
 			// 코디 찾기
-			Community codi = hasRead ? communityService.findByNo(commNo): communityService.findByNo(commNo, hasRead);
+			Community codi = hasRead ? communityService.findByNo(no): communityService.findByNo(no, hasRead);
 			// 댓글
 			List<CommunityComment> codiCommentList = communityService.findCommunityCommentByCommNo(commNo);
 			// 사진찾기

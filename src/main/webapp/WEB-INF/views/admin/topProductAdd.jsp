@@ -17,7 +17,7 @@
                 <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
 			</ul>
 		</nav>
-		<form name="shareAddFrm"
+		<form name="topProductAddFrm"
 			action="<%=request.getContextPath()%>/admin/productManagement/topProductAdd" 
 			method="post"
 			encType = "multipart/form-data">
@@ -41,10 +41,10 @@
 					<textarea name="content" cols="100" rows="50"></textarea>
 				</p>
 				<div>
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
-					<input type="file" name="filename" accept="image/*">
+					<input type="file" name="imgproduct1" accept="image/*">
+					<input type="file" name="imgproduct2" accept="image/*">
+					<input type="file" name="imgproduct3" accept="image/*">
+					<input type="file" name="imgproduct4" accept="image/*">
 				</div>
 
 		<div id="btn-sum" style="margin:30px;">
@@ -57,9 +57,9 @@
 
 	<script>
 /**
-* shareAddFrm 유효성 검사
+* topProductAddFrmFrm 유효성 검사
 */
-document.shareAddFrm.onsubmit = (e) => {
+document.topProductAddFrm.onsubmit = (e) => {
 	const frm = e.target;
 	//상품 이름을 작성하지 않은 경우
 	if(!/^.+$/.test(frm.name.value)){

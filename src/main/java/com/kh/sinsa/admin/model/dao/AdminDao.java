@@ -756,6 +756,49 @@ public int orderGetTotalContent(Connection conn) {
 		close(pstmt);
 	}
 	return orderTotalContent;
+}
+
+public int editOrderStatus(Connection conn, Order order) {
+	PreparedStatement pstmt = null;
+	int result = 0;
+	String sql = prop.getProperty("editOrderStatus");
+//	editOrderStatus = update kh_order set order_status = ? where order_no = ?
+//	editFree = update community set comm_title = ?, comm_content = ? where comm_no = ?
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, order.getOrderStatus());
+		pstmt.setInt(2, order.getOrderNo());
+		result = pstmt.executeUpdate();
+	} 
+	catch (SQLException e) {
+		throw new CommunityException("주문상태 수정 오류!", e);
+	}
+	finally {
+		close(pstmt);
+	}
+	return result;
+}
+
+public Order findByOrderNo(Connection conn, int orderNo) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	Order order = null;
+	String sql = prop.getProperty("findByOrderNo");
+//	findByNo = select * from community where comm_no = ?
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, orderNo);
+		rset = pstmt.executeQuery();
+		while (rset.next())
+			order = handleOrderResultSet(rset);
+
+	} catch (SQLException e) {
+		throw new AdminException("주문 조회 오류!", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return order;
 }}
 //##########Order ends#############
 

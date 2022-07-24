@@ -276,6 +276,41 @@ public int orderGetTotalContent() {
 	int orderTotalContent = adminDao.orderGetTotalContent(conn);
 	close(conn);
 	return orderTotalContent;
+}
+
+public int editOrderStatus(Order order) {
+	Connection conn = getConnection();
+	int result = 0;
+
+	try {
+		result = adminDao.editOrderStatus(conn, order);
+		commit(conn);
+	} catch (Exception e) {
+		rollback(conn);
+		throw e;
+	} finally {
+		close(conn);
+	}
+	return result;
+}
+
+public Order findByOrderNo(int orderNo) {
+	Connection conn = getConnection();
+	Order order = null;
+
+	try {
+		// community 테이블에서 조회
+		order = adminDao.findByOrderNo(conn, orderNo);
+
+		commit(conn);
+	} catch (Exception e) {
+		rollback(conn);
+		throw e;
+
+	} finally {
+		close(conn);
+	}
+	return order;
 }}
 
 //##########jaekyung OrderService ends#############

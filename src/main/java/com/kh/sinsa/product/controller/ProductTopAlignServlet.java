@@ -17,18 +17,19 @@ import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.service.ProductService;
 
 /**
- * Servlet implementation class productTopFindServlet
+ * Servlet implementation class ProductAlignServlet
  */
-@WebServlet("/product/productTopFind")
-public class ProductTopFindServlet extends HttpServlet {
+@WebServlet("/product/productTopAlign")
+public class ProductTopAlignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductService productService = new ProductService();
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 9;
@@ -40,20 +41,21 @@ public class ProductTopFindServlet extends HttpServlet {
 			
 			int start = (cPage - 1) * numPerPage + 1;
 			int end = cPage * numPerPage;
+			String align = request.getParameter("align");
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("start", start);
 			param.put("end", end);
+			param.put("align", align);
 			param.put("type", type);
 			
 			// 업무로직
-			
-			List<Product> list = productService.productTypeFind(param);
+			List<Product> list = productService.productAlign(param);
 			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
 			int totalContent = productService.getTotalContent();
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			System.out.println(attachList);
+
 			// view단 처리
 			request.setAttribute("attachList", attachList);
 			request.setAttribute("list", list);
@@ -64,6 +66,8 @@ public class ProductTopFindServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
+		
+
 	}
 
 }

@@ -19,18 +19,18 @@
 		<hr />
 		<div class="d-flex flex-wrap justify-content-between">
 	    	<div class="align">
-	       	 <form action="<%= request.getContextPath() %>/product/productAlign" method="get">
+	       	 <form action="<%= request.getContextPath() %>/product/productBottomAlign" method="get">
 	             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
 				  <option value="#" selected>정렬기준</option>
 				  <option value="pro_name">상품명</option>
 				  <option value="pro_price">가격순</option>
-				  <option value="#">좋아요순</option>
+				  <option value="reg_date">등록일순</option>
 				 </select>
 	         </form>
 	       	</div>
 			<div class="search">
-				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productFind" method="get">
-		          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/product/productBottomSearch" method="get">
+		          <input type="text" class="form-control me-2" id="search" name="search" placeholder="Search..." aria-label="Search">
 		          <button type="button" class="btn btn-outline-dark">🔎</button>
 		        </form>
 			</div>

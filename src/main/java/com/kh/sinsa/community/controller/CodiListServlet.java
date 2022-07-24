@@ -46,6 +46,7 @@ public class CodiListServlet extends HttpServlet {
 			// 업무로직
 			List<Community> codiList = communityService.findCodiAll(param);
 			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
+			
 			int codiTotalContent = communityService.getCodiTotalContent();
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);

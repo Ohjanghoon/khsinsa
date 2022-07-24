@@ -1,4 +1,4 @@
-package com.kh.sinsa.product.controller;
+package com.kh.sinsa.community.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,27 +12,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
-import com.kh.sinsa.product.model.dto.Product;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
-import com.kh.sinsa.product.model.service.ProductService;
+import com.kh.sinsa.community.model.dto.Community;
+import com.kh.sinsa.community.model.dto.CommunityAttachment;
+import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class ProductAlignServlet
+ * Servlet implementation class CodiAlignServlet
  */
-@WebServlet("/product/productAlign")
-public class ProductAlignServlet extends HttpServlet {
+@WebServlet("/community/codiAlign")
+public class CodiAlignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ProductService productService = new ProductService();
-	
+	private CommunityService communityService = new CommunityService();   
+ 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+try {
 			
 			// 사용자 입력값
 			int cPage = 1;
-			int numPerPage = 9;
+			int numPerPage = 6;
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -46,26 +46,26 @@ public class ProductAlignServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			param.put("align", align);
+		
 			
 			// 업무로직
-			List<Product> list = productService.productAlign(param);
-			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
-			int totalContent = productService.getTotalContent();
+			List<Community> codiList = communityService.codiAlign(param);
+			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
+			int codiTotalContent = communityService.getCodiTotalContent();
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);
 
 			// view단 처리
-			request.setAttribute("attachList", attachList);
-			request.setAttribute("list", list);
+			request.setAttribute("codiAttachList", codiAttachList);
+			request.setAttribute("codiList", codiList);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/product/productList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/codi_community/codiList.jsp").forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
-
 	}
 
+	
 }

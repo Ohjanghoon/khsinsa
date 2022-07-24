@@ -26,40 +26,38 @@ public class ProductSearchTopServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			// 사용자 입력값
+			int cPage = 1;
+			int numPerPage = 9;
+			String type = "상의";
 			
-				// 사용자 입력값
-				int cPage = 1;
-				int numPerPage = 9;
-				String type = "상의";
-				
-				try {
-					cPage = Integer.parseInt(request.getParameter("cPage"));
-				} catch (NumberFormatException e) {}
-				
-				int start = (cPage - 1) * numPerPage + 1;
-				int end = cPage * numPerPage;
-				String search = request.getParameter("search");
-				System.out.println(search);
-				
-				Map<String, Object> param = new HashMap<>();
-				param.put("start", start);
-				param.put("end", end);
-				param.put("search", search);
-				param.put("type", type);
-				
-				// 업무로직
-				List<Product> list = productService.productSearch(param);
-				List<ProductAttachment> attachList = productService.productAttachmentFindAll();
-				int totalContent = productService.getTotalContent();
-				String url = request.getRequestURI()+ "?search=" + search;
-				String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			try {
+				cPage = Integer.parseInt(request.getParameter("cPage"));
+			} catch (NumberFormatException e) {}
+			
+			int start = (cPage - 1) * numPerPage + 1;
+			int end = cPage * numPerPage;
+			String search = request.getParameter("search");
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("start", start);
+			param.put("end", end);
+			param.put("search", search);
+			param.put("type", type);
+			
+			// 업무로직
+			List<Product> list = productService.productSearch(param);
+			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
+			int totalContent = productService.getTotalContent();
+			String url = request.getRequestURI()+ "?search=" + search;
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 
-				// view단 처리
-				request.setAttribute("attachList", attachList);
-				request.setAttribute("list", list);
-				request.setAttribute("pagebar", pagebar);
-				request.getRequestDispatcher("/WEB-INF/views/product/productTop.jsp").forward(request, response);
-				
+			// view단 처리
+			request.setAttribute("attachList", attachList);
+			request.setAttribute("list", list);
+			request.setAttribute("pagebar", pagebar);
+			request.getRequestDispatcher("/WEB-INF/views/product/productTop.jsp").forward(request, response);
+			
 			} catch(Exception e) {
 				e.printStackTrace();
 				throw e;

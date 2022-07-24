@@ -21,7 +21,6 @@ import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.exception.CommunityException;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.exception.ProductException;
 
 public class CommunityDao {
@@ -769,6 +768,62 @@ public class CommunityDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<Community> codiAlign(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiAlign");
+		String align = (String) param.get("align");
+		sql = sql.replace("#", align);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 정렬 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
+	}
+
+	public List<Community> codiSearch(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiSearch");
+		String search = (String) param.get("search");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+ search + "%");
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 검색 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
 	}
 
 

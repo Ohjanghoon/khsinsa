@@ -35,15 +35,15 @@ public class CodiViewServlet extends HttpServlet {
 			
 			// 읽음여부판단
 			Cookie[] cookies = request.getCookies();
-			String boardCookieVal = "";
+			String communityCookieVal = "";
 			boolean hasRead = false;
 			
 			if(cookies != null) {
 				for(Cookie c : cookies) {
 					String name = c.getName();
 					String value = c.getValue();
-					if("boardCookie".equals(name)) {
-						boardCookieVal = value;
+					if("communityCookie".equals(name)) {
+						communityCookieVal = value;
 						if(value.contains("["+no+"]")) {
 							hasRead = true;
 						}
@@ -54,8 +54,8 @@ public class CodiViewServlet extends HttpServlet {
 			
 			// 쿠키처리
 			if(!hasRead) {
-				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "[" + no + "]");
-				cookie.setPath(request.getContextPath()+ "/board/boardView");
+				Cookie cookie = new Cookie("communityCookie", communityCookieVal + "[" + no + "]");
+				cookie.setPath(request.getContextPath()+ "/community/codiView");
 				cookie.setMaxAge(365*24*60*60);
 				response.addCookie(cookie);
 			}

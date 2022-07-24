@@ -11,6 +11,7 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
+import com.kh.sinsa.product.model.dto.Product;
 
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
@@ -428,6 +429,20 @@ public class CommunityService {
 				close(conn);
 			}
 			return result;
+		}
+
+		public List<Community> codiAlign(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.codiAlign(conn, param);
+			close(conn);
+			return codiList;
+		}
+
+		public List<Community> codiSearch(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.codiSearch(conn, param);
+			close(conn);
+			return codiList;
 		}
 
 }

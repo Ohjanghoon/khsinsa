@@ -15,14 +15,17 @@ import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.service.CommunityService;
+import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 /**
- * Servlet implementation class codiViewServlet
+ * Servlet implementation class CodiSearchServlet
  */
-@WebServlet("/community/codiList")
-public class CodiListServlet extends HttpServlet {
+@WebServlet("/community/codiSearch")
+public class CodiSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -31,6 +34,7 @@ public class CodiListServlet extends HttpServlet {
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 6;
+			String search = request.getParameter("search");
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -42,15 +46,16 @@ public class CodiListServlet extends HttpServlet {
 			Map<String, Object> param = new HashMap<>();
 			param.put("start", start);
 			param.put("end", end);
+			param.put("search", search);
 			
 			// 업무로직
-			List<Community> codiList = communityService.findCodiAll(param);
+			List<Community> codiList = communityService.codiSearch(param);
 			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
 			
 			int codiTotalContent = communityService.getCodiTotalContent();
-			String url = request.getRequestURI();
+			String url = request.getRequestURI()+ "?search=" + search;
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);
-
+			
 			// view단 처리
 			request.setAttribute("codiAttachList", codiAttachList);
 			request.setAttribute("codiList", codiList);
@@ -61,7 +66,6 @@ public class CodiListServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 }

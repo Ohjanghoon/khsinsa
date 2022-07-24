@@ -2,9 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+
 <%
 	User user = (User) request.getAttribute("user");
+	String tempPwd = (String)session.getAttribute("tempPwd");
 %>
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/css/user/userForgotPwd.css">
@@ -43,12 +46,11 @@
 			
 
 		</form>
-		
-		
-		
-			<% if(user != null) { %>
-      		<p>임시비밀번호는 <%= request.getAttribute("tempPwd")  %>입니다.</p>
-			<% } %> 
+			<br>
+			<br>
+			
+      		<p id="tempPwdMSG">임시비밀번호는 <%=tempPwd%> 입니다.</p>
+			
 			
 			
 			

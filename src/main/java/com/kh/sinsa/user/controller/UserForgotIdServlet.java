@@ -33,7 +33,7 @@ public class UserForgotIdServlet extends HttpServlet {
 		try {
 			//1. 사용자 입력값 처리
 	         //입력 : username , userEmail ----> UserDto
-//			request.setCharacterEncoding("UTF-8");
+			request.setCharacterEncoding("UTF-8");
 			String username = request.getParameter("username");
 			String userEmail = request.getParameter("userEmail");
 		
@@ -42,7 +42,8 @@ public class UserForgotIdServlet extends HttpServlet {
 			
 			//2. 업무로직: 이름 + 이메일 일치 여부 판단 
 			User user = userService.forgotId(username, userEmail);
-			String location ="";
+			System.out.println(user);
+			
 			
 			// view단 처리
 			request.setAttribute("user", user);
@@ -50,14 +51,17 @@ public class UserForgotIdServlet extends HttpServlet {
 			//아이디 찾기 성공
 			if(user != null) {
 				request.getSession().setAttribute("msg","아이디는 [ " + user.getUserId()+"] 입니다." );
-				response.sendRedirect(request.getContextPath() + "/");
+				request.getSession().setAttribute("user", user);
+//				response.sendRedirect(request.getContextPath() + "/");
 			}
 			//아이디 찾기 실패 (아이디가 존재하지 않는 경우 || 비밀번호가 틀린 경우)
 			else {
-				request.getSession().setAttribute("msg", "이름 또는 이메일가 일치하지 않습니다. ");
-				response.sendRedirect(request.getContextPath() + "/");
+				request.getSession().setAttribute("msg", "이름 또는 이메일이 일치하지 않습니다. ");
+//				response.sendRedirect(request.getContextPath() + "/");
 			}
 			
+				String location = request.getHeader("Referer");
+				response.sendRedirect(location);
 			
 			
 		} catch (Exception e) {

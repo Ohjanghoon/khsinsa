@@ -121,10 +121,7 @@ if (loginUser != null) {
 		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
 		<button type="reset" class="btn btn-secondary btn-lg">취소하기</button>
 		</div>
-		
-			<!-- <button type="submit" id="btn_edit">수정하기</button>
-			<button type="reset" id="btn_cancel">취소하기</button> -->
-
+	
 	</form>
 </div>
 <script>

@@ -31,4 +31,11 @@ public class FavoriteService {
 	
 	}
 
+	public int proByFavorite(String proNo) {
+		Connection conn = getConnection();
+		int totalfavorite = favoriteDao.proByFavorite(conn,proNo);
+		close(conn);
+		return totalfavorite;
+	}
+
 }

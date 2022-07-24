@@ -32,7 +32,7 @@ public class ReviewListServlet extends HttpServlet {
 			// 사용자 입력값
 			String proNo = request.getParameter("proNo");
 			int cPage = Integer.parseInt(request.getParameter("cPage"));
-			int numPerPage = 1;
+			int numPerPage = 3;
 			int start = (cPage -1) * numPerPage + 1;
 			int end = cPage * numPerPage;
 			Map<String, Object> param = new HashMap<>();

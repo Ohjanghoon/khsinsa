@@ -101,4 +101,10 @@
         border-radius: 3px;
         cursor: pointer;
       }
+      
+      p {
+		color: red;
+		font-weight: bold;
+		font-size: 11px;
+		}
  

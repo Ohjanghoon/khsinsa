@@ -32,25 +32,25 @@
         <p id="warn">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
 <% if(loginUser != null && loginUser.getUserRole() == UserRole.A) { %>        
         <br />
-        <button type="button" class="btn btn-outline-dark">글쓰기</button>
+        <button type="button" id="addComm" class="btn btn-outline-dark">글쓰기</button>
 <% } %>
 	    </div>
 	    <br />
 	    <div class="d-flex flex-wrap justify-content-between">
 	    	<div class="align">
-	       	 <form action="<%= request.getContextPath() %>" method="get">
-	             <select class="form-select" aria-label="Default select example" name="align" onchange="this.form.submit()">
+	       	 <form action="<%= request.getContextPath() %>/community/codiAlign" method="get">
+	             <select class="form-select" aria-label="Default select example" id="align" name="align" onchange="this.form.submit()">
 				  <option value="#" selected>정렬기준</option>
-				  <option value="pro_name">게시글명</option>
-				  <option value="pro_price">등록순</option>
-				  <option value="#">추천순</option>
+				  <option value="comm_content">게시글명</option>
+				  <option value="comm_readcount">조회순</option>
+				  <option value="comm_recommend">추천순</option>
 				 </select>
 	         </form>
 	       	</div>
 			<div class="search">
-				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>" method="get">
-		          <input type="text" class="form-control me-2" placeholder="Search..." aria-label="Search">
-		          <button type="button" class="btn btn-outline-dark">🔎</button>
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/community/codiSearch" method="get">
+		          <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search..." aria-label="Search">
+		          <button type="submit" class="btn btn-outline-dark">🔎</button>
 		        </form>
 			</div>
 		</div>
@@ -73,8 +73,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
 <% if(loginUser != null && loginUser.getUserRole() == UserRole.A) { %>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                    <button type="button" value="<%= codi.getCommNo() %>" class="btn btn-sm btn-outline-secondary editComm">Edit</button>
+                                    <button type="button" value="<%= codi.getCommNo() %>" class="btn btn-sm btn-outline-secondary delComm">Delete</button>
+                                    
 <% } else { %>
 									<middeum class="text-muted">조회수 : <%= codi.getCommReadCount() %></middeum>
 									
@@ -97,4 +98,40 @@
 	<br />
 	<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
 </main>
+<form action="<%= request.getContextPath() %>/share/shareDelete" name="delCommFrm" method="post">
+	<input type="hidden" name="no" />
+</form>
+<form action="<%= request.getContextPath() %>/community/codiEdit" name="editCommFrm" method="get">
+	<input type="hidden" name="commNo" />
+</form>
+<form action="<%= request.getContextPath() %>/community/codiAdd" name="addCommFrm" method="get"></form>
+<script>
+	/* 게시글 등록 */
+	document.querySelector("#addComm").addEventListener('click', (e) => {
+				const frm = document.addCommFrm;
+				frm.submit();
+	});
+
+	/* 게시글 수정 */
+	document.querySelectorAll(".delComm").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+			if(confirm("해당 게시물을 정말 삭제하시겠습니까?")){
+				const {value} = e.target;
+				const frm = document.delCommFrm;
+				frm.no.value = value;
+				frm.submit();
+			}	
+		});
+	});
+
+	/* 게시글 삭제 */
+	document.querySelectorAll(".editComm").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+				const {value} = e.target;
+				const frm = document.editCommFrm;
+				frm.commNo.value = value;
+				frm.submit();
+		});
+	});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -19,8 +19,8 @@ import com.kh.sinsa.community.model.dto.CommentLevel;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
+import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.exception.CommunityException;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.exception.ProductException;
 
 public class CommunityDao {
@@ -450,6 +450,381 @@ public class CommunityDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public CommunityAttachment findCodiAttachmentByNo(Connection conn, String commAttachNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CommunityAttachment commAttach = null;
+		String sql = prop.getProperty("findCodiAttachmentByNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttachNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				commAttach = handlerAttachmentResultSet(rset);
+			}
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 조회 오류",e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commAttach;
+	}
+
+	public int deleteCodiAttachment(Connection conn, String commAttachNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteCodiAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttachNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 삭제 오류!", e);
+			
+		} finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+	
+	public int insertCodiAttachment(Connection conn, CommunityAttachment commAttach) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCodiAttachment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, commAttach.getCommNo());
+			pstmt.setString(2, commAttach.getOriginalFilename());
+			pstmt.setString(3, commAttach.getRenamedFilename());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CommunityException("코디 첨부파일 등록 오류", e);
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int codiEdit(Connection conn, CommunityExt codi) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("codiEdit");
+//		codiEdit = update community set comm_title =?, comm_content = ? where comm_no = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, codi.getCommTitle());
+			pstmt.setString(2, codi.getCommContent());
+			pstmt.setString(3, codi.getCommNo());
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("코디게시글 업데이트 오류!", e);
+			
+		} finally {
+			close(pstmt);
+			
+		}
+		return result;
+	}
+
+	public int codiAdd(Connection conn, CommunityExt codi) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("codiAdd");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, codi.getUserId());
+			pstmt.setString(2, codi.getCommTitle());
+			pstmt.setString(3, codi.getCommContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new CommunityException("코디게시글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public String getLastCodiCommNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String commNo = null;
+		String sql = prop.getProperty("getLastCodiCommNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				commNo = rset.getString(1);
+		} catch (SQLException e) {
+			throw new CommunityException("생성된 게시글 번호 조회 오류", e);
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commNo;
+	}
+	
+	public List<Community> findFreeAll(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> list = new ArrayList<>();
+		String sql = prop.getProperty("findFreeAll");
+		//findAll = select * from (select row_number () over (order by comm_date desc)rnum, c.* from community c) c
+		// 			where rnum between ? and ? and substr(comm_no,1,3) in 'C30'
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Community communtiy = handlerCommunityResultSet(rset);
+				list.add(communtiy);
+
+			}
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 목록 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public Community findByFreeNo(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Community community = null;
+		String sql = prop.getProperty("findByFreeNo");
+//		findByNo = select * from community where comm_no = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			rset = pstmt.executeQuery();
+			while (rset.next())
+				community = handlerCommunityResultSet(rset);
+
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 1건 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return community;
+	}
+
+	public int insertFree(Connection conn, CommunityExt community) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertFree");
+		//insertCommunity = insert into community (comm_no, user_id, comm_title, comm_content) values ('C30' || seq_community_comm_no.nextval, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, community.getUserId());
+			pstmt.setString(2, community.getCommTitle());
+			pstmt.setString(3, community.getCommContent());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public String getLastFreeNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String commNo = null;
+		String sql = prop.getProperty("getLastFreeNo");
+		// getLastCommNo = select 'C30' || seq_community_comm_no.currval from dual
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				commNo = rset.getString(1);
+		} catch (SQLException e) {
+			throw new CommunityException("생성된 게시글 번호 조회 오류", e);
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return commNo;
+	}
+
+	public int insertFreeAttachment(Connection conn, CommunityAttachment attach) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertFreeAttachment");
+		//insertAttachment = insert into comm_attachment values('C32' || seq_comm_attachment_comm_attachment_no.nextval, ?, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, attach.getCommNo());
+			pstmt.setString(2, attach.getOriginalFilename());
+			pstmt.setString(3, attach.getRenamedFilename());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CommunityException("첨부파일 등록 오류", e);
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertFreeComment(Connection conn, CommunityComment communityComment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertFreeComment");
+		// insertCommunityComment = insert into comm_comment values ('C31' || seq_comm_comment_comm_comment_no.nextval, ?, ?, ?, default, ?, ?)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, communityComment.getCommNo());
+			pstmt.setString(2, communityComment.getUserId());
+			pstmt.setString(3, communityComment.getCommentContent());
+			pstmt.setInt(4, communityComment.getCommentLevel().getValue());
+			pstmt.setObject(5, "0".equals(communityComment.getCommentRef()) ? null : communityComment.getCommentRef());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			throw new CommunityException("댓글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteFreeComment(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteFreeComment");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new CommunityException("댓글/답글 삭제 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int editFree(Connection conn, Community community) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editFree");
+		// updateCommunity = update community set comm_title = ?, comm_content = ? where comm_no = ?
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, community.getCommTitle());
+			pstmt.setString(2, community.getCommContent());
+			pstmt.setString(3, community.getCommNo());
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("게시글 수정 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteFree(Connection conn, String no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteFree");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, no);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 등록 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<Community> codiAlign(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiAlign");
+		String align = (String) param.get("align");
+		sql = sql.replace("#", align);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 정렬 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
+	}
+
+	public List<Community> codiSearch(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiSearch");
+		String search = (String) param.get("search");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+ search + "%");
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 검색 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
 	}
 
 

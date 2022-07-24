@@ -175,17 +175,18 @@ public class ProductDao {
 		return attachmentList;
 	}
 
-	public List<Product> productFind(Connection conn, Map<String, Object> param) {
+	public List<Product> productSearch(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Product> list = new ArrayList<>();
-		String sql = prop.getProperty("productFind");
+		String sql = prop.getProperty("productSearch");
 		String search = (String) param.get("search");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + search + "%");
-			pstmt.setInt(2, (int) param.get("start"));
-			pstmt.setInt(3, (int) param.get("end"));
+			pstmt.setString(1, (String) param.get("type"));
+			pstmt.setString(2, "%" + search + "%");
+			pstmt.setInt(3, (int) param.get("start"));
+			pstmt.setInt(4, (int) param.get("end"));
 			
 			rset = pstmt.executeQuery();
 			
@@ -208,10 +209,11 @@ public class ProductDao {
 		List<Product> list = new ArrayList<>();
 		String sql = prop.getProperty("productAlign");
 		String align = (String) param.get("align");
+		sql = sql.replace("#", align);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, align);
+			pstmt.setString(1, (String) param.get("type"));
 			pstmt.setInt(2, (int) param.get("start"));
 			pstmt.setInt(3, (int) param.get("end"));
 			

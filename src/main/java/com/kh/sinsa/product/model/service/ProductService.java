@@ -50,9 +50,9 @@ public class ProductService {
 		return attachmentList;
 	}
 
-	public List<Product> productFind(Map<String, Object> param) {
+	public List<Product> productSearch(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Product> list = productDao.productFind(conn, param);
+		List<Product> list = productDao.productSearch(conn, param);
 		close(conn);
 		return list;
 	}
@@ -70,6 +70,6 @@ public class ProductService {
 		close(conn);
 		return list;
 	}
-	
+
 
 }

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -53,4 +54,26 @@ public class FavoriteDao {
 	
 	}
 
+	public int proByFavorite(Connection conn, String proNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalfavorite = 0;
+		String sql = prop.getProperty("proByFavorite");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, proNo);
+			rset = pstmt.executeQuery();
+			
+			if (rset.next())
+				totalfavorite = rset.getInt(1);
+			
+		} catch (SQLException e) {
+			throw new FavoriteException("관심 상품 등록 오류",e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		} 
+		return totalfavorite;
+	}			
 }

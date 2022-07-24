@@ -2,8 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+
 <%
 	User user = (User) request.getAttribute("user");
+	String tempPwd = (String)session.getAttribute("tempPwd");
 %>
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/css/user/userForgotPwd.css">
@@ -18,23 +22,23 @@
 
 				<div class="input_area">
 					<label>아이디</label> 
-					<input type="text" name="userId" class="btn-name" placeholder="등록된 아이디를 입력하세요. "> <br>
+					<input type="text" name="userId" class="btn-name"> <br>
 				</div>
 				<div class="input_area">
 					<label>이름</label> 
-					<input type="text" name="username" class="btn-name" placeholder="등록된 이름을 입력하세요. "> <br>
+					<input type="text" name="username" class="btn-name"> <br>
 				</div>
 
 				<div class="input_area">
 					<label>이메일 </label>
-					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" placeholder="등록된 이메일을 입력하세요. " value=qkralstj08@naver.com>
+					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email">
 				</div>
 				<br>
 
 			</section>
 			<div class="btnSearch">
-				<input type="submit" name="enter"  id="btn_find" value="찾기" class="btn_open"> 
-				<input type="button" name="cancle" value="취소" id="btn_cancel" onClick="history.back()">
+			<button type="submit" class="btn btn-primary btn-sm" >찾기</button>
+			<button type="button" class="btn btn-secondary btn-sm"  onClick ="history.back()" >취소</button>
 				
 			</div>
 			
@@ -42,12 +46,11 @@
 			
 
 		</form>
-		
-		
-		
-			<% if(user != null) { %>
-      		<p>임시비밀번호는 <%= request.getAttribute("tempPwd")  %>입니다.</p>
-			<% } %> 
+			<br>
+			<br>
+			
+      		<p id="tempPwdMSG">임시비밀번호는 <%=tempPwd%> 입니다.</p>
+			
 			
 			
 			

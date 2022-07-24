@@ -37,8 +37,7 @@ String todayDate = sdf.format(new Date());
 				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
 			</button>
 		</div>
-		<br>
-		<span class="message_box" id="pwdMsg">8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
+		<br><span class="message_box" id="pwdMsg">8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
 		
 		<%-- 비밀번호 확인 --%>
 		<div class="input_area">

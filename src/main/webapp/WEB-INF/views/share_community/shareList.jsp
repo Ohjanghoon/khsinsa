@@ -17,9 +17,9 @@
                 <nav class="navi">
                   <ul>
                       <li><a href="#">OOTD</a></li>
-                      <li><a href="#">코디북</a></li>
+                      <li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
                       <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
-                      <li><a href="#">자유게시판</a></li>
+                      <li><a href="<%= request.getContextPath() %>/community/freeist">자유게시판</a></li>
                       <li><a href="#">패션토크</a></li>
                   </ul>
               </nav>

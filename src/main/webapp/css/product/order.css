@@ -32,3 +32,10 @@ hr{
  	font-size: 22px;
  	font-weight: bold;
  }
+ 
+ .addbtn {
+ 	display: flex;
+ 	float: right;
+ 	transform: translate(0, 38px);
+ }
+ 

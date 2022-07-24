@@ -16,9 +16,9 @@
 		<nav class="navi">
 			<ul>
 				<li><a href="#">OOTD</a></li>
-				<li><a href="#">코디북</a></li>
-				<li><a href="#">정보공유</a></li>
-				<li><a href="#">자유게시판</a></li>
+				<li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
+				<li><a href="<%= request.getContextPath() %>/share/shareList">정보공유</a></li>
+				<li><a href="<%= request.getContextPath() %>/community/freeList">자유게시판</a></li>
 				<li><a href="#">패션토크</a></li>
 			</ul>
 		</nav>
@@ -29,12 +29,12 @@
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
 				<span class="dropdown"> 
-				<select name="one" class="dropdown-select">
+				<select onchange="if(this.value) location.href=(this.value);" name="one" class="dropdown-select">
 						<option value="0">게시판 선택</option>
 						<option value="1">OOTD</option>
-						<option value="2">코디북</option>
-						<option value="3" href="<%=request.getContextPath()%>/share/shareEdit" selected />정보공유</option>
-						<option value="4">자유게시판</option>
+						<option value="<%= request.getContextPath() %>/community/codiList">코디북</option>
+						<option value="<%=request.getContextPath()%>/share/shareEdit" selected />정보공유</option>
+						<option value="<%= request.getContextPath() %>/community/freeList" >자유게시판</option>
 						<option value="5">패션토크</option>
 				</select>
 				</span> 

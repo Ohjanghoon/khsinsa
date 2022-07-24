@@ -8,6 +8,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product/productDetail.css" />
 <%
+	int totalFavorite = (int) request.getAttribute("totalFavorite");
 	Product product = (Product) request.getAttribute("product");
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
 	int totalPage = (int) request.getAttribute("totalPage");
@@ -50,7 +51,7 @@
 			      	<img src="<%= request.getContextPath() %>/images/colorHeart.png" alt="" width="25" height="25">
 			      </th>
 			      <td>
-			      	0
+			      	<span id="like"><%= totalFavorite %></span>
 			      </td>
 			    </tr>
 			    <tr>
@@ -68,7 +69,7 @@
 			      	<form action="<%= request.getContextPath() %>/product/order" name="productFrm" method="POST">
 			       	 <input type="hidden" name="proNo" id="proNo" value="<%= product.getProNo() %>" />
 			         <select class="form-select" aria-label="Default select example" id="size" name="size" required>
-			           <option selected disabled>사이즈를 선택해주세요.</option>
+			           <option value="none" selected disabled>사이즈를 선택해주세요.</option>
 			           <option value="L">L</option>
 			           <option value="M">M</option>
 			           <option value="S">S</option>
@@ -79,9 +80,9 @@
 			      	<h5>수량</h5>
 			      </th>
 			      <td>
-			      	 <button id="minus" type="button">-</button>
+			      	 <button id="minus" type="button" class="btn btn-outline-dark">-</button>
 			         <input type="number" min=1 value=1 id="orderAmount" name="orderAmount" readonly>
-			         <button id="plus" type="button">+</button>
+			         <button id="plus" type="button" class="btn btn-outline-dark">+</button>
 			      </td>
 			      <tr>
 			      <th scope="row">
@@ -93,9 +94,9 @@
 			     </tr>
 			  </tbody>
 			</table>
-			       	<button id="buy">Buy</button>
-			       	<input type="button" id="cart" value="🛒"/>
-			        <input type="button" id="liveToastBtn" value="❤️"/>
+			       	<button id="buy" class="btn btn-outline-primary">Buy</button>
+			       	<input type="button" id="cart" value="🛒" class="btn btn-outline-secondary"/>
+			        <input type="button" id="liveToastBtn" value="❤️" class="btn btn-outline-danger"/>
       		</form>
        	</div>
        	<hr /><br /><br />
@@ -119,12 +120,13 @@
          <br /><br />
         </div>
         <hr><br />
-         
-        <div class="btn-more-container" id="photo-container">
-        <p id="review">Review</p>
+        <section class="py-5 text-center container">
+	         <p id="review">Review</p>
+	         <span id="cPage"></span><input type="hidden" id="totalPage" value="<%= totalPage %>" />
  <% if(totalPage != 0) { %>
-         <button id="btn-more">Review️</button>
-         <span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>
+	         <button class="btn btn-outline-secondary btn-sm" id="btn-more">More️..</button>
+        </section>
+        <div class="row row-cols-1 row-cols-md-3 g-4 reviewcon">
  <%
 	 } else {
  %>
@@ -140,7 +142,20 @@
         
 </main>
 <script>
+	/* 옵션값 검사 */
+	document.productFrm.addEventListener('submit', (e) => {
+		if(document.querySelector('#size').value == 'none'){
+			e.preventDefault();
+			alert("사이즈를 선택해주세요.");
+		} 
+	});
+
+	 /* 로그인 메시지 */
+	const loginAlert = () => {
+		alert("로그인후 이용할 수 있습니다.");
+	};
 <% if(loginUser != null) { %>
+
 	 /*  장바구니 */
 	document.querySelector('#cart').addEventListener('click', (e) => {
 		const cartSize = document.querySelector('#size').value;
@@ -156,10 +171,10 @@
 			error : console.log,
 		})
 	});
-	
+
 	 /* 상품 좋아요.. */
 	document.querySelector('#liveToastBtn').addEventListener('click', (e) => {
-		
+		const pl = Number(document.querySelector('#like').textContent) + 1;
 		$.ajax({
 			url : '<%= request.getContextPath() %>/favorite/favoriteAdd',
 			method : 'POST',
@@ -167,7 +182,7 @@
 			success(response){
 				alert("관심상품 등록되었씁니다.");
 				
-				 const body = document.querySelector("body");
+				 <%-- const body = document.querySelector("body"); -%>
 				
 				 <%-- const html = `
 					<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -197,6 +212,9 @@
 				}  --%>
 			},
 			error : console.log,
+			complete(){
+				<%-- document.querySelector('#like').innerHTML = pl; --%>
+			}
 		})
 	});
 <% } %>
@@ -206,7 +224,11 @@
 		document.querySelector('#orderAmount').value++;
 	});
 	document.querySelector('#minus').addEventListener('click', (e) => {
-		document.querySelector('#orderAmount').value--;
+		if(document.querySelector('#orderAmount').value < 2){
+			document.querySelector('#minus') = disabled;
+		} else{
+			document.querySelector('#orderAmount').value--;
+		}
 	});
 	
 	
@@ -217,25 +239,26 @@
 				data : {cPage, proNo: "<%= proNo %>"},
 				success(response){
 					console.log(response);
-					const container = document.querySelector("#photo-container");
+					const reviewcon = document.querySelector(".reviewcon");
 					
 					response.forEach((review) => {
 						const {reviewNo, proNo, orderNo, reviewWriter, reviewContent, reviewOriginalFilename, reviewRenamedFilename, reviewDate, reviewRecommend} = review;
 						
 						const html = `
-						<div class="polaroid">
-							<img src="<%= request.getContextPath() %>/upload/review/\${reviewOriginalFilename}" alt="" />
-							<p class="info">
-								<span class="writer">\${reviewWriter}</span>
-								<span class="photoDate">\${reviewDate}</span>
-							</p>
-							<p class="caption">\${reviewContent}</p>
-							<input type="button" id="reviewRecommend" value="👍"/>
-							<input type="button" id="reprot" value="🚨"/>
-							<br /><br />
-						</div>
-						`;
-						container.insertAdjacentHTML('beforeend', html);
+						<div class="col">
+			              <div class="card h-100">
+			                <img src="<%= request.getContextPath() %>/upload/review/\${reviewRenamedFilename}" class="card-img-top" alt="...">
+			                <div class="card-body">
+			                  <h5 class="card-title">\${reviewWriter}</h5>
+			                  <p class="card-text">\${reviewContent}</p>
+			                </div>
+			                <div class="card-footer">
+			                  <small class="text-muted">\${reviewDate}</small>
+			                </div>
+			              </div>
+			            </div>
+			         	`;
+						reviewcon.insertAdjacentHTML('beforeend', html);
 						
 					});
 				},
@@ -247,30 +270,14 @@
 					if(cPage == <%= totalPage %>){
 						document.querySelector("#btn-more").disabled = true;
 					}
-					
-					// 리뷰 추천
-					document.querySelector("#reviewRecommend").addEventListener('click', (e) => {
-						$.ajax({
-							url : '<%= request.getContextPath() %>/review/reviewRecommendUp',
-							method : 'POST',
-							data : {${reviewNo}},
-							success(response){
-								alert("해당 리뷰를 추천하였습니다.");
-							},
-							error : console.log
-						})
-					});
-					
-					
-					
 				}
 			});
 		};
 		
-		document.querySelector("#btn-more").addEventListener('click', (e) => {
-			const cPage = Number(document.querySelector("#cPage").textContent) + 1;
-			getPage(cPage);
-		});	
+	document.querySelector("#btn-more").addEventListener('click', (e) => {
+		const cPage = Number(document.querySelector("#cPage").textContent)+1;
+		getPage(cPage);
+	});	
 		
 	
 </script>

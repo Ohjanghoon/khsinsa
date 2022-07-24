@@ -2,12 +2,7 @@ package com.kh.sinsa.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -64,7 +59,7 @@ public class ProductBottomAddServlet extends HttpServlet {
 			// 0. 첨부파일처리
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
-			int maxPostSize = 1024 * 1024 * 10 * 30; //300MB
+			int maxPostSize = 1024 * 1024 * 10 * 10; //300MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy();
 			

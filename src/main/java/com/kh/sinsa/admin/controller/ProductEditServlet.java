@@ -17,7 +17,6 @@ import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.admin.model.dto.ProductManagementExt;
 import com.kh.sinsa.admin.model.service.AdminService;
 import com.kh.sinsa.common.KhsinsaRenamePolicy;
-import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
@@ -72,7 +71,7 @@ public class ProductEditServlet extends HttpServlet {
 			// 1. 서버컴퓨터 파일저장
 			ServletContext application = getServletContext();
 			String saveDirectory = application.getRealPath("/upload/product");
-			int maxPostSize = 1024 * 1024 * 10 * 30;// 300MB
+			int maxPostSize = 1024 * 1024 * 10 * 10;// 100MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
 			
@@ -90,7 +89,6 @@ public class ProductEditServlet extends HttpServlet {
 					delFile.delete();
 					// db 레코드 삭제
 					int result = adminService.deleteProductAttachment(proAttachmentNo);
-					System.out.println("[첨부파일 " + proAttachmentNo + "번 삭제! : " + productAttach.getProRenameFilename());
 				}
 			}
 			
@@ -101,8 +99,8 @@ public class ProductEditServlet extends HttpServlet {
 			int proPrice = Integer.parseInt(multiReq.getParameter("proPrice"));
 			String proSize = multiReq.getParameter("proSize");
 			String proContent = multiReq.getParameter("proContent");
-			ProductManagementExt product = new ProductManagementExt(null, productType, proName, proPrice, proSize, null, proContent); 
-//			pro_no,pro_type,pro_name,pro_price,pro_size,pro_content
+			ProductManagementExt product = new ProductManagementExt(proNo, productType, proName, proPrice, proSize, null, proContent); 
+
 			
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {

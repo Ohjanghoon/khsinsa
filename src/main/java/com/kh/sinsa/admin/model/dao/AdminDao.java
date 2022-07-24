@@ -391,13 +391,13 @@ public class AdminDao {
 	public String getLastTopProNo(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String ProNo = null;
+		String proNo = null;
 		String sql = prop.getProperty("getLastTopProNo");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			if(rset.next())
-				ProNo = rset.getString(1);
+				proNo = rset.getString(1);
 		} 
 		catch (SQLException e) {
 			throw new AdminException("생성된 상품번호 조회 오류!", e);
@@ -406,7 +406,7 @@ public class AdminDao {
 			close(rset);
 			close(pstmt);
 		}
-		return ProNo;
+		return proNo;
 	}
 	
 //	create table product_attachment(
@@ -420,13 +420,13 @@ public class AdminDao {
 	public String getLastBottomProNo(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String ProNo = null;
+		String proNo = null;
 		String sql = prop.getProperty("getLastBottomProNo");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			if(rset.next())
-				ProNo = rset.getString(1);
+				proNo = rset.getString(1);
 		} 
 		catch (SQLException e) {
 			throw new AdminException("생성된 상품번호 조회 오류!", e);
@@ -435,7 +435,7 @@ public class AdminDao {
 			close(rset);
 			close(pstmt);
 		}
-		return ProNo;
+		return proNo;
 	}
 	
 	public int insertProductAttachment(Connection conn, ProductAttachment productAttach) {

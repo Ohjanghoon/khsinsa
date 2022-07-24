@@ -1,6 +1,5 @@
 package com.kh.sinsa.admin.model.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ProductManagementExt extends Product{
 		return productAttachCount;
 	}
 
-	public void setProductAttachCount(int attachCount) {
+	public void setProductAttachCount(int productAttachCount) {
 		this.productAttachCount = productAttachCount;
 	}
 

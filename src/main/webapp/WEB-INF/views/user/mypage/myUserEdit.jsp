@@ -107,13 +107,13 @@ if (loginUser != null) {
 				<option value="nate.com">
 			</datalist>
 		</div>
-		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
+		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다뇨.</span>
 
 
 		<%-- 주소  수정 --%>
 		<div class="input_area">
-			<label>주소 <span class="essential_mark">*</span></label> <input
-				type="text" name="roadAddr" id="roadAddr" readonly>
+			<label>주소 <span class="essential_mark">*</span></label> 
+			<input type="text" name="roadAddr" id="roadAddr" readonly value =" <%=loginUser.getUserAddress()%>">
 			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
 		</div>
 		<br> 

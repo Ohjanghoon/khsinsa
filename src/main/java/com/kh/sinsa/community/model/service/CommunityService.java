@@ -11,6 +11,7 @@ import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
+import com.kh.sinsa.product.model.dto.Product;
 
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
@@ -33,14 +34,14 @@ public class CommunityService {
 	}
 
 	// 게시글 상세조회
-	public Community findByNo(String no) {
+	public CommunityExt findByNo(String no) {
 
 		return findByNo(no, true);
 	}
 
-	public Community findByNo(String no, boolean hasRead) {
+	public CommunityExt findByNo(String no, boolean hasRead) {
 		Connection conn = getConnection();
-		Community community = null;
+		CommunityExt community = null;
 
 		try {
 			if (!hasRead) {
@@ -49,6 +50,8 @@ public class CommunityService {
 
 			// community 테이블에서 조회
 			community = communityDao.findByNo(conn, no);
+			
+			List<CommunityAttachment> attachments = communityDao.findAttachmentByCommNo(conn, no);
 
 			commit(conn);
 		} catch (Exception e) {
@@ -103,7 +106,7 @@ public class CommunityService {
 	}
 
 	// 게시글 작성
-	public int insertCommunity(Community community) {
+	public int insertCommunity(CommunityExt community) {
 		Connection conn = getConnection();
 		int result = 0;
 
@@ -148,12 +151,21 @@ public class CommunityService {
 		return result;
 	}
 //	게시글 수정
-	public int editCommunity(Community community) {
+	public int editCommunity(CommunityExt community) {
 		Connection conn = getConnection();
 		int result = 0;
 
 		try {
+			// 게시글 수정
 			result = communityDao.editCommunity(conn, community);
+			// 첨부파일 등록
+			List<CommunityAttachment> attachments = community.getAttachments();
+			if(attachments != null || !attachments.isEmpty()) {
+				for(CommunityAttachment attach : attachments) {
+					result = communityDao.insertAttachment(conn, attach);
+				}
+			}
+			
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);
@@ -163,12 +175,36 @@ public class CommunityService {
 		}
 		return result;
 	}
+	
+	public CommunityAttachment findAttachmentByNo(String attachNo) {
+		Connection conn = getConnection();
+		CommunityAttachment attach = communityDao.findAttachmentByNo(conn, attachNo);
+		close(conn);
+		return attach;
+	}
 
 	public List<CommunityAttachment> findAttachmentByCommNo(String no) {
 		Connection conn = getConnection();
 		List<CommunityAttachment> attach = communityDao.findAttachmentByCommNo(conn, no);
 		close(conn);
 		return attach;
+	}
+	
+	public int deleteAttachment(String attachNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = communityDao.deleteAttachment(conn, attachNo);
+			commit(conn);
+		} 
+		catch (Exception e) {
+			rollback(conn);
+			throw e;
+		}
+		finally {
+			close(conn);			
+		}
+		return result;	
 	}
 	
 	 // 코디 전체 불러오기  // ilchan
@@ -428,6 +464,23 @@ public class CommunityService {
 				close(conn);
 			}
 			return result;
+		}
+
+
+
+
+		public List<Community> codiAlign(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.codiAlign(conn, param);
+			close(conn);
+			return codiList;
+		}
+
+		public List<Community> codiSearch(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.codiSearch(conn, param);
+			close(conn);
+			return codiList;
 		}
 
 }

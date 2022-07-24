@@ -1,7 +1,9 @@
 package com.kh.sinsa.community.model.dao;
 
 
-import static com.kh.sinsa.common.JdbcTemplate.close;
+
+
+import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,7 +23,6 @@ import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.exception.CommunityException;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.product.model.exception.ProductException;
 
 public class CommunityDao {
@@ -66,7 +67,7 @@ public class CommunityDao {
 	}
 
 	// 게시글 목록 조회
-	private Community handlerCommunityResultSet(ResultSet rset) throws SQLException {
+	private CommunityExt handlerCommunityResultSet(ResultSet rset) throws SQLException {
 		String commNo = rset.getString("comm_no");
 		String userId = rset.getString("user_id");
 		String commTitle = rset.getString("comm_title");
@@ -74,8 +75,9 @@ public class CommunityDao {
 		Date commDate = rset.getDate("comm_date");
 		int commRecommend = rset.getInt("comm_recommend");
 		int commReadCount = rset.getInt("comm_readCount");
+		
 
-		return new Community(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadCount);
+		return new CommunityExt(commNo, userId, commTitle, commContent, commDate, commRecommend, commReadCount);
 	}
 
 	// 게시글 목록 조회 페이지바
@@ -117,10 +119,10 @@ public class CommunityDao {
 		return result;
 	}
 
-	public Community findByNo(Connection conn, String no) {
+	public CommunityExt findByNo(Connection conn, String no) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Community community = null;
+		CommunityExt community = null;
 		String sql = prop.getProperty("findByNo");
 //		findByNo = select * from community where comm_no = ?
 		try {
@@ -190,7 +192,7 @@ public class CommunityDao {
 		return result;
 	}
 
-	public int insertCommunity(Connection conn, Community community) {
+	public int insertCommunity(Connection conn, CommunityExt community) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertCommunity");
@@ -230,7 +232,7 @@ public class CommunityDao {
 		return result;
 	}
 
-	public int editCommunity(Connection conn, Community community) {
+	public int editCommunity(Connection conn, CommunityExt community) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("editCommunity");
@@ -274,6 +276,29 @@ public class CommunityDao {
 		}
 		return result;
 	}
+	
+	public CommunityAttachment findAttachmentByNo(Connection conn, String attachNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		CommunityAttachment attach = null;
+		String sql = prop.getProperty("findAttachmentByNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, attachNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) 
+				attach = handlerAttachmentResultSet(rset);
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("첨부파일 한건 조회 오류!", e);
+		}
+		finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attach;
+	}
 
 	public List<CommunityAttachment> findAttachmentByCommNo(Connection conn, String no) {
 		PreparedStatement pstmt = null;
@@ -298,15 +323,35 @@ public class CommunityDao {
 		
 		return attach;
 	}
-
+	
 	private CommunityAttachment handlerAttachmentResultSet(ResultSet rset) throws SQLException {
-
+		
 		String no = rset.getString("comm_attachment_no");
 		String commNo = rset.getString("comm_no");
 		String originalFilename =rset.getString("comm_original_filename");
 		String renamedFilename = rset.getString("comm_rename_filename");
 		return new CommunityAttachment(no, commNo, originalFilename, renamedFilename);
 	}
+	
+	public int deleteAttachment(Connection conn, String attachNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, attachNo);
+			result = pstmt.executeUpdate();
+		} 
+		catch (SQLException e) {
+			throw new CommunityException("첨부파일 삭제 오류!", e);
+		}
+		finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 	public String getLastCommNo(Connection conn) {
 		PreparedStatement pstmt = null;
@@ -519,6 +564,7 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("codiEdit");
+//		codiEdit = update community set comm_title =?, comm_content = ? where comm_no = ?
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -770,6 +816,67 @@ public class CommunityDao {
 		}
 		return result;
 	}
+
+	public List<Community> codiAlign(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiAlign");
+		String align = (String) param.get("align");
+		sql = sql.replace("#", align);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 정렬 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
+	}
+
+	public List<Community> codiSearch(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Community> codiList = new ArrayList<>();
+		String sql = prop.getProperty("codiSearch");
+		String search = (String) param.get("search");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+ search + "%");
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				codiList.add(handlerCommunityResultSet(rset));
+			}
+			
+		} catch (SQLException e) {
+			throw new CommunityException("게시글 검색 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return codiList;
+	}
+
+
+
+
+
 
 
 }

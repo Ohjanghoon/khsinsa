@@ -27,12 +27,15 @@ public class KhOrderServlet extends HttpServlet {
 			// 사용자 입력값
 			String proNo = request.getParameter("proNo");
 			String userId = request.getParameter("userId");
-			String orderAddress = request.getParameter("orderAddress");
+			String orderAddress1 = request.getParameter("orderAddress1");
+			String orderAddress2 = request.getParameter("orderAddress2");
 			String orderPhone = request.getParameter("orderPhone");
 			String orderEmail = request.getParameter("orderEmail");
 			String orderReq = request.getParameter("orderReq");
 			int orderPrice = Integer.parseInt(request.getParameter("orderPrice"));
 			int orderAmount = Integer.parseInt(request.getParameter("orderAmount"));
+			
+			String orderAddress = orderAddress1 + "+" + orderAddress2;
 			
 			Order order = new Order(0, userId, proNo, orderAddress, orderPhone, orderEmail, null, orderReq, orderPrice, null, orderAmount);
 			

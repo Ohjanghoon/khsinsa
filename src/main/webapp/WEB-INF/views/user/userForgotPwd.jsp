@@ -34,8 +34,8 @@
 
 			</section>
 			<div class="btnSearch">
-				<input type="submit" name="enter"  id="btn_find" value="찾기" class="btn_open"> 
-				<input type="button" name="cancle" value="취소" id="btn_cancel" onClick="history.back()">
+			<button type="submit" class="btn btn-primary btn-sm" >찾기</button>
+			<button type="button" class="btn btn-secondary btn-sm"  onClick ="history.back()" >취소</button>
 				
 			</div>
 			

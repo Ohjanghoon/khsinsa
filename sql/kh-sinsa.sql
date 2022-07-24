@@ -459,7 +459,8 @@ select * from comm_attachment where comm_no like 'C20%';
 select * from comm_comment;
 select * from kh_user;
 
-
+select * from favorite;
+desc favorite;
 
 
 

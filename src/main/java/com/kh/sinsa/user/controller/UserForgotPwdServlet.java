@@ -36,7 +36,7 @@ public class UserForgotPwdServlet extends HttpServlet {
 		try {
 			//1. 사용자 입력값 처리
 	         //입력 : userId, username , userEmail ----> UserDto
-//			request.setCharacterEncoding("UTF-8");
+			request.setCharacterEncoding("UTF-8");
 			String userId = request.getParameter("userId");
 			String username = request.getParameter("username");
 			String userEmail = request.getParameter("userEmail");
@@ -54,12 +54,11 @@ public class UserForgotPwdServlet extends HttpServlet {
 			System.out.println("tempPwd = " + tempPwd);
 			
 			// view단 처리
-//			request.setAttribute("user", user);
+			request.setAttribute("user", user);
 			//비밀번호 찾기 성공
 			if(user != null) {
-//				request.getSession().setAttribute("msg","임시 비밀번호는 [ " + user.getUserPwd()+"] 입니다." );
-//				response.sendRedirect(request.getContextPath() + "/");
-		        request.setAttribute("tempPwd", tempPwd);
+
+				request.getSession().setAttribute("tempPwd", tempPwd);
 		      
 
 				System.out.println(1);

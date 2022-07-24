@@ -3,7 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
-	User user = (User) request.getAttribute("user");
+	/* User user = (User) request.getAttribute("user") */;
+		User user = (User) session.getAttribute("user");
 %>
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/css/user/userForgotId.css">
@@ -34,8 +35,9 @@
 				<button type="submit" class="btn btn-primary btn-sm" >찾기</button>
 				<button type="button" class="btn btn-secondary btn-sm"  onClick ="history.back()" >취소</button>
 			</div>
-			
-			
+				<br>
+				<br> 
+				<p id="findIdMSG">회원님의 아이디는 <%= user.getUserId() %> 입니다.</p>
 
 		</form>
 	</div>

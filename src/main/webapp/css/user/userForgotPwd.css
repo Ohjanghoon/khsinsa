@@ -67,7 +67,7 @@
         top: -3px;
         font-size: 10px; color: rgb(0, 70, 113);
     }
-
+	
   
     div:nth-child(3){
         margin-top: 10px;
@@ -131,3 +131,9 @@
         border-radius: 5px;
         cursor: pointer;
     } 
+    
+    #tempPwdMSG{
+    
+    	color:blue;
+    }
+    

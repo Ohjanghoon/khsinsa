@@ -107,7 +107,7 @@ if (loginUser != null) {
 				<option value="nate.com">
 			</datalist>
 		</div>
-		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다.</span>
+		<br> <span class="message_box" id="emailMsg">계정 분실시 본인인증 정보로 사용됩니다뇨.</span>
 
 
 		<%-- 주소  수정 --%>

@@ -12,10 +12,7 @@
 	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
 	int totalPage = (int) request.getAttribute("totalPage");
 	String proNo = (String) request.getAttribute("proNo");
-	
-	for(ProductAttachment att : productattachmentList){
-		String proNoo = att.getProNo();
-	}
+	//System.out.println(productattachmentList);
 %>
 <main>
     <div class="container">
@@ -148,6 +145,10 @@
 	<input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
 </form>
 <script>
+const updateProduct = () => {
+	location.href = "<%= request.getContextPath() %>/admin/productManagement/productEdit?proNo=<%= product.getProNo() %>";	
+};
+
 const deleteProduct = () => {
 	if(confirm("정말 상품을 삭제하시겠습니까?"))
 		document.productDelFrm.submit();
@@ -284,7 +285,5 @@ const deleteProduct = () => {
 			const cPage = Number(document.querySelector("#cPage").textContent) + 1;
 			getPage(cPage);
 		});	
-		
-	
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

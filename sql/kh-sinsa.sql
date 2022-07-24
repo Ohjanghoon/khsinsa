@@ -455,7 +455,18 @@ select * from (select row_number() over(order by pro_no desc) rnum, p.* from pro
 commit;
 insert into comm_comment values ('C21' || seq_comm_comment_comm_comment_no.nextval, 'C20301', 'dlfcks0808', '이 코디 정말 제 스타일인것같아요.', default,2, 'C21141');
 desc comm_comment;
-desc comm_attachment
-select * from comm_attachment where comm_attachment_no = ?
+select * from comm_attachment where comm_no like 'C20%';
 select * from comm_comment;
 select * from kh_user;
+
+
+
+
+
+
+
+
+
+
+
+

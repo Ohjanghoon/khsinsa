@@ -14,6 +14,7 @@
 Community community = (Community) request.getAttribute("community");
 List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
+System.out.println("############commentList = " + commentList + "########################");
 String commNo = (String) request.getAttribute("no");
 %>
 

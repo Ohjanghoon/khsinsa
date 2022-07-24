@@ -38,7 +38,7 @@ public class MyOrderListServlet extends HttpServlet {
 		try {
 			//1. 사용자 입력값
 			int cPage = 1;
-			int numPerPage = 20;
+			int numPerPage = 5;
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
 			} catch (NumberFormatException e) {}
@@ -81,9 +81,9 @@ public class MyOrderListServlet extends HttpServlet {
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리
-			System.out.println("myOrderList = " + myOrderList);
-			System.out.println("proInfoList = " + proInfoList);
-			System.out.println("proAttachList = " + proAttachList);
+//			System.out.println("myOrderList = " + myOrderList);
+//			System.out.println("proInfoList = " + proInfoList);
+//			System.out.println("proAttachList = " + proAttachList);
 			
 			request.setAttribute("myOrderList", myOrderList);
 			request.setAttribute("proInfoList", proInfoList);

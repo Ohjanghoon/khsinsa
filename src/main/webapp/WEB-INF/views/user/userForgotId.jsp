@@ -20,12 +20,12 @@
 
 				<div class="input_area">
 					<label>이름</label> 
-					<input type="text" name="username" class="btn-name" placeholder="등록된 이름을 입력하세요. "> <br>
+					<input type="text" name="username" class="btn-name"> <br>
 				</div>
 
 				<div class="input_area">
 					<label>이메일 </label>
-					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" placeholder="등록된 이메일을 입력하세요. " value=qkralstj08@naver.com>
+					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email">
 				</div>
 				<br>
 

@@ -1,3 +1,4 @@
+<%@page import="java.util.HashSet"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -11,8 +12,11 @@
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/user/mypage/myOrderList.css">
 <%
 	List<Order> myOrderList= (List<Order>) request.getAttribute("myOrderList");
-	List<Product> proInfoList = (List<Product>) request.getAttribute("proInfoList");
-	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	List<Product> _proInfoList = (List<Product>) request.getAttribute("proInfoList");
+	List<ProductAttachment> _proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	
+	HashSet<Product> proInfoList = new HashSet<>(_proInfoList);
+	HashSet<ProductAttachment> proAttachList = new HashSet<>(_proAttachList);
 %>	
 
 <div class="myOrderList_content">
@@ -31,10 +35,11 @@
 		    </thead>
 		    <tbody>
 		    <% if(myOrderList != null && !myOrderList.isEmpty()) {
-				for(Order ord : myOrderList) { 
+				for(Order ord: myOrderList) { 
 					for(Product pro : proInfoList){
+						if(ord.getProNo().equals(pro.getProNo())){
 						for(ProductAttachment proAttach : proAttachList){
-							if(ord.getProNo().equals(pro.getProNo()) && ord.getProNo().equals(proAttach.getProNo())){
+							if(ord.getProNo().equals(proAttach.getProNo())){
 							
 				%>
 				<tr>
@@ -73,10 +78,12 @@
 					<% } %>
 	            
 				</tr>
-		   	<%   		}
-		   			  }
-		   			}
-		   		 }
+		   	<%   	
+		   					}
+		   			  	}
+		   				}
+		   		 	}
+			  	}
 			   }%>
 		    </tbody>
 	           
@@ -84,7 +91,7 @@
           
 	</form>
     <div class="pagebar">
-			<%= request.getAttribute("pagebar") %>
+		<%= request.getAttribute("pagebar") %>
 	</div>    
 </div>
 

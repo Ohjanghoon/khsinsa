@@ -14,7 +14,6 @@
 Community community = (Community) request.getAttribute("community");
 List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
-System.out.println("############commentList = " + commentList + "########################");
 String commNo = (String) request.getAttribute("no");
 %>
 
@@ -55,17 +54,19 @@ String commNo = (String) request.getAttribute("no");
 			</li>
 			
 			<hr style="color: gainsboro;">
-			
-			<li style="margin-top: 50px; background-color: white; height: 500px;">
+
+			<li style="margin-top: 50px; background-color: white; height: auto;">
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
 			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
 				<%}
-					} %>
+					}  %>
+
+					
 				<p><%= community.getCommContent() %></p>
 			</li>
-			
+
 		
 			
 

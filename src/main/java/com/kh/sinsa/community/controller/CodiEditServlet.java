@@ -82,7 +82,7 @@ public class CodiEditServlet extends HttpServlet {
 			String commNo = multiReq.getParameter("commNo");
 			String commTitle = multiReq.getParameter("commTitle");
 			String commContent = multiReq.getParameter("commContent");
-			CommunityExt codi = new CommunityExt(commNo, null, commTitle, commContent, null, 0, 0, 0); 
+			CommunityExt codi = new CommunityExt(commNo, null, commTitle, commContent, null, 0, 0); 
 			
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {

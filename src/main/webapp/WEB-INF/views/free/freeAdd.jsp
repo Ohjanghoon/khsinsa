@@ -25,13 +25,13 @@
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
 				<span class="drop"> 
-				<select onchange="if(this.value) location.href=(this.value);" name="one" class="dropdown-select">
-						<option value="0">게시판 선택</option>
-						<option value="1">OOTD</option>
+				<select onchange="if(this.value) location.href=(this.value);" name="one" id="drop-select">
+						<option value="#">게시판 선택</option>
+						<option value="#">OOTD</option>
 						<option value="<%= request.getContextPath() %>/community/codiList">코디북</option>
-						<option value="<%=request.getContextPath()%>/share/shareEdit" />정보공유</option>
-						<option value="<%= request.getContextPath() %>/community/freeList" selected>자유게시판</option>
-						<option value="5">패션토크</option>
+						<option value="<%=request.getContextPath()%>/share/shareAdd" />정보공유</option>
+						<option value="<%= request.getContextPath() %>/community/freeAdd" selected>자유게시판</option>
+						<option value="#">패션토크</option>
 				</select>
 				</span> 
 				<br> 

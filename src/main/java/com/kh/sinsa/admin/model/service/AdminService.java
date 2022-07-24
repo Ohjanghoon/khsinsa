@@ -159,21 +159,22 @@ public class AdminService {
 				}
 				return result;
 			}
-//updateProduct = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
-//deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
-//findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
 			
-		public int updateProduct(ProductManagementExt product) {
+//			productEdit = update product set pro_name = ?, pro_price = ?, pro_size = ?, pro_content = ? where pro_no = ?
+//			deleteProductAttachment = delete from product_attachment where pro_attachment_no = ?
+//			findProductAttachmentByProAttachmentNo = select * from product_attachment where pro_attachment_no = ?
+			
+		public int productEdit(ProductManagementExt product) {
 			Connection conn = getConnection();
 			int result = 0;
 			try {
 				// 1. 상품 수정
-				result = adminDao.updateProduct(conn, product);
+				result = adminDao.productEdit(conn, product);
 				// 2. 첨부파일 등록
 				List<ProductAttachment> productattachmentList = product.getProductAttachmentList();
 				if(productattachmentList != null || !productattachmentList.isEmpty()) {
-					for(ProductAttachment productattach : productattachmentList) {
-						result = adminDao.insertProductAttachment(conn, productattach);
+					for(ProductAttachment productAttach : productattachmentList) {
+						result = adminDao.insertProductAttachment(conn, productAttach);
 					}
 				}
 				
@@ -208,9 +209,9 @@ public class AdminService {
 
 		public ProductAttachment findProductAttachmentByProAttachmentNo(int proAttachmentNo) {
 			Connection conn = getConnection();
-			ProductAttachment productattach = adminDao.findProductAttachmentByProAttachmentNo(conn, proAttachmentNo);
+			ProductAttachment productAttach = adminDao.findProductAttachmentByProAttachmentNo(conn, proAttachmentNo);
 			close(conn);
-			return productattach;
+			return productAttach;
 		}
 		
 		// 상품 삭제

@@ -16,7 +16,7 @@ public class CommunityExt extends Community {
 	}
 
 	public CommunityExt(String commNo, String userId, String commTitle, String commContent, Date commDate,
-			int commRecommand, int commReadCount, int attachCount) {
+			int commRecommand, int commReadCount) {
 		super(commNo, userId, commTitle, commContent, commDate, commRecommand, commReadCount);
 		this.attachCount = attachCount;
 
@@ -42,7 +42,7 @@ public class CommunityExt extends Community {
 		this.attachments.add(attach);
 	}
 
-
+	
 
 	@Override
 	public String toString() {

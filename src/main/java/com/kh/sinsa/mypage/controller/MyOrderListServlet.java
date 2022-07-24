@@ -58,7 +58,7 @@ public class MyOrderListServlet extends HttpServlet {
 				userId = loginUser.getUserId();
 				//System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n", cPage, numPerPage, start, end);
 				myOrderList = mypageService.orderListFindById(userId, param);
-				//System.out.println("list@MyOrderListServlet = " + list);
+				System.out.println("myOrderList@MyOrderListServlet = " + myOrderList);
 				
 				Product proInfo = null;
 				ProductAttachment proAttach = null;
@@ -72,7 +72,7 @@ public class MyOrderListServlet extends HttpServlet {
 			}
 			
 			//b. pagebar 영역
-			// getTotalMyInquireContent = select * from inquire where user_id = ?
+			// totalMyOrderListContent = select count(*) from kh_order where user_id = ?
 			int totalMyOrderListContent = mypageService.getTotalMyOrderListContent(userId);
 			//System.out.println("totalMyOrderListContent = " + totalMyOrderListContent);
 			

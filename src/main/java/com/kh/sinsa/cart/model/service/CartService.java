@@ -18,7 +18,7 @@ public class CartService {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = cartDao.favoriteAdd(conn, cart);
+			result = cartDao.cartAdd(conn, cart);
 			commit(conn);
 			
 		} catch(Exception e) {

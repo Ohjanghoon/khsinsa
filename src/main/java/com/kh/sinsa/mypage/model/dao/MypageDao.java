@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -483,6 +484,31 @@ public class MypageDao {
 		return new Cart(userId, proNo, cartBuyStock, cartSize, cartDate);
 	}
 	
+	//장바구니 수 조회
+	public int getTotalMyCartListContent(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalMyCartListContent = 0;
+		String sql = prop.getProperty("totalMyCartListContent");
+		//totalMyCartListContent = select count(*) from cart where user_id = ?
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalMyCartListContent = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new MypageException("장바구니 수 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalMyCartListContent;
+	}
+	
 	//장바구니 수량 변경
 	public int editStock(Connection conn, String userId, String proNo, int cartBuyStock) {
 		PreparedStatement pstmt = null;
@@ -505,6 +531,34 @@ public class MypageDao {
 		return result;
 	}
 
+	//장바구니 삭제
+	public int myCartDelete(Connection conn, String userId, String[] cartList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("myCartDelete");
+		//myCartDelete = delete from cart where user_id = ? and pro_no = ? and cart_size = ?
+		
+		try {
+			for(String cartNo : cartList) {
+				String[] splitCartNo = cartNo.split("/");
+				String proNo = splitCartNo[0];
+				String cartSize = splitCartNo[1];
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, proNo);
+				pstmt.setString(3, cartSize);
+				
+				result = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			throw new MypageException("장바구니 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	//관심상품 조회
 	public List<String> favListFindById(Connection conn, String userId, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
@@ -559,4 +613,8 @@ public class MypageDao {
 		return totalMyFavListContent;
 	}
 //##########janghoon MypageDao end#############
+
+
+
+	
 }

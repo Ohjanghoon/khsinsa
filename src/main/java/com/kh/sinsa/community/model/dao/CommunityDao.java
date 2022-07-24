@@ -874,9 +874,4 @@ public class CommunityDao {
 	}
 
 
-
-
-
-
-
 }

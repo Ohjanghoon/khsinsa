@@ -466,9 +466,6 @@ public class CommunityService {
 			return result;
 		}
 
-
-
-
 		public List<Community> codiAlign(Map<String, Object> param) {
 			Connection conn = getConnection();
 			List<Community> codiList = communityDao.codiAlign(conn, param);

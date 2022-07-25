@@ -50,10 +50,13 @@
 				%>
 				<tr>
 					<td>
-						<input type="checkbox" name="proNo" value="<%= cart.getProNo() %>/<%= cart.getCartSize() %>" />
+						<input type="checkbox"
+							class="cartProNo" 
+							name="proNo" 
+							value="<%= cart.getProNo() %>/<%= cart.getCartSize() %>/<%= cart.getCartBuyStock() %>" />
 					</td>
 	            	
-					<td class="proNo">
+					<td class="proInfo">
 						<div class="proInfo">
 				            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
 				            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
@@ -103,13 +106,21 @@
 			<%= request.getAttribute("pagebar") %>
 		</div>    
 		<div id="myCart_btn_order_area">
-			<button type="submit" id="btn_order" onclick="">선택 상품 주문하기</button>           
+			<button type="button" id="btn_order" onclick="myCartOrder()">선택 상품 주문하기</button>           
 		</div>
 	</form>
+	<%-- 장바구니 수량 변경 --%>
 	<form action="<%= request.getContextPath() %>/mypage/myCart/editStock " method="post" name="myCartEditFrm">
 		<input type="hidden" name="proNo" value="" />
 		<input type="hidden" name="cartBuyStock" value=""/>
 	</form>
+	
+	<%-- 장바구니 선택 상품 주문 
+	<form action="<%= request.getContextPath() %>/product/order/cartOrder" method="post" name="myCartOrderFrm">
+		<input type="hidden" name="proNo" value="" />
+		<input type="hidden" name="cartBuyStock" value=""/>
+		<input type="hidden" name="cartSize" value="" />
+	</form> --%>
 </div>
 	
 <script>
@@ -126,14 +137,24 @@ const checkAllorNone = (obj) => {
 /* 삭제버튼 처리 */
 const myCartListDel = () => {
 	
-	const answer = confirm("삭제하시겠습니까?");
-	
-	if(answer){
+	if(confirm("삭제하시겠습니까?")){
 		const frm = document.myCartFrm;
 		frm.action = "<%= request.getContextPath() %>/mypage/myCartDel";
 		frm.submit();
 	}
 };
+
+/* 선택 상품 주문 */
+const myCartOrder = () => {
+	
+	if(confirm("선택한 상품을 주문하시겠습니까?")){
+		const frm = document.myCartFrm;
+		frm.action = "<%= request.getContextPath() %>/product/order/cartOrder";
+		frm.submit();
+	}	
+
+};
+
 /* 수량 변경 설정 */
 document.querySelectorAll(".btn_edit").forEach((btn) => {
 	
@@ -160,7 +181,7 @@ document.querySelectorAll(".cartBuyStock").forEach((inp) => {
 	});
 });
 
-/* 마이너스 버튼 설정*/
+/* 마이너스 버튼 설정 */
 document.querySelectorAll(".btn_stock_minus").forEach((btn) => {
 	
 	btn.addEventListener('mousedown', (e) => {
@@ -180,7 +201,7 @@ document.querySelectorAll(".btn_stock_minus").forEach((btn) => {
 		});
 });
 
-/* 플러스 버튼 설정*/
+/* 플러스 버튼 설정 */
 document.querySelectorAll(".btn_stock_plus").forEach((btn) => {
 	
 	btn.addEventListener('mouseup', (e) => {
@@ -193,5 +214,7 @@ document.querySelectorAll(".btn_stock_plus").forEach((btn) => {
 		}
 	});
 });
+
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

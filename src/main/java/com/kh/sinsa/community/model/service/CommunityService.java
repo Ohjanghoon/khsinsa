@@ -753,24 +753,26 @@ public class CommunityService {
 
 		public List<Community> talkAlign(Map<String, Object> param) {
 			Connection conn = getConnection();
-			List<Community> codiList = communityDao.talkAlign(conn, param);
+			List<Community> list = communityDao.talkAlign(conn, param);
 			close(conn);
-			return codiList;
+			return list;
 		}
 
 		public int getTalkTotalContent() {
 			Connection conn = getConnection();
-			int codiTotalContent = communityDao.getTalkTotalContent(conn);
+			int totalContent = communityDao.getTalkTotalContent(conn);
 			close(conn);
-			return codiTotalContent;
+			return totalContent;
 		}
 
 		public List<Community> talkSearch(Map<String, Object> param) {
 			Connection conn = getConnection();
-			List<Community> codiList = communityDao.talkSearch(conn, param);
+			List<Community> list = communityDao.talkSearch(conn, param);
 			close(conn);
-			return codiList;
+			return list;
 		}
+
+
 		
 }
 

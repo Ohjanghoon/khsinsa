@@ -10,7 +10,7 @@
 
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/share/shareList.css" />
-        <div class="content_wrapper">
+        <div class="container">
          	<div id="header2"></div>
                 
                 

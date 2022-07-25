@@ -91,9 +91,20 @@ public class UserService {
 	}
 	
 	
-	public int editPassword(String userId, String newPwd) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int editPassword(String userId,String tempPwd, String newPwd) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = userDao.editPassword(conn, userId,tempPwd, newPwd);
+			commit(conn);
+			System.out.println(5);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; // controller에 예외 던짐.
+		} finally {
+			close(conn);
+		}
+		return result;
 	}
 
 
@@ -140,6 +151,10 @@ public class UserService {
 		
 		return result;
 	}
+
+	
+
+		
 
 	
 	

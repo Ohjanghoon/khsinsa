@@ -61,8 +61,6 @@
                       COMMUNITY
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="#">Outfit Of The Day</a></li>
-                      <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<%= request.getContextPath() %>/community/codiList">Style Book</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<%=request.getContextPath()%>/share/shareList">Info Sharing</a></li>
@@ -73,7 +71,7 @@
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/notice/noticeView">공지사항</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/notice/noticeList">공지사항</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/inquire/inquireList">1:1문의</a>

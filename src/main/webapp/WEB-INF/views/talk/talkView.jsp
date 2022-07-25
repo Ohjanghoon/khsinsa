@@ -21,36 +21,36 @@ String commNo = community.getCommNo();
 
 <div class="container">
 
-	<div id="headlist">
+
 		<div id="header2">COMMUNITY</div>
-		<nav class="navi">
-			<ul>
-				<li><a href="#">OOTD</a></li>
-				<li><a href="<%= request.getContextPath()%>/community/freeList">코디북</a></li>
-				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
-				<li><a href="<%= request.getContextPath()%>/community/freeList">자유게시판</a></li>
-				<li><a href="<%= request.getContextPath() %>/community/talkList">">패션토크</a></li>
-			</ul>
-		</nav>
+		<nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+	          <ul class="nav me-auto">
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/codiList" class="nav-link link-dark px-2">코디북</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/share/shareList" class="nav-link link-dark px-2">정보공유</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/freeList" class="nav-link link-dark px-2">자유게시판</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/talkList" class="nav-link link-dark px-2">패션토크</a></li>
+	          </ul>
+	      </nav>
+        
+			<br><br><br>
 
 
-	</div>
-	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">패션토크 <span style="font-size: 18px;">Fashion Talk</span>
+	<h2 style="font-size: 40px; color: green; font-weight:bold;">패션토크 <span style="font-size: 18px;">Fashion Talk</span>
 	</h2>
-	<hr style="border-top: 3px solid rgb(101, 101, 252);">
+	<hr style="border-top: 3px solid green;">
 	<div class="main">
 
 		<ul>
 			<li id="title"><h2><%=community.getCommTitle()%></h2></li>
-			<li id="writer"><h3><%=community.getUserId()%></h3></li>
-			<li>
+			<li id="writer"><h4>작성자 : <%=community.getUserId()%></h4></li>
+			<li id="readRecomm">
 				<span id="readCount">조회수 : <%=community.getCommReadCount()%></span>
 				<span> | 추천수 : </span><span id="recommand"><%=community.getCommRecommand()%></span>
 				<button type="button" id="like" style="border:0px; background-color:white;">
 				<img id="heart" src="<%= request.getContextPath() %>/images/emptyHeart.png" style="width: 20px; height: auto">
 				</button>
 			</li>
-			
+			<br>
 			<li id="date">
 				<span>작성일 <%= new SimpleDateFormat("yy-MM-dd HH:mm").format(community.getCommDate()) %></span>
 			</li>
@@ -61,7 +61,7 @@ String commNo = community.getCommNo();
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
-			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
+			%> <img src ="<%= request.getContextPath() %>/upload/talk/<%= attach.getRenamedFilename() %>" name="upload">
 				<%}
 					}  %>
 
@@ -80,11 +80,12 @@ String commNo = community.getCommNo();
 		%>
 
 			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-			<li>
-				<input type="button" value="수정하기" onclick="editCommunity()">
-				<input type="button" value="삭제하기" onclick="deleteCommunity()">
+			
+			<li id="editDel">
+				<input type="button" value="수정하기" onclick="editCommunity()" style="margin-right : 10px; background-color : black; color : white;"  >
+				<input type="button" value="삭제하기" onclick="deleteCommunity()" style=" background-color : black; color : white;">
 			</li>
-		
+			<br>
 		<% } %>	
 		
 		
@@ -268,7 +269,7 @@ const deleteCommunity = () => {
 };
 
 const editCommunity = () => {
-	location.href = "<%= request.getContextPath() %>/share/shareEdit?no=<%= community.getCommNo() %>";	
+	location.href = "<%= request.getContextPath() %>/community/talkEdit?no=<%= community.getCommNo() %>";	
 };
 
 </script>

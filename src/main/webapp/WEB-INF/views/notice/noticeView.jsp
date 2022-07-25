@@ -13,12 +13,12 @@ Notice notice = (Notice) request.getAttribute("notice");
 %>
 
 
-<div class="content_wrapper">
+<div class="container">
 
 
 		<div id="header2"></div>
 
-	<h2 style="font-size: 35px; color: red;">공지사항 <span style="font-size: 18px;"> Notice</span>
+	<h2 style="font-size: 35px; color: red; font-weight:bold;">공지사항 <span style="font-size: 18px;"> Notice</span>
 	</h2>
 	<hr style="border-top: 3px solid red;">
 	<div class="main">
@@ -51,11 +51,15 @@ Notice notice = (Notice) request.getAttribute("notice");
 		
 		<% } %>
 
-			<hr>
-
+			
+				
+		
 		</ul>
-
-	</div>
+		<div id="goList">
+			<input type="button" value="목록으로" onclick="location.href = '<%=request.getContextPath() %>/notice/noticeList'" id="btn_goList">
+		</div>	
+		
+</div>		
 
 </div>
 

@@ -15,11 +15,10 @@
 	    </section>
 	    <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
 	          <ul class="nav me-auto">
-	            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">OTTD</a></li>
 	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/codiList" class="nav-link link-dark px-2">코디북</a></li>
-	            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">정보공유</a></li>
-	            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">자유게시판</a></li>
-	            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">패션토크</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/share/shareList" class="nav-link link-dark px-2">정보공유</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/freeList" class="nav-link link-dark px-2">자유게시판</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/talkList" class="nav-link link-dark px-2">패션토크</a></li>
 	          </ul>
 	      </nav>
 	      

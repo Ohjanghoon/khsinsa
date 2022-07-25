@@ -35,6 +35,9 @@
     margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
 }
 
+#header2{
+	width:1024px;
+}
 #readRecomm{
 	float : right;
 }
@@ -77,6 +80,10 @@ textarea{
     height: 56px;
 }
 
+.upload{
+	width:800px;
+	height : auto;
+}
 
 table#tbl-comment{width:100%; height:auto; margin:0 auto; border-collapse:collapse;} 
 table#tbl-comment tr td{border-bottom:1px solid; border-top:1px solid; padding:5px; text-align:left; line-height:120%;}

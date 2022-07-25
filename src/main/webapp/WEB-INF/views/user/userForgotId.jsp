@@ -22,12 +22,12 @@
 
 				<div class="input_area">
 					<label>이름</label> 
-					<input type="text" name="username" class="btn-name"> <br>
+					<input type="text" name="username" class="btn-name" value="박민서"> <br>
 				</div>
 
 				<div class="input_area">
 					<label>이메일 </label>
-					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email">
+					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" value="qkralstj08@naver.com">
 				</div>
 				<br>
 
@@ -40,9 +40,11 @@
 				<br> 
 				 <%-- <p id="findIdMSG">회원님의 아이디는 <%= user %> 입니다.</p> --%> 
 				 	
+				  <div class ="findIdColor">
 				  <%if(userId != null) { %> 
-				   <p id="findIdMSG">회원님의 아이디는 <%=userId%> 입니다.</p>    
-				<%} %>
+				   <p>회원님의 아이디는 <span id="findIdMSG"><%=userId%></span> 입니다.</p>    
+				  <%} %>
+				  </div>
 		</form>
 	</div>
 </div>

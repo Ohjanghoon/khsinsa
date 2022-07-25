@@ -35,17 +35,17 @@
            			String _category = comm.getCommNo().substring(0, 2);
            			
            			String category = "";
+           			String categoryView = "";
 					switch(_category) {
-						case "C1" : category = "ootd 게시판"; break;
-						case "C3" : category = "정보공유 게시판"; break;
-						case "C4" : category = "자유게시판"; break;
-						case "C5" : category = "패션토크 게시판"; break;
+						case "C3" : category = "정보공유 게시판"; categoryView="/share/shareView"; break;
+						case "C4" : category = "자유게시판"; categoryView="/share/shareView"; break;
+						case "C5" : category = "패션토크 게시판"; categoryView="/share/shareView"; break;
                		}
            	%>
                <tr>
                    	<td><input type="checkbox" id="commNo" name="commNo" value="<%= comm.getCommNo() %>"></td>
                   	<td><%= category %></td>
-                   	<td><a href=""><%= comm.getCommTitle() %></a></td>
+                   	<td><a href="<%= request.getContextPath() %><%= categoryView %>?no=<%= comm.getCommNo() %>"><%= comm.getCommTitle() %></a></td>
                    	<td><%= comm.getCommDate() %></td>
                  	<td><%= comm.getCommReadCount() %></td>
                  	<td><%= comm.getCommRecommand() %></td>

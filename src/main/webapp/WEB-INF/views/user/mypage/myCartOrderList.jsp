@@ -1,4 +1,5 @@
 <%@page import="java.text.DecimalFormat"%>
+<%@page import="com.kh.sinsa.cart.model.dto.Cart"%>
 <%@page import="com.kh.sinsa.product.model.dto.ProductAttachment"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kh.sinsa.product.model.dto.Product"%>
@@ -8,12 +9,11 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/product/order.css" />
 <%
-	Product product = (Product) request.getAttribute("product");
-	User user = (User) request.getAttribute("user");
-	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
-	int orderAmount = (int) request.getAttribute("orderAmount");
-	String size = (String) request.getAttribute("size");
-	int totalPrice = product.getProPrice() * orderAmount;
+	List<Product> proList = (List<Product>) request.getAttribute("proList");
+	List<ProductAttachment> proAttachList = (List<ProductAttachment>) request.getAttribute("proAttachList");
+	List<Cart> cartList = (List<Cart>) request.getAttribute("cartList");
+	int totalPrice = 0;
+	int orderPrice = 0;
 	DecimalFormat df = new DecimalFormat("###,###");
 %>
 <main>
@@ -24,12 +24,7 @@
         <hr>
   
        <form action="<%= request.getContextPath() %>/order/khOrder" name="orderFrm" method='post'>
-       	<input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
-       	<input type="hidden" name="orderPrice" value="<%= totalPrice %>" />
-       	<input type="hidden" name="orderAmount" value="<%= orderAmount %>" />
-       	<input type="hidden" name="userId" value="<%= loginUser.getUserId() %>" />
-       	<input type="hidden" name="orderEmail" value="<%= loginUser.getUserEmail() %>"/>
-       	<input type="hidden" name="orderPhone" value="<%= loginUser.getUserPhone() %>"/>
+ 
 			<div id="last">
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="radio" name="address" id="nowAddress" value="option1" checked>
@@ -43,16 +38,17 @@
 	          	<div class="row g-4">
 	            <div class="col-sm-4">
 	            <br />
+	              <input type="hidden" name="userId" value="<%= loginUser.getUserId() %>" />
 	              <label for="firstName" class="form-label">주문자</label>
 	              <input type="text" class="form-control" name="userName" id="userName" placeholder="press your Name" value="<%= loginUser.getUserName() %>">
 	              </div>
 	            </div>
-	            
-	            <div class="col-7">
+	
+				<div class="col-7">
 	              <label for="phone" class="form-label">휴대전화</label>
 	              <input type="text" class="form-control" name="orderPhone" id="orderPhone" placeholder="press your Phone" value="<%= loginUser.getUserPhone() %>">
 	            </div>
-	
+	            
 	            <div class="col-7">
 	              <label for="email" class="form-label">Email</label>
 	              <input type="email" class="form-control" name="orderEmail" id="orderEmail" placeholder="press your Email" value="<%= loginUser.getUserEmail() %>">
@@ -92,38 +88,53 @@
                  </tr>
                </thead>
                <tbody>
+	    <% if(cartList != null && !cartList.isEmpty()) {
+			for(Cart cart : cartList) { 
+				for(Product pro : proList){
+				
+					if(cart.getProNo().equals(pro.getProNo())){
+					orderPrice = pro.getProPrice() * cart.getCartBuyStock();
+					totalPrice += orderPrice;	
+					for(ProductAttachment proAttach : proAttachList){
+						if(cart.getProNo().equals(proAttach.getProNo())){
+		%>
                  <tr>
                    <th scope="row">
-<% 
-for(ProductAttachment att : attachList) {
-%>
-       <img src="<%= request.getContextPath() %>/upload/product/<%= att.getProRenameFilename() %>" alt="">
-<% 
- break; } 
-%>
+		       	   <img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProRenameFilename() %>" alt="">
                    </th>
 					<td>
-                       <p><%= product.getProName() %></p>
+						<input type="hidden" name="proNo" value="<%= pro.getProNo() %>" />
+                       <p><%= pro.getProName() %></p>
 					</td>
 					<td>
-                       <p><%= size %></p>
+                       <p><%= cart.getCartSize() %></p>
 					</td>
                    <td>
-                       <p><%= orderAmount %></p>
+                   <input type="hidden" name="orderAmount" value="<%= cart.getCartBuyStock() %>" />
+                       <p><%= cart.getCartBuyStock() %></p>
                    </td>
                    <td>
                        <p>무료</p>
                    </td>
                    <td>
-                       <p><%= df.format(totalPrice) %>원</p>
+                   <input type="hidden" name="orderPrice" value="<%= orderPrice %>" />
+                       <p><%= df.format(orderPrice) %>원</p>
                    </td>
                  </tr>
+	   	<%   			}
+		   			}
+		   			}
+		   		}
+		   	}
+		   }
+		%>
                </tbody>
              </table>
              <br /><br />
            <div class="product-price">
             <h4>결제 금액</h4>
             <p><%= df.format(totalPrice) %>원</p>
+            <input type="hidden" name="orderPrice" value="<%= totalPrice %>" />
             <hr />
             <h4>할인 금액</h4>
             <p>0원</p>
@@ -139,59 +150,59 @@ for(ProductAttachment att : attachList) {
 </main>
 <script>
 
-	/* 기존 배송지 선택시 기존값 설정 */
-	document.querySelector('#nowAddress').addEventListener('click',(e) => {
-		document.querySelector('#userName').value = "<%= loginUser.getUserName() %>";
-		document.querySelector('#orderPhone').value = "<%= loginUser.getUserPhone() %>";
-		document.querySelector('#orderEmail').value = "<%= loginUser.getUserEmail() %>";
-		document.querySelector('#orderAddress1').value = "<%= loginUser.getUserAddress() %>";
-		document.querySelector('#orderAddress2').value = "";
-	});
-	
-	/*  new 배송지 선택시 val 초기화 */
-	document.querySelector('#newAddress').addEventListener('click',(e) => {
-		document.querySelector('#userName').value = "";
-		document.querySelector('#orderPhone').value = "";
-		document.querySelector('#orderEmail').value = "";
-		document.querySelector('#orderAddress1').value = "";
-		document.querySelector('#orderAddress2').value = "";
-	});
+/* 기존 배송지 선택시 기존값 설정 */
+document.querySelector('#nowAddress').addEventListener('click',(e) => {
+	document.querySelector('#userName').value = "<%= loginUser.getUserName() %>";
+	document.querySelector('#orderPhone').value = "<%= loginUser.getUserPhone() %>";
+	document.querySelector('#orderEmail').value = "<%= loginUser.getUserEmail() %>";
+	document.querySelector('#orderAddress1').value = "<%= loginUser.getUserAddress() %>";
+	document.querySelector('#orderAddress2').value = "";
+});
 
-	
-	document.orderFrm.onsubmit = (e) => {
-		// 이름
-		if(document.querySelector('#userName').value == ""){
-			e.preventDefault();
-			alert("이름을 작성해주세요.");
-			return false;
-		}
-		
-		// 이메일
-		if(document.querySelector('#orderEmail').value == ""){
-			e.preventDefault();
-			alert("이메일을 작성해주세요.");
-			return false;
-		}
-		
-		// 배송지검사
-		if(document.querySelector('#orderAddress1').value == ""){
-			e.preventDefault();
-			alert("배송지를 작성해주세요.");
-			return false;
-		}
-		if(document.querySelector('#orderAddress2').value == ""){
-			e.preventDefault();
-			alert("상세주소를 작성해주세요.");
-			return false;
-		}
-		// 요청사항
-		if(document.querySelector('#orderReq').value == 'none'){
-			e.preventDefault();
-			alert("요청사항을 선택해주세요.");
-			return false;
-		}
-		
+/*  new 배송지 선택시 val 초기화 */
+document.querySelector('#newAddress').addEventListener('click',(e) => {
+	document.querySelector('#userName').value = "";
+	document.querySelector('#orderPhone').value = "";
+	document.querySelector('#orderEmail').value = "";
+	document.querySelector('#orderAddress1').value = "";
+	document.querySelector('#orderAddress2').value = "";
+});
+
+
+document.orderFrm.onsubmit = (e) => {
+	// 이름
+	if(document.querySelector('#userName').value == ""){
+		e.preventDefault();
+		alert("이름을 작성해주세요.");
+		return false;
 	}
+	
+	// 이메일
+	if(document.querySelector('#orderEmail').value == ""){
+		e.preventDefault();
+		alert("이메일을 작성해주세요.");
+		return false;
+	}
+	
+	// 배송지검사
+	if(document.querySelector('#orderAddress1').value == ""){
+		e.preventDefault();
+		alert("배송지를 작성해주세요.");
+		return false;
+	}
+	if(document.querySelector('#orderAddress2').value == ""){
+		e.preventDefault();
+		alert("상세주소를 작성해주세요.");
+		return false;
+	}
+	// 요청사항
+	if(document.querySelector('#orderReq').value == 'none'){
+		e.preventDefault();
+		alert("요청사항을 선택해주세요.");
+		return false;
+	}
+	
+}
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

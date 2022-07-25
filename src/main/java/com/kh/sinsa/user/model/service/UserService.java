@@ -89,6 +89,13 @@ public class UserService {
 		}
 		return result;
 	}
+	
+	
+	public int editPassword(String userId, String newPwd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	// ##########minseo UserService end#############
 
@@ -117,6 +124,7 @@ public class UserService {
 		return user;
 	}
 
+	
 	
 	
 

@@ -41,27 +41,7 @@ if (loginUser != null) {
 		</div>
 		<br> <span class="message_box" id="idMsg"></span>
 
-		<%-- 비밀번호 수정 --%>
-		<%-- <div class="input_area">
-			<label>비밀번호 <span class="essential_mark">*</span></label> 
-			<input type="password" name="userPwd" id="userPwd" autocomplete="off" value="<%=loginUser.getUserPwd() %>" required>
-			<button type="button" id="btn_show_pwd">
-				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
-			</button>
-		</div> --%>
-		<br> <span class="message_box" id="pwdMsg">8~12자리
-			숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span> 
-
-		<%-- 비밀번호 확인 --%>
-<!-- 		<div class="input_area">
-			<label>비밀번호 확인 <span class="essential_mark">*</span></label> 
-			<input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
-		</div>
-		<br> <span class="message_box" id="pwdCheckMsg"></span>  -->
-
 		<%-- 이름  수정 --%>
-
-
 		<div class="input_area">
 			<label>이름 <span class="essential_mark">*</span></label> 
 			<input type="text" name="userName" id="userName" value="<%=loginUser.getUserName()%>" autocomplete="off" required>
@@ -119,96 +99,18 @@ if (loginUser != null) {
 		<%-- 수정/취소/탈퇴 버튼 영역 --%>
 		<div class="btn_area">
 		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
-		<button type="reset" class="btn btn-secondary btn-lg">취소하기</button>
+		<a type="reset" class="btn btn-secondary btn-lg" href="<%= request.getContextPath() %>/user/userPasswordEdit">비밀번호 수정</a>
 		<br>
-		<button type="submit"  id="withdrwal" class="withdrwal" onclick=>탈퇴하기</button>
+		 <a  href="<%= request.getContextPath() %>/user/userDelete">회원 탈퇴</a> 
 		</div>
 	
 	</form>
 </div>
 <script>
-
-//----------------------------------비밀번호----------------------------------------
-//비밀번호 유효성 검사
-/* const checkPwd = () => {
-	const tempPwd = document.querySelector("#userPwd").value;
-	const pwdRegExp1 = /^[\da-zA-z!@#$%&]{8,12}$/g;
-	const pwdRegExp2 = /\d+/g;
-	const pwdRegExp3 = /[a-zA-z]+/g;
-	const pwdRegExp4 = /[!@#$%&]+/;
-	const pwdRegExp5 = /`\${tempId}`/;
-	
-	if(tempPwd === ""){
-	    showMsg(pwdMsg, "필수 정보입니다.");
-	    return false;
-	}
-	if(!pwdRegExp1.test(tempPwd)){
-	    showMsg(pwdMsg, "8~12자리 숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.")
-	    return false;
-	}
-	if(!pwdRegExp2.test(tempPwd)){
-	    showMsg(pwdMsg, "숫자를 하나이상 반드시 포함해주세요.");
-	    return false;
-	}
-	if(!pwdRegExp3.test(tempPwd)){
-	    showMsg(pwdMsg, "영대소문자를 하나이상 반드시 포함해주세요.");
-	    return false;
-	}
-	if(!pwdRegExp4.test(tempPwd)){
-	    showMsg(pwdMsg, "특수문자(!, @, #, $, %, &)를 하나이상 반드시 포함해주세요.");
-	    return false;
-	}
-	showMsg(pwdMsg, "✔️");
-	
-	userPwdCheck.focus();
-	return true;
-}; */
-//onblur시 비밀번호 유효성 검사 체크
-/* userPwd.onblur = () => {
-checkPwd();
-}; */
-
-
-//----------------------------------비밀번호 확인----------------------------------------
-//비밀번호 일치여부 확인
-/* const checkPwdCheck = () => {
-    const tempPwdCheck = document.querySelector("#userPwdCheck").value;
-
-    if(tempPwdCheck === ""){
-        showMsg(pwdCheckMsg, "필수 정보입니다.");
-        return false;
-    }
-    if(userPwd.value !== userPwdCheck.value){
-        showMsg(pwdCheckMsg, "비밀번호가 일치하지 않습니다.");
-        return false;
-    }
-
-    showMsg(pwdCheckMsg, "✔️");
-    return true;
-}; */
-//onblur시 비밀번호 확인 일치여부 체크
-/* userPwdCheck.onblur = () => {
-    checkPwdCheck();
-}; */
-
-//-----------------------------눈 아이콘 클릭시 비밀번호 보이기------------------------------------
-/* document.querySelector("#btn_show_pwd").addEventListener('mousedown', () => {
-    const ele_pwd = document.querySelector("#userPwd");
-    const ele_pwdCheck = document.querySelector("#userPwdCheck");
-    btn_show_pwd.classList.add('clicked');
-
-    ele_pwd.type = "text";
-    ele_pwdCheck.type = "text";
-});
-btn_show_pwd.addEventListener('mouseup', () => {
-    const ele_pwd = document.querySelector("#userPwd");
-    const ele_pwdCheck = document.querySelector("#userPwdCheck");
-    btn_show_pwd.classList.remove('clicked');
-
-    ele_pwd.type = "password";
-    ele_pwdCheck.type = "password";
-}); */
-
+//유효성 검사 메세지
+const showMsg = (obj, msg) => {
+    obj.innerHTML = msg;
+};
 //----------------------------------이름----------------------------------------
 //이름 유효성 검사
 const checkName = () => {

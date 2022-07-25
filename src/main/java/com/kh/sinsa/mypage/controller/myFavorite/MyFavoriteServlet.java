@@ -1,4 +1,4 @@
-package com.kh.sinsa.mypage.controller;
+package com.kh.sinsa.mypage.controller.myFavorite;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import com.kh.sinsa.product.model.dto.ProductAttachment;
 import com.kh.sinsa.user.model.dto.User;
 
 /**
- * Servlet implementation class MyOrderListServlet
+ * Servlet implementation class MyFavoriteServlet
  */
-@WebServlet("/mypage/myOrderList")
-public class MyOrderListServlet extends HttpServlet {
+@WebServlet("/mypage/myFavorite")
+public class MyFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	/**
@@ -31,14 +31,14 @@ public class MyOrderListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = "";
-		List<Order> myOrderList = null;
+		List<String> myFavList = null;
 		List<Product> proInfoList = new ArrayList<>();
 		List<ProductAttachment> proAttachList = new ArrayList<>();
 		
 		try {
 			//1. 사용자 입력값
 			int cPage = 1;
-			int numPerPage = 5;
+			int numPerPage = 10;
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
 			} catch (NumberFormatException e) {}
@@ -57,27 +57,27 @@ public class MyOrderListServlet extends HttpServlet {
 			if(loginUser != null) {
 				userId = loginUser.getUserId();
 				//System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n", cPage, numPerPage, start, end);
-				myOrderList = mypageService.orderListFindById(userId, param);
-				System.out.println("myOrderList@MyOrderListServlet = " + myOrderList);
+				myFavList = mypageService.favListFindById(userId, param);
+				//System.out.println("list@MyOrderListServlet = " + list);
 				
 				Product proInfo = null;
 				ProductAttachment proAttach = null;
-				for(Order ord : myOrderList) {
-					proInfo = mypageService.findByProNo(ord.getProNo());
+				for(String proNo : myFavList) {
+					proInfo = mypageService.findByProNo(proNo);
 					proInfoList.add(proInfo);
 					
-					proAttach = mypageService.findAttachByProNo(ord.getProNo());
+					proAttach = mypageService.findAttachByProNo(proNo);
 					proAttachList.add(proAttach);
 				}
 			}
 			
 			//b. pagebar 영역
-			// totalMyOrderListContent = select count(*) from kh_order where user_id = ?
-			int totalMyOrderListContent = mypageService.getTotalMyOrderListContent(userId);
+			// getTotalMyFavListContent = select * from inquire where user_id = ?
+			int totalMyFavListContent = mypageService.getTotalMyFavListContent(userId);
 			//System.out.println("totalMyOrderListContent = " + totalMyOrderListContent);
 			
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyOrderListContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalMyFavListContent, url);
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리
@@ -85,11 +85,11 @@ public class MyOrderListServlet extends HttpServlet {
 //			System.out.println("proInfoList = " + proInfoList);
 //			System.out.println("proAttachList = " + proAttachList);
 			
-			request.setAttribute("myOrderList", myOrderList);
+			request.setAttribute("myFavList", myFavList);
 			request.setAttribute("proInfoList", proInfoList);
 			request.setAttribute("proAttachList", proAttachList);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myOrderList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/user/mypage/myFavorite.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

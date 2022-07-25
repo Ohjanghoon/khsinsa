@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.share;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,13 +17,13 @@ import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class CodiAlignServlet
+ * Servlet implementation class CommunityAlignServlet
  */
-@WebServlet("/community/codiAlign")
-public class CodiAlignServlet extends HttpServlet {
+@WebServlet("/share/shareAlign")
+public class CommunityAlignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();   
- 
+	 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -32,7 +32,7 @@ try {
 			
 			// 사용자 입력값
 			int cPage = 1;
-			int numPerPage = 6;
+			int numPerPage = 10;
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -49,23 +49,19 @@ try {
 		
 			
 			// 업무로직
-			List<Community> codiList = communityService.codiAlign(param);
-			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
-			int codiTotalContent = communityService.getCodiTotalContent();
+			List<Community> list = communityService.communityAlign(param);
+			int totalContent = communityService.getTotalContent();
 			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 
 			// view단 처리
-			request.setAttribute("codiAttachList", codiAttachList);
-			request.setAttribute("codiList", codiList);
+			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/codi_community/codiList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/share_community/shareList.jsp").forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-
-	
 }

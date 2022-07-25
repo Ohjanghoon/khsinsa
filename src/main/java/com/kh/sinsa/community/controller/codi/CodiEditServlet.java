@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.codi;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,73 +21,68 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
- * Servlet implementation class CommunityEditServlet
+ * Servlet implementation class CodiEditServlet
  */
-@WebServlet("/share/shareEdit")
-public class CommunityEditServlet extends HttpServlet {
+@WebServlet("/community/codiEdit")
+public class CodiEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String no = request.getParameter("no");
-			String commNo = request.getParameter("no");
-					
-			CommunityExt community = communityService.findByNo(no);
-			List<CommunityAttachment> attach = communityService.findAttachmentByCommNo(commNo);
+			// 사용자 입력값
+			String commNo = request.getParameter("commNo");
+			String no = request.getParameter("commNo");
 			
-			request.setAttribute("community", community);
-			request.setAttribute("attach", attach);
-			request.getRequestDispatcher("/WEB-INF/views/share_community/shareEdit.jsp")
-				.forward(request, response);
+			// 업무로직
+			Community codi = communityService.findByNo(no);
+			List<CommunityAttachment> codiAttach = communityService.findAttachmentByCommNo(commNo);
 			
-			System.out.println("1 comm : " + attach);
+			// view처리
+			request.setAttribute("codi", codi);
+			request.setAttribute("codiAttach", codiAttach);
+			request.getRequestDispatcher("/WEB-INF/views/codi_community/codiEdit.jsp")
+			.forward(request, response);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 1. 서버컴퓨터 파일저장
 			ServletContext application = getServletContext();
-			String saveDirectory = application.getRealPath("/upload/share");
-			int maxPostSize = 1024 * 1024 * 10; // 10MB
+			String saveDirectory = application.getRealPath("/upload/codi");
+			int maxPostSize = 1024 * 1024 * 10 * 10; // 100MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
-						
-			MultipartRequest multiReq = new MultipartRequest(
-					request, saveDirectory, maxPostSize, encoding, policy);
-				
+			
+			MultipartRequest multiReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
+	
 			// 2. db update처리
 			// 삭제파일 처리
 			String[] delFiles = multiReq.getParameterValues("delFile");
 			if(delFiles != null) {
 				for(String temp : delFiles) {
-					String attachNo = temp;
+					String commAttachNo = temp;
 					// 첨부파일 삭제
-					CommunityAttachment attach = communityService.findAttachmentByNo(attachNo);
-					File delFile = new File(saveDirectory, attach.getRenamedFilename());
+					CommunityAttachment commAttach = communityService.findCodiAttachmentByNo(commAttachNo);
+					File delFile = new File(saveDirectory, commAttach.getRenamedFilename());
 					delFile.delete();
 					// db 레코드 삭제
-					int result = communityService.deleteAttachment(attachNo);
-					System.out.println("[첨부파일 " + attachNo + "번 삭제! : " + attach.getRenamedFilename());
+					int result = communityService.deleteCodiAttachment(commAttachNo);
 				}
 			}
 			
-			// 3. 입력값
-			String no = multiReq.getParameter("no");
-			String writer = multiReq.getParameter("writer");
-			String title = multiReq.getParameter("title");
-			String content = multiReq.getParameter("content");
-			CommunityExt community = new CommunityExt(no, writer, title, content, null, 0, 0);
+			
+			String commNo = multiReq.getParameter("commNo");
+			String commTitle = multiReq.getParameter("commTitle");
+			String commContent = multiReq.getParameter("commContent");
+			CommunityExt codi = new CommunityExt(commNo, null, commTitle, commContent, null, 0, 0); 
 			
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {
@@ -95,26 +90,28 @@ public class CommunityEditServlet extends HttpServlet {
 				File commUpFile = multiReq.getFile(filename);
 				if(commUpFile != null) {
 					CommunityAttachment attach = new CommunityAttachment();
-					attach.setCommNo(no); // 게시글 번호 PK
+					attach.setCommNo(commNo); // 게시글 번호 PK
 					attach.setOriginalFilename(multiReq.getOriginalFileName(filename));
 					attach.setRenamedFilename(multiReq.getFilesystemName(filename));
-					community.addAttachment(attach);
+					codi.addAttachment(attach);
 				}
 			}
 			
-			// 4. 업무로직
-			int result = communityService.editCommunity(community);
-			System.out.println("ccc : " + community);
+			// 2. 업무로직
+			int result = communityService.codiEdit(codi);
 			
-			// 5. redirect
+			// 3. redirect
 			request.getSession().setAttribute("msg", "게시글을 성공적으로 수정했습니다.");
-			response.sendRedirect(request.getContextPath() + "/share/shareView?no=" + no);
+			response.sendRedirect(request.getContextPath() + "/community/codiView?commNo=" + commNo);
 			
 			
-		} catch(Exception e) {
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+		
+		
 	}
 
 }

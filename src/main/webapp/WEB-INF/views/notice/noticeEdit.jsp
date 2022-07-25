@@ -17,8 +17,8 @@
 		<form name="noticeEditFrm"
 			action="<%=request.getContextPath()%>/notice/noticeEdit" 
 			method="post">
-			<h2 style="font-size: 30px; color: black;">공지사항 수정</h2>
-			<hr style="border-top: 3px solid black;">
+			<h2 style="font-size: 30px; color: red; font-weight:bold;">공지사항 수정</h2>
+			<hr style="border-top: 3px solid red;">
 			<div id="content" style="margin: 30px;">
  
 				<br> 

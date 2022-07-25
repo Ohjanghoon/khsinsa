@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.codi;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,24 +15,26 @@ import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.service.CommunityService;
+import com.kh.sinsa.product.model.dto.Product;
+import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 /**
- * Servlet implementation class CommunityAlignServlet
+ * Servlet implementation class CodiSearchServlet
  */
-@WebServlet("/share/shareAlign")
-public class CommunityAlignServlet extends HttpServlet {
+@WebServlet("/community/codiSearch")
+public class CodiSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CommunityService communityService = new CommunityService();   
-	 
+	private CommunityService communityService = new CommunityService();
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-try {
-			
+		try {
 			// 사용자 입력값
 			int cPage = 1;
-			int numPerPage = 10;
+			int numPerPage = 6;
+			String search = request.getParameter("search");
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -40,28 +42,30 @@ try {
 			
 			int start = (cPage - 1) * numPerPage + 1;
 			int end = cPage * numPerPage;
-			String align = request.getParameter("align");
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("start", start);
 			param.put("end", end);
-			param.put("align", align);
-		
+			param.put("search", search);
 			
 			// 업무로직
-			List<Community> list = communityService.communityAlign(param);
-			int totalContent = communityService.getTotalContent();
-			String url = request.getRequestURI();
-			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
-
+			List<Community> codiList = communityService.codiSearch(param);
+			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
+			
+			int codiTotalContent = communityService.getCodiTotalContent();
+			String url = request.getRequestURI()+ "?search=" + search;
+			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);
+			
 			// view단 처리
-			request.setAttribute("list", list);
+			request.setAttribute("codiAttachList", codiAttachList);
+			request.setAttribute("codiList", codiList);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/share_community/shareList.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/codi_community/codiList.jsp").forward(request, response);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
+
 }

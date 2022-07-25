@@ -31,7 +31,7 @@ public class AdminFilter implements Filter {
 		HttpSession session = httpReq.getSession();
 		
 		
-		User loginUser = (User) session.getAttribute("loginMember");
+		User loginUser = (User) session.getAttribute("loginUser");
 		
 		
 		if(loginUser == null || loginUser.getUserRole() != UserRole.A) {

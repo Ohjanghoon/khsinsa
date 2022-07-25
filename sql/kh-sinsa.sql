@@ -474,5 +474,9 @@ select * from (select row_number() over(order by pro_no desc) rnum, p.* from pro
 
 select * from ( select row_number () over (order by reg_date desc) rnum, p.* from product p where pro_type = '상의' and pro_name like '%니%' ) p where rnum between 1 and 10;
 select * from ( select row_number () over (order by pro_name desc) rnum, p.* from product p where pro_type = '상의') p where rnum between 1 and 10;
-insert into product values ('A10'||seq_product_pro_no.nextval, :1 , :2 , :3 , :4 , defalut, :5 )
+insert into product values ('A10'||seq_product_pro_no.nextval, :1 , :2 , :3 , :4 , defalut, :5 );
 insert into product values ('A20'||seq_product_pro_no.nextval,?,?,?,?,default,?);
+
+delete from product where pro_no = 'A20114';
+
+alter table product_attachment add constraint fk_pro_no_03 foreign key (pro_no) references product(pro_no) on delete cascade;

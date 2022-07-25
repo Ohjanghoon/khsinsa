@@ -53,7 +53,7 @@ private CommunityService communityService = new CommunityService();
 			String writer = multiReq.getParameter("writer");
 			String title = multiReq.getParameter("title");
 			String content = multiReq.getParameter("content");
-			CommunityExt community = new CommunityExt (null, writer, title, content, null, 0, 0, 0);
+			CommunityExt community = new CommunityExt (null, writer, title, content, null, 0, 0);
 			System.out.println("writer = " + writer + ", title = " + title + ", content = " + content);
 
 			Enumeration<String> filenames = multiReq.getFileNames();

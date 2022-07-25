@@ -51,7 +51,7 @@ public class CodiAddServlet extends HttpServlet {
 			String userId = multiReq.getParameter("userId");
 			String commTitle = multiReq.getParameter("commTitle");
 			String commContent = multiReq.getParameter("commContent");
-			CommunityExt codi = new CommunityExt(null, userId, commTitle, commContent, null, 0, 0, 0); 
+			CommunityExt codi = new CommunityExt(null, userId, commTitle, commContent, null, 0, 0); 
 			
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {

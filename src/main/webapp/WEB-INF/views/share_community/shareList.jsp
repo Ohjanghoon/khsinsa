@@ -20,7 +20,7 @@
                       <li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
                       <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
                       <li><a href="<%= request.getContextPath() %>/community/freeist">자유게시판</a></li>
-                      <li><a href="#">패션토크</a></li>
+                      <li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
                   </ul>
               </nav>
         
@@ -41,30 +41,27 @@
                 <br>
                
                 <div id="list">
-                    <br>
-                    <div id="option">
-                    <select name="standard" id="standard" size="1">
-                    <option value="" selected>정렬기준</option>
-                    <option value="1">인기게시글</option>
-                    <option value="2">높은조회수</option>
-                    <option value="3">최신게시글</option>
-                    </select>
+                <br>
+                <div class="align">
+	     	  	 <form action="<%= request.getContextPath() %>/share/shareAlign" method="get">
+	             <select class="form-select" aria-label="Default select example" id="align" name="align" onchange="this.form.submit()">
+				  <option value="#" selected>정렬기준</option>
+				  <option value="comm_content">게시글명</option>
+				  <option value="comm_readcount">조회순</option>
+				  <option value="comm_recommend">추천순</option>
+				 </select>
+	         	 </form>
+	       	</div>
+			<div class="search">
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/share/shareSearch" method="get">
+		          <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search..." aria-label="Search">
+		          <button type="submit" class="btn btn-outline-dark">🔎</button>
+		        </form>
+			</div>
 
-                    <div>
-                    <select name="finder" id="finder" size="1" style="height: 30px;">
-                        <option value="" selected>검색조건</option>
-                        <option value="1">제목</option>
-                        <option value="2">작성자</option>
-                        <option value="3">본문내용</option>
-                    </select>
-                    
-                    <input type="text" name="" id="" placeholder="검색어를 입력하세요" style="height: 26px;">
-                    <button style="height: 30px;">검색</button>
-                </div>
-                    <button id="write" type="submit">글쓰기</button>
+			<br><br>
 
-
-                    </div>
+                  
 
                     <table id="tbl-board">
                         <thead>
@@ -112,12 +109,12 @@
                     </div>
                 <br>
             </div>
-                
-
+                <input  style="float:right;"
+						type="button" value="글쓰기" id="write"
+						onclick="location.href='<%= request.getContextPath() %>/share/shareAdd';"/>
+ 			 </div>
             </div>
-        </div>
         
-        <div>
         <script>
         document.querySelector("#write").addEventListener('click', (e) => {
         	if(<%= loginUser == null %>){

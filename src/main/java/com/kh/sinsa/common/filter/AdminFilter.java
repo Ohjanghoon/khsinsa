@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.sinsa.user.model.dto.User;
+import com.kh.sinsa.user.model.dto.UserRole;
+
 
 /**
  * Servlet Filter implementation class AdminFilter
@@ -27,16 +30,16 @@ public class AdminFilter implements Filter {
 		HttpServletResponse httpRes = (HttpServletResponse) response;
 		HttpSession session = httpReq.getSession();
 		
-		/* 수정
-		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		User loginUser = (User) session.getAttribute("loginMember");
 		
 		
-		if(loginMember == null || loginMember.getMemberRole() != MemberRole.A) {
+		if(loginUser == null || loginUser.getUserRole() != UserRole.A) {
 			session.setAttribute("msg", "관리자만 이용가능합니다!");
 			httpRes.sendRedirect(httpReq.getContextPath() + "/");
 			return;
 		}
-		*/	
+		
 		chain.doFilter(request, response);
 	}
 

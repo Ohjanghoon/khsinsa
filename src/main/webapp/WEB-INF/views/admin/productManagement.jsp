@@ -35,10 +35,10 @@
             <ul class = "ul">
                 <adminmenu>
                 <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
-                <li class = :"li"><a>상품 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
             </adminmenu>
             </ul>
             <br>
@@ -46,7 +46,7 @@
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button id="productadd" type="submit">상품 등록</button></div>
-            <table class="table table-bordered">
+            <table class="table" style = "width: 1000px;">
 <%
 			if(productlist == null || productlist.isEmpty()){
 		%>

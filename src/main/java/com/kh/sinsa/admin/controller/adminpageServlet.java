@@ -59,9 +59,9 @@ public class adminpageServlet extends HttpServlet {
 						
 			// 3. view단처리
 			request.setAttribute("userlist", userlist);
+			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/admin/adminpage.jsp")
 			.forward(request, response);
-			request.setAttribute("pagebar", pagebar);
 		}
 		catch(Exception e) {
 			e.printStackTrace();

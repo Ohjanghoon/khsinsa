@@ -55,7 +55,7 @@ public class UserEditServlet extends HttpServlet {
 			
 			String userPhone = phone1 + phone2;
 			String userEmail = emailId + "@" + emailAddr;
-			String userAddress = roadAddr + roadDetail;
+			String userAddress = roadAddr + "+" + roadDetail;
 			
 			Date userBirthday = (birthday != null & !"".equals(birthday)) ? Date.valueOf(birthday) : null;
 			

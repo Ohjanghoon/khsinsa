@@ -64,6 +64,10 @@
 .myCart_list .proInfo {
 	vertical-align: middle;
 }
+.myCart_list a {
+	color: black;
+	font-weight: bold;
+}
 
 /* 상품정보 사진 영역 */
 .myCart_list .proInfo img {

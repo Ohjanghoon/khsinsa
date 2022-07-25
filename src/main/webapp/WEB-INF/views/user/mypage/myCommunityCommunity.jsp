@@ -38,8 +38,8 @@
            			String categoryView = "";
 					switch(_category) {
 						case "C3" : category = "정보공유 게시판"; categoryView="/share/shareView"; break;
-						case "C4" : category = "자유게시판"; categoryView="/share/shareView"; break;
-						case "C5" : category = "패션토크 게시판"; categoryView="/share/shareView"; break;
+						case "C4" : category = "자유게시판"; categoryView="/community/freeView"; break;
+						case "C5" : category = "패션토크 게시판"; categoryView="/community/talkView"; break;
                		}
            	%>
                <tr>

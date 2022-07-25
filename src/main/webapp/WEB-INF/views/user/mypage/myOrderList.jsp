@@ -17,6 +17,7 @@
 	
 	HashSet<Product> proInfoList = new HashSet<>(_proInfoList);
 	HashSet<ProductAttachment> proAttachList = new HashSet<>(_proAttachList);
+	
 %>	
 
 <div class="myOrderList_content">
@@ -24,7 +25,7 @@
   		<h2>주문내역 조회</h2>
   	</div>
   	
-	<form action="" name="myOrderListFrm">
+	
 	    <table class="myOrderList_list">
 		    <thead>
 	            <th name="proNo">상품정보</td>
@@ -39,7 +40,7 @@
 					for(Product pro : proInfoList){
 						if(ord.getProNo().equals(pro.getProNo())){
 						for(ProductAttachment proAttach : proAttachList){
-							if(ord.getProNo().equals(proAttach.getProNo())){
+							if(pro.getProNo().equals(proAttach.getProNo())){
 							
 				%>
 				<tr>
@@ -70,7 +71,9 @@
 	            	<%
 		            if("배송완료".equals(ord.getOrderStatus())) { 
 		            %>
-	            	<td name="reviewAdd"><button type="button" id="btn_review_add">후기 작성</button></td>
+	            	<td name="reviewAdd">
+	            		<button type="button" id="btn_review_add" onclick="location.href='<%= request.getContextPath() %>/review/reviewAdd?proNo=<%= ord.getProNo() %>'">후기 작성</button>
+	            		</td>
 		            <%
 		            } else { 
 		            %>
@@ -79,22 +82,21 @@
 	            
 				</tr>
 		   	<%   	
+		   					break;
 		   					}
 		   			  	}
 		   				}
 		   		 	}
-			  	}
-			   }%>
+			  	 }
+			   } %>
 		    </tbody>
 	           
 	   	</table>
           
-	</form>
     <div class="pagebar">
 		<%= request.getAttribute("pagebar") %>
 	</div>    
 </div>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 

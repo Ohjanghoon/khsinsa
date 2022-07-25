@@ -30,11 +30,8 @@
                 <hr style="width: 370px;">
                 <br>
                 <p>국내,외의 다양한 패션 트렌드, 브랜드 소식, 패션쇼 등의 패션 정보를 공유하는 커뮤니티 공간입니다.</p>
-                <br>
                 <p style="font-weight:bold;">※ 패션에 관한 '질문'의 경우 패션토크 게시판 이용 부탁드립니다.</p>
-                <br>
                 <p style="font-weight:bold; color: red;">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
-                <br>
                
                 <div id="list">
                 <br>
@@ -106,8 +103,7 @@
                 <br>
             </div>
                 <input  style="float:right;"
-						type="button" value="글쓰기" id="write"
-						onclick="location.href='<%= request.getContextPath() %>/share/shareAdd';"/>
+						type="button" value="글쓰기" id="write"/>
 						<br>
  			 </div>
  			 

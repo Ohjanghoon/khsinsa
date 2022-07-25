@@ -35,11 +35,8 @@
                 <hr style="width: 370px;">
                 <br>
                 <p>국내,외의 다양한 패션 트렌드, 브랜드 소식, 패션쇼 등의 패션 정보를 공유하는 커뮤니티 공간입니다.</p>
-                <br>
-                <p style="font-weight:bold;">※ 패션에 관한 '질문'은 여기 패션토크에서 나눠주세요~</p>
-                <br>
+                <p style="font-weight:bold;">※ 여러분의 패션관련 정보, 꿀팁, 질문을 남겨주세요.</p>
                 <p style="font-weight:bold; color: red;">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
-                <br>
                
                 <div id="list">
                 <br>
@@ -88,7 +85,6 @@
                             <a href="<%= request.getContextPath() %>/community/talkView?no=<%= community.getCommNo() %>"id="commTitle">
                             <%= KhsinsaUtils.escapeXml(community.getCommTitle()) %></a>
                             
-
                             </td>
                             <td><%= community.getUserId() %></td>
                             <td><%= new SimpleDateFormat("yyyy-MM-dd").format(community.getCommDate()) %></td>
@@ -113,8 +109,7 @@
             </div>
            
         <input  style="float:right;"
-				type="button" value="글쓰기" id="write"
-				onclick="location.href='<%= request.getContextPath() %>/community/talkAdd';"/>
+				type="button" value="글쓰기" id="write"/>
 		<br>	
  		</div>
       </div>

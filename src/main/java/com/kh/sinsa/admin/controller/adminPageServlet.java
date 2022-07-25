@@ -46,7 +46,7 @@ public class adminPageServlet extends HttpServlet {
 			System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
 							cPage, numPerPage, start, end);
 			List<User> userList = adminService.userFindAll(param);
-			System.out.println("userList = " + userList);
+//			System.out.println("userList = " + userList);
 						
 			
 			// b. pagebar영역

@@ -1,6 +1,7 @@
 package com.kh.sinsa.community.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Community {
 	private String commNo;
@@ -89,6 +90,7 @@ public class Community {
 				+ commContent + ", commDate=" + commDate + ", commRecommand=" + commRecommand + ", commReadCount="
 				+ commReadCount + "]";
 	}
+
 	
 	
 	

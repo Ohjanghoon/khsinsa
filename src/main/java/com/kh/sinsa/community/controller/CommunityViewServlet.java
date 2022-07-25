@@ -14,6 +14,7 @@ import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
+import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
@@ -33,6 +34,7 @@ public class CommunityViewServlet extends HttpServlet {
 		try {
 			// 1. 사용자 입력값 처리
 			String no = request.getParameter("no");
+			
 			
 			System.out.println(no);
 
@@ -65,7 +67,7 @@ public class CommunityViewServlet extends HttpServlet {
 			}
 
 			// 2. 업무 로직
-			Community community = hasRead ?
+			CommunityExt community = hasRead ?
 					communityService.findByNo(no) :
 						communityService.findByNo(no, hasRead);
 			System.out.println("community : " + community);

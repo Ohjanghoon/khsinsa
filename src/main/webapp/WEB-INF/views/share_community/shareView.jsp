@@ -14,8 +14,8 @@
 Community community = (Community) request.getAttribute("community");
 List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getAttribute("attach");
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
-System.out.println("############commentList = " + commentList + "########################");
-String commNo = (String) request.getAttribute("no");
+// String commNo = (String) request.getAttribute("no");
+String commNo = community.getCommNo();
 %>
 
 
@@ -29,7 +29,7 @@ String commNo = (String) request.getAttribute("no");
 				<li><a href="<%= request.getContextPath()%>/community/freeList">코디북</a></li>
 				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
 				<li><a href="<%= request.getContextPath()%>/community/freeList">자유게시판</a></li>
-				<li><a href="#">패션토크</a></li>
+				<li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
 			</ul>
 		</nav>
 
@@ -43,10 +43,11 @@ String commNo = (String) request.getAttribute("no");
 		<ul>
 			<li id="title"><h2><%=community.getCommTitle()%></h2></li>
 			<li id="writer"><h3><%=community.getUserId()%></h3></li>
-			<li id="readCount">조회수 : <%=community.getCommReadCount()%> | 추천수 : <%=community.getCommRecommand()%>
-				
-				<button id="like" name="like" style="border: 0; background-color: white;">
-					<img src="<%=request.getContextPath()%>/images/emptyHeart.png" alt="버튼" style="width: 20px; height: 20px;">
+			<li>
+				<span id="readCount">조회수 : <%=community.getCommReadCount()%></span>
+				<span> | 추천수 : </span><span id="recommand"><%=community.getCommRecommand()%></span>
+				<button type="button" id="like" style="border:0px; background-color:white;">
+				<img id="heart" src="<%= request.getContextPath() %>/images/emptyHeart.png" style="width: 20px; height: auto">
 				</button>
 			</li>
 			
@@ -55,17 +56,19 @@ String commNo = (String) request.getAttribute("no");
 			</li>
 			
 			<hr style="color: gainsboro;">
-			
-			<li style="margin-top: 50px; background-color: white; height: 500px;">
+
+			<li style="margin-top: 50px; background-color: white; height: auto;">
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
 			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
 				<%}
-					} %>
+					}  %>
+
+					
 				<p><%= community.getCommContent() %></p>
 			</li>
-			
+
 		
 			
 
@@ -223,15 +226,27 @@ document.communityCommentFrm.content.addEventListener('focus', (e) => {
 		loginAlert();
 });
 
-document.querySelector("#like").addEventListener('click', (e) => {
-		
-	$.ajax({
-		url : '<%= request.getContextPath() %>/share/shareLike',
+//추천이여!!
+	document.querySelector("#like").addEventListener('click', (e) => {
+		const reco = Number(document.querySelector('#recommand').textContent) + 1;
+<% if(loginUser != null){%>
+		$.ajax({
+		url : '<%= request.getContextPath() %>/community/communityRecommend',
 		method : 'POST',
-		data : {commNo : "<%= commNo %>"}
-	})
+		data : {commNo : "<%= commNo %>"},
+		success(response){
+			alert("해당 게시물을 추천하였습니다.");
+		},
+		error : console.log,
+		complete(){
+			document.querySelector('#recommand').innerHTML = reco;
+		}
+  })
+<% } else { %>
+		loginAlert();
+<% } %>
 });
-
+ 
 </script>
 
 <form 

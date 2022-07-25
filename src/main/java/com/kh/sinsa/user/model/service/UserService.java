@@ -65,12 +65,29 @@ public class UserService {
 		return user;
 	}
 	
-	public User forgotPwd(String userId, String username, String userEmail) {
+	public User selectOneUser(String userId, String username, String userEmail) {
 		Connection conn = getConnection();
-		User user = userDao.forgotPwd(conn, userId, username, userEmail);
+		User user = userDao.selectOneUser(conn, userId, username, userEmail);
 		close(conn);
 		System.out.println("2");
 		return user;
+	}
+
+	
+	public int updatePwd(User user, String tempPwd) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = userDao.updatePwd(conn, user, tempPwd);
+			commit(conn);
+			System.out.println(5);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; // controller에 예외 던짐.
+		} finally {
+			close(conn);
+		}
+		return result;
 	}
 
 	// ##########minseo UserService end#############
@@ -99,6 +116,11 @@ public class UserService {
 		close(conn);
 		return user;
 	}
+
+	
+	
+
+	
 
 
 

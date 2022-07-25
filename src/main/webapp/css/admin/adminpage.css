@@ -1,15 +1,5 @@
 @charset "UTF-8";
+
 .nav{
-	justify-content: space-around;
-} 
-
-.searchcon{
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction : column;
-}
-
- #searchType{ 
-	text-align: center;
-	align-content : center;
+    justify-content: space-around;
 }

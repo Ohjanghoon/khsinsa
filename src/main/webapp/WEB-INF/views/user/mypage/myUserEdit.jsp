@@ -42,22 +42,22 @@ if (loginUser != null) {
 		<br> <span class="message_box" id="idMsg"></span>
 
 		<%-- 비밀번호 수정 --%>
-		<div class="input_area">
+		<%-- <div class="input_area">
 			<label>비밀번호 <span class="essential_mark">*</span></label> 
-			<input type="password" name="userPwd" id="userPwd" autocomplete="off" required>
+			<input type="password" name="userPwd" id="userPwd" autocomplete="off" value="<%=loginUser.getUserPwd() %>" required>
 			<button type="button" id="btn_show_pwd">
 				<img src="<%=request.getContextPath()%>/images/eye_visible_icon.png" alt="버튼">
 			</button>
-		</div>
+		</div> --%>
 		<br> <span class="message_box" id="pwdMsg">8~12자리
-			숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span>
+			숫자/영대소문자/특수문자(!, @, #, $, %, &)를 사용하세요.</span> 
 
 		<%-- 비밀번호 확인 --%>
-		<div class="input_area">
+<!-- 		<div class="input_area">
 			<label>비밀번호 확인 <span class="essential_mark">*</span></label> 
 			<input type="password" name="userPwdCheck" id="userPwdCheck" autocomplete="off" required>
 		</div>
-		<br> <span class="message_box" id="pwdCheckMsg"></span>
+		<br> <span class="message_box" id="pwdCheckMsg"></span>  -->
 
 		<%-- 이름  수정 --%>
 
@@ -116,10 +116,12 @@ if (loginUser != null) {
 		</div>
 		<br> <span class="message_box" id="addressMsg"></span>
 
-		<%-- 수정/취소 버튼 영역 --%>
+		<%-- 수정/취소/탈퇴 버튼 영역 --%>
 		<div class="btn_area">
 		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
 		<button type="reset" class="btn btn-secondary btn-lg">취소하기</button>
+		<br>
+		<button type="submit"  id="withdrwal" class="withdrwal" onclick=>탈퇴하기</button>
 		</div>
 	
 	</form>
@@ -128,7 +130,7 @@ if (loginUser != null) {
 
 //----------------------------------비밀번호----------------------------------------
 //비밀번호 유효성 검사
-const checkPwd = () => {
+/* const checkPwd = () => {
 	const tempPwd = document.querySelector("#userPwd").value;
 	const pwdRegExp1 = /^[\da-zA-z!@#$%&]{8,12}$/g;
 	const pwdRegExp2 = /\d+/g;
@@ -160,16 +162,16 @@ const checkPwd = () => {
 	
 	userPwdCheck.focus();
 	return true;
-};
+}; */
 //onblur시 비밀번호 유효성 검사 체크
-userPwd.onblur = () => {
+/* userPwd.onblur = () => {
 checkPwd();
-};
+}; */
 
 
 //----------------------------------비밀번호 확인----------------------------------------
 //비밀번호 일치여부 확인
-const checkPwdCheck = () => {
+/* const checkPwdCheck = () => {
     const tempPwdCheck = document.querySelector("#userPwdCheck").value;
 
     if(tempPwdCheck === ""){
@@ -183,14 +185,14 @@ const checkPwdCheck = () => {
 
     showMsg(pwdCheckMsg, "✔️");
     return true;
-};
+}; */
 //onblur시 비밀번호 확인 일치여부 체크
-userPwdCheck.onblur = () => {
+/* userPwdCheck.onblur = () => {
     checkPwdCheck();
-};
+}; */
 
 //-----------------------------눈 아이콘 클릭시 비밀번호 보이기------------------------------------
-document.querySelector("#btn_show_pwd").addEventListener('mousedown', () => {
+/* document.querySelector("#btn_show_pwd").addEventListener('mousedown', () => {
     const ele_pwd = document.querySelector("#userPwd");
     const ele_pwdCheck = document.querySelector("#userPwdCheck");
     btn_show_pwd.classList.add('clicked');
@@ -205,7 +207,7 @@ btn_show_pwd.addEventListener('mouseup', () => {
 
     ele_pwd.type = "password";
     ele_pwdCheck.type = "password";
-});
+}); */
 
 //----------------------------------이름----------------------------------------
 //이름 유효성 검사

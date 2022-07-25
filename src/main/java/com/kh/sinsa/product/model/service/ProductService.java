@@ -22,6 +22,20 @@ public class ProductService {
 		return list;
 	}
 
+	public int getBottomTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = productDao.getBottomTotalContent(conn); 
+		close(conn);
+		return totalContent;
+	}
+	
+	public int getTopTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = productDao.getTopTotalContent(conn); 
+		close(conn);
+		return totalContent;
+	}
+	
 	public int getTotalContent() {
 		Connection conn = getConnection();
 		int totalContent = productDao.getTotalContent(conn); 

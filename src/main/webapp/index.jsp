@@ -47,7 +47,7 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="textm">코디북</span>을 제공합니다.</h2>
         <p class="lead">빠른 속도로 변해가는 트렌드와 유행에 민감한 대한민국에 살고 있는 지금, 바쁜 시간 속 멋을 포기 할 수 없는 시대에 살고 있다. 과열된 쇼핑몰의 시장 속 어디서 어떻게 구매해야하는지, 가격은 적절한 지에 대한 의문점이 제기 되고 있다. 과열된 시장 속 고객들에게 좀 더 합리적인 가격으로 나아가며, 스타일에 맞는 유행 트렌드에 맞추어 고객에게 정보를 제공하여 구매할 수 있도록 돕는다.</p>
       </div>
       <div class="col-md-5">
@@ -59,7 +59,7 @@
 
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="textm">코디북</span>을 제공합니다.</h2>
         <p class="lead">다양한 브랜드와 각양각색의 옷들이 많지만 온라인에서는 숫자적인 수치 이외에는 정보가 부족한 것이 사실이다. 하지만 소비자간의 소통으로 브랜드나 옷에 대한 정보를 보다 사실적으로 공유할 수 있으며, 각자 자신의 스타일 공유를 통해 옷을 구매할 때 도움이 될 수 있는 기회가 생겨 실패 리스크를 줄일 수 있는 이점이 있다.</p>
       </div>
       <div class="col-md-5 order-md-1">
@@ -71,7 +71,7 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="textm">코디북</span>을 제공합니다.</h2>
         <p class="lead">다양한 브랜드와 각양각색의 옷들이 많지만 온라인에서는 숫자적인 수치 이외에는 정보가 부족한 것이 사실이다. 하지만 소비자간의 소통으로 브랜드나 옷에 대한 정보를 보다 사실적으로 공유할 수 있으며, 각자 자신의 스타일 공유를 통해 옷을 구매할 때 도움이 될 수 있는 기회가 생겨 실패 리스크를 줄일 수 있는 이점이 있다.</p>
       </div>
       <div class="col-md-5">

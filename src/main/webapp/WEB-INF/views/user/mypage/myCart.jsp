@@ -149,7 +149,7 @@ const myCartOrder = () => {
 	
 	if(confirm("선택한 상품을 주문하시겠습니까?")){
 		const frm = document.myCartFrm;
-		frm.action = "<%= request.getContextPath() %>/product/order/cartOrder";
+		frm.action = "<%= request.getContextPath() %>/mypage/myCart/orderList";
 		frm.submit();
 	}	
 

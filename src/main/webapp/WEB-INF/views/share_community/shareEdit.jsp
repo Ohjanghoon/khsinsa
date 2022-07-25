@@ -69,8 +69,8 @@
 					<br>
 
 		<div id="btn-sum" style="margin:30px;">
-			<span class="btn-add"> <input type="submit" value="수정하기" style="width:150px;"></span> 
-			<span class="btn-sel"> <input type="button" value="취소" onclick="history.go(-1);" style="width:150px;"></span>
+			<span class="btn-add"> <input type="submit" value="수정하기" style="width:150px; background-color:black; color:white;"></span> 
+			<span class="btn-sel"> <input type="button" value="취소" onclick="history.go(-1);" style="width:150px; background-color:black; color:white;"></span>
 		</div>
 
 	</div>

@@ -36,23 +36,20 @@ if (userId != null)
 				<br>
 
 			</section>
-	
+
 			<div class="d-grid gap-2 d-md-block" id="wrapper">
-  			<button class="btn btn-primary" type="button" >찾기</button>
+  			<button class="btn btn-primary" type="submit" >찾기</button>
   			<button class="btn btn-primary" type="button" onClick="history.back()">취소</button>
 			</div>
+ 
 
-
-			<div class="findIdColor">
-				<%
-				if (userId != null) {
-				%>
-				<p>
-					회원님의 아이디는 <span id="findIdMSG"><%=userId%></span> 입니다.
-				</p>
-				<%
-				}
-				%>
+			 <div class ="findIdColor">
+              <%if(userId != null) { %> 
+               <p>회원님의 아이디는 <span id="findIdMSG"><%=userId%></span> 입니다.</p>    
+              <%} %>
+              </div>
+      </form>
+  	 </div>
 			</div>
 
 

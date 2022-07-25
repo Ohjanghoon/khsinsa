@@ -80,7 +80,7 @@ if (tempPwd != null)
 			<br> 
 			<div class="tempColor">
 				<p id="tempPwdMSG" class="tempPwdMSG">
-					임시비밀번호는 <span id="tempPwd"><%=tempPwd%></span> 입니다.
+					임시비밀번호는 <span id="tempPwd"><%= tempPwd%></span> 입니다.
 				</p>
 			</div>
 

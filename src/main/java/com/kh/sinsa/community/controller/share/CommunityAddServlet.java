@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.share;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,65 +19,67 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
- * Servlet implementation class CodiAddServlet
+ * Servlet implementation class CommunityAddServlet
  */
-@WebServlet("/community/codiAdd")
-public class CodiAddServlet extends HttpServlet {
+@WebServlet("/share/shareAdd")
+public class CommunityAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();
-
+	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * GET 게시글 등록폼 요청
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/codi_community/codiAdd.jsp").forward(request, response);
+		
+		request.getRequestDispatcher("/WEB-INF/views/share_community/shareAdd.jsp")
+			.forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			// 1. 서버컴퓨터 파일저장
+			// 0. 첨부파일처리
 			ServletContext application = getServletContext();
-			String saveDirectory = application.getRealPath("/upload/codi");
-			int maxPostSize = 1024 * 1024 * 10 * 10; // 100MB
+			String saveDirectory = application.getRealPath("/upload/share");
+			System.out.println("saveDirectory = " + saveDirectory);
+			int maxPostSize = 1024 * 1024 * 10; // 10MB
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new KhsinsaRenamePolicy(); 
+						
+			MultipartRequest multiReq = new MultipartRequest(
+					request, saveDirectory, maxPostSize, encoding, policy);
 			
-			MultipartRequest multiReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
-			
-			// 사용자 입력값
-			String userId = multiReq.getParameter("userId");
-			String commTitle = multiReq.getParameter("commTitle");
-			String commContent = multiReq.getParameter("commContent");
-			CommunityExt codi = new CommunityExt(null, userId, commTitle, commContent, null, 0, 0); 
-			
+			// 1. 사용자 입력값 처리
+			String writer = multiReq.getParameter("writer");
+			String title = multiReq.getParameter("title");
+			String content = multiReq.getParameter("content");
+			CommunityExt community = new CommunityExt (null, writer, title, content, null, 0, 0);
+			System.out.println("writer = " + writer + ", title = " + title + ", content = " + content);
+
 			Enumeration<String> filenames = multiReq.getFileNames();
 			while(filenames.hasMoreElements()) {
 				String filename = filenames.nextElement();
-				File commUpFile = multiReq.getFile(filename);
-				if(commUpFile != null) {
+				File upFile = multiReq.getFile(filename);
+				if(upFile != null) {
 					CommunityAttachment attach = new CommunityAttachment();
 					attach.setOriginalFilename(multiReq.getOriginalFileName(filename));
 					attach.setRenamedFilename(multiReq.getFilesystemName(filename));
-					codi.addAttachment(attach);
+					community.addAttachment(attach);
 				}
 			}
 			
 			// 2. 업무로직
-			int result = communityService.codiAdd(codi);
+			int result = communityService.insertCommunity(community);
 			
-			// 3. redirect
-			request.getSession().setAttribute("msg", "게시글을 성공적으로 등록하였습니다.");
-			response.sendRedirect(request.getContextPath() + "/community/codiList");
+			// 3. 리다이렉트
+			request.getSession().setAttribute("msg", "게시글 등록 완료입니다.");
+			response.sendRedirect(request.getContextPath() + "/share/shareList");
 			
-			
-			
-		} catch (Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
+
 
 }

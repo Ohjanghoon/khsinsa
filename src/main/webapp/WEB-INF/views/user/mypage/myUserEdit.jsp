@@ -18,6 +18,8 @@ String todayDate = sdf.format(new Date());
 <%
 String emailId = "";
 String emailAddr = "";
+String roadAddr = "";
+String roadDetail = "";
 if (loginUser != null) {
 
 	String[] tempEmail = loginUser.getUserEmail().split("\\@");
@@ -27,6 +29,12 @@ if (loginUser != null) {
 	String phone = loginUser.getUserPhone();
 	String phonefront = phone.substring(0, 3);
 	String phoneBack = phone.substring(3);
+	
+	String address = loginUser.getUserAddress();
+	String[] tempAddress = address.split("+");
+	roadAddr = tempAddress[0];
+	roadDetail = tempAddress[1];
+	
 }
 %>
 <div class="edit_container">
@@ -87,12 +95,12 @@ if (loginUser != null) {
 		<%-- 주소  수정 --%>
 		<div class="input_area">
 			<label>주소 <span class="essential_mark">*</span></label> 
-			<input type="text" name="roadAddr" id="roadAddr" readonly value =" <%=loginUser.getUserAddress()%>">
+			<input type="text" name="roadAddr" id="roadAddr" value ="<%= roadAddr%>" readonly>
 			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
 		</div>
 		<br> 
 		<div class="input_area addr_area">
-		<input type="text" name="roadDetail" id="roadDetail" placeholder="상세주소 입력">
+		<input type="text" name="roadDetail" id="roadDetail" value="<%= roadDetail %>" placeholder="상세주소 입력" value="">
 		</div>
 		<br> <span class="message_box" id="addressMsg"></span>
 
@@ -101,12 +109,23 @@ if (loginUser != null) {
 		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
 		<a type="reset" class="btn btn-secondary btn-lg" href="<%= request.getContextPath() %>/user/userPasswordEdit">비밀번호 수정</a>
 		<br>
-		 <a  href="<%= request.getContextPath() %>/user/userDelete">회원 탈퇴</a> 
+		<a href="#" onclick="userDel();">회원 탈퇴</a> 
 		</div>
 	
 	</form>
+	<form action="<%= request.getContextPath() %>/user/userDelete" method="post" name="userDelFrm">
+		<input type="hidden" name="userId" value="<%=loginUser.getUserId()%>" />
+	</form>
+	
 </div>
 <script>
+const userDel = () => {
+	
+	if(confirm("탈퇴하시면 지금까지의 혜택을 누릴수 없습니다.\n정말로 탈퇴하시겠습니까?😭")){
+		const frm = document.userDelFrm;
+		frm.submit();
+	}
+};
 //유효성 검사 메세지
 const showMsg = (obj, msg) => {
     obj.innerHTML = msg;

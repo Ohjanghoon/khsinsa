@@ -1,6 +1,7 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.share;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +13,10 @@ import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class CodiCommentAdd
+ * Servlet implementation class CommunityCommentAddServlet
  */
-@WebServlet("/community/codiCommentAdd")
-public class CodiCommentAdd extends HttpServlet {
+@WebServlet("/share/shareCommentAdd")
+public class CommunityCommentAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();
 
@@ -23,20 +24,27 @@ public class CodiCommentAdd extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int result = 0;
+		
 		try {
 			// 1. 사용자 입력값 처리
 			String commNo = request.getParameter("commNo");
-			String writer = request.getParameter("userId");
-			String content = request.getParameter("commCommentContent");
-			CommentLevel commentLevel = CommentLevel.valueOf(Integer.parseInt(request.getParameter("commCommentLevel")));
-			String commentRef = request.getParameter("commCommentRef");
+			String writer = request.getParameter("writer");
+			String content = request.getParameter("content");
+			CommentLevel commentLevel = CommentLevel.valueOf(Integer.parseInt(request.getParameter("commentLevel")));
+			String commentRef = request.getParameter("commentRef");
 			CommunityComment communityComment = new CommunityComment(null, commNo, writer, content, null, commentLevel, commentRef);
 			
 			// 2. 업무로직
-			int result = communityService.codiCommentAdd(communityComment);
 
+			result = communityService.insertCommunityComment(communityComment);
+			System.out.println("ccccc : " + communityComment);
+
+
+			
 			// 3. redirect 응답
-			response.sendRedirect(request.getHeader("Referer"));
+			response.sendRedirect(request.getContextPath() + "/share/shareView?no=" + commNo);
+			
 			
 		}
 		catch(Exception e) {

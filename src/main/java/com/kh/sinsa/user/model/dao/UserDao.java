@@ -205,6 +205,7 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("updatePwd");
+		
 //		updatePwd =  update kh_user set user_pwd =?  where user_id = ? and user_name = ? and user_email = ?
 
 		try {
@@ -215,6 +216,34 @@ public class UserDao {
 
 			result = pstmt.executeUpdate();
 			System.out.println(6);
+
+		} catch (SQLException e) {
+			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
+			throw new UserException("비밀번호 업데이트 실패!", e);
+		} finally {
+			
+			close(pstmt);
+			
+		}
+		return result;
+	}
+	
+	public int editPassword(Connection conn, String userId, String tempPwd, String newPwd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("editPassword");
+		
+	//	editPassword =  update kh_user set user_pwd =?  where user_id = ?  and user_pwd = ?
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, tempPwd);
+		
+
+			result = pstmt.executeUpdate();
+
 
 		} catch (SQLException e) {
 			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
@@ -283,7 +312,32 @@ public class UserDao {
 		}
 		return user;
 	}
+
+	public int deleteById(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteById");
+		//deleteById = update set kh_user user_del = 'Y' where user_id = ? 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new UserException("회원 탈퇴 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	// ##########janghoon UserDao end#############
+
+	
+
+
+
+	
 
 	
 

@@ -135,6 +135,23 @@ public class UserService {
 		return user;
 	}
 
+	public int deleteById(String userId) {
+		Connection conn = getConnection();
+		
+		int result = 0;
+		try {
+			result = userDao.deleteById(conn, userId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 	
 
 		

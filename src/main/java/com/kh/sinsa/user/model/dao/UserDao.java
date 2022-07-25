@@ -312,6 +312,25 @@ public class UserDao {
 		}
 		return user;
 	}
+
+	public int deleteById(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteById");
+		//deleteById = update set kh_user user_del = 'Y' where user_id = ? 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new UserException("회원 탈퇴 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	// ##########janghoon UserDao end#############
 
 	

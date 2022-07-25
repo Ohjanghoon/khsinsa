@@ -13,27 +13,6 @@
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 %>
-<<<<<<< HEAD
-
-<div align="center" id="body">
-            <br>
-            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
-            <ul class = "ul">
-                <adminmenu>
-                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-            </adminmenu>
-            </ul>
-            <br>
-            <a><center>상품 관리</center></a>
-            <br>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button id="productadd" type="submit">상품 등록</button></div>
-            <table class="table" style = "width: 1000px;">
-=======
     <main>
         <div class="container">
             <section class="py-5 text-center container">
@@ -57,7 +36,6 @@
                 <button type="button" id="addBottomProduct" class="btn btn-outline-secondary btn-sm">하의 상품 등록</button><br /><br />
                 <h2 class="pb-2 border-bottom">등록된 상품</h2>
                 <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
->>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git
 <%
     if(productlist != null || !productlist.isEmpty()){
         for(Product product : productlist){

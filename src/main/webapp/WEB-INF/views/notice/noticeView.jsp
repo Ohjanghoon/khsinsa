@@ -37,6 +37,7 @@ Notice notice = (Notice) request.getAttribute("notice");
 			<li style="margin-top: 50px; background-color: white; height: 500px;"><p>
 					<%=notice.getNoticeContent()%>
 				</p></li>
+				
 		<%
 			boolean canEdit = (loginUser != null && 
 						loginUser.getUserRole() == UserRole.A);
@@ -44,9 +45,9 @@ Notice notice = (Notice) request.getAttribute("notice");
 		%>
 
 			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-			<li>
-				<input type="button" value="수정하기" onclick="editNotice()">
-				<input type="button" value="삭제하기" onclick="deleteNotice()">
+			<li style="float:right">
+				<input type="button" value="수정하기" onclick="editNotice()" style="background-color:black; color:white;">
+				<input type="button" value="삭제하기" onclick="deleteNotice()" style="background-color:black; color:white;">
 			</li>
 		
 		<% } %>
@@ -54,10 +55,11 @@ Notice notice = (Notice) request.getAttribute("notice");
 			
 				
 		
-		</ul>
 		<div id="goList">
-			<input type="button" value="목록으로" onclick="location.href = '<%=request.getContextPath() %>/notice/noticeList'" id="btn_goList">
+			<input type="image" src="<%= request.getContextPath() %>/images/menuIcon.png" onclick="location.href = '<%=request.getContextPath() %>/notice/noticeList'" id="btn_goList"
+			style="width:60px; height:auto;">
 		</div>	
+		</ul>
 		
 </div>		
 

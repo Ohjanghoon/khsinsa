@@ -61,7 +61,7 @@ String commNo = community.getCommNo();
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
-			%> <img src ="<%= request.getContextPath() %>/upload/talk/<%= attach.getRenamedFilename() %>" name="upload">
+			%> <img src ="<%= request.getContextPath() %>/upload/talk/<%= attach.getRenamedFilename() %>" class="upload">
 				<%}
 					}  %>
 

@@ -62,7 +62,7 @@ String commNo = community.getCommNo();
 			<% 
 				if(attachments != null && !attachments.isEmpty()) { 
 					for(CommunityAttachment attach : attachments){
-			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" name="upload">
+			%> <img src ="<%= request.getContextPath() %>/upload/share/<%= attach.getRenamedFilename() %>" class="upload">
 				<%}
 					}  %>
 
@@ -83,9 +83,11 @@ String commNo = community.getCommNo();
 
 			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
 			<li id="editDel">
-				<input type="button" value="수정하기" onclick="editCommunity()">
-				<input type="button" value="삭제하기" onclick="deleteCommunity()">
+				<input type="button" value="수정하기" onclick="editCommunity()" style="margin-right : 10px; background-color : black; color : white;"  >
+				<input type="button" value="삭제하기" onclick="deleteCommunity()" style=" background-color : black; color : white;">
 			</li>
+			
+			<br>
 		
 		<% } %>	
 		

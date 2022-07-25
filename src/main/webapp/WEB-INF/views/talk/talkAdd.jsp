@@ -43,8 +43,8 @@
 				</div>
 
 		<div id="btn-sum" style="margin:30px;">
-			<span class="btn-add"> <input type="submit" id="btn-add" value="작성" style="width:150px;"></span> 
-			<span class="btn-sel"> <input type="button" value="취소" style="width:150px;"></span>
+			<span class="btn-add"> <input type="submit" id="btn-add" value="작성" style="width:150px; background-color:black; color:white;"></span> 
+			<span class="btn-sel"> <input type="button" value="취소" style="width:150px; background-color:black; color:white;"></span>
 		</div>
 
 	</div>

@@ -8,6 +8,11 @@
     font-family: 'Noto Sans', sans-serif;
 }
 
+.indexText{
+	color : #e5e5e5;
+}
+
+
 /* header */
 header {
     background-color: #e5e5e5;

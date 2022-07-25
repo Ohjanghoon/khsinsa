@@ -73,6 +73,23 @@ public class UserService {
 		return user;
 	}
 
+	
+	public int updatePwd(User user, String tempPwd) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = userDao.updatePwd(conn, user, tempPwd);
+			commit(conn);
+			System.out.println(6);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; // controller에 예외 던짐.
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 	// ##########minseo UserService end#############
 
 	// ##########janghoon UserService begin#############
@@ -99,6 +116,11 @@ public class UserService {
 		close(conn);
 		return user;
 	}
+
+	
+	
+
+	
 
 
 

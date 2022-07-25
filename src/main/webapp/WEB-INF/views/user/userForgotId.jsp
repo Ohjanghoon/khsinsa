@@ -3,8 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
-	/* User user = (User) request.getAttribute("user") */;
-		User user = (User) session.getAttribute("user");
+			/*  User user = (User) request.getAttribute("user");  */
+			User user = (User) session.getAttribute("user");  
 %>
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/css/user/userForgotId.css">
@@ -37,7 +37,8 @@
 			</div>
 				<br>
 				<br> 
-				<p id="findIdMSG">회원님의 아이디는 <%= user.getUserId() %> 입니다.</p>
+				<p id="findIdMSG">회원님의 아이디는 <%= user %> 입니다.</p>
+				<%-- <p id="findIdMSG">회원님의 아이디는 <%= user.getUserId()%> 입니다.</p> --%>
 
 		</form>
 	</div>

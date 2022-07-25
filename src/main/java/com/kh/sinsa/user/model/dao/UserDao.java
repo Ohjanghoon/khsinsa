@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
+
 import com.kh.sinsa.user.model.dto.Del;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.dto.UserRole;
@@ -170,10 +171,10 @@ public class UserDao {
 		return user;
 	}
 	
-	public User forgotPwd(Connection conn, String userId, String username, String userEmail) {
+	public User selectOneUser(Connection conn, String userId, String username, String userEmail) {
 		PreparedStatement pstmt =  null;
 		ResultSet rset = null;
-		User user = new User();
+		User user = null;
 		String sql= prop.getProperty("forgotPwd");
 		System.out.println("3");
 		// forgotPwd = select * from kh_user where user_id =? and user_name= ? and user_email= ?
@@ -197,7 +198,34 @@ public class UserDao {
 		
 		return user;
 	}
+	
+	
+	
+	public int updatePwd(Connection conn, User user, String tempPwd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updatePwd");
+//		updatePwd =  update kh_user set user_pwd =?  where user_id = ? and user_name = ? and user_email = ?
 
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tempPwd);
+			pstmt.setString(2, user.getUserId());
+		
+
+			result = pstmt.executeUpdate();
+			System.out.println(6);
+
+		} catch (SQLException e) {
+			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)
+			throw new UserException("비밀번호 업데이트 실패!", e);
+		} finally {
+			
+			close(pstmt);
+			
+		}
+		return result;
+	}
 
 	// ##########minseo UserDao end#############
 
@@ -222,6 +250,7 @@ public class UserDao {
 			pstmt.setString(7, user.getUserAddress());
 
 			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			throw new UserException("회원가입 오류", e);
 		} finally {
@@ -255,6 +284,10 @@ public class UserDao {
 		return user;
 	}
 	// ##########janghoon UserDao end#############
+
+	
+
+	
 
 
 

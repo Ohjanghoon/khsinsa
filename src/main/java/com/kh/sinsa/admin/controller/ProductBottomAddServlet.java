@@ -93,7 +93,7 @@ public class ProductBottomAddServlet extends HttpServlet {
 			int result = adminService.insertBottomProduct(product);
 			
 			// 3. 리다이렉트
-			request.getSession().setAttribute("msg", "상품 등록 완료입니다.");
+			request.getSession().setAttribute("msg", "상품이 등록되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/admin/productManagement");
 			
 		}catch(Exception e) {

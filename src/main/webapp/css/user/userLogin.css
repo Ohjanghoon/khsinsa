@@ -122,3 +122,13 @@
         border-radius: 5px;
         cursor: pointer;
     }
+    #tempPwdMSG{
+    	text-align:center;
+    	
+    }
+    div .tempColor span{
+   
+    	color:red;
+    }
+    
+    

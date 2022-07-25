@@ -12,25 +12,22 @@
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/share/shareList.css" />
         <div class="container">
-            <div id="headlist">
+        
                 <div id="header2">COMMUNITY</div>
-                <nav class="navi">
-                  <ul>
-                      <li><a href="#">OOTD</a></li>
-                      <li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
-                      <li><a href="<%=request.getContextPath()%>/share/shareList">정보공유</a></li>
-                      <li><a href="<%= request.getContextPath() %>/community/freeist">자유게시판</a></li>
-                      <li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
-                  </ul>
-              </nav>
-        
-        
+             	 <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+	          <ul class="nav me-auto">
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/codiList" class="nav-link link-dark px-2">코디북</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/share/shareList" class="nav-link link-dark px-2">정보공유</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/freeList" class="nav-link link-dark px-2">자유게시판</a></li>
+	            <li class="nav-item"><a href="<%= request.getContextPath() %>/community/talkList" class="nav-link link-dark px-2">패션토크</a></li>
+	          </ul>
+	      </nav>
 
-            </div>
+			<br><br><br>
 
 
             <div id="main">
-                <h1>패션토크<span style="font-size: 20px;">Fashion Talk</span></h1>
+                <h1>자유게시판<span style="font-size: 20px;">You are free here</span></h1>
                 <hr style="width: 370px;">
                 <br>
                 <p>국내,외의 다양한 패션 트렌드, 브랜드 소식, 패션쇼 등의 패션 정보를 공유하는 커뮤니티 공간입니다.</p>

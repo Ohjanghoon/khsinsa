@@ -99,9 +99,9 @@ if (loginUser != null) {
 		<%-- 수정/취소/탈퇴 버튼 영역 --%>
 		<div class="btn_area">
 		<button type="submit" class="btn btn-primary btn-lg" id=btn_edit>수정하기</button>
-		<button type="reset" class="btn btn-secondary btn-lg">취소하기</button>
+		<a type="reset" class="btn btn-secondary btn-lg" href="<%= request.getContextPath() %>/user/userPasswordEdit">비밀번호 수정</a>
 		<br>
-		 <a href="<%= request.getContextPath() %>/user/userDelete">회원 탈퇴</a> 
+		 <a  href="<%= request.getContextPath() %>/user/userDelete">회원 탈퇴</a> 
 		</div>
 	
 	</form>

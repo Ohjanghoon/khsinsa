@@ -106,7 +106,7 @@
 	if(attachList != null && !attachList.isEmpty()){ 
 		for(ProductAttachment pa : attachList){
 %>
-         <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProOriginalFilename() %>" alt="">
+         <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" alt="">
 <% 
 		}
 	}

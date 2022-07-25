@@ -11,25 +11,6 @@
 	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
 	String proNo = (String) request.getAttribute("proNo");
 %>
-<<<<<<< HEAD
-
-<!-- // board -> product / attachments -> productattachList -->
-
-<body>
-	<div id="container">
-		<div id="header1"></div>
-		<div id="header2">Admin Page</div>
-		<nav>
-			<ul class="navi">
-				<li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-			</ul>
-		</nav>
-=======
->>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git
 <main>
 <form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="productUpdateFrm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="proNo" value="<%= product.getProNo() %>" />
@@ -67,15 +48,12 @@
        </div>
        <div class="mb-3">
            <label for="formFile" class="form-label">Select The File</label>
-           <small>* 처음 선택한 사진이 대표사진으로 등록됩니다. *</small>
-           <div class="insert">
-            <input class="form-control form-control-sm" id="file1" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file2" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file3" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file4" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file5" name="upFile" type="file">
-           <div class="file-list"></div>
-           </div>
+           <small>* 마지막 등록 사진이 대표사진으로 등록됩니다. *</small>
+            <input class="form-control" name="upFile1" type="file" id="formFile">
+            <input class="form-control" name="upFile2" type="file" id="formFile">
+            <input class="form-control" name="upFile3" type="file" id="formFile">
+            <input class="form-control" name="upFile4" type="file" id="formFile">
+            <input class="form-control" name="upFile5" type="file" id="formFile">
        </div>
        <div class="mb-3">
            <label for="exampleFormControlTextarea1" class="form-label">상품 내용</label>

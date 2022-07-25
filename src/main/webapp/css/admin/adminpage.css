@@ -1,4 +1,5 @@
 @charset "UTF-8";
+<<<<<<< HEAD
 * {
     margin: 0px;
     padding: 0px;
@@ -89,8 +90,19 @@ nav {
     color: rgb(130, 130, 130);
     margin: 0 20px;
     font-weight: bold;
+=======
+.nav{
+	justify-content: space-around;
+} 
+
+.searchcon{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction : column;
+>>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git
 }
 
+<<<<<<< HEAD
 
 /* adminpage 리스트 영역 */
 .table {
@@ -128,3 +140,9 @@ nav {
 	margin: 20px auto;
 	text-align: center;
 }
+=======
+ #searchType{ 
+	text-align: center;
+	align-content : center;
+}
+>>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git

@@ -14,7 +14,7 @@
 	line-height: 80px;
 	letter-spacing: 5px;
 }
-/* 회원가입 폼 */
+/* 회원정보 수정 폼 */
 [name = editFrm] {
 	width: 100%;
 	display: flex;
@@ -108,7 +108,7 @@
 	color : red;
 }
 /* 비밀번호 확인 버튼 */
-.input_area #btn_show_pwd {
+/* .input_area #btn_show_pwd {
 	background: none;
 	border: none;
 	z-index: 3;
@@ -116,7 +116,7 @@
 	bottom: 5px;
 	right: 50px; 
 	cursor: pointer;
-}
+} */
 .btn_area{
 	text-align: center;
 	margin-top: 30px;
@@ -132,7 +132,7 @@
 	margin:30px;
 }
 
-button {
+/* button {
 	border:none;
 	color:red;
 	background-color:white;
@@ -140,14 +140,7 @@ button {
 	
 	
 	
-}
-
-
-
-
-
-	
-
+} */
 
 /* 유효성 검사 메세지 */
 .message_box {

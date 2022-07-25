@@ -52,7 +52,7 @@ public class ProductBottomAlignServlet extends HttpServlet {
 			// 업무로직
 			List<Product> list = productService.productAlign(param);
 			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
-			int totalContent = productService.getTotalContent();
+			int totalContent = productService.getBottomTotalContent();
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 

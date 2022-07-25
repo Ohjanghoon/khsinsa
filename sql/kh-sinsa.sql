@@ -457,7 +457,10 @@ commit;
 insert into comm_comment values ('C21' || seq_comm_comment_comm_comment_no.nextval, 'C20301', 'dlfcks0808', '이 코디 정말 제 스타일인것같아요.', default,2, 'C21141');
 desc comm_comment;
 select * from community where comm_no like 'C20%';
-delete community where comm_no = 'C20331';
+select * from comm_attachment where comm_no like 'C20%';
+56
+commit;
+delete community where comm_no = 'C20334';
 select * from comm_comment;
 select * from kh_user;
 select * from community;
@@ -476,7 +479,7 @@ select * from ( select row_number () over (order by reg_date desc) rnum, p.* fro
 select * from ( select row_number () over (order by pro_name desc) rnum, p.* from product p where pro_type = '상의') p where rnum between 1 and 10;
 insert into product values ('A10'||seq_product_pro_no.nextval, :1 , :2 , :3 , :4 , defalut, :5 );
 insert into product values ('A20'||seq_product_pro_no.nextval,?,?,?,?,default,?);
-
+select count(*) from product;
 delete from product where pro_no = 'A20114';
 select * from inquire;
 alter table product_attachment add constraint fk_pro_no_03 foreign key (pro_no) references product(pro_no) on delete cascade;

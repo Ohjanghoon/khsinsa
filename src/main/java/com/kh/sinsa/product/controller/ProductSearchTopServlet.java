@@ -48,7 +48,7 @@ public class ProductSearchTopServlet extends HttpServlet {
 			// 업무로직
 			List<Product> list = productService.productSearch(param);
 			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
-			int totalContent = productService.getTotalContent();
+			int totalContent = productService.getTopTotalContent();
 			String url = request.getRequestURI()+ "?search=" + search;
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 

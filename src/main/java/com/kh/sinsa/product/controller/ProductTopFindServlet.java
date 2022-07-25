@@ -50,7 +50,7 @@ public class ProductTopFindServlet extends HttpServlet {
 			
 			List<Product> list = productService.productTypeFind(param);
 			List<ProductAttachment> attachList = productService.productAttachmentFindAll();
-			int totalContent = productService.getTotalContent();
+			int totalContent = productService.getTopTotalContent();
 			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println(attachList);

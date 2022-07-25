@@ -10,20 +10,26 @@
     .container {
         width: 1024px;
         margin: 0 auto;  /* 화면에 가운데 정렬하기 위함 */
+    
     }
+    
+  
+    
 
     /* 로그인 폼 컨테이너 */
     .login_container {
         width: 500px;
         height: 400px;
-    /*     background-color: rgba(150, 150, 150, 0.2); */
+    	/* background-color: red; */
         margin: 100px auto;
         position: relative;
-
+		/* background-color: red; */
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+    
+
     /* 컨테이너 제목 */
     .login_container h2 {
         line-height: 80px;

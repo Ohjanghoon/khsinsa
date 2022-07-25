@@ -102,14 +102,13 @@
         color: rgb(120, 120, 120);
     }
     
-	.btnSearch{
-    	text-align: center;
-    }
-    
-    .btn-primary {
-    	background-color:#3f51b5;
-    	border-color: #3f51b5;
-    }
+
+   
+   	#wrapper{
+   		text-align:center;
+   	}
+   	
+   	
     
     .btn btn-primary {
     	text-align: center;

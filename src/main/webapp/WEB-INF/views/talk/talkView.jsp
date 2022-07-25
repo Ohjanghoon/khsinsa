@@ -67,6 +67,7 @@ String commNo = community.getCommNo();
 
 					
 				<p><%= community.getCommContent() %></p>
+				<br><br>
 			</li>
 
 		

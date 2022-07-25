@@ -13,6 +13,7 @@ import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 import com.kh.sinsa.inquire.model.dto.Inquire;
+import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.order.model.dto.Order;
 
 public class AdminService {
@@ -238,6 +239,20 @@ public class AdminService {
 				close(conn);
 			}
 			return inquirelist;
+		}
+		
+		public List<InquireExt> inquireExtFindAll(Map<String, Object> param) {
+			Connection conn = null;
+			List<InquireExt> iq = null;
+			try {
+				conn = getConnection();
+				iq = adminDao.inquireExtFindAll(conn, param);
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return iq;
 		}
 
 		public int inquireGetTotalContent() {

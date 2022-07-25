@@ -90,6 +90,7 @@
     .saveId_wrapper>label {
         font-size: 13px;
         position: absolute;
+        margin-left:15px;
     }
     .forgot_wrapper a, span{
         font-size: 12px;

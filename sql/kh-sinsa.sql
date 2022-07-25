@@ -478,5 +478,5 @@ insert into product values ('A10'||seq_product_pro_no.nextval, :1 , :2 , :3 , :4
 insert into product values ('A20'||seq_product_pro_no.nextval,?,?,?,?,default,?);
 
 delete from product where pro_no = 'A20114';
-
+select * from inquire;
 alter table product_attachment add constraint fk_pro_no_03 foreign key (pro_no) references product(pro_no) on delete cascade;

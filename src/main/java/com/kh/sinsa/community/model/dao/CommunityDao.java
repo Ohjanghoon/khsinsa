@@ -882,7 +882,7 @@ public class CommunityDao {
 		ResultSet rset = null;
 		String commNo = null;
 		String sql = prop.getProperty("getFreeLastCommNo");
-		// getTalkLastCommNo = select 'C50' || seq_community_comm_no.currval from dual
+		// getFreeLastCommNo = select 'C40' || seq_community_comm_no.currval from dual
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -902,7 +902,7 @@ public class CommunityDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("insertFreeAttachment");
-		//insertTalkAttachment = insert into comm_attachment values('C32' || seq_comm_attachment_comm_attachment_no.nextval, ?, ?, ?)
+		//insertFreeAttachment = insert into comm_attachment values('C42' || seq_comm_attachment_comm_attachment_no.nextval, ?, ?, ?)
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, attach.getCommNo());

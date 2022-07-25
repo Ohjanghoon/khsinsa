@@ -107,7 +107,10 @@ if (loginUser != null) {
 	</form>
 </div>
 <script>
-
+//유효성 검사 메세지
+const showMsg = (obj, msg) => {
+    obj.innerHTML = msg;
+};
 //----------------------------------이름----------------------------------------
 //이름 유효성 검사
 const checkName = () => {

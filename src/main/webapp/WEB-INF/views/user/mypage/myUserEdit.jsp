@@ -30,8 +30,7 @@ if (loginUser != null) {
 	String phonefront = phone.substring(0, 3);
 	String phoneBack = phone.substring(3);
 	
-	String address = loginUser.getUserAddress();
-	String[] tempAddress = address.split("+");
+	String[] tempAddress = loginUser.getUserAddress().split("\\+");
 	roadAddr = tempAddress[0];
 	roadDetail = tempAddress[1];
 	
@@ -95,12 +94,12 @@ if (loginUser != null) {
 		<%-- 주소  수정 --%>
 		<div class="input_area">
 			<label>주소 <span class="essential_mark">*</span></label> 
-			<input type="text" name="roadAddr" id="roadAddr" value ="<%= roadAddr%>" readonly>
+			<input type="text" name="roadAddr" id="roadAddr" value ="<%= roadAddr %>" readonly>
 			<button type="button" id="btn_address" onclick="addressPopup();">주소검색</button>
 		</div>
 		<br> 
 		<div class="input_area addr_area">
-		<input type="text" name="roadDetail" id="roadDetail" value="<%= roadDetail %>" placeholder="상세주소 입력" value="">
+		<input type="text" name="roadDetail" id="roadDetail" value="<%= roadDetail %>" placeholder="상세주소 입력">
 		</div>
 		<br> <span class="message_box" id="addressMsg"></span>
 

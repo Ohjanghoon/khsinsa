@@ -58,7 +58,7 @@ public class MyOrderListServlet extends HttpServlet {
 				userId = loginUser.getUserId();
 				//System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n", cPage, numPerPage, start, end);
 				myOrderList = mypageService.orderListFindById(userId, param);
-				System.out.println("myOrderList@MyOrderListServlet = " + myOrderList);
+				//System.out.println("myOrderList@MyOrderListServlet = " + myOrderList);
 				
 				Product proInfo = null;
 				ProductAttachment proAttach = null;
@@ -81,9 +81,9 @@ public class MyOrderListServlet extends HttpServlet {
 			//System.out.println("pagebar = " + pagebar);
 			
 			//3. view 응답 처리
-//			System.out.println("myOrderList = " + myOrderList);
-//			System.out.println("proInfoList = " + proInfoList);
-//			System.out.println("proAttachList = " + proAttachList);
+			System.out.println("myOrderList = " + myOrderList);
+			System.out.println("proInfoList = " + proInfoList);
+			System.out.println("proAttachList = " + proAttachList);
 			
 			request.setAttribute("myOrderList", myOrderList);
 			request.setAttribute("proInfoList", proInfoList);

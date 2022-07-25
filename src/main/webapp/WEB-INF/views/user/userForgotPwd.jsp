@@ -18,17 +18,13 @@
 			<section class="form-search">
 
 				<div class="input_area">
-					<label>아이디</label> 
-					<input type="text" name="userId" class="btn-name" value ="qkralstj0808"> <br>
+					<input type="text" name="userId" class="btn-name" placeholder="가입된 아이디를 입력하세요."> <br>
 				</div>
 				<div class="input_area">
-					<label>이름</label> 
-					<input type="text" name="username" class="btn-name" value="박민서"> <br>
+					<input type="text" name="username" class="btn-name" placeholder="가입된 이름을 입력하세요. "> <br>
 				</div>
-
 				<div class="input_area">
-					<label>이메일 </label>
-					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" value="qkralstj08@naver.com">
+					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" placeholder="가입된 이메일을 입력하세요." >
 				</div>
 				<br>
 

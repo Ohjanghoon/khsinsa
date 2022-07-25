@@ -11,9 +11,9 @@
 		<nav class="navi">
 			<ul>
 				<li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
                 <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
                 <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
 			</ul>
 		</nav>

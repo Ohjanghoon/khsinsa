@@ -5,29 +5,15 @@
 <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.sinsa.common.KhsinsaUtils"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link 
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
-<link
-	rel="stylesheet"
-	href="<%= request.getContextPath() %>/css/admin/productManagement.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/productManagement.css">
 <%
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
-	//System.out.println(productlist);
-	//System.out.println(productattachList);
-	//System.out.println(productlist);
 %>
+<<<<<<< HEAD
 
 <div align="center" id="body">
             <br>
@@ -35,10 +21,10 @@
             <ul class = "ul">
                 <adminmenu>
                 <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/requestmanagement">요청 처리</a></li>
-                <li class = :"li"><a>상품 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/ordermanagement">주문 관리</a></li>
-                <li class = :"li"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
             </adminmenu>
             </ul>
             <br>
@@ -46,83 +32,107 @@
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button id="productadd" type="submit">상품 등록</button></div>
-            <table class="table table-bordered">
+            <table class="table" style = "width: 1000px;">
+=======
+    <main>
+        <div class="container">
+            <section class="py-5 text-center container">
+                <h3>Admin Page</h3>
+            </section>
+            <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+                <ul class="nav me-auto">
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminpage" class="nav-link link-dark px-2">회원관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestmanagement" class="nav-link link-dark px-2">요청처리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/productManagement" class="nav-link link-dark px-2">상품관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/ordermanagement" class="nav-link link-dark px-2">주문관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet" class="nav-link link-dark px-2">통계관리</a></li>
+                </ul>
+            </nav>
+            <br><br><br><br>
+            <section class="py-2 text-center container">
+                <h3>상품관리</h3>
+            </section>
+            <div class="container px-4 py-5" id="featured-3">
+                <button type="button" id="addTopProduct" class="btn btn-outline-secondary btn-sm">상의 상품 등록</button><br /><br />
+                <button type="button" id="addBottomProduct" class="btn btn-outline-secondary btn-sm">하의 상품 등록</button><br /><br />
+                <h2 class="pb-2 border-bottom">등록된 상품</h2>
+                <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+>>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git
 <%
-			if(productlist == null || productlist.isEmpty()){
-		%>
-			<tr>
-				<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
-			</tr>
-		<%
-			} 
-			else { for(Product product : productlist){
-%>
-                <thead>
-                    <tr class = tablehead>
-                        <th>NO</th>
-                        <th>분류</th>
-                        <th>이름</th>
-                        <th>사진</th>
-                        <th>가격</th>
-                        <th>내용</th>
-                        <th>사이즈</th>
-                        <th>등록일</th>
-                        <th>수정/삭제</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        <td><%= product.getProNo() %></td>
-                        <td><%= product.getProType() %></td>
-                        <td>
-                        	<a href="<%= request.getContextPath() %>/admin/productManagementDetail?proNo=<%= product.getProNo() %>">
-                        	<%= product.getProName() %>
-                        </td>
+    if(productlist != null || !productlist.isEmpty()){
+        for(Product product : productlist){
+        	String top = product.getProType();
+%>                   
+                  <div class="feature col">
+                      <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= product.getProNo() %>" class="icon-link">
 <%
-	for(ProductAttachment pa : productattachList){
-		if(product.getProNo().equals(pa.getProNo())){
-%>
-						<td>
-							<div class = 'img-container'>
-								<img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" width = "100px" height = "100px" colspan = "2" alt="" class="img-product">
-							</div>
-						</td>
+        for(ProductAttachment pa : productattachList){
+            if(product.getProNo().equals(pa.getProNo())){
+%>                          
+                        <img src="<%= request.getContextPath() %>/upload/product/<%= pa.getProRenameFilename() %>" alt="" width="100%" height="340px">
 <%
-		break; }		
-	}
+            break; }		
+            }
 %>
-						<td><%= product.getProPrice() %></td>
-						<td><%= product.getProContent() %></td>
-                        <td><%= product.getProSize() %></td>
-                        <td><%= product.getRegDate() %></td>
-                        <td><button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary editProduct">Edit</button>
-                            <button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary delProduct">Delete</button>
-                        </td>
-                        <% 		}
-       		} %>
-                    </tbody>
-            </table>
-<form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="editProductFrm" method="get">
+                      </a>
+                    <p><%= product.getProName() %></p>
+                      <small>제품 번호 : <%= product.getProNo() %></small><br />
+                      <small>제품 설명 : <%= product.getProContent() %></small><br />
+                      <small>등록일 : <%= product.getRegDate() %></small><br /><br />
+                      <button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary editProduct">Edit</button>
+                      <button type="button" value="<%= product.getProNo() %>" class="btn btn-sm btn-outline-secondary delProduct">Delete</button>
+                  </div>
+<% 		
+        }
+    } 
+%>
+                  
+                </div>
+              </div>
+		</div>
+		<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="editProFrm" method="get">
+    <input type="hidden" name="proNo" />
+</form>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productTopAdd" name="addTopProFrm" method="get"></form>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productBottomAdd" name="addBottomProFrm" method="get"></form>
+<form action="<%= request.getContextPath() %>/admin/productManagement/productDelete" name="delProFrm" method="post">
 	<input type="hidden" name="proNo" />
 </form>
+</main>
 <script>
-/* 상품 등록 */
-document.querySelector("#productadd").addEventListener('click', (e) => {
-	if(<%= loginUser == null %>){
-		loginAlert();		
-	}else{
-		location.href = "<%= request.getContextPath() %>/admin/productManagement/topProductAdd";
-	}	
-});
-
-/* 상품 수정 */
-document.querySelectorAll(".editProduct").forEach((btn) => {
-	btn.addEventListener('click', (e) => {
-			const {value} = e.target;
-			const frm = document.editProductFrm;
-			frm.proNo.value = value;
-			frm.submit();
+    /* 게시글 등록 하의 */
+	document.querySelector("#addTopProduct").addEventListener('click', (e) => {
+				const frm = document.addTopProFrm
+				frm.submit();
 	});
-});
 
+	/* 게시글 등록 상의 */
+	document.querySelector("#addBottomProduct").addEventListener('click', (e) => {
+				const frm = document.addBottomProFrm;
+				frm.submit();
+	});
+	
+	/* 게시글 수정 */
+	document.querySelectorAll(".delProduct").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+			if(confirm("해당 게시물을 정말 삭제하시겠습니까?")){
+				const {value} = e.target;
+				const frm = document.delProFrm;
+				frm.proNo.value = value;
+				frm.submit();
+			}	
+		});
+	});
+
+	/* 게시글 삭제 */
+	document.querySelectorAll(".editProduct").forEach((btn) => {
+		btn.addEventListener('click', (e) => {
+				const {value} = e.target;
+				const frm = document.editProFrm;
+				frm.proNo.value = value;
+				frm.submit();
+		});
+	});
 </script>
  <%@ include file="/WEB-INF/views/common/footer.jsp" %>

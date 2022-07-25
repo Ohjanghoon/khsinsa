@@ -14,6 +14,18 @@
 	String proNo = (String) request.getAttribute("proNo");
 	//System.out.println(productattachmentList);
 %>
+<div align="center" id="body">
+            <br>
+            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
+            <ul class = "ul">
+                <adminmenu>
+                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+            </adminmenu>
+            </ul>
 <main>
     <div class="container">
         <section class="py-5 text-center container">

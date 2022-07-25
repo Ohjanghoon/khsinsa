@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.codi;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,26 +15,24 @@ import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.service.CommunityService;
-import com.kh.sinsa.product.model.dto.Product;
-import com.kh.sinsa.product.model.dto.ProductAttachment;
 
 /**
- * Servlet implementation class CodiSearchServlet
+ * Servlet implementation class CodiAlignServlet
  */
-@WebServlet("/community/codiSearch")
-public class CodiSearchServlet extends HttpServlet {
+@WebServlet("/community/codiAlign")
+public class CodiAlignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CommunityService communityService = new CommunityService();
-
+	private CommunityService communityService = new CommunityService();   
+ 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+try {
+			
 			// 사용자 입력값
 			int cPage = 1;
 			int numPerPage = 6;
-			String search = request.getParameter("search");
 			
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -42,20 +40,21 @@ public class CodiSearchServlet extends HttpServlet {
 			
 			int start = (cPage - 1) * numPerPage + 1;
 			int end = cPage * numPerPage;
+			String align = request.getParameter("align");
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("start", start);
 			param.put("end", end);
-			param.put("search", search);
+			param.put("align", align);
+		
 			
 			// 업무로직
-			List<Community> codiList = communityService.codiSearch(param);
+			List<Community> codiList = communityService.codiAlign(param);
 			List<CommunityAttachment> codiAttachList = communityService.findCodiAttachmentFindAll();
-			
 			int codiTotalContent = communityService.getCodiTotalContent();
-			String url = request.getRequestURI()+ "?search=" + search;
+			String url = request.getRequestURI();
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, codiTotalContent, url);
-			
+
 			// view단 처리
 			request.setAttribute("codiAttachList", codiAttachList);
 			request.setAttribute("codiList", codiList);
@@ -68,4 +67,5 @@ public class CodiSearchServlet extends HttpServlet {
 		}
 	}
 
+	
 }

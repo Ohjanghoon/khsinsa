@@ -87,7 +87,7 @@ public class TalkViewServlet extends HttpServlet {
 			request.setAttribute("commentList", commentList);
 			request.setAttribute("attach", attach);
 			System.out.println("attach" + attach);
-			request.getRequestDispatcher("/WEB-INF/views/share_community/shareView.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/talk/talkView.jsp")
 				.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

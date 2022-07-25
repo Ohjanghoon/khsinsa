@@ -1492,13 +1492,6 @@ public class CommunityDao {
 		}
 		return list;
 	}
-
-
-
-
-
-
-
-
+	
 
 }

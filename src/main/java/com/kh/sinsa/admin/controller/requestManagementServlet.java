@@ -46,8 +46,11 @@ public class requestManagementServlet extends HttpServlet {
 				
 				System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
 						cPage, numPerPage, start, end);
-				List<Inquire> inquirelist = adminService.inquireFindAll(param);
-				System.out.println("inquirelist = " + inquirelist);
+				List<Inquire> inquireList = adminService.inquireFindAll(param);
+				List<InquireExt> iq = adminService.inquireExtFindAll(param);
+				
+				System.out.println("inquireList = " + inquireList);
+				System.out.println("iq = " + iq);
 				
 				
 				// b. pagebar 영역
@@ -59,11 +62,11 @@ public class requestManagementServlet extends HttpServlet {
 				System.out.println("pagebar = " + pagebar);
 				
 				// 3. view단처리
-				request.setAttribute("inquirelist", inquirelist);
+				request.setAttribute("inquireList", inquireList);
 				request.setAttribute("pagebar", pagebar);
 				request.getRequestDispatcher("/WEB-INF/views/admin/requestManagement.jsp")
 					.forward(request, response);
-				System.out.println("list@requestmanagement = " + inquirelist);
+				System.out.println("list@requestManagement = " + inquireList);
 			} 
 			catch(Exception e) {
 				e.printStackTrace();

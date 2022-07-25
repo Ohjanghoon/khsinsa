@@ -60,6 +60,7 @@ public class orderManagementServlet extends HttpServlet {
 						
 			// 3. view단처리
 			request.setAttribute("orderlist", orderlist);
+			request.setAttribute("pagebar", pagebar);
 			request.getRequestDispatcher("/WEB-INF/views/admin/orderManagement.jsp")
 			.forward(request, response);
 		}

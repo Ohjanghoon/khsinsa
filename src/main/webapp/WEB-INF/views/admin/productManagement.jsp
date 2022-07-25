@@ -13,17 +13,17 @@
 	List<Product> productlist = (List<Product>) request.getAttribute("productlist");
 	List<ProductAttachment> productattachList = (List<ProductAttachment>) request.getAttribute("productattachList");
 %>
-    <main>
+<main>
         <div class="container">
             <section class="py-5 text-center container">
                 <h3>Admin Page</h3>
             </section>
             <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
                 <ul class="nav me-auto">
-                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminpage" class="nav-link link-dark px-2">회원관리</a></li>
-                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestmanagement" class="nav-link link-dark px-2">요청처리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestManagement" class="nav-link link-dark px-2">요청처리</a></li>
                   <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/productManagement" class="nav-link link-dark px-2">상품관리</a></li>
-                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/ordermanagement" class="nav-link link-dark px-2">주문관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/orderManagement" class="nav-link link-dark px-2">주문관리</a></li>
                   <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet" class="nav-link link-dark px-2">통계관리</a></li>
                 </ul>
             </nav>

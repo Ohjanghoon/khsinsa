@@ -15,6 +15,9 @@
 
 h6{
 	transform: translate(0, 30px);
+	color : black;
+	font-style: italic;
+	text-shadow: 1px 0px 3px white;
 }
 
 d-flex{

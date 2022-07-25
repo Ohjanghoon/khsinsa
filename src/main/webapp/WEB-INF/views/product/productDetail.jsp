@@ -13,10 +13,6 @@
 	List<ProductAttachment> attachList = (List<ProductAttachment>) request.getAttribute("attachList");
 	int totalPage = (int) request.getAttribute("totalPage");
 	String proNo = (String) request.getAttribute("proNo");
-	
-	for(ProductAttachment att : attachList){
-		String proNoo = att.getProNo();
-	}
 %>
 <main>
     <div class="container">
@@ -168,7 +164,7 @@
 			success(response){
 				alert("상품을 장바구니에 추가했습니다");
 			},
-			error : console.log,
+			error : alert("사이즈를 선택해주세요.")
 		})
 	});
 
@@ -180,7 +176,7 @@
 			method : 'POST',
 			data : {proNo : "<%= proNo %>", userId : "<%= loginUser.getUserId() %>"},
 			success(response){
-				alert("관심상품 등록되었씁니다.");
+				alert("관심상품 등록되었습니다.");
 				
 				 <%-- const body = document.querySelector("body"); -%>
 				
@@ -213,7 +209,7 @@
 			},
 			error : console.log,
 			complete(){
-				<%-- document.querySelector('#like').innerHTML = pl; --%>
+				document.querySelector('#like').innerHTML = pl;
 			}
 		})
 	});

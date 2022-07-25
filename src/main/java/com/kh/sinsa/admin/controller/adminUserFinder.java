@@ -50,8 +50,8 @@ public class adminUserFinder extends HttpServlet {
 			
 			// 2. 업무로직
 			// a. content 영역
-			List<User> userlist = adminService.findUserLike(param);
-			System.out.println("userlist = " + userlist);
+			List<User> userList = adminService.findUserLike(param);
+			System.out.println("userList = " + userList);
 			
 			// b. pagebar 영역
 			int usertotalContent = adminService.userGetTotalContentLike(param);
@@ -61,9 +61,9 @@ public class adminUserFinder extends HttpServlet {
 			System.out.println("pagebar = " + pagebar);
 			
 			// 3. view단처리
-			request.setAttribute("userlist", userlist);
+			request.setAttribute("userList", userList);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/admin/adminpage.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/admin/adminPage.jsp")
 				.forward(request, response);
 		}
 		catch(Exception e) {

@@ -17,7 +17,6 @@
         <div class="container">
             <section class="py-5 text-center container">
                 <h3>Admin Page</h3>
-            </section>
             <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
                 <ul class="nav me-auto">
                   <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
@@ -28,16 +27,15 @@
                 </ul>
             </nav>
             <br><br>
-			<section class="py-2 text-center container">
 				<h3>1:1 문의</h3>
     				<table class="table caption-top">
         				<thead>
             				<tr class = tablehead>
-                				<th>문의 유형</th>
-                    			<th>번호</th>
-                    			<th>제목</th>
-                    			<th>작성자</th>
-                    			<th>게시일</th>
+                				<th scope="col">문의 유형</th>
+                    			<th scope="col">번호</th>
+                    			<th scope="col">제목</th>
+                    			<th scope="col">작성자</th>
+                    			<th scope="col">게시일</th>
 							</tr>
 						</thead>
             			<tbody>
@@ -46,11 +44,11 @@
 		for(Inquire inquire : inquireList){%>
 		
         					<tr>
-                    			<td>1 : 1 문의</td>
-                        		<td><%=inquire.getInquireNo()%></td>
-                        		<td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a></td>
-                        		<td><%=inquire.getUserId()%></td>
-                        		<td><%=inquire.getInquireDate()%></td>
+                    			<td class="nav-item"><a class="nav-link link-dark px-2">1 : 1 문의</a></td>
+                        		<td class="nav-item"><a class="nav-link link-dark px-2"><%=inquire.getInquireNo()%></a></td>
+                        		<td class="nav-item"><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>" class="nav-link link-dark px-2"><%=inquire.getInquireTitle()%></a></td>
+                        		<td class="nav-item"><a class="nav-link link-dark px-2"><%=inquire.getUserId()%></a></td>
+                        		<td class="nav-item"><a class="nav-link link-dark px-2"><%=inquire.getInquireDate()%></a></td>
                     		</tr>
 <% 	}
 		}
@@ -60,7 +58,5 @@
 					</table>
 				</section>
 		</div>
-		<div id="pagebar">
-			<%= request.getAttribute("pagebar") %>\
-		</div>
+		<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

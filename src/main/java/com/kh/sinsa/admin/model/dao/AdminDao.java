@@ -156,7 +156,7 @@ public class AdminDao {
 		int usertotalContent = 0;
 		String sql = prop.getProperty("userGetTotalContentLike");
 		String col = (String) param.get("usersearchType");
-		String val = (String) param.get("usersearchType");
+		String val = (String) param.get("usersearchKeyword");
 		sql = sql.replace("#", col);
 
 		try {

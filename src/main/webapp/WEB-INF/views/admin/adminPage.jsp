@@ -20,7 +20,6 @@
 			<div class="container">
 				<section class="py-5 text-center container">
 					<h3>Admin Page</h3>
-        		</section>
             		<nav class="py-2 bg-white border-top border-bottom" id="commnavi">
                 		<ul class="nav me-auto">
                   			<li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminpage" class="nav-link link-dark px-2">회원관리</a></li>
@@ -30,9 +29,7 @@
                 		</ul>
             		</nav>
             <br><br><br><br>
-            	<section class="py-2 text-center container">
-                <h3>회원관리</h3>
-            	</section>
+                	<h3>회원관리</h3>
             <div class="searchcon">
             	<label for="searchType"><h5>검색타입</h5></label>
                 	<select id="searchType" class="form-select text-center" size="2" aria-label="size 2 select example">
@@ -41,15 +38,15 @@
 					</select>
 	        <div id="search-userId" class="search-type">
 	        	<form action="<%=request.getContextPath()%>/admin/userFinder">
-	            	<input type="hidden" name="searchType" value="user_id"/>
-	                <input type="text" name="searchKeyword"  size="25" placeholder="검색할 아이디를 입력하세요." value="<%= "user_id".equals(type) ? kw : "" %>"/>
+	            	<input type="hidden" name="usersearchType" value="user_id"/>
+	                <input type="text" name="usersearchKeyword"  size="25" placeholder="검색할 아이디를 입력하세요." value="<%= "user_id".equals(type) ? kw : "" %>"/>
 	                <button type="submit" class="btn btn-outline-dark" >🔎</button>			
 	            </form>	
 	        </div>
 	        <div id="search-userName" class="search-type">
 	        	<form action="<%=request.getContextPath()%>/admin/userFinder">
-	            	<input type="hidden" name="searchType" value="user_name"/>
-	                <input type="text" name="searchKeyword" size="25" placeholder="검색할 이름을 입력하세요." value="<%= "user_name".equals(type) ? kw : "" %>"/>
+	            	<input type="hidden" name="usersearchType" value="user_name"/>
+	                <input type="text" name="usersearchKeyword" size="25" placeholder="검색할 이름을 입력하세요." value="<%= "user_name".equals(type) ? kw : "" %>"/>
 	                <button type="submit" class="btn btn-outline-dark">🔎</button>
 	            </form>	
 	        </div>
@@ -90,9 +87,30 @@
 %> 
 	                </tbody>
 			</table>
+			<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
 		</section>
         <section class="py-2 text-center container">
 			<h3>탈퇴회원</h3>
+            <div class="searchcon">
+            	<label for="searchType"><h5>검색타입</h5></label>
+                	<select id="searchType" class="form-select text-center" size="2" aria-label="size 2 select example">
+						<option value="user_id" <%= "user_id".equals(type) ? "selected" : "" %> selected>User ID</option>
+						<option value="user_name" <%= "user_name".equals(type) ? "selected" : "" %>>User Name</option>
+					</select>
+	        <div id="search-userId" class="search-type">
+	        	<form action="<%=request.getContextPath()%>/admin/userFinder">
+	            	<input type="hidden" name="usersearchType" value="user_id"/>
+	                <input type="text" name="usersearchKeyword"  size="25" placeholder="검색할 아이디를 입력하세요." value="<%= "user_id".equals(type) ? kw : "" %>"/>
+	                <button type="submit" class="btn btn-outline-dark" >🔎</button>			
+	            </form>	
+	        </div>
+	        <div id="search-userName" class="search-type">
+	        	<form action="<%=request.getContextPath()%>/admin/userFinder">
+	            	<input type="hidden" name="usersearchType" value="user_name"/>
+	                <input type="text" name="usersearchKeyword" size="25" placeholder="검색할 이름을 입력하세요." value="<%= "user_name".equals(type) ? kw : "" %>"/>
+	                <button type="submit" class="btn btn-outline-dark">🔎</button>
+	            </form>	
+	        </div>
 				<table class="table caption-top">
 					<thead>
 						<tr>
@@ -127,25 +145,12 @@
 %>
                 	</tbody>
                 </table>
+        </div>
+			<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
             </section>
         </div>
     </main>
 <script>
-
-    window.addEventListener('load', (e) => {
-            document.querySelector("select#searchType").onchange = (e) => {
-                document.querySelectorAll(".search-type").forEach((div, index) => {
-                    div.style.display = "none";			
-                });
-                let id;
-                switch(e.target.value){
-                case "user_id" : id = "userId"; break;
-                case "user_name" : id = "userName"; break;
-                }
-                document.querySelector(`#search-\${id}`).style.display = "inline-block";
-            }
-        });
-    
     window.addEventListener('load', (e) => {
         document.querySelector("select#searchType").onchange = (e) => {
             document.querySelectorAll(".search-type").forEach((div, index) => {

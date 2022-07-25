@@ -20,7 +20,6 @@
 	<div class="container">
 		<section class="py-5 text-center container">
 			<h3>Admin Page</h3>
-        </section>
         	<nav class="py-2 bg-white border-top border-bottom" id="commnavi">
                 <ul class="nav me-auto">
                   <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
@@ -30,152 +29,155 @@
                 </ul>
             </nav>
             <br><br>
-            <a><center>주문 대기</center></a>
+            <h3>배송현황[주문 대기]</h3>
             <br>
-            <table class="table table-bordered" style = "width: 1024px;"> 
-                <thead>
-                    <tr>
-                        <th>회원ID</th>
-                        <th>상품NO</th>
-                        <th>배송지</th>
-                        <th>전화번호</th>
-                        <th>요청사항</th>
-                        <th>결제금액</th>
-                        <th>결제일</th>
-                        <th colspan="2">현황</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                    <% if(orderlist != null || orderlist.isEmpty()){
-                    	for(Order order : orderlist) {
-                    		if("주문 대기".equals(order.getOrderStatus())) {
-					%>
+            	<table table class="table caption-top"> 
+	                <thead>
 	                    <tr>
-	                        <td><%= order.getUserId() %></td>
-	                        <td><%= order.getProNo() %></td>
-	                        <td><%= order.getOrderAddress() %></td>
-	                        <td><%= order.getOrderPhone() %></td>
-	                        <td><%= order.getOrderReq() %></td>
-	                        <td><%= order.getOrderPrice() %></td>
-	                        <td><%= order.getOrderDate() %></td>
-	                        <td><%= order.getOrderStatus() %></td>
-	                        <td>
-	                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
-	                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
-	                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
-			           					<option value="none" selected disabled>변경 주문 현황 선택</option>
-			           					<option value="주문 대기">주문 대기</option>
-			           					<option value="배송중">배송중</option>
-			           					<option value="배송완료">배송완료</option>
-			         				</select>
-			       			</td>
-			       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
-			       			</form>
+	                        <th scope="col">회원ID</th>
+	                        <th scope="col">상품NO</th>
+	                        <th scope="col">배송지</th>
+	                        <th scope="col">전화번호</th>
+	                        <th scope="col">요청사항</th>
+	                        <th scope="col">결제<br>금액</th>
+	                        <th scope="col">결제일</th>
+	                        <th scope="col" colspan="2">현황</th>
 	                    </tr>
+	                </thead>
+	                    <tbody>
+	                    <% if(orderlist != null || orderlist.isEmpty()){
+	                    	for(Order order : orderlist) {
+	                    		if("주문 대기".equals(order.getOrderStatus())) {
+						%>
+		                	<tr>
+		                        <td><%= order.getUserId() %></td>
+		                        <td><%= order.getProNo() %></td>
+		                        <td><%= order.getOrderAddress() %></td>
+		                        <td><%= order.getOrderPhone() %></td>
+		                        <td><%= order.getOrderReq() %></td>
+		                        <td><%= order.getOrderPrice() %></td>
+		                        <td><%= order.getOrderDate() %></td>
+		                        <td><%= order.getOrderStatus() %></td>
+		                        <td>
+		                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
+		                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
+		                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
+				           					<option value="none" selected disabled>변경 주문 현황 선택</option>
+				           					<option value="주문 대기">주문 대기</option>
+				           					<option value="배송중">배송중</option>
+				           					<option value="배송완료">배송완료</option>
+				         				</select>
+				       			</td>
+				       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
+				       			</form>
+		                    </tr>
 <% 						}
                     }
                    }
 %>
-	                    </tbody>
+	            	</tbody>
 	            </table>
-	            <br><br>
-            <a><center>배송중</center></a>
+<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
+            <h3>배송현황[배송중]</h3>
             <br>
-	            <table class="table table-bordered" style = "width: 1024px;"> 
-                <thead>
-                    <tr>
-                        <th>회원ID</th>
-                        <th>상품NO</th>
-                        <th>배송지</th>
-                        <th>전화번호</th>
-                        <th>요청사항</th>
-                        <th>결제금액</th>
-                        <th>결제일</th>
-                        <th colspan="2">현황</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                    <% if(orderlist != null || orderlist.isEmpty()){
-                    	for(Order order : orderlist) {
-                    		if("배송중".equals(order.getOrderStatus())) {
-					%>
+            	<table table class="table caption-top"> 
+	                <thead>
 	                    <tr>
-	                        <td><%= order.getUserId() %></td>
-	                        <td><%= order.getProNo() %></td>
-	                        <td><%= order.getOrderAddress() %></td>
-	                        <td><%= order.getOrderPhone() %></td>
-	                        <td><%= order.getOrderReq() %></td>
-	                        <td><%= order.getOrderPrice() %></td>
-	                        <td><%= order.getOrderDate() %></td>
-	                        <td><%= order.getOrderStatus() %></td>
-	                        <td>
-	                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
-	                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
-	                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
-			           					<option value="none" selected disabled>변경 주문 현황 선택</option>
-			           					<option value="주문 대기">주문 대기</option>
-			           					<option value="배송중">배송중</option>
-			           					<option value="배송완료">배송완료</option>
-			         				</select>
-			       			</td>
-			       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
-			       			</form>
+	                        <th scope="col">회원ID</th>
+	                        <th scope="col">상품NO</th>
+	                        <th scope="col">배송지</th>
+	                        <th scope="col">전화번호</th>
+	                        <th scope="col">요청사항</th>
+	                        <th scope="col">결제<br>금액</th>
+	                        <th scope="col">결제일</th>
+	                        <th scope="col" colspan="2">현황</th>
 	                    </tr>
-<% 						}
-                    }
-                   }
-%>
-	                    </tbody>
-	            </table>
-	            <a><center>배송완료</center></a>
+	                </thead>
+	                    <tbody>
+	                    <% if(orderlist != null || orderlist.isEmpty()){
+	                    	for(Order order : orderlist) {
+	                    		if("배송중".equals(order.getOrderStatus())) {
+						%>
+		                    <tr>
+		                        <td><%= order.getUserId() %></td>
+		                        <td><%= order.getProNo() %></td>
+		                        <td><%= order.getOrderAddress() %></td>
+		                        <td><%= order.getOrderPhone() %></td>
+		                        <td><%= order.getOrderReq() %></td>
+		                        <td><%= order.getOrderPrice() %></td>
+		                        <td><%= order.getOrderDate() %></td>
+		                        <td><%= order.getOrderStatus() %></td>
+		                        <td>
+		                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
+		                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
+		                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
+				           					<option value="none" selected disabled>변경 주문 현황 선택</option>
+				           					<option value="주문 대기">주문 대기</option>
+				           					<option value="배송중">배송중</option>
+				           					<option value="배송완료">배송완료</option>
+				         				</select>
+				       			</td>
+				       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
+				       			</form>
+		                    </tr>
+	<% 							}
+	                    	 }
+	                   		}
+	%>
+		                    </tbody>
+		            </table>
+<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
+	            <h3>배송현황[배송완료]</h3>
             <br>
-	            <table class="table table-bordered" style = "width: 1024px;"> 
-                <thead>
-                    <tr>
-                        <th>회원ID</th>
-                        <th>상품NO</th>
-                        <th>배송지</th>
-                        <th>전화번호</th>
-                        <th>요청사항</th>
-                        <th>결제금액</th>
-                        <th>결제일</th>
-                        <th colspan="2">현황</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                    <% if(orderlist != null || orderlist.isEmpty()){
-                    	for(Order order : orderlist) {
-                    		if("배송완료".equals(order.getOrderStatus())) {
-					%>
+            	<table table class="table caption-top"> 
+	                <thead>
 	                    <tr>
-	                        <td><%= order.getUserId() %></td>
-	                        <td><%= order.getProNo() %></td>
-	                        <td><%= order.getOrderAddress() %></td>
-	                        <td><%= order.getOrderPhone() %></td>
-	                        <td><%= order.getOrderReq() %></td>
-	                        <td><%= order.getOrderPrice() %></td>
-	                        <td><%= order.getOrderDate() %></td>
-	                        <td><%= order.getOrderStatus() %></td>
-	                        <td>
-	                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
-	                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
-	                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
-			           					<option value="none" selected disabled>변경 주문 현황 선택</option>
-			           					<option value="주문 대기">주문 대기</option>
-			           					<option value="배송중">배송중</option>
-			           					<option value="배송완료">배송완료</option>
-			         				</select>
-			       			</td>
-			       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
-			       			</form>
+	                        <th scope="col">회원ID</th>
+	                        <th scope="col">상품NO</th>
+	                        <th scope="col">배송지</th>
+	                        <th scope="col">전화번호</th>
+	                        <th scope="col">요청사항</th>
+	                        <th scope="col">결제<br>금액</th>
+	                        <th scope="col">결제일</th>
+	                        <th scope="col" colspan="2">현황</th>
 	                    </tr>
-<% 						}
-                    }
-                   }
-%>
-	                    </tbody>
-	            </table>
-<div class="deliveryChange">
-	<form role="form" method="post" class="deliveryForm">
-	</form></div>
+	                </thead>
+	                    <tbody>
+	                    <% if(orderlist != null || orderlist.isEmpty()){
+	                    	for(Order order : orderlist) {
+	                    		if("배송완료".equals(order.getOrderStatus())) {
+						%>
+		                    <tr>
+		                        <td><%= order.getUserId() %></td>
+		                        <td><%= order.getProNo() %></td>
+		                        <td><%= order.getOrderAddress() %></td>
+		                        <td><%= order.getOrderPhone() %></td>
+		                        <td><%= order.getOrderReq() %></td>
+		                        <td><%= order.getOrderPrice() %></td>
+		                        <td><%= order.getOrderDate() %></td>
+		                        <td><%= order.getOrderStatus() %></td>
+		                        <td>
+		                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
+		                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
+		                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
+				           					<option value="none" selected disabled>변경 주문 현황 선택</option>
+				           					<option value="주문 대기">주문 대기</option>
+				           					<option value="배송중">배송중</option>
+				           					<option value="배송완료">배송완료</option>
+				         				</select>
+				       			</td>
+				       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
+				       			</form>
+		                    </tr>
+	<% 							}
+	                    	 }
+	                   		}
+	%>
+		                    </tbody>
+		            </table>
+<p class="pagination justify-content-center"><%= request.getAttribute("pagebar") %></p>
+	<div class="deliveryChange">
+								<form role="form" method="post" class="deliveryForm">
+								</form>
+	</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

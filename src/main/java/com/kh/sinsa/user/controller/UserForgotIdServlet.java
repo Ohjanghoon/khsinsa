@@ -18,6 +18,7 @@ import com.kh.sinsa.user.model.service.UserService;
 public class UserForgotIdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserService userService = new UserService();
+	User user = new User();
 	
   
 	@Override

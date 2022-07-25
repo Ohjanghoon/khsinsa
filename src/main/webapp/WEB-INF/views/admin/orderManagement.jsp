@@ -16,19 +16,21 @@
 	String kw = request.getParameter("ordersearchKeyword");
 %>
 
-        <div align="center" id="body">
-            <br>
-            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
-            <ul class = "ul">
-                <adminmenu>
-                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-            	</adminmenu>
-            </ul>
-            <br>
+<main>
+	<div class="container">
+		<section class="py-5 text-center container">
+			<h3>Admin Page</h3>
+        </section>
+        	<nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+                <ul class="nav me-auto">
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestManagement" class="nav-link link-dark px-2">요청처리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/productManagement" class="nav-link link-dark px-2">상품관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/orderManagement" class="nav-link link-dark px-2">주문관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet" class="nav-link link-dark px-2">통계관리</a></li>
+                </ul>
+            </nav>
+            <br><br>
             <a><center>주문 관리</center></a>
             <br>
             <table class="table table-bordered" style = "width: 1024px;"> 

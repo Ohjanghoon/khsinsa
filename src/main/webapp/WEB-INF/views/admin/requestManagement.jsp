@@ -3,70 +3,64 @@
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
 </script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/requestManagement.css">
-
 <%
-	List<Inquire> inquirelist = (List<Inquire>) request.getAttribute("inquirelist");
-	System.out.println("list@requestmanagement = " + inquirelist);
-	String type = request.getParameter("searchType");
-	String kw = request.getParameter("searchKeyword");
+	List<Inquire> inquireList = (List<Inquire>) request.getAttribute("inquireList");
+	List<InquireExt> iq = (List<InquireExt>) request.getAttribute("inquireExtList");
 %>
-
-<div align="center" id="body">
-	<br>
-	<class = "adminpage"><h1>ADMIN PAGE</h1></class>
-    	<ul class = "ul">
-        	<adminmenu>
-           		<li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-            </adminmenu>
-		</ul>
-<div class="requestManagement_content">
-	<h1 class="mt-4"><center>1:1문의</center></h1>
-    	<table class="table" style = "width: 1000px;">
-        	<thead>
-            	<tr class = tablehead>
-                	<th>문의 유형</th>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>게시일</th>
-				</tr>
-			</thead>
-            	<tbody>
-                <%
-				if(inquirelist == null || inquirelist.isEmpty()){
-				%>
-					<tr>
-						<td colspan="10" align="center"> 검색 결과가 없습니다. </td>
-					</tr>
-				<%
-				} 
-				else { for(Inquire inquire : inquirelist) {%>
-                    <tr>
-                    	<td>1 : 1 문의</td>
-                        <td><%=inquire.getInquireNo()%></td>
-                        <td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a></td>
-                        <td><%=inquire.getUserId()%></td>
-                        <td><%=inquire.getInquireDate()%></td>
-                    </tr>
-                    <% 		}}
-       		 		%>
-				</tbody>
-		</table>
-</div>
-<div id="pagebar">
-<%= request.getAttribute("pagebar") %>\
-</div>
+<main>
+        <div class="container">
+            <section class="py-5 text-center container">
+                <h3>Admin Page</h3>
+            </section>
+            <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+                <ul class="nav me-auto">
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestManagement" class="nav-link link-dark px-2">요청처리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/productManagement" class="nav-link link-dark px-2">상품관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/orderManagement" class="nav-link link-dark px-2">주문관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet" class="nav-link link-dark px-2">통계관리</a></li>
+                </ul>
+            </nav>
+            <br><br>
+			<section class="py-2 text-center container">
+				<h3>1:1 문의</h3>
+    				<table class="table caption-top">
+        				<thead>
+            				<tr class = tablehead>
+                				<th>문의 유형</th>
+                    			<th>번호</th>
+                    			<th>제목</th>
+                    			<th>작성자</th>
+                    			<th>게시일</th>
+							</tr>
+						</thead>
+            			<tbody>
+<%
+	if(inquireList != null || !inquireList.isEmpty()){
+		for(Inquire inquire : inquireList){%>
+		
+        					<tr>
+                    			<td>1 : 1 문의</td>
+                        		<td><%=inquire.getInquireNo()%></td>
+                        		<td><a href="<%=request.getContextPath()%>/inquire/inquireView?inquireNo=<%= inquire.getInquireNo()%>"><%=inquire.getInquireTitle()%></a></td>
+                        		<td><%=inquire.getUserId()%></td>
+                        		<td><%=inquire.getInquireDate()%></td>
+                    		</tr>
+<% 	}
+		}
+				
+%>
+						</tbody>
+					</table>
+				</section>
+		</div>
+		<div id="pagebar">
+			<%= request.getAttribute("pagebar") %>\
+		</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

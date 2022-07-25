@@ -125,12 +125,12 @@ public class AdminDao {
 		// select * from ( select row_number () over (order by enroll_date desc) rnum,
 		// u.* from kh_user u where # like ?) u where rnum between ? and ?
 		String col = (String) param.get("usersearchType");
-		String val = (String) param.get("usersearchType");
+		String val = (String) param.get("usersearchKeyword");
 		int start = (int) param.get("start");
 		int end = (int) param.get("end");
-
+		System.out.println("sql" + sql);
 		sql = sql.replace("#", col);
-		System.out.println(sql);
+		
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -640,6 +640,47 @@ public List<Inquire> inquireFindAll(Connection conn, Map<String, Object> param) 
 	return inquirelist;
 }
 
+public List<InquireExt> inquireExtFindAll(Connection conn, Map<String, Object> param) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<InquireExt> iq = new ArrayList<>();
+	String sql = prop.getProperty("inquireFindAll");
+	System.out.println(sql);
+	try {
+		pstmt = conn.prepareStatement(sql);
+
+		pstmt.setInt(1, (int) param.get("start"));
+		pstmt.setInt(2, (int) param.get("end"));
+		rset = pstmt.executeQuery();
+		
+		while (rset.next()) {
+			InquireExt inquireExt = handleInquireExtResultSet(rset);
+			iq.add(inquireExt);
+		}
+
+	} catch (SQLException e) {
+		throw new InquireException("요청처리 목록 조회 오류", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return iq;
+}
+
+
+
+private InquireExt handleInquireExtResultSet(ResultSet rset) throws SQLException {
+	String inquireNo = rset.getString("inquire_no");
+	String userId = rset.getString("user_id");
+	String inquireAnswerRef = rset.getString("inquire_answer_ref");
+	String inquireTitle = rset.getString("inquire_title");
+	String inquireContent = rset.getString("inquire_content");
+	Date inquireDate = rset.getDate("inquire_date");
+	String inquireCategory = rset.getString("inquire_category");
+	return new InquireExt(inquireNo, userId, inquireAnswerRef, inquireTitle, inquireContent, inquireDate,
+			inquireCategory);
+}
+
 public int inquireGetTotalContent(Connection conn) {
 	PreparedStatement pstmt = null;
 	ResultSet rset = null;
@@ -800,7 +841,9 @@ public Order findByOrderNo(Connection conn, int orderNo) {
 		close(pstmt);
 	}
 	return order;
-}}
+}
+
+}
 //##########Order ends#############
 
 

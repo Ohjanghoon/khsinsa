@@ -36,15 +36,17 @@ public class adminUserFinder extends HttpServlet {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
 			} catch (NumberFormatException e) {}
 			
+			String usersearchType = request.getParameter("usersearchType");
 			String usersearchKeyword = request.getParameter("usersearchKeyword");
-			String usersearchType = request.getParameter("usersearchKeyword");
+			System.out.println("usersearchType" + usersearchType);
+			System.out.println("usersearchKeyword " + usersearchKeyword);
 			
 			Map<String, Object> param = new HashMap<>();
-			param.put("usersearchKeyword", usersearchKeyword);
 			param.put("usersearchType", usersearchType);
+			param.put("usersearchKeyword", usersearchKeyword);
 			param.put("start", (cPage - 1) * numPerPage + 1);
 			param.put("end", cPage * numPerPage);
-			System.out.println(param);
+			// System.out.println(param);
 			
 			// 2. 업무로직
 			// a. content 영역
@@ -54,7 +56,7 @@ public class adminUserFinder extends HttpServlet {
 			// b. pagebar 영역
 			int usertotalContent = adminService.userGetTotalContentLike(param);
 			System.out.println("usertotalContent = " + usertotalContent);
-			String url = request.getRequestURI() + "&usersearchKeyword=" + usersearchKeyword;
+			String url = request.getRequestURI() + "?usersearchType=" + usersearchType + "&usersearchKeyword=" + usersearchKeyword;
 			String pagebar = KhsinsaUtils.getPagebar(cPage, numPerPage, usertotalContent, url);
 			System.out.println("pagebar = " + pagebar);
 			

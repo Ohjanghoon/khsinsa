@@ -8,18 +8,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin/inquiredetail.css" />
 
-<div align="center" id="body">
-            <br>
-            <class = "adminpage"><h1>ADMIN PAGE</h1></class>
-            <ul class = "ul">
-                <adminmenu>
-                <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
-				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
-                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
-            </adminmenu>
-            </ul>
+<main>
+        <div class="container">
+            <section class="py-5 text-center container">
+                <h3>Admin Page</h3>
+            </section>
+            <nav class="py-2 bg-white border-top border-bottom" id="commnavi">
+                <ul class="nav me-auto">
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/adminPage" class="nav-link link-dark px-2">회원관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/requestManagement" class="nav-link link-dark px-2">요청처리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/productManagement" class="nav-link link-dark px-2">상품관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/orderManagement" class="nav-link link-dark px-2">주문관리</a></li>
+                  <li class="nav-item"><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet" class="nav-link link-dark px-2">통계관리</a></li>
+                </ul>
+            </nav>
+            <br><br>
             <main class="mt-5 pt-5">
                     <div class="row" style="margin-bottom:20px; margin-left:1px;">
                         <div class="col-lg-12">

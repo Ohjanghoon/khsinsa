@@ -18,8 +18,8 @@ import com.kh.sinsa.admin.model.service.AdminService;
 /**
  * Servlet implementation class AdminMemberListServlet
  */
-@WebServlet("/admin/adminpage")
-public class adminpageServlet extends HttpServlet {
+@WebServlet("/admin/adminPage")
+public class adminPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AdminService adminService = new AdminService();
 
@@ -45,8 +45,8 @@ public class adminpageServlet extends HttpServlet {
 					
 			System.out.printf("cPage = %s, numPerPage = %s, start = %s, end = %s%n",
 							cPage, numPerPage, start, end);
-			List<User> userlist = adminService.userFindAll(param);
-			System.out.println("userlist = " + userlist);
+			List<User> userList = adminService.userFindAll(param);
+			System.out.println("userList = " + userList);
 						
 			
 			// b. pagebar영역
@@ -58,9 +58,9 @@ public class adminpageServlet extends HttpServlet {
 			System.out.println("pagebar = " + pagebar);
 						
 			// 3. view단처리
-			request.setAttribute("userlist", userlist);
+			request.setAttribute("userList", userList);
 			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/admin/adminpage.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/admin/adminPage.jsp")
 			.forward(request, response);
 		}
 		catch(Exception e) {

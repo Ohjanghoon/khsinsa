@@ -88,7 +88,7 @@
                         </li>
                 <%		} else { %>
                         <li class="nav-item">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/adminpage" id="admin">ADMIN PAGE</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/adminPage" id="admin">ADMIN PAGE</a>
                         </li>
                 <%  	} %>
 	            	<a class="btn btn-sm btn-outline-secondary" href="<%= request.getContextPath() %>/user/userLogout">LogOut</a>

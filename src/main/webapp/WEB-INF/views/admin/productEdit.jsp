@@ -11,6 +11,25 @@
 	List<ProductAttachment> productattachmentList = (List<ProductAttachment>) request.getAttribute("productattachmentList");
 	String proNo = (String) request.getAttribute("proNo");
 %>
+<<<<<<< HEAD
+
+<!-- // board -> product / attachments -> productattachList -->
+
+<body>
+	<div id="container">
+		<div id="header1"></div>
+		<div id="header2">Admin Page</div>
+		<nav>
+			<ul class="navi">
+				<li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
+			</ul>
+		</nav>
+=======
+>>>>>>> branch 'master' of https://github.com/Ohjanghoon/khsinsa.git
 <main>
 <form action="<%= request.getContextPath() %>/admin/productManagement/productEdit" name="productUpdateFrm" method="post" enctype="multipart/form-data">
 <input type="hidden" name="proNo" value="<%= product.getProNo() %>" />

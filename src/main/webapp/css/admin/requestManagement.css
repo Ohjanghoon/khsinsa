@@ -45,40 +45,70 @@ li {
     float: left !important;
     margin: auto 20px !important; 
 }
-#logo {
-    margin: 20px auto 0 !important; 
+
+/* requestManagement 컨텐트 영역*/
+.requestManagement_content {
+	width: 1000px;
+    margin: 0 auto;
+}
+.requestManagement_content h2 {
+	font-weight: bold;
+	margin-left : auto;
+	margin-right : auto;
+	
+}
+.requestManagement_content a {
+	text-decoration: none;
+}
+/* requestManagement 헤더 영역 */
+.requestManagement_content_header {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+.requestManagement_content_header ul {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.requestManagement_content_header a {
+    color: rgb(130, 130, 130);
+    margin: 0 20px;
+    font-weight: bold;
 }
 
-#logo > img {
-    width: 150px !important; 
-    height: auto !important; 
+
+/* requestManagement 리스트 영역 */
+.requestManagement_list {
+    width: 1000px;
+    border-collapse: collapse;
+    text-align : center;
 }
-a {
-    color: rgb(50, 50, 50) !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    text-decoration: none;
+.requestManagement_list thead {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
-/* 컨텐츠 영역 */
-.main {
-    width: 100% !important;
-    height: 100vh !important; 
-    background-color: blue !important; 
+.requestManagement_list th {
+    /* background-color: red; */
+    padding: 10px 0;
+    text-align: center;
 }
-.main:nth-child(2) {
-    background-color: green !important; 
+.requestManagement_list td {
+    /* background-color: blue; */
+    padding: 5px 0;
 }
-
-.회원관리 {
-    color: rgb(50, 50, 50) !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    text-decoration: underline; 
+.requestManagement_list tr {
+	border-bottom: 1px solid gray;
 }
 
-/* footer */
-footer {
-    background-color: lightslategray !important;
-    height: 200px !important; 
+.th-3 {
+	width: 300px;
+}
+
+/* 내 게시글 조회 페이지바 영역*/
+.requestManagement_content>.pagebar {
+	position: relative;
+	margin: 20px auto;
+	text-align: center;
 }

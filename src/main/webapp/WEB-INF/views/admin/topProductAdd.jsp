@@ -17,8 +17,8 @@
                 <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
 			</ul>
 		</nav>
-		<form name="shareAddFrm"
-			action="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd" 
+		<form name="topProductAddFrm"
+			action="<%=request.getContextPath()%>/admin/productManagement/topProductAdd" 
 			method="post"
 			encType = "multipart/form-data">
 			<h2 style="font-size: 30px; color: black;">상품 등록</h2>
@@ -26,9 +26,9 @@
 			<div id="content" style="margin: 30px;">
 				<span class="drop"> 
 				<select name="one" id="drop-select" onchange="if(this.value) location.href=(this.value)">
-						<option class="option" value="" >상품 분류</option>
-						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/topProductAdd""/>상의</option>
-						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd"" selected//>하의</option>
+						<option class="option" value="">상품 분류</option>
+						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/topProductAdd"" selected/>상의</option>
+						<option class="option" value="<%=request.getContextPath()%>/admin/productManagement/bottomProductAdd""/>하의</option>
 				</select>
 				</span> 
 				<br> 
@@ -41,10 +41,10 @@
 					<textarea name="content" cols="100" rows="50"></textarea>
 				</p>
 				<div>
-					<input type="file" name="filename1" accept="image/*">
-					<input type="file" name="filename2" accept="image/*">
-					<input type="file" name="filename3" accept="image/*">
-					<input type="file" name="filename4" accept="image/*">
+					<input type="file" name="imgproduct1" accept="image/*">
+					<input type="file" name="imgproduct2" accept="image/*">
+					<input type="file" name="imgproduct3" accept="image/*">
+					<input type="file" name="imgproduct4" accept="image/*">
 				</div>
 
 		<div id="btn-sum" style="margin:30px;">
@@ -57,9 +57,9 @@
 
 	<script>
 /**
-* shareAddFrm 유효성 검사
+* topProductAddFrmFrm 유효성 검사
 */
-document.shareAddFrm.onsubmit = (e) => {
+document.topProductAddFrm.onsubmit = (e) => {
 	const frm = e.target;
 	//상품 이름을 작성하지 않은 경우
 	if(!/^.+$/.test(frm.name.value)){

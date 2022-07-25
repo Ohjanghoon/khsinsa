@@ -124,10 +124,11 @@
     }
     #tempPwdMSG{
     	text-align:center;
+    	font-size:16px;
     	
     }
     div .tempColor span{
-   
+   		font-size:20px;
     	color:red;
     }
     

@@ -1,4 +1,4 @@
-package com.kh.sinsa.mypage.controller;
+package com.kh.sinsa.mypage.controller.myCommunity;
 
 import java.io.IOException;
 import java.sql.Array;
@@ -16,8 +16,8 @@ import com.kh.sinsa.mypage.model.service.MypageService;
 /**
  * Servlet implementation class MyInquireDeleteServlet
  */
-@WebServlet("/mypage/myReviewDel")
-public class DeleteMyReviewServlet extends HttpServlet {
+@WebServlet("/mypage/myCommunityDel")
+public class DeleteMyCommunityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	/**
@@ -27,16 +27,16 @@ public class DeleteMyReviewServlet extends HttpServlet {
 		
 		try {
 			//1. 사용자 입력값 처리
-			String[] reviewList = request.getParameterValues("reviewNo");
-			System.out.println("reviewList@MyReviewDeleteServlet = " + reviewList);
+			String[] communityList = request.getParameterValues("commNo");
+			System.out.println("communityList@MyCommunityDeleteServlet = " + communityList);
 			
-			if(reviewList == null) {
-				request.getSession().setAttribute("msg", "선택된 리뷰글이 없습니다.");
+			if(communityList == null) {
+				request.getSession().setAttribute("msg", "선택된 커뮤니티글이 없습니다.");
 			} else {
 				//2. 업무 로직
-				int result = mypageService.myReviewDelete(reviewList);
+				int result = mypageService.myCommunityDelete(communityList);
 				//myInquireDelete = delete from inquire where inquire_no in (?)
-				request.getSession().setAttribute("msg", "리뷰글이 삭제되었습니다.");
+				request.getSession().setAttribute("msg", "커뮤니티글이 삭제되었습니다.");
 			}
 			
 			//3. 응답처리

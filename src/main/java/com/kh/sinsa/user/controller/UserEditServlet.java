@@ -45,7 +45,7 @@ public class UserEditServlet extends HttpServlet {
 			// 1. 사용자 입력값 처리
 			String userId = request.getParameter("userId");
 			String userName = request.getParameter("userName");
-			String birthday = request.getParameter("birthday");
+			String birthday = request.getParameter("userBirth");
 			String phone1 = request.getParameter("phone1"); // 010
 			String phone2 = request.getParameter("phone2"); // 12344567
 			String emailId = request.getParameter("emailId"); // qwertyu

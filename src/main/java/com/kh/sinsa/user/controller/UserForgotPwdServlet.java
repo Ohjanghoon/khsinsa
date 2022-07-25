@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.sinsa.common.KhsinsaUtils;
 import com.kh.sinsa.common.TempPassword;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.service.UserService;
@@ -47,29 +48,33 @@ public class UserForgotPwdServlet extends HttpServlet {
 			System.out.println("userEmail = " + userEmail);
 			
 			//2. 업무로직: 아이디 + 이름 + 이메일 일치 여부 판단 
-			User user = userService.forgotPwd(userId, username, userEmail);
+			User user = userService.selectOneUser(userId, username, userEmail);
 			System.out.println(user);
-			
-			String tempPwd =  tempPassword.getRandomPassword(10);
-			System.out.println("tempPwd = " + tempPwd);
 			
 			// view단 처리
 			request.setAttribute("user", user);
 			//비밀번호 찾기 성공
 			if(user != null) {
-
+				
+				String tempPwd =  tempPassword.getRandomPassword(10);
 				request.getSession().setAttribute("tempPwd", tempPwd);
+				System.out.println("tempPwd = " + tempPwd);
+				
+				tempPwd = KhsinsaUtils.getEncryptedPassword(tempPwd, userId);
+				System.out.println("tempPwd = " + tempPwd);
+				
+				int result = userService.updatePwd(user, tempPwd);
 		      
-
-				System.out.println(1);
+				String location = request.getContextPath() + "/user/userLogin";
+				response.sendRedirect(location);
 			}
 			//비밀번호 찾기 실패 (아이디, 이름, 이메일이 일치하지 않는 경우)
 			else {
 				request.getSession().setAttribute("msg", "정확한 회원정보를 입력해주세요. ");
-			}
-				
 				String location = request.getHeader("Referer");
 				response.sendRedirect(location);
+			}
+				
 			
 			
 		} catch (Exception e) {

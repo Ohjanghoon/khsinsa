@@ -5,11 +5,7 @@
 
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 
-<%
-/* 	User user = (User) request.getAttribute("user"); */
-	User user = (User) session.getAttribute("user"); 
-	String tempPwd = (String)session.getAttribute("tempPwd");
-%>
+
 <link rel="stylesheet"
 	href="<%= request.getContextPath() %>/css/user/userForgotPwd.css">
 <div class="container">
@@ -23,16 +19,16 @@
 
 				<div class="input_area">
 					<label>아이디</label> 
-					<input type="text" name="userId" class="btn-name"> <br>
+					<input type="text" name="userId" class="btn-name" value ="qkralstj0808"> <br>
 				</div>
 				<div class="input_area">
 					<label>이름</label> 
-					<input type="text" name="username" class="btn-name"> <br>
+					<input type="text" name="username" class="btn-name" value="박민서"> <br>
 				</div>
 
 				<div class="input_area">
 					<label>이메일 </label>
-					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email">
+					 <input type="text" onKeyup="addHypen(this);" name="userEmail" class="btn-email" value="qkralstj08@naver.com">
 				</div>
 				<br>
 
@@ -51,12 +47,9 @@
 			<br>
 			<br>
 	
-		<%-- 	<%if(user!=null){ %> --%>
-      		<p id="tempPwdMSG"class="tempPwdMSG">임시비밀번호는 <%=tempPwd%> 입니다.</p>
-      		<%--  <%} %>  --%>
 
       	
-			<!-- <button type="button" class="btn btn-outline-primary">비밀번호 변경하기</button> -->
+			<!-- <button type="button" class="btn btn-outline-primary">비밀번호 변경하기</button>  -->
       		
 			
 			

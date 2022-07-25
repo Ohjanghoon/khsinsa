@@ -17,11 +17,11 @@
 				<li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
 			</ul>
 		</nav>
-		<form name="shareAddFrm"
-			action="<%=request.getContextPath()%>/share/shareAdd" 
+		<form name="talkAddFrm"
+			action="<%=request.getContextPath()%>/community/talkAdd" 
 			method="post"
 			encType = "multipart/form-data">
-			<h2 style="font-size: 30px; color: black;">정보공유 게시글 작성</h2>
+			<h2 style="font-size: 30px; color: black;">패션토크 게시글 작성</h2>
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
 				<span class="drop"> 
@@ -29,9 +29,9 @@
 						<option class="option" value="">게시판 선택</option>
 						<option class="option" value="#">OOTD</option>
 						<option class="option" value="#">코디북</option>
-						<option class="option" value="<%=request.getContextPath()%>/share/shareAdd" selected />정보공유</option>
+						<option class="option" value="<%=request.getContextPath()%>/share/shareAdd">정보공유</option>
 						<option class="option" value="<%= request.getContextPath() %>/community/freeAdd">자유게시판</option>
-						<option class="option" value="<%= request.getContextPath() %>/community/talkAdd">패션토크</option>
+						<option class="option" value="<%= request.getContextPath() %>/community/talkAdd" selected />패션토크</option>
 				</select>
 				</span> 
 				<br> 
@@ -63,7 +63,7 @@
 /**
 * shareAddFrm 유효성 검사
 */
-document.shareAddFrm.onsubmit = (e) => {
+document.talkAddFrm.onsubmit = (e) => {
 	const frm = e.target;
 	//제목을 작성하지 않은 경우
 	if(!/^.+$/.test(frm.title.value)){

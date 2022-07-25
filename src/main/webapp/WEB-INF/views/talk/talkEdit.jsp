@@ -23,14 +23,14 @@
 				<li><a href="<%= request.getContextPath() %>/community/codiList">코디북</a></li>
 				<li><a href="<%= request.getContextPath() %>/share/shareList">정보공유</a></li>
 				<li><a href="<%= request.getContextPath() %>/community/freeList">자유게시판</a></li>
-				<li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
+				<li><a href="<%= request.getContextPath() %>/community/talkList">">패션토크</a></li>
 			</ul>
 		</nav>
-		<form name="shareEditFrm"
-			action="<%=request.getContextPath()%>/share/shareEdit" 
+		<form name="talkEditFrm"
+			action="<%=request.getContextPath()%>/community/talkEdit" 
 			enctype="multipart/form-data"
 			method="post">
-			<h2 style="font-size: 30px; color: black;">정보공유 게시글 수정</h2>
+			<h2 style="font-size: 30px; color: black;">패션토크 게시글 수정</h2>
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
 				
@@ -41,7 +41,7 @@
 						<option value="<%= request.getContextPath() %>/community/codiEdit">코디북</option>
 						<option value="<%=request.getContextPath()%>/share/shareEdit" selected />정보공유</option>
 						<option value="<%= request.getContextPath() %>/community/freeEdit" >자유게시판</option>
-						<option value="5">패션토크</option>
+						<option value="<%= request.getContextPath() %>/community/talkEdit">">패션토크</option>
 				</select>
 				</span> 
 				<br> 
@@ -98,7 +98,7 @@
 /**
 * shareEditFrm 유효성 검사
 */
-document.shareEditFrm.onsubmit = (e) => {
+document.talkEditFrm.onsubmit = (e) => {
 	const frm = e.target;
 	//제목을 작성하지 않은 경우
 	if(!/^.+$/.test(frm.title.value)){

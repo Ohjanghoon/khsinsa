@@ -29,13 +29,13 @@ String commNo = community.getCommNo();
 				<li><a href="<%= request.getContextPath()%>/community/freeList">코디북</a></li>
 				<li><a href="<%= request.getContextPath()%>/share/shareList" />정보공유</a></li>
 				<li><a href="<%= request.getContextPath()%>/community/freeList">자유게시판</a></li>
-				<li><a href="<%= request.getContextPath() %>/community/talkList">패션토크</a></li>
+				<li><a href="<%= request.getContextPath() %>/community/talkList">">패션토크</a></li>
 			</ul>
 		</nav>
 
 
 	</div>
-	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">정보공유 게시판 <span style="font-size: 18px;"> Share Information</span>
+	<h2 style="font-size: 35px; color: rgb(101, 101, 252);">패션토크 <span style="font-size: 18px;">Fashion Talk</span>
 	</h2>
 	<hr style="border-top: 3px solid rgb(101, 101, 252);">
 	<div class="main">
@@ -97,8 +97,8 @@ String commNo = community.getCommNo();
 				<div class="comment-container">
 					<!-- 댓글 작성부 -->
 					<div class="comment-editor">
-						<form name="communityCommentFrm"
-							action="<%=request.getContextPath()%>/share/shareCommentAdd"
+						<form name="talkCommentFrm"
+							action="<%=request.getContextPath()%>/community/talkCommentAdd"
 							method="post" style="border-bottom:0px;">
 								<input type="hidden" name="commNo" value="<%=community.getCommNo()%>" /> 
 								<input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
@@ -155,8 +155,8 @@ String commNo = community.getCommNo();
 	</div>
 
 </div>
-<form action="<%= request.getContextPath() %>/share/shareCommentDelete"
-	method="post" name="shareCommentDelFrm">
+<form action="<%= request.getContextPath() %>/community/talkCommentDelete"
+	method="post" name="talkCommentDelFrm">
 	<input type="hidden" name="no" />
 </form>
 
@@ -165,7 +165,7 @@ document.querySelectorAll(".btn-delete").forEach((btn) => {
 	btn.addEventListener('click', (e) => {
 		if(confirm("해당 댓글을 정말 삭제하시겠습니까?")) {
 			const {value} = e.target;
-			const frm = document.shareCommentDelFrm;
+			const frm = document.talkCommentDelFrm;
 			frm.no.value = value;
 			frm.submit();
 		}
@@ -185,8 +185,8 @@ document.querySelectorAll(".btn-reply").forEach((btn) => {
 		<tr>
 			<td colspan="2" style="text-align:left;">
 				<form
-		        	name="communityCommentFrm"
-					action="<%=request.getContextPath()%>/share/shareCommentAdd" 
+		        	name="talkCommentFrm"
+					action="<%=request.getContextPath()%>/community/talkCommentAdd" 
 					method="post">
 		            <input type="hidden" name="commNo" value="<%= community.getCommNo() %>" />
 		            <input type="hidden" name="writer" value="<%= loginUser != null ? loginUser.getUserId() : "" %>" />
@@ -205,7 +205,7 @@ document.querySelectorAll(".btn-reply").forEach((btn) => {
 });
 
 document.addEventListener('submit', (e) => {
-if(e.target.matches("form[name=communityCommentFrm]")){		
+if(e.target.matches("form[name=talkCommentFrm]")){		
 	if(<%=loginUser == null%>){
 		loginAlert();
 		e.preventDefault();
@@ -221,7 +221,7 @@ if(e.target.matches("form[name=communityCommentFrm]")){
 
 });
 
-document.communityCommentFrm.content.addEventListener('focus', (e) => {
+document.talkCommentFrm.content.addEventListener('focus', (e) => {
 	if(<%=loginUser == null%>)
 		loginAlert();
 });
@@ -250,9 +250,9 @@ document.communityCommentFrm.content.addEventListener('focus', (e) => {
 </script>
 
 <form 
-	action="<%= request.getContextPath() %>/share/shareDelete"
+	action="<%= request.getContextPath() %>/community/talkDelete"
 	method="post" 
-	name="shareDelFrm">
+	name="talkDelFrm">
 	<input type="hidden" name="no" value="<%= community.getCommNo() %>" />
 </form>
 <script>
@@ -264,7 +264,7 @@ const loginAlert = () => {
 
 const deleteCommunity = () => {
 	if(confirm("게시글을 삭제하시겠습니까?"))
-		document.shareDelFrm.submit();
+		document.talkDelFrm.submit();
 };
 
 const editCommunity = () => {

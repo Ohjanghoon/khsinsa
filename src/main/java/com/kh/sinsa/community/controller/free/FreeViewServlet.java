@@ -66,12 +66,12 @@ public class FreeViewServlet extends HttpServlet {
 
 			// 2. 업무 로직
 			Community community = hasRead ?
-					communityService.findByFreeNo(no) :
-						communityService.findByFreeNo(no, hasRead);
+					communityService.findFreeByNo(no) :
+						communityService.findFreeByNo(no, hasRead);
 			System.out.println("community : " + community);
-			List<CommunityComment> commentList = communityService.findCommunityCommentByCommNo(no);
+			List<CommunityComment> commentList = communityService.findFreeCommentByCommNo(no);
 			
-			List<CommunityAttachment> attach = communityService.findAttachmentByCommNo(no);
+			List<CommunityAttachment> attach = communityService.findFreeAttachmentByCommNo(no);
 
 			// XSS공격대비 (Cross-site Scripting)
 			community.setCommTitle(KhsinsaUtils.escapeXml(community.getCommTitle()));		

@@ -42,7 +42,7 @@ public class CommunityEditServlet extends HttpServlet {
 			request.setAttribute("community", community);
 			request.setAttribute("attach", attach);
 			request.getRequestDispatcher("/WEB-INF/views/share_community/shareEdit.jsp")
-			.forward(request, response);
+				.forward(request, response);
 			
 			System.out.println("1 comm : " + attach);
 		}

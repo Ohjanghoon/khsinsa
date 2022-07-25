@@ -16,6 +16,9 @@ import com.kh.sinsa.product.model.dto.Product;
 public class CommunityService {
 	private CommunityDao communityDao = new CommunityDao();
 
+	
+	// ================================ Share ===========================================
+	// ==================================================================================
 	// 게시글 목록 조회
 	public List<Community> findAll(Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -207,6 +210,23 @@ public class CommunityService {
 		return result;	
 	}
 	
+	
+	public List<Community> communitySearch(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> list = communityDao.communitySearch(conn, param);
+		close(conn);
+		return list;
+	}
+	
+	public List<Community> communityAlign(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> list = communityDao.communityAlign(conn, param);
+		close(conn);
+		return list;
+	}
+	
+	// ================================ Codi ===========================================
+	// =================================================================================
 	 // 코디 전체 불러오기  // ilchan
 	public List<Community> findCodiAll(Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -340,30 +360,48 @@ public class CommunityService {
 		return result;
 	}
 	
+	public List<Community> codiAlign(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> codiList = communityDao.codiAlign(conn, param);
+		close(conn);
+		return codiList;
+	}
+
+	public List<Community> codiSearch(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> codiList = communityDao.codiSearch(conn, param);
+		close(conn);
+		return codiList;
+	}
+	
+	// ================================ Free ===========================================
+	// ==================================================================================
 	public List<Community> findFreeAll(Map<String, Object> param) {
 		Connection conn = getConnection();
 		List<Community> result = communityDao.findFreeAll(conn, param);
 		close(conn);
 		return result;
 	}
-
+		
 	// 게시글 상세조회
-		public Community findByFreeNo(String no) {
+		public CommunityExt findFreeByNo(String no) {
 
-			return findByFreeNo(no, true);
+			return findFreeByNo(no, true);
 		}
 
-		public Community findByFreeNo(String no, boolean hasRead) {
+		public CommunityExt findFreeByNo(String no, boolean hasRead) {
 			Connection conn = getConnection();
-			Community community = null;
+			CommunityExt community = null;
 
 			try {
 				if (!hasRead) {
-					int result = communityDao.updateReadCount(conn, no);
+					int result = communityDao.updateFreeReadCount(conn, no);
 				}
 
 				// community 테이블에서 조회
-				community = communityDao.findByFreeNo(conn, no);
+				community = communityDao.findFreeByNo(conn, no);
+				
+				List<CommunityAttachment> attachments = communityDao.findFreeAttachmentByCommNo(conn, no);
 
 				commit(conn);
 			} catch (Exception e) {
@@ -376,6 +414,20 @@ public class CommunityService {
 			return community;
 		}
 
+		public List<CommunityComment> findFreeCommentByCommNo(String no) {
+			Connection conn = getConnection();
+			List<CommunityComment> commentList = communityDao.findFreeCommentByCommNo(conn, no);
+			close(conn);
+			return commentList;
+		}
+
+		public List<CommunityAttachment> findFreeAttachmentByCommNo(String no) {
+			Connection conn = getConnection();
+			List<CommunityAttachment> attach = communityDao.findFreeAttachmentByCommNo(conn, no);
+			close(conn);
+			return attach;
+		}
+
 		public int insertFree(CommunityExt community) {
 			Connection conn = getConnection();
 			int result = 0;
@@ -384,7 +436,7 @@ public class CommunityService {
 				result = communityDao.insertFree(conn, community);
 				
 				// 방금 등록된 boaard.no 컬럼값 조회
-				String commNo = communityDao.getLastFreeNo(conn);
+				String commNo = communityDao.getFreeLastCommNo(conn);
 						
 				List<CommunityAttachment> attachments = ((CommunityExt) community).getAttachments();
 				if(attachments != null && !attachments.isEmpty()) {
@@ -394,6 +446,71 @@ public class CommunityService {
 						result = communityDao.insertFreeAttachment(conn, attach);
 					}
 							}
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int editFree(CommunityExt community) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				// 게시글 수정
+				result = communityDao.editFree(conn, community);
+				// 첨부파일 등록
+				List<CommunityAttachment> attachments = community.getAttachments();
+				if(attachments != null || !attachments.isEmpty()) {
+					for(CommunityAttachment attach : attachments) {
+						result = communityDao.insertFreeAttachment(conn, attach);
+					}
+				}
+				
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public CommunityAttachment findFreeAttachmentByNo(String attachNo) {
+			Connection conn = getConnection();
+			CommunityAttachment attach = communityDao.findFreeAttachmentByNo(conn, attachNo);
+			close(conn);
+			return attach;
+		}
+
+		public int deleteFreeAttachment(String attachNo) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.deleteFreeAttachment(conn, attachNo);
+				commit(conn);
+			} 
+			catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			finally {
+				close(conn);			
+			}
+			return result;	
+		}
+
+		public int deleteFree(String no) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				result = communityDao.deleteFree(conn, no);
 				commit(conn);
 			} catch (Exception e) {
 				rollback(conn);
@@ -434,12 +551,101 @@ public class CommunityService {
 			return result;
 		}
 
-		public int editFree(Community community) {
+		public List<Community> freeAlign(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.freeAlign(conn, param);
+			close(conn);
+			return codiList;
+		}
+
+		public int getFreeTotalContent() {
+			Connection conn = getConnection();
+			int totalContent = communityDao.getFreeTotalContent(conn);
+			close(conn);
+			return totalContent;
+		}
+
+		public List<Community> freeSearch(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> list = communityDao.freeSearch(conn, param);
+			close(conn);
+			return list;
+		}
+		
+
+	// ================================ Talk ============================================
+	// ==================================================================================		
+		
+	public List<Community> findTalkAll(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Community> result = communityDao.findTalkAll(conn, param);
+		close(conn);
+		return result;
+	}
+		
+	// 게시글 상세조회
+		public CommunityExt findTalkByNo(String no) {
+
+			return findTalkByNo(no, true);
+		}
+
+		public CommunityExt findTalkByNo(String no, boolean hasRead) {
+			Connection conn = getConnection();
+			CommunityExt community = null;
+
+			try {
+				if (!hasRead) {
+					int result = communityDao.updateTalkReadCount(conn, no);
+				}
+
+				// community 테이블에서 조회
+				community = communityDao.findTalkByNo(conn, no);
+				
+				List<CommunityAttachment> attachments = communityDao.findAttachmentByCommNo(conn, no);
+
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+
+			} finally {
+				close(conn);
+			}
+			return community;
+		}
+
+		public List<CommunityComment> findTalkCommentByCommNo(String no) {
+			Connection conn = getConnection();
+			List<CommunityComment> commentList = communityDao.findTalkCommentByCommNo(conn, no);
+			close(conn);
+			return commentList;
+		}
+
+		public List<CommunityAttachment> findTalkAttachmentByCommNo(String no) {
+			Connection conn = getConnection();
+			List<CommunityAttachment> attach = communityDao.findTalkAttachmentByCommNo(conn, no);
+			close(conn);
+			return attach;
+		}
+
+		public int insertTalk(CommunityExt community) {
 			Connection conn = getConnection();
 			int result = 0;
 
 			try {
-				result = communityDao.editFree(conn, community);
+				result = communityDao.insertTalk(conn, community);
+				
+				// 방금 등록된 boaard.no 컬럼값 조회
+				String commNo = communityDao.getTalkLastCommNo(conn);
+						
+				List<CommunityAttachment> attachments = ((CommunityExt) community).getAttachments();
+				if(attachments != null && !attachments.isEmpty()) {
+								
+					for(CommunityAttachment attach : attachments) {
+						attach.setCommNo(commNo);
+						result = communityDao.insertTalkAttachment(conn, attach);
+					}
+							}
 				commit(conn);
 			} catch (Exception e) {
 				rollback(conn);
@@ -450,12 +656,21 @@ public class CommunityService {
 			return result;
 		}
 
-		public int deleteFree(String no) {
+		public int editTalk(CommunityExt community) {
 			Connection conn = getConnection();
 			int result = 0;
 
 			try {
-				result = communityDao.deleteFree(conn, no);
+				// 게시글 수정
+				result = communityDao.editTalk(conn, community);
+				// 첨부파일 등록
+				List<CommunityAttachment> attachments = community.getAttachments();
+				if(attachments != null || !attachments.isEmpty()) {
+					for(CommunityAttachment attach : attachments) {
+						result = communityDao.insertTalkAttachment(conn, attach);
+					}
+				}
+				
 				commit(conn);
 			} catch (Exception e) {
 				rollback(conn);
@@ -466,18 +681,103 @@ public class CommunityService {
 			return result;
 		}
 
-		public List<Community> codiAlign(Map<String, Object> param) {
+		public CommunityAttachment findTalkAttachmentByNo(String attachNo) {
 			Connection conn = getConnection();
-			List<Community> codiList = communityDao.codiAlign(conn, param);
+			CommunityAttachment attach = communityDao.findTalkAttachmentByNo(conn, attachNo);
+			close(conn);
+			return attach;
+		}
+
+		public int deleteTalkAttachment(String attachNo) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.deleteTalkAttachment(conn, attachNo);
+				commit(conn);
+			} 
+			catch (Exception e) {
+				rollback(conn);
+				throw e;
+			}
+			finally {
+				close(conn);			
+			}
+			return result;	
+		}
+
+		public int deleteTalk(String no) {
+			Connection conn = getConnection();
+			int result = 0;
+
+			try {
+				result = communityDao.deleteTalk(conn, no);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int insertTalkComment(CommunityComment communityComment) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.insertTalkComment(conn, communityComment);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public int deleteTalkComment(String no) {
+			Connection conn = getConnection();
+			int result = 0;
+			try {
+				result = communityDao.deleteTalkComment(conn, no);
+				commit(conn);
+			} catch (Exception e) {
+				rollback(conn);
+				throw e;
+			} finally {
+				close(conn);
+			}
+			return result;
+		}
+
+		public List<Community> talkAlign(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.talkAlign(conn, param);
 			close(conn);
 			return codiList;
 		}
 
-		public List<Community> codiSearch(Map<String, Object> param) {
+		public int getTalkTotalContent() {
 			Connection conn = getConnection();
-			List<Community> codiList = communityDao.codiSearch(conn, param);
+			int codiTotalContent = communityDao.getTalkTotalContent(conn);
+			close(conn);
+			return codiTotalContent;
+		}
+
+		public List<Community> talkSearch(Map<String, Object> param) {
+			Connection conn = getConnection();
+			List<Community> codiList = communityDao.talkSearch(conn, param);
 			close(conn);
 			return codiList;
 		}
-
+		
 }
+
+
+
+
+
+
+
+

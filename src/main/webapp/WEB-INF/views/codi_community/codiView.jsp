@@ -179,7 +179,7 @@
  		const reco = Number(document.querySelector('#recommand').textContent) + 1;
 <% if(loginUser != null){%>
  		$.ajax({
-			url : '<%= request.getContextPath() %>/community/commnityRecommend',
+			url : '<%= request.getContextPath() %>/community/communityRecommend',
 			method : 'POST',
 			data : {commNo : "<%= commNo %>"},
 			success(response){

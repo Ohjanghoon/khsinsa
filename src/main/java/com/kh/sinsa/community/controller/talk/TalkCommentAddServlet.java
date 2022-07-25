@@ -7,35 +7,50 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.sinsa.community.model.dto.CommentLevel;
+import com.kh.sinsa.community.model.dto.CommunityComment;
+import com.kh.sinsa.community.model.service.CommunityService;
+
 /**
  * Servlet implementation class TalkCommentAddServlet
  */
 @WebServlet("/community/talkCommentAdd")
 public class TalkCommentAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TalkCommentAddServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+	private CommunityService communityService = new CommunityService();
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		int result = 0;
+		
+		try {
+			// 1. 사용자 입력값 처리
+			String commNo = request.getParameter("commNo");
+			String writer = request.getParameter("writer");
+			String content = request.getParameter("content");
+			CommentLevel commentLevel = CommentLevel.valueOf(Integer.parseInt(request.getParameter("commentLevel")));
+			String commentRef = request.getParameter("commentRef");
+			CommunityComment communityComment = new CommunityComment(null, commNo, writer, content, null, commentLevel, commentRef);
+			
+			// 2. 업무로직
+
+			result = communityService.insertTalkComment(communityComment);
+			System.out.println("ccccc : " + communityComment);
+
+
+			
+			// 3. redirect 응답
+			response.sendRedirect(request.getContextPath() + "/community/talkView?no=" + commNo);
+			
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
+
 
 }

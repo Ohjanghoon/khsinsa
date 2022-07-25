@@ -7,35 +7,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.sinsa.community.model.service.CommunityService;
+
 /**
  * Servlet implementation class TalkCommentDelete
  */
 @WebServlet("/community/talkCommentDelete")
 public class TalkCommentDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TalkCommentDelete() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private CommunityService communityService = new CommunityService();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			// 1. 사용자 입력값 처리
+			String no = request.getParameter("no");
+			System.out.println("no = " + no );
+			
+			// 2. 업무로직
+			int result = communityService.deleteTalkComment(no);
+			
+			// 3. redirect
+			response.sendRedirect(request.getHeader("Referer"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }

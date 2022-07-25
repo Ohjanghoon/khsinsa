@@ -21,8 +21,8 @@ import com.kh.sinsa.user.model.dto.User;
 /**
  * Servlet implementation class MyCartOrderServlet
  */
-@WebServlet("/mypage/myCart/orderList")
-public class MyCartOrdeListrServlet extends HttpServlet {
+@WebServlet("/mypage/myCart/order")
+public class MyCartOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	

@@ -72,7 +72,7 @@
 		            if("배송완료".equals(ord.getOrderStatus())) { 
 		            %>
 	            	<td name="reviewAdd">
-	            		<button type="button" id="btn_review_add" onclick="location.href='<%= request.getContextPath() %>/review/reviewAdd?proNo=<%= ord.getProNo() %>'">후기 작성</button>
+	            		<button type="button" id="btn_review_add" onclick="location.href='<%= request.getContextPath() %>/mypage/review/reviewAdd?proNo=<%= ord.getProNo() %>&orderNo=<%= ord.getOrderNo()%>'">후기 작성</button>
 	            		</td>
 		            <%
 		            } else { 

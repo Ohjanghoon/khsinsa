@@ -15,6 +15,10 @@
 	int totalPrice = 0;
 	int orderPrice = 0;
 	DecimalFormat df = new DecimalFormat("###,###");
+	
+	String[] tempAddress = loginUser.getUserAddress().split("\\+");
+	String orderAddress1 = tempAddress[0];
+	String orderAddress2 = tempAddress[1]; 
 %>
 <main>
     <div class="container">
@@ -57,12 +61,12 @@
 	            <div class="col-12">
 	              <label for="address" class="form-label">배송지</label>
 	              <button type="button" class="btn btn-primary addbtn" id="btn_address" onclick="addressPopup();">주소검색</button>
-	              <input type="text" class="form-control" name="orderAddress1" id="orderAddress1" placeholder="press your Address" value="<%= loginUser.getUserAddress() %>" readonly>
+	              <input type="text" class="form-control" name="orderAddress1" id="orderAddress1" placeholder="press your Address" value="<%= orderAddress1 %>" readonly>
 	            </div>
 			
            	  	<div class="col-12">
 	              <label for="address2" class="form-label">상세주소</label>
-	              <input type="text" class="form-control" name="orderAddress2" id="orderAddress2" placeholder="press your Detail Address">
+	              <input type="text" class="form-control" name="orderAddress2" id="orderAddress2"  value="<%= orderAddress2 %>" placeholder="press your Detail Address">
             	</div>
 				<br />
 	           <label for="request">배송 요청 사항</label>
@@ -155,8 +159,8 @@ document.querySelector('#nowAddress').addEventListener('click',(e) => {
 	document.querySelector('#userName').value = "<%= loginUser.getUserName() %>";
 	document.querySelector('#orderPhone').value = "<%= loginUser.getUserPhone() %>";
 	document.querySelector('#orderEmail').value = "<%= loginUser.getUserEmail() %>";
-	document.querySelector('#orderAddress1').value = "<%= loginUser.getUserAddress() %>";
-	document.querySelector('#orderAddress2').value = "";
+	document.querySelector('#orderAddress1').value = "<%= orderAddress1 %>";
+	document.querySelector('#orderAddress2').value = "<%= orderAddress2 %>";
 });
 
 /*  new 배송지 선택시 val 초기화 */

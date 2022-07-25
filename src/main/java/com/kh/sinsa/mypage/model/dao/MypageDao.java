@@ -612,8 +612,33 @@ public class MypageDao {
 		
 		return totalMyFavListContent;
 	}
-//##########janghoon MypageDao end#############
 
+	//리뷰 작성
+	public int reviewAdd(Connection conn, Review review) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("reviewAdd");
+		//reviewAdd = insert into review values ('R10'||seq_review_review_no.nextval, ?, ?, ?, ?, ?, ?, default, default)
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, review.getProNo());
+			pstmt.setInt(2, review.getOrderNo());
+			pstmt.setString(3, review.getReviewWriter());
+			pstmt.setString(4, review.getReviewContent());
+			pstmt.setString(5, review.getReviewOriginalFilename());
+			pstmt.setString(6, review.getReviewRenamedFilename());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MypageException("리뷰 작성 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+//##########janghoon MypageDao end#############
 
 
 	

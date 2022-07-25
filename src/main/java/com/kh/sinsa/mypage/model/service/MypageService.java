@@ -235,6 +235,24 @@ public class MypageService {
 		return totalMyFavListContent;
 	}
 
+	//리뷰 작성
+	public int reviewAdd(Review review) {
+		Connection conn = getConnection();
+		int result = 0;
+		
+		try {
+			result = mypageDao.reviewAdd(conn, review);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 	
 
 

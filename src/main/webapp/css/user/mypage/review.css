@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	list-style: none;
+}
+
+/* 리뷰 컨텐트 영역*/
+.review_content {
+	width: 1000px;
+    margin: 50px auto;
+}
+.review_content h2 {
+	margin-left: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+.review_content hr {
+	border-bottom: 3px solid black;
+}
+.review_container {
+	margin: 50px auto 0;
+	width: 500px;
+}
+.review_info input {
+	text-indent: 10px;
+	border: none;
+	font-weight: bold;
+}
+.review_container textarea {
+	width: 100%;
+}
+
+.review_btn_area {
+	text-align: center;
+	margin: 30px auto;
+}
+.review_btn_area #review_btn_add{
+	width: 100px;
+	padding: 10px 20px;
+	border: none;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	font-weight: bold;
+}

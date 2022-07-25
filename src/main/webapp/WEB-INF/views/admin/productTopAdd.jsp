@@ -7,10 +7,10 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/admin/productEdit.css" />
 <main>
-<form action="<%= request.getContextPath() %>/admin/productManagement/productAdd" name="productAddFrm" method="post" enctype="multipart/form-data">
+<form action="<%= request.getContextPath() %>/admin/productManagement/productTopAdd" name="productAddFrm" method="post" enctype="multipart/form-data">
 	<div class="container">
        <section class="py-5 text-center container">
-           <h3>상품 수정</h3>
+           <h3>상의 상품 등록</h3>
        </section>
        <div class="mb-3">
            <label for="exampleFormControlInput1" class="form-label">상품 이름</label>

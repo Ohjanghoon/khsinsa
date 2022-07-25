@@ -1,9 +1,6 @@
 package com.kh.sinsa.admin.model.service;
 
-import static com.kh.sinsa.common.JdbcTemplate.close;
-import static com.kh.sinsa.common.JdbcTemplate.commit;
-import static com.kh.sinsa.common.JdbcTemplate.getConnection;
-import static com.kh.sinsa.common.JdbcTemplate.rollback;
+import static com.kh.sinsa.common.JdbcTemplate.*;
 
 import java.sql.Connection;
 import java.util.List;
@@ -11,22 +8,15 @@ import java.util.Map;
 
 import com.kh.sinsa.admin.model.dao.AdminDao;
 import com.kh.sinsa.admin.model.dto.ProductManagementExt;
-import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.product.model.dto.Product;
 import com.kh.sinsa.product.model.dto.ProductAttachment;
-import com.kh.sinsa.product.model.dto.ProductExt;
 
-import com.kh.sinsa.inquire.model.dto.Attachment;
 import com.kh.sinsa.inquire.model.dto.Inquire;
-import com.kh.sinsa.inquire.model.dto.InquireExt;
 import com.kh.sinsa.order.model.dto.Order;
 
 public class AdminService {
 
-	private static final int String = 0;
-	private static final Map<java.lang.String, Object> Object = null;
-	private static final int Map = 0;
 	private static AdminDao adminDao = new AdminDao();
 	
 	// ##########jaekyung UserService begin#############
@@ -97,20 +87,49 @@ public class AdminService {
 	}
 	
 	// 상의 등록
-	public int insertProduct(Product product) {
+	public int insertTopProduct(ProductManagementExt product) {
 		Connection conn = getConnection();
 		int result = 0; 
 		
 		try {
 			// product테이블에 insert
-			result = adminDao.insertProduct(conn, product);
+			result = adminDao.insertTopProduct(conn, product);
 		
 			// 방금 등록된 pro.no 컬럼값 조회
 			String proNo = adminDao.getLastTopProNo(conn);
-			System.out.println("proNo = " + proNo);
+			
+			// attachment테이블 insert
+			List<ProductAttachment> productAttachmentList = product.getProductAttachmentList();
+			if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
+						
+				for(ProductAttachment productAttach : productAttachmentList) {
+					productAttach.setProNo(proNo);
+					result = adminDao.insertProductAttachment(conn, productAttach);
+						}
+					}
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int insertBottomProduct(ProductManagementExt product) {
+		Connection conn = getConnection();
+		int result = 0; 
+		
+		try {
+			// product테이블에 insert
+			result = adminDao.insertBottomProduct(conn, product);
+		
+			// 방금 등록된 pro.no 컬럼값 조회
+			String proNo = adminDao.getLastBottomProNo(conn);
 					
 			// attachment테이블 insert
-			List<ProductAttachment> productAttachmentList = ((ProductManagementExt) product).getProductAttachmentList();
+			List<ProductAttachment> productAttachmentList = product.getProductAttachmentList();
 			if(productAttachmentList != null && !productAttachmentList.isEmpty()) {
 						
 				for(ProductAttachment productAttach : productAttachmentList) {
@@ -279,6 +298,8 @@ public Order findByOrderNo(int orderNo) {
 		close(conn);
 	}
 	return order;
-}}
+}
+
+}
 
 //##########jaekyung OrderService ends#############

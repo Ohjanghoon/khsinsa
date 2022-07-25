@@ -13,11 +13,11 @@
             <class = "adminpage"><h1>ADMIN PAGE</h1></class>
             <ul class = "ul">
                 <adminmenu>
-                    <li><a href="<%=request.getContextPath()%>/adminpage.html">회원 관리</a></li>
-                    <li class = :"li"><a href="<%=request.getContextPath()%>/requestManagement.html">요청 처리</a></li>
-                    <li class = :"li"><a href="<%=request.getContextPath()%>/productManagement.html">상품 관리</a></li>
-                    <li class = :"li"><a href="<%=request.getContextPath()%>/orderManagement.html">주문 관리</a></li>
-                    <li class = :"li"><a href="<%=request.getContextPath()%>/StatisticsView.html">통계 관리</a></li>
+                    <li><a href="<%= request.getContextPath() %>/admin/adminpage">회원 관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/admin/requestManagement">요청 처리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/productManagement">상품 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/orderManagement">주문 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/admin/StatisticsViewServlet">통계 관리</a></li>
             </adminmenu>
             </ul>
             <h1>신고</h1>

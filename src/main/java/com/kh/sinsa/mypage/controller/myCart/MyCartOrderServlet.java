@@ -49,15 +49,18 @@ public class MyCartOrderServlet extends HttpServlet {
 			//2. 업무로직
 			if(loginUser != null) {
 				String[] cartOrder = request.getParameterValues("proNo");
-				System.out.println("cartOrder = " + Arrays.toString(cartOrder));
-				for(String cart : cartOrder) {
-					String[] splitCart = cart.split("/");
-					String proNo = splitCart[0];
-					String cartSize = splitCart[1];
-					int caryBuyStock = Integer.parseInt(splitCart[2]);
-					cartList.add(new Cart(userId, proNo, caryBuyStock, cartSize, null));
-					proList.add(mypageService.findByProNo(proNo));
-					proAttachList.add(mypageService.findAttachByProNo(proNo));
+				//System.out.println("cartOrder = " + Arrays.toString(cartOrder));
+				
+				if(cartOrder != null) {
+					for(String cart : cartOrder) {
+						String[] splitCart = cart.split("/");
+						String proNo = splitCart[0];
+						String cartSize = splitCart[1];
+						int caryBuyStock = Integer.parseInt(splitCart[2]);
+						cartList.add(new Cart(userId, proNo, caryBuyStock, cartSize, null));
+						proList.add(mypageService.findByProNo(proNo));
+						proAttachList.add(mypageService.findAttachByProNo(proNo));
+					}
 				}
 			}
 			

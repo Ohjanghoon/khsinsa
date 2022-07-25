@@ -59,7 +59,7 @@
 					<td class="proInfo">
 						<div class="proInfo">
 				            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
-				            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
+				            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProRenameFilename() %>">
 			            	</a>
 			            	<ul>
 				        		<li><%= pro.getProNo() %> / <%= pro.getProType() %></li>
@@ -128,7 +128,7 @@
 /* 전체선택 체크박스 */
 const checkAllorNone = (obj) => {
 	
-	const checks = document.querySelectorAll("[name=cartNo]");
+	const checks = document.querySelectorAll(".cartProNo");
 	
 	for(let i in checks){
 		checks[i].checked = obj.checked;

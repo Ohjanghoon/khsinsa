@@ -47,7 +47,7 @@
 				<td name="proNo">
 					<div class="proInfo">
 			            <a href="<%= request.getContextPath() %>/product/productDetail?proNo=<%= pro.getProNo()%>">
-			            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProOriginalFilename() %>">
+			            	<img src="<%= request.getContextPath() %>/upload/product/<%= proAttach.getProRenameFilename() %>">
 		            	</a>
 		            	<ul>
 			        		<li><%= pro.getProNo() %> / <%= pro.getProType() %></li>

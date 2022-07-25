@@ -34,14 +34,15 @@
             <table class="table table-bordered" style="margin-left: auto; margin-right: auto;"> 
                 <thead>
                     <tr>
-                        <th style = "width: 8%">회원ID</th>
-                        <th style = "width: 8%">상품NO</th>
-                        <th style = "width: 21.5%">배송지</th>
-                        <th style = "width: 12.5%">전화번호</th>
-                        <th style = "width: 12.5%">요청사항</th>
-                        <th style = "width: 12.5%">결제금액</th>
-                        <th style = "width: 12.5%">결제일</th>
-                        <th style = "width: 12.5%">현황</th>
+                        <th>회원ID</th>
+                        <th>상품NO</th>
+                        <th>배송지</th>
+                        <th>전화번호</th>
+                        <th>요청사항</th>
+                        <th>결제금액</th>
+                        <th>결제일</th>
+                        <th>현황</th>
+                        <th>배송 상태 변경</th>
                     </tr>
                 </thead>
                     <tbody>
@@ -55,7 +56,7 @@
 						} 
 						else { for(Order order : orderlist) { %>
 	                    <tr>
-	                        <td><%= order.getOrderNo() %></td>
+	                        <td><%= order.getUserId() %></td>
 	                        <td><%= order.getProNo() %></td>
 	                        <td><%= order.getOrderAddress() %></td>
 	                        <td><%= order.getOrderPhone() %></td>
@@ -63,6 +64,9 @@
 	                        <td><%= order.getOrderPrice() %></td>
 	                        <td><%= order.getOrderDate() %></td>
 	                        <td><%= order.getOrderStatus() %></td>
+	                        <td>
+	                        	<button type="button" class="orderStatus2_btn">배송완료</button>
+	                        </td>
 	                    </tr>
 	                    <% 	}	%>
 	
@@ -81,23 +85,37 @@
 	                        <th style = "width: 12.5%">요청사항</th>
 	                        <th style = "width: 12.5%">결제금액</th>
 	                        <th style = "width: 12.5%">결제일</th>
-	                        <th style = "width: 12.5%">현황</th>
+	                        <th style = "width: 12.5%" colspan="2">현황</th>
 	                    </tr>
 	                </thead>
 	                    <tbody>
 	                    <% for(Order order : orderlist) { %>
 	                    <tr>
-	                        <td><%= order.getOrderNo()%></td>
+	                        <td><%= order.getUserId()%></td>
 	                        <td><%= order.getProNo()%></td>
 	                        <td><%= order.getOrderAddress()%></td>
 	                        <td><%= order.getOrderPhone()%></td>
 	                        <td><%= order.getOrderReq()%></td>
 	                        <td><%= order.getOrderPrice()%></td>
 	                        <td><%= order.getOrderDate()%></td>
-	                        <td><%= order.getOrderStatus()%></td>
+	                        <td>
+	                        <form action="<%= request.getContextPath() %>/admin/orderManagement/orderStatusEdit" name="productFrm" method="POST">
+	                        	<input type="hidden" name="orderNo" id="orderNo" value="<%= order.getOrderNo() %>" />
+	                        		<select class="form-select" aria-label="Default select example" id="orderStatus" name="orderStatus">
+			           					<option value="none" selected disabled><%= order.getOrderStatus() %></option>
+			           					<option value="주문 대기">주문 대기</option>
+			           					<option value="배송중">배송중</option>
+			           					<option value="배송완료">배송완료</option>
+			         				</select>
+			       			</td>
+			       			<td><button id="orderStatusEdit" class="btn btn-outline-primary">변경</button></td>
+			       			</form>
 	                    </tr>
 	                    <% 		}}
 	       		 %>
 	                    </tbody>
 	            </table>
+<div class="deliveryChange">
+	<form role="form" method="post" class="deliveryForm">
+	</form></div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

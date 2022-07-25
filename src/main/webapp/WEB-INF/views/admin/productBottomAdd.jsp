@@ -39,14 +39,13 @@
 		</div>
        <div class="mb-3">
            <label for="formFile" class="form-label">Select The File</label>
-           <small>* 처음 선택한 사진이 대표사진으로 등록됩니다. *</small>
+           <small>* 마지막 등록 사진이 대표사진으로 등록됩니다. *</small>
            <div class="insert">
-            <input class="form-control form-control-sm" id="file1" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file2" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file3" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file4" name="upFile" type="file">
-            <input class="form-control form-control-sm" id="file5" name="upFile" type="file">
-           <div class="file-list"></div>
+        	<input class="form-control" name="upFile1" type="file" id="formFile">
+        	<input class="form-control" name="upFile2" type="file" id="formFile">
+        	<input class="form-control" name="upFile3" type="file" id="formFile">
+        	<input class="form-control" name="upFile4" type="file" id="formFile">
+        	<input class="form-control" name="upFile5" type="file" id="formFile">
            </div>
        </div>
        <div class="mb-3">

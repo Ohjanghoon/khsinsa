@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller;
+package com.kh.sinsa.community.controller.talk;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,17 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.sinsa.common.KhsinsaUtils;
-import com.kh.sinsa.community.model.dto.Community;
 import com.kh.sinsa.community.model.dto.CommunityAttachment;
 import com.kh.sinsa.community.model.dto.CommunityComment;
 import com.kh.sinsa.community.model.dto.CommunityExt;
 import com.kh.sinsa.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class CommunityViewServlet
+ * Servlet implementation class TalkViewServlet
  */
-@WebServlet("/share/shareView")
-public class CommunityViewServlet extends HttpServlet {
+@WebServlet("/community/talkView")
+public class TalkViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();
 
@@ -60,7 +59,7 @@ public class CommunityViewServlet extends HttpServlet {
 			// 쿠키처리
 			if (!hasRead) {
 				Cookie cookie = new Cookie("communityCookie", communityCookieVal + "[" + no + "]");
-				cookie.setPath(request.getContextPath() + "/share/shareView");
+				cookie.setPath(request.getContextPath() + "/community/talkView");
 				cookie.setMaxAge(24 * 60 * 60);
 				response.addCookie(cookie);
 				System.out.println("[communityCookie 새로 발급되었음 : " + cookie.getValue() + "]");
@@ -68,12 +67,12 @@ public class CommunityViewServlet extends HttpServlet {
 
 			// 2. 업무 로직
 			CommunityExt community = hasRead ?
-					communityService.findByNo(no) :
-						communityService.findByNo(no, hasRead);
+					communityService.findTalkByNo(no) :
+						communityService.findTalkByNo(no, hasRead);
 			System.out.println("community : " + community);
-			List<CommunityComment> commentList = communityService.findCommunityCommentByCommNo(no);
+			List<CommunityComment> commentList = communityService.findTalkCommentByCommNo(no);
 			
-			List<CommunityAttachment> attach = communityService.findAttachmentByCommNo(no);
+			List<CommunityAttachment> attach = communityService.findTalkAttachmentByCommNo(no);
 
 			// XSS공격대비 (Cross-site Scripting)
 			community.setCommTitle(KhsinsaUtils.escapeXml(community.getCommTitle()));		

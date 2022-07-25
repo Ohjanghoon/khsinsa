@@ -30,12 +30,12 @@
 
 
             <div id="main">
-                <h1>정보공유 게시판<span style="font-size: 20px;"> Share Information</span></h1>
+                <h1>패션토크<span style="font-size: 20px;">Fashion Talk</span></h1>
                 <hr style="width: 370px;">
                 <br>
                 <p>국내,외의 다양한 패션 트렌드, 브랜드 소식, 패션쇼 등의 패션 정보를 공유하는 커뮤니티 공간입니다.</p>
                 <br>
-                <p style="font-weight:bold;">※ 패션에 관한 '질문'의 경우 패션토크 게시판 이용 부탁드립니다.</p>
+                <p style="font-weight:bold;">※ 패션에 관한 '질문'은 여기 패션토크에서 나눠주세요~</p>
                 <br>
                 <p style="font-weight:bold; color: red;">※ 부적절한 게시글/댓글의 경우 '삭제', '제한' 될 수 있는점 알려드립니다.</p>
                 <br>
@@ -43,7 +43,7 @@
                 <div id="list">
                 <br>
                 <div class="align">
-	     	  	 <form action="<%= request.getContextPath() %>/share/shareAlign" method="get">
+	     	  	 <form action="<%= request.getContextPath() %>/community/talkAlign" method="get">
 	             <select class="form-select" aria-label="Default select example" id="align" name="align" onchange="this.form.submit()">
 				  <option value="#" selected>정렬기준</option>
 				  <option value="comm_content">게시글명</option>
@@ -53,14 +53,15 @@
 	         	 </form>
 	       	</div>
 			<div class="search">
-				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/share/shareSearch" method="get">
+				<form class="d-flex" name="searchFrm" action="<%= request.getContextPath() %>/community/talkSearch" method="get">
 		          <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search..." aria-label="Search">
 		          <button type="submit" class="btn btn-outline-dark">🔎</button>
 		        </form>
 			</div>
 
 			<br><br>
-
+			
+		
                   
 
                     <table id="tbl-board">
@@ -83,7 +84,7 @@
                         <tr>
                             <td><%= community.getCommNo() %></td>
                             <td>
-                            <a href="<%= request.getContextPath() %>/share/shareView?no=<%= community.getCommNo() %>"id="commTitle">
+                            <a href="<%= request.getContextPath() %>/community/talkView?no=<%= community.getCommNo() %>"id="commTitle">
                             <%= KhsinsaUtils.escapeXml(community.getCommTitle()) %></a>
                             
 
@@ -109,18 +110,20 @@
                     </div>
                 <br>
             </div>
-                <input  style="float:right;"
-						type="button" value="글쓰기" id="write"
-						onclick="location.href='<%= request.getContextPath() %>/share/shareAdd';"/>
- 			 </div>
-            </div>
+           
+        <input  style="float:right;"
+				type="button" value="글쓰기" id="write"
+				onclick="location.href='<%= request.getContextPath() %>/community/talkAdd';"/>
+		<br>	
+ 		</div>
+      </div>
         
         <script>
         document.querySelector("#write").addEventListener('click', (e) => {
         	if(<%= loginUser == null %>){
         		loginAlert();		
         	}else{
-        		location.href = "<%= request.getContextPath() %>/share/shareAdd";
+        		location.href = "<%= request.getContextPath() %>/community/talkAdd";
         	}
         	
         	

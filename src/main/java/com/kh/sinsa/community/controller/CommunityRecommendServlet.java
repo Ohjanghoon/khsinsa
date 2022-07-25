@@ -15,7 +15,7 @@ import com.kh.sinsa.community.model.service.CommunityService;
 /**
  * Servlet implementation class CommunityRecommendServlet
  */
-@WebServlet("/community/commnityRecommend")
+@WebServlet("/community/communityRecommend")
 public class CommunityRecommendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CommunityService communityService = new CommunityService();

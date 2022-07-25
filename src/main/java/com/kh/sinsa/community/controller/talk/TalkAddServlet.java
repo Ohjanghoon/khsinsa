@@ -1,4 +1,4 @@
-package com.kh.sinsa.community.controller.free;
+package com.kh.sinsa.community.controller.talk;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +19,10 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
- * Servlet implementation class FreeAddServlet
+ * Servlet implementation class TalkAddServlet
  */
-@WebServlet({ "/FreeAddServlet", "/community/freeAdd" })
-public class FreeAddServlet extends HttpServlet {
+@WebServlet("/community/talkAdd")
+public class TalkAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 private CommunityService communityService = new CommunityService();
 	
@@ -31,7 +31,7 @@ private CommunityService communityService = new CommunityService();
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/WEB-INF/views/free/freeAdd.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/talk/talkAdd.jsp")
 			.forward(request, response);
 	}
 	
@@ -40,7 +40,7 @@ private CommunityService communityService = new CommunityService();
 		try {
 			// 0. 첨부파일처리
 			ServletContext application = getServletContext();
-			String saveDirectory = application.getRealPath("/upload/free");
+			String saveDirectory = application.getRealPath("/upload/talk");
 			System.out.println("saveDirectory = " + saveDirectory);
 			int maxPostSize = 1024 * 1024 * 10; // 10MB
 			String encoding = "utf-8";
@@ -69,17 +69,16 @@ private CommunityService communityService = new CommunityService();
 			}
 			
 			// 2. 업무로직
-			int result = communityService.insertFree(community);
+			int result = communityService.insertTalk(community);
 			
 			// 3. 리다이렉트
 			request.getSession().setAttribute("msg", "게시글 등록 완료입니다.");
-			response.sendRedirect(request.getContextPath() + "/community/freeList");
+			response.sendRedirect(request.getContextPath() + "/community/talkList");
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-
 
 }

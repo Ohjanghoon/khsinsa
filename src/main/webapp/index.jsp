@@ -11,24 +11,24 @@
 	  </div>
 	  <div class="carousel-inner">
 	    <div class="carousel-item active" data-bs-interval="6000">
-	      <img src="<%= request.getContextPath() %>/images/index_image_1.jpg" class="d-block w-100" alt="...">
+	      <img src="<%= request.getContextPath() %>/images/index_page1.jpg" class="d-block w-100" alt="...">
 	      <div class="carousel-caption d-none d-md-block">
-	        <h5>First slide label</h5>
-	        <p>Some representative placeholder content for the first slide.</p>
+	        <h5>주신사는...</h5>
+	        <p>합리적인 가격으로 나아가며, 스타일에 맞는 유행 트렌드에 맞추어 고객님에게 정보를 제공하겠습니다.</p>
 	      </div>
 	    </div>
 	    <div class="carousel-item" data-bs-interval="3000">
-	      <img src="<%= request.getContextPath() %>/images/index_image_1.jpg" class="d-block w-100" alt="...">
+	      <img src="<%= request.getContextPath() %>/images/index_page2.jpg" class="d-block w-100" alt="...">
 	      <div class="carousel-caption d-none d-md-block">
-	        <h5>Second slide label</h5>
-	        <p>Some representative placeholder content for the second slide.</p>
+	        <h5 class="indexText">주신사는...</h5>
+	        <p class="indexText">소비자간의 소통으로 브랜드나 옷에 대한 정보를 보다 사실적으로 공유할 수 있습니다.</p>
 	      </div>
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<%= request.getContextPath() %>/images/index_image_1.jpg" class="d-block w-100" alt="...">
+	      <img src="<%= request.getContextPath() %>/images/index_page5.jpg" class="d-block w-100" alt="...">
 	      <div class="carousel-caption d-none d-md-block">
-	        <h5>Third slide label</h5>
-	        <p>Some representative placeholder content for the third slide.</p>
+	        <h5 class="indexText">주신사는...</h5>
+	        <p class="indexText">오늘입은  스타일 공유를 통해 옷을 구매할 때 정보를 공유할 수 있습니다.</p>
 	      </div>
 	    </div>
 	  </div>
@@ -47,11 +47,11 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <p class="lead">빠른 속도로 변해가는 트렌드와 유행에 민감한 대한민국에 살고 있는 지금, 바쁜 시간 속 멋을 포기 할 수 없는 시대에 살고 있다. 과열된 쇼핑몰의 시장 속 어디서 어떻게 구매해야하는지, 가격은 적절한 지에 대한 의문점이 제기 되고 있다. 과열된 시장 속 고객들에게 좀 더 합리적인 가격으로 나아가며, 스타일에 맞는 유행 트렌드에 맞추어 고객에게 정보를 제공하여 구매할 수 있도록 돕는다.</p>
       </div>
       <div class="col-md-5">
-        <img src="<%= request.getContextPath() %>/images/index_image_1.jpg" width="100%" height="350"  alt="" />
+        <img src="<%= request.getContextPath() %>/images/index_page4.jpg" width="100%" height="310"  alt="" />
       </div>
     </div>
     
@@ -59,11 +59,11 @@
 
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <p class="lead">다양한 브랜드와 각양각색의 옷들이 많지만 온라인에서는 숫자적인 수치 이외에는 정보가 부족한 것이 사실이다. 하지만 소비자간의 소통으로 브랜드나 옷에 대한 정보를 보다 사실적으로 공유할 수 있으며, 각자 자신의 스타일 공유를 통해 옷을 구매할 때 도움이 될 수 있는 기회가 생겨 실패 리스크를 줄일 수 있는 이점이 있다.</p>
       </div>
       <div class="col-md-5 order-md-1">
-		<img src="<%= request.getContextPath() %>/images/index_image_1.jpg" width="100%" height="350"  alt="" />
+		<img src="<%= request.getContextPath() %>/images/index_page3.jpg" width="100%" height="310"  alt="" />
       </div>
     </div>
 
@@ -71,11 +71,11 @@
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-        <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+        <h2 class="featurette-heading">주신사는 고객께 옷 구매시 도움을 드릴 수 있는 <span class="text-muted">코디북</span>을 제공합니다.</h2>
+        <p class="lead">다양한 브랜드와 각양각색의 옷들이 많지만 온라인에서는 숫자적인 수치 이외에는 정보가 부족한 것이 사실이다. 하지만 소비자간의 소통으로 브랜드나 옷에 대한 정보를 보다 사실적으로 공유할 수 있으며, 각자 자신의 스타일 공유를 통해 옷을 구매할 때 도움이 될 수 있는 기회가 생겨 실패 리스크를 줄일 수 있는 이점이 있다.</p>
       </div>
       <div class="col-md-5">
-		<img src="<%= request.getContextPath() %>/images/index_image_1.jpg" width="100%" height="350"  alt="" />
+		<img src="<%= request.getContextPath() %>/images/index_page6.jpg" width="100%" height="310"  alt="" />
       </div>
     </div>
   </div>

@@ -15,6 +15,9 @@
 			}
 		}
 	}
+	
+	String tempPwd = (String)session.getAttribute("tempPwd");
+	if(tempPwd != null) session.removeAttribute("tempPwd");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/userLogin.css">
  <div class="container">
@@ -49,6 +52,16 @@
                     <button type="submit" id="btn_login">로그인</button>
                     <button type="button" id="btn_signup" onclick="location.href = '<%= request.getContextPath() %>/user/userEnroll'">회원가입</button>
                 </div>
+                <% if(tempPwd!=null){ %>
+                	<br>
+                	<br>
+                	<div class="tempColor">
+		      		<p id="tempPwdMSG"class="tempPwdMSG">임시비밀번호는 <span id="tempPwd"><%=tempPwd%></span> 입니다.</p>
+                	</div>
+                	
+                	
+		      	<% } %>
+		                
         </form>
     </div>
 

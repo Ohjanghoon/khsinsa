@@ -14,7 +14,7 @@ import java.util.Properties;
 
 import static com.kh.sinsa.common.JdbcTemplate.*;
 
-import com.kh.sinsa.user.controller.UserPwdUpdateServlet;
+
 import com.kh.sinsa.user.model.dto.Del;
 import com.kh.sinsa.user.model.dto.User;
 import com.kh.sinsa.user.model.dto.UserRole;
@@ -171,10 +171,10 @@ public class UserDao {
 		return user;
 	}
 	
-	public User forgotPwd(Connection conn, String userId, String username, String userEmail) {
+	public User selectOneUser(Connection conn, String userId, String username, String userEmail) {
 		PreparedStatement pstmt =  null;
 		ResultSet rset = null;
-		User user = new User();
+		User user = null;
 		String sql= prop.getProperty("forgotPwd");
 		System.out.println("3");
 		// forgotPwd = select * from kh_user where user_id =? and user_name= ? and user_email= ?
@@ -211,12 +211,10 @@ public class UserDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, tempPwd);
 			pstmt.setString(2, user.getUserId());
-			pstmt.setString(3, user.getUserName());
-			pstmt.setString(4, user.getUserEmail());
 		
 
 			result = pstmt.executeUpdate();
-			System.out.println(7);
+			System.out.println(6);
 
 		} catch (SQLException e) {
 			// service 예외 던짐(unchecked, 비지니스를 설명가능한 구체적 커스텀예외 전환)

@@ -36,7 +36,7 @@
                 <div class="searchcon">
                     <label for="searchType"><h5>검색타입</h5></label> 
                     <br />
-                    <select id="searchType" class="form-select" size="2" aria-label="size 2 select example">
+                    <select id="searchType" class="form-select text-center" size="2" aria-label="size 2 select example">
 						  <option value="user_id" <%= "user_id".equals(type) ? "selected" : "" %> selected>User ID</option>
 						  <option value="user_name" <%= "user_name".equals(type) ? "selected" : "" %>>User Name</option>
 					</select>

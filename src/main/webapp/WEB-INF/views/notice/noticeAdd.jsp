@@ -12,7 +12,7 @@
 		<form name="noticeAddFrm"
 			action="<%=request.getContextPath()%>/notice/noticeAdd" 
 			method="post">
-			<h2 style="font-size: 30px; color: black;">정보공유 게시글 작성</h2>
+			<h2 style="font-size: 30px; color: black;">공지사항 작성</h2>
 			<hr style="border-top: 3px solid black;">
 			<div id="content" style="margin: 30px;">
 

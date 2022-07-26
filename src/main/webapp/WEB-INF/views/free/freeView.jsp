@@ -16,7 +16,7 @@ List<CommunityAttachment> attachments = (List<CommunityAttachment>) request.getA
 List<CommunityComment> commentList = (List<CommunityComment>) request.getAttribute("commentList");
 // String commNo = (String) request.getAttribute("no");
 String commNo = community.getCommNo();
-%>
+%>	
 
 
 <div class="container">

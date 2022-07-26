@@ -19,7 +19,6 @@
 				<span class="drop"> 
 				<select name="one" id="drop-select" onchange="if(this.value) location.href=(this.value)">
 						<option class="option" value="">게시판 선택</option>
-						<option class="option" value="#">OOTD</option>
 						<option class="option" value="<%=request.getContextPath()%>/share/shareAdd">정보공유</option>
 						<option class="option" value="<%= request.getContextPath() %>/community/freeAdd">자유게시판</option>
 						<option class="option" value="<%= request.getContextPath() %>/community/talkAdd" selected />패션토크</option>
